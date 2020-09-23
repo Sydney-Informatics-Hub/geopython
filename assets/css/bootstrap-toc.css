@@ -1,0 +1,54 @@
+/*!
+ * Bootstrap Table of Contents v<%= version %> (http://afeld.github.io/bootstrap-toc/)
+ * Copyright 2015 Aidan Feldman
+ * Licensed under MIT (https://github.com/afeld/bootstrap-toc/blob/gh-pages/LICENSE.md) */
+
+/* modified from https://github.com/twbs/bootstrap/blob/94b4076dd2efba9af71f0b18d4ee4b163aa9e0dd/docs/assets/css/src/docs.css#L548-L601 */
+
+/* All levels of nav */
+nav[data-toggle='toc'] .nav > li > a {
+  display: block;
+  font-weight: 500;
+  color: #767676;
+  padding: 5px 10px;
+  border-left: 1px solid rgba(255, 255, 255, 0);
+}
+
+nav[data-toggle='toc'] .nav > li > a:hover,
+nav[data-toggle='toc'] .nav > li > a:focus {
+  color: #563d7c;
+  text-decoration: none;
+  background-color: transparent;
+  border-left: 1px solid #563d7c;
+}
+nav[data-toggle='toc'] .nav .active > a,
+nav[data-toggle='toc'] .nav .active:hover > a,
+nav[data-toggle='toc'] .nav .active:focus > a {
+  font-weight: bold;
+  color: #563d7c;
+  background-color: transparent;
+  border-left: 2px solid #563d7c;
+}
+
+nav[data-toggle='toc'] {
+  font-size: 18px;
+}
+
+nav[data-toggle='toc'] .nav {
+  position: relative;
+  padding-left: 7px;
+  font-size: 90%;
+}
+
+/* Nav: second level (shown on .active) */
+nav[data-toggle='toc'] .nav-link + ul {
+  display: none; /* Hide by default, but at >768px, show it */
+}
+
+/* from https://github.com/twbs/bootstrap/blob/e38f066d8c203c3e032da0ff23cd2d6098ee2dd6/docs/assets/css/src/docs.css#L631-L634 */
+nav[data-toggle='toc'] .nav > .active > ul,
+nav[data-toggle='toc'] .nav:first-child li:first-child > ul:first-child,
+nav[data-toggle='toc'] .nav > .active > ul li:first-child > ul:first-child
+{
+  display: block;
+}

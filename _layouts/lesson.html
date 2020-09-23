@@ -1,0 +1,8 @@
+---
+layout: base
+---
+{% include main_title.html %}
+{{ content }}
+{% if site.kind != "series" %}
+{% include syllabus.html %}
+{% endif %}
