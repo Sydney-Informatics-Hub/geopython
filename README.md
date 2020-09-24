@@ -5,6 +5,7 @@ Take your geoscience data management and analysis to the next level with the Pyt
 
 Download this repo which contains all the small datasets and the codes/notebooks we will be using: https://github.com/Sydney-Informatics-Hub/geopython
 
+This site in its rendered format is available at: https://sydney-informatics-hub.github.io/geopython/
 
 ## Set up the python environment via Docker
 Pull it from [docker hub](https://cloud.docker.com/u/nbutter/repository/docker/nbutter/pyforgeo) or build the [Dockerfile](Docker_details/Dockerfile) and run!
@@ -19,21 +20,18 @@ We need two different environments. One is particularly needed for pyGplates. We
 # Session 1
 This will be a hands-on programming intro. You will learn the basics of coding and Python. If you have experience using command line or some programming language (e.g. Matlab, C++) then you should find this straight-forward. If you have never programmed before, great! This will be the beginning of a great relationship with getting data to do what you want!
 
-* [Python Fundamentals ](Session1/exercise)
+* [Python Fundamentals](_episodes/01-fundamentals.md)
 
 # Session 2
 
-Python lists, 2d arrays and numpy arrays
- * https://an.example.link
-
-An internal link
- * [Class exercise and examples ](Session2/exercise)
+We will do more things
+ * [Machine Learning for classification of economic geology](_episodes/02-MachineLearning.md)
 
 # Session 3
 
 
 A Python introduction leading into visualising geo-spatial data.
-* [An Introduction to Python for GIS](Session3/Intro_Python_Geo.ipynb)
+* [An Introduction to Python for GIS](_episodes/Intro_Python_Geo.ipynb)
 
 Then a deeper lesson exploring some new Python libraries and advanced features of Python data manipulation on various types of data.
 * [Python with shapefiles and pandas](Session3/PandasExamples.ipynb)
