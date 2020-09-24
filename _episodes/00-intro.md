@@ -1,17 +1,17 @@
 ---
-title: "1. Accelerating Python"
+title: "0. Python for Geoscientists"
 teaching: 10
 exercises: 0
 questions:
 - "Who are the Sydney Informatics Hub?"
-- "How do you make your Python faster?"
+- "Why do you want to learn Python?"
 objectives:
-- "Understand the Accelerated Python ecosystem."
+- "Understand the Python ecosystem."
 keypoints:
-- "SIH is availble to researchers to help them research!"
-- "Many ways to make Python go faster."
+- "SIH is cool!"
+- "Python is cool!."
 ---
-This episode introduces the [Sydney Informatics Hub](https://informatics.sydney.edu.au/), and puts into context the desire to make our Python code/scripts run faster and efficiently.
+This episode introduces the [Sydney Informatics Hub](https://informatics.sydney.edu.au/), and puts the Python programming language into context for geoscience.
 
 
 # The Sydney Informatics Hub
