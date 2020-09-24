@@ -5,8 +5,8 @@ title: "Citation"
 
 #### Please cite as:
 
-Hayim Dar, Nathaniel Butterworth, Cali Willet (eds):   
-"_Sydney Informatics Hub: Artemis Training_", Version 2018.10, October 2018   
+Nathaniel Butterworth, Darya Vanichka, Ben Mather:   
+"_Sydney Informatics Hub: Introduction to Python for Geoscientists_", Version 2020.11, November 2020   
 {{ site.series_home }}
 
 <br>
