@@ -3,13 +3,13 @@ title: "Deep Learning Time Series with Python, tensorflow, and a GPU"
 teaching: 20
 exercises: 20
 questions:
-- "How do you set up a Python environemnt on Artemis?"
-- "How submit a GPU dependent Python script to Artemis?"
+- "Why is deep learning so special?"
+- "What is a GPU and why do I care?"
 objectives:
 - "Set up your own Python environemnt"
 - "Run a tensorflow job"
 keypoints:
-- "Artemis has lots of software, but sometime you need to roll-your-own"
+- "Roll-your-own software stack"
 - "Getting the correct balance of versions for software stacks is imperative"
 - "Not all GPUs are compliant with all software"
 ---
