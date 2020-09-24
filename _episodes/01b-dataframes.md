@@ -1,3 +1,16 @@
+---
+title: "01b. Python Fundamentals - shapefiles and dataframes"
+teaching: 10
+exercises: 0
+questions:
+- "What else can Python do?"
+- "What are libraries and packages?"
+objectives:
+- "Learn the ."
+keypoints:
+- "Shapefiles"
+- "Pandas dataframes"
+---
 
 ## Dealing with other data types
 Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the "pyshp" (for dealing with shapefiles) and "pandas" (great for tables nad time series) packages.
