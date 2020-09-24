@@ -1,3 +1,17 @@
+---
+title: "01. Python Fundamentals"
+teaching: 10
+exercises: 0
+questions:
+- "What can Python do?"
+- "How do I do it?"
+objectives:
+- "Learn the basic Python commands."
+keypoints:
+- "loops"
+- "Control statements."
+- "Indexing"
+---
 
 # Introduction to Python for Geoscientists
 
