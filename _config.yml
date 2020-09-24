@@ -10,8 +10,8 @@ port: 4003
 carpentry: "sih"
 
 # Overall title for pages.
-title: "Parallel Python: multithreading, multiprocessing and parallel python programming for HPC"
-series_name: "Artemis Series"
+title: "Introduction to Python for Geoscientists"
+series_name: "SIH Series"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -23,7 +23,7 @@ kind: "lesson"
 # Magic to make URLs resolve both locally and on GitHub.
 # See https://help.github.com/articles/repository-metadata-on-github-pages/.
 # Please don't change it: <USERNAME>/<PROJECT> is correct.
-repository: <USERNAME>/<PROJECT>
+repository: Sydney-Informatics-hub/geopython
 
 # Email address, no mailto:
 email: "sih.training@sydney.edu.au"
@@ -32,8 +32,8 @@ email: "sih.training@sydney.edu.au"
 sih_site: "http://informatics.sydney.edu.au"
 sih_pages: "https://sydney-informatics-hub.github.io"
 sih_github: "https://github.com/Sydney-Informatics-Hub"
-series_home: "https://sydney-informatics-hub.github.io/training.artemis/"
-training_home: "https://sydney-informatics-hub.github.io/training.home/"
+series_home: "https://sydney-informatics-hub.github.io/geopython/"
+training_home: "https://sydney-informatics-hub.github.io/geopython/"
 
 # Carpentries sites
 amy_site: "https://amy.software-carpentry.org/workshops"
