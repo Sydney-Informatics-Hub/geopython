@@ -1,5 +1,5 @@
 ---
-title: "01. Python Fundamentals"
+title: "01a. Python Fundamentals"
 teaching: 10
 exercises: 0
 questions:
@@ -8,7 +8,7 @@ questions:
 objectives:
 - "Learn the basic Python commands."
 keypoints:
-- "loops"
+- "Loops"
 - "Control statements."
 - "Indexing"
 ---
@@ -23,15 +23,7 @@ Today we are using a Python kernel to do some cool stuff with Geoscience data. T
 ```python
 2+4*10
 ```
-
-
-
-
     42
-
-
-
-
 ```python
 #This is a comment. This is for a human to read (so you remember what your code does!)
 #Python ignores anything behind the '#'.
