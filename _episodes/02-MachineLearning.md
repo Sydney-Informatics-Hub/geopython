@@ -20,7 +20,7 @@ We have a dataset (from Butterworth et al. 2016) with a collection of tectonomag
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
 
-![SegmentLocal](../data/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](../data/figs/MullerConvergenceSmall.gif "segment")
 
 ### Now, import most of the modules we need
 By convention module loads go at the top of your workflows.
@@ -42,6 +42,7 @@ from sklearn import preprocessing
 
 #For making pretty figures
 import matplotlib.pyplot as plt 
+from matplotlib import cm
 
 #For easy geographic projections on a map
 import cartopy.crs as ccrs
@@ -411,12 +412,12 @@ paramLabels=paramColumns[params].tolist()
 fig, ax = plt.subplots()
 
 #Plot the bar graph
-rects=ax.bar(np.arange(0, datalength, step=1),rf.feature_importances_)
+rects=ax.barh(np.arange(0, datalength, step=1),rf.feature_importances_)
 
 #Label the axes
-ax.set_xticks(np.arange(0, datalength, step=1))
-ax.set_xticklabels(paramLabels,rotation=90)
-ax.set_ylabel('Feature Importance')
+ax.set_yticks(np.arange(0, datalength, step=1))
+ax.set_yticklabels(paramLabels,rotation=90)
+ax.set_xlabel('Feature Importance')
 
 #Print the feature importance to compare with plot
 np.set_printoptions(precision=3,suppress=True)
@@ -453,7 +454,7 @@ plt.show()
 
 
 
-![png](output_10_1.png)
+![png](../data/figs/fig-02ML-featimp.png)
 
 
 Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifer we can predict a probability that porphyry copper deposits have formed
@@ -496,10 +497,6 @@ varZ=np.array(data.variables['z'][:])
 data.close()
 ```
 
-    /usr/local/lib/python2.7/dist-packages/scipy/io/netcdf.py:317: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
-      ), category=RuntimeWarning)
-
-
 
 ```python
 #Make a figure object
@@ -509,10 +506,10 @@ plt.figure()
 ax = plt.gca()
 
 #Create a colormap from a predefined function
-age_cmap=colormap_age()
+#age_cmap=colormap_age()
 
 #Put down the main dataset
-im=ax.imshow(varZ,vmin=0,vmax=200,extent=[0,360,-90,90],origin='lower',aspect=1,cmap=age_cmap)
+im=ax.imshow(varZ,vmin=0,vmax=200,extent=[0,360,-90,90],origin='lower',aspect=1,cmap=cm.hsv)
 
 #Make a colorbar
 cbar=plt.colorbar(im,fraction=0.025,pad=0.05,ticks=[0, 150],extend='max')
@@ -549,7 +546,7 @@ plt.show()
 
 
 
-![png](output_16_1.png)
+![png](../data/figs/fig-02ML-agegrid.png)
 
 
 ### For loops plotting shapefiles
@@ -570,22 +567,7 @@ for i, nshp in enumerate(range(Nshp)):
 plt.show()
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-12-26a781502d9a> in <module>()
-          1 #Load in plate polygons for plotting
-          2 topologyFile='../data/topology_platepolygons_0.00Ma.shp'
-    ----> 3 [recs,shapes,fields,Nshp]=readTopologyPlatepolygonFile(topologyFile)
-          4 for i, nshp in enumerate(range(Nshp)):
-          5     #if nshp!=35 and nshp!=36 and nshp!=23:
-
-
-    NameError: name 'readTopologyPlatepolygonFile' is not defined
-
-
+![png](../data/figs/fig-02ML-plates.png)
 
 ```python
 filename="../data/topodata.nc"
@@ -695,24 +677,7 @@ print("Added deposit probability")
 plt.show()
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-15-d2511d04c7e9> in <module>()
-          2 fig = plt.figure(figsize=(16,12),dpi=150)
-          3 
-    ----> 4 ax = plt.axes(projection=ccrs.PlateCarree())
-          5 ax.set_extent([-85, -30, -55, 10])
-          6 ax.coastlines('50m', linewidth=0.8)
-
-
-    NameError: name 'ccrs' is not defined
-
-
-
-    <matplotlib.figure.Figure at 0x7fec3cc1f0d0>
+![png](../data/figs/fig-02ML-porphyry.png)
 
 
 # Exercise
