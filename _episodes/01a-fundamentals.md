@@ -23,7 +23,10 @@ Today we are using a Python kernel to do some cool stuff with Geoscience data. T
 ```python
 2+4*10
 ```
+    
     42
+    
+    
 ```python
 #This is a comment. This is for a human to read (so you remember what your code does!)
 #Python ignores anything behind the '#'.
