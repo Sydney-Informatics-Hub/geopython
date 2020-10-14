@@ -676,6 +676,12 @@ print("Added deposit probability")
 
 plt.show()
 ```
+```
+Made base map
+Added topo
+Added shapes
+Added deposit probability
+```
 
 ![png](../data/figs/fig-02ML-porphyry.png)
 
