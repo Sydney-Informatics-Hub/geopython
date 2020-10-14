@@ -473,102 +473,6 @@ print("Done RF")
 
 ## Maps!
 
-
-```python
-filename="../data/EarthByte_Zahirovic_etal_2016_ESR_r888_AgeGrid-0.nc"
-data = scipy.io.netcdf.netcdf_file(filename,'r')
-data.variables
-```
-
-
-
-
-    OrderedDict([('lon', <scipy.io.netcdf.netcdf_variable at 0x7fec3cd7c190>),
-                 ('lat', <scipy.io.netcdf.netcdf_variable at 0x7fec406d7150>),
-                 ('z', <scipy.io.netcdf.netcdf_variable at 0x7fec3cd9fc90>)])
-
-
-
-
-```python
-varX=data.variables['lon'][:]
-varY=data.variables['lat'][:]
-varZ=np.array(data.variables['z'][:])
-data.close()
-```
-
-
-```python
-#Make a figure object
-plt.figure()
-
-#Get the axes of the current figure, for manipulation
-ax = plt.gca()
-
-#Create a colormap from a predefined function
-#age_cmap=colormap_age()
-
-#Put down the main dataset
-im=ax.imshow(varZ,vmin=0,vmax=200,extent=[0,360,-90,90],origin='lower',aspect=1,cmap=cm.hsv)
-
-#Make a colorbar
-cbar=plt.colorbar(im,fraction=0.025,pad=0.05,ticks=[0, 150],extend='max')
-cbar.set_label('Age (Ma)', rotation=0)
-
-#Clean up the default axis ticks
-plt.yticks([-90,-45,0,45,90])
-plt.xticks([0,90,180,270,360])
-
-#Put labels on the figure
-ax.set_xlabel('Longitude')
-ax.set_ylabel('Latitude')
-
-#Put a title on it
-plt.title("Global Seafloor Age Grid \n (Zahirovic et al. 2016)")
-
-plt.show()
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-11-94fa21453eab> in <module>()
-          6 
-          7 #Create a colormap from a predefined function
-    ----> 8 age_cmap=colormap_age()
-          9 
-         10 #Put down the main dataset
-
-
-    NameError: name 'colormap_age' is not defined
-
-
-
-![png](../data/figs/fig-02ML-agegrid.png)
-
-
-### For loops plotting shapefiles
-
-
-```python
-#Load in plate polygons for plotting
-topologyFile='../data/topology_platepolygons_0.00Ma.shp'
-[recs,shapes,fields,Nshp]=readTopologyPlatepolygonFile(topologyFile)
-for i, nshp in enumerate(range(Nshp)):
-    #if nshp!=35 and nshp!=36 and nshp!=23:
-    #These are the plates that cross the dateline and cause 
-        #banding errors
-        polygonShape=shapes[nshp].points
-        poly=np.array(polygonShape)
-        plt.plot(poly[:,0], poly[:,1], c='k',zorder=1)
-        
-plt.show()
-```
-
-![png](../data/figs/fig-02ML-plates.png)
-
 ```python
 filename="../data/topodata.nc"
 data = scipy.io.netcdf.netcdf_file(filename,'r')
@@ -590,8 +494,73 @@ data.variables
 topoX=data.variables['X'][:]
 topoY=data.variables['Y'][:]
 topoZ=np.array(data.variables['elev'][:])
+
+#Some filetypes and readers (like netcdf) can actually change the data directly on disk
+#Good practice, is to close the file when done (for safety and memory saving)
 data.close()
 ```
+
+```python
+#Make a figure object
+plt.figure()
+
+#Get the axes of the current figure, for manipulation
+ax = plt.gca()
+
+#Put down the main topography dataset
+im=ax.imshow(topoZ,vmin=-5000,vmax=1000,extent=[0,360,-90,90],origin='upper',aspect=1,cmap=cm.gist_earth)
+
+#Make a colorbar
+cbar=plt.colorbar(im,fraction=0.025,pad=0.05,ticks=[-5000,0, 1000],extend='both')
+cbar.set_label('Height \n ASL \n (m)', rotation=0)
+
+#Clean up the default axis ticks
+plt.yticks([-90,-45,0,45,90])
+plt.xticks([0,90,180,270,360])
+
+#Put labels on the figure
+ax.set_xlabel('Longitude')
+ax.set_ylabel('Latitude')
+
+#Put a title on it
+plt.title("Bathymetry and Topography of the World \n (ETOPO5 2020)")
+
+plt.show()
+
+
+
+![png](../data/figs/fig-02ML-topo.png)
+
+
+### For loops plotting shapefiles
+
+
+```python
+#Load in plate polygons for plotting
+topologyFile='../data/topology_platepolygons_0.00Ma.shp'
+
+#read in the file
+shapeRead = shapefile.Reader(topologyFile)
+
+#And save out some of the shape file attributes
+recs    = shapeRead.records()
+shapes  = shapeRead.shapes()
+fields  = shapeRead.fields
+Nshp    = len(shapes)
+
+for i, nshp in enumerate(range(Nshp)):
+    #if nshp!=35 and nshp!=36 and nshp!=23:
+    #These are the plates that cross the dateline and cause 
+        #banding errors
+        polygonShape=shapes[nshp].points
+        poly=np.array(polygonShape)
+        plt.plot(poly[:,0], poly[:,1], c='k',zorder=1)
+        
+plt.show()
+```
+
+![png](../data/figs/fig-02ML-plates.png)
+
 
 ### Make a prettier map
 
@@ -642,7 +611,16 @@ print("Added topo")
 ###Plot shapefile polygon outlines
 #Load in plate polygons for plotting
 topologyFile='../data/topology_platepolygons_0.00Ma.shp'
-[recs,shapes,fields,Nshp]=readTopologyPlatepolygonFile(topologyFile)
+
+#read in the file
+shapeRead = shapefile.Reader(topologyFile)
+
+#And save out some of the shape file attributes
+recs    = shapeRead.records()
+shapes  = shapeRead.shapes()
+fields  = shapeRead.fields
+Nshp    = len(shapes)
+
 for i, nshp in enumerate(range(Nshp)):
     if nshp!=35 and nshp!=36 and nshp!=23:
     #These are the plates that cross the dateline and cause 
