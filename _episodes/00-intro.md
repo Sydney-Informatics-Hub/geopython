@@ -32,46 +32,23 @@ The Sydney Informatics Hub (SIH) is a _[Core Research Facility](https://sydney.e
 We also aim to cultivate a **data community** at USyd, organising monthly [Hacky Hours](https://sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/hacky-hour.html), outside training events (eg NVIDIA, Pawsey Center), and data/coding-related events. Look out for everthing happening on our [calander](https://www.sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/training-calendar.html) or contact us (at sih.info@sydney.edu.au) to get some digital collaboration going.
 
 <br>
-# Acceleration, Paralleisation, Vectorising, Threading, make-Python-go-fast 
-
-We will cover a few of the ways that you can potentially speed up Python. As we will learn there are multitudes of methods to make Python code more efficient, and also different implentations of libraries, tools, techniques that can all be utilised depending on how your code and/or data is organised. This is a rich and evolving ecosystem and there is no one perfect way to implement efficiencies.
-
-Some key words that might come up:
-
-* Vectorisation
-* MPI message parsing interface
-* CPU, core, node, thread, process, worker, job, task
-* Parallelisation
-* Python decorators and functional programming.
 
 
 <br>
 # Course pre-requisites
-You should have some experience with Python. You should be able to connect to a remote computer (i.e. Artemis) via ssh and submit a job to a scheduler.
+None. This is an introductory course. The ability to navigate around directories and use a command line is helpful, but we will be working through these tasks. 
 
+# Python
 
-<br>
-# What does *parallel* mean?
-Seperate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isloated ecosystem where computation is performed Communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data. 
+Why use Python
+Version 2?
+Version 3!
 
-Generally speaking parallel workflows fit different categories, which can make you think about how to write your code and what approaches to take.
+You can automate a workflow! 
 
-### Embarrassingly parallel:
-Requires no communication between processors. Utilise shared memory spaces.
+## How does it compare to...
+Other tools, R, Julia, C++, bash
 
-* running same algorithm for a range of input parameters
-* rendering video frames in computer animation
-* Open MP implementations.
-
-### Coarse/Fine-grained parallel:
-Requires occasional or frequent communication between processors
-
-* Uses a small number of processes on large data. 
-* Fine grain uses a large number of small processes with very little communication. Improves computationally bound problems.
-* MPI implementations.
-* Some examples are finite difference time-stepping on parallel grid, finite element methods.
-
-Traditional implemententations of paralellism  are done on a low level. However, open source software has ***evolved*** dramatically over the last few years allowing more ***high level implementations and concise 'pythonic' syntax*** that wraps around low level tools. The focus on this course is to use these modern high level implementations for use on Artemis.
 
 Let's get started with some examples....
 
