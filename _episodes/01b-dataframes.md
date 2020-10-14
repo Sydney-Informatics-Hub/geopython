@@ -928,7 +928,7 @@ lithCounts[(lithCounts < 50)].plot.bar(rot=90,figsize=(15,5))
 
 
 
-![png](output_31_1.png)
+![png](../fig/fig-01shp-boreholes.png)
 
 
 
@@ -957,7 +957,7 @@ plt.show()
 ```
 
 
-![png](output_32_0.png)
+![png](../fig/fig-01shp-hist.png)
 
 
 
