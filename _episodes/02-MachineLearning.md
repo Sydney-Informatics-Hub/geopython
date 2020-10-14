@@ -529,7 +529,7 @@ plt.show()
 ```
 
 
-![png](../data/figs/fig-02ML-topo.png)
+![png](../fig/fig-02ML-topo.png)
 
 
 ### For loops plotting shapefiles
