@@ -14,6 +14,41 @@ keypoints:
 ---
 This episode shows you a few of the basic tools that we can use in Python to make our code go faster. There is no perfect method for optimising code. Efficiency gains depend on what your end goal is, what libraries are available, what method or approach you want to take when writing algorithms, what your data is like, what hardware you have. Hopefully these notes will allow you to think about your problems from different perspectives to give you the best opportunity to make your development and execution as efficient as possible.
 
+# Acceleration, Paralleisation, Vectorising, Threading, make-Python-go-fast 
+
+We will cover a few of the ways that you can potentially speed up Python. As we will learn there are multitudes of methods to make Python code more efficient, and also different implentations of libraries, tools, techniques that can all be utilised depending on how your code and/or data is organised. This is a rich and evolving ecosystem and there is no one perfect way to implement efficiencies.
+
+Some key words that might come up:
+
+* Vectorisation
+* MPI message parsing interface
+* CPU, core, node, thread, process, worker, job, task
+* Parallelisation
+* Python decorators and functional programming.
+
+<br>
+# What does *parallel* mean?
+Seperate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isloated ecosystem where computation is performed Communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data. 
+
+Generally speaking parallel workflows fit different categories, which can make you think about how to write your code and what approaches to take.
+
+### Embarrassingly parallel:
+Requires no communication between processors. Utilise shared memory spaces.
+
+* running same algorithm for a range of input parameters
+* rendering video frames in computer animation
+* Open MP implementations.
+
+### Coarse/Fine-grained parallel:
+Requires occasional or frequent communication between processors
+
+* Uses a small number of processes on large data. 
+* Fine grain uses a large number of small processes with very little communication. Improves computationally bound problems.
+* MPI implementations.
+* Some examples are finite difference time-stepping on parallel grid, finite element methods.
+
+Traditional implemententations of paralellism  are done on a low level. However, open source software has ***evolved*** dramatically over the last few years allowing more ***high level implementations and concise 'pythonic' syntax*** that wraps around low level tools. The focus on this course is to use these modern high level implementations for use on Artemis.
+
 
 # Profiling your code
 
