@@ -1,5 +1,5 @@
 ---
-title: "2. Simple methods"
+title: "04a. Efficient Python methods"
 teaching: 10
 exercises: 15
 questions:
@@ -195,7 +195,7 @@ print("I am rank %d in group of %d processes." % (rank, size))
 ~~~
 {: .python}
 
-If you want to submit this python script on Artemis, the PBS script is below. Notice here we are requesting 4 seperate nodes in the PBS script. This amount aligns with the ```-np 4``` flag (number of processes), so each process is seperate and executed on different nodes on Artemis.
+If you want to submit this python script on a High Performance Computing environment, the PBS script is below. Notice here we are requesting 4 seperate nodes in the PBS script. This amount aligns with the ```-np 4``` flag (number of processes), so each process is seperate and executed on different nodes on Artemis.
 ~~~
 #!/bin/bash
 
