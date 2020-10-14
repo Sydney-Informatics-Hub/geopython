@@ -670,15 +670,14 @@ Present your results on a map, and compare it with the Random Forest method.
 
 # Datasets
 
-Topography/Bathymetry
+#### Topography/Bathymetry
 WORLDBATH: ETOPO5 5x5 minute Navy bathymetry. http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NGDC/.ETOPO5/
     
-ML dataset. 
-Expanded in Butterworth et al 2016 from a compilation made by by Bertrand et al 2016. https://doi.org/10.1002/2016TC004289
+#### ML dataset
+Butterworth et al 2016 https://doi.org/10.1002/2016TC004289
 
-Shape files polygons: 
+#### Shapefile plate polygons
 GPlates2.0. https://www.gplates.org/
 
-Age Grid
-Zahirovic etal 2016. ftp://ftp.earthbyte.org/Data_Collections/Zahirovic_etal_2016_ESR_AgeGrid/
+
     
