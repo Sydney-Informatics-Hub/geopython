@@ -20,30 +20,35 @@ We need two different environments. One is particularly needed for pyGplates. We
 # Session 1
 This will be a hands-on programming intro. You will learn the basics of coding and Python. If you have experience using command line or some programming language (e.g. Matlab, C++) then you should find this straight-forward. If you have never programmed before, great! This will be the beginning of a great relationship with getting data to do what you want!
 
-* [Python Fundamentals](_episodes/01-fundamentals.md)
+* [Intro to the course](_episodes/00-intro.md)
+* [Python Fundamentals](_episodes/01a-fundamentals.md)
+* [Python data types and mapping](_episodes/01b-dataframes.md)
 
 # Session 2
 
-We will do more things
+Here we will start applying the fundamental Python concepts and tools to solve real world problems. 
+
  * [Machine Learning for classification of economic geology](_episodes/02-MachineLearning.md)
+ * [Machine Learning for classification of economic geology 2](https://github.com/natbutter/gawler-exploration)?
+ * [Python data types and mapping](More of Ben's stuff??)
 
 # Session 3
 
+We will explore more advanced data analyis techniques with deep learning.
 
-A Python introduction leading into visualising geo-spatial data.
-* [An Introduction to Python for GIS](_episodes/Intro_Python_Geo.ipynb)
-
-Then a deeper lesson exploring some new Python libraries and advanced features of Python data manipulation on various types of data.
-* [Python with shapefiles and pandas](Session3/PandasExamples.ipynb)
+* [Time Series predictions](_episodes/03a-DeepLearningTS.md)
+* [Image Classification](https://github.com/seg/2016-ml-contest/blob/master/LA_Team/Facies_classification_LA_TEAM_05_VALIDATION.ipynb)?
+* [Image Classification](https://www.sepm.org/files/172article.912no7rips120nln.pdf)?
 
 
 # Session 4
 
+The final session will be looking at some more advanced methods for tuning your Python codes and identifying multiple ways of solving the same problem (with vastly different efficiency).
 
-We will use Python to perform machine learning on a well-constructed dataset 
-* [Machine Learning with Python for Geoscience](Session4/ML_Geo.ipynb)
-* Random forest background: https://medium.com/@williamkoehrsen/random-forest-simple-explanation-377895a60d2d 
-* Random forest code: https://www.datascience.com/resources/notebooks/random-forest-intro
+* [Time Series predictions](_episodes/04-HPC.md)
+* [Time Series predictions](_episodes/04a-SimpleSpeedUps.md)
+* [Time Series predictions](_episodes/04b-DaskDataframes.md)
+
 
 
 # Contact
