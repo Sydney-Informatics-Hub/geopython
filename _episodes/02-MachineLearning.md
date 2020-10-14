@@ -526,7 +526,7 @@ ax.set_ylabel('Latitude')
 plt.title("Bathymetry and Topography of the World \n (ETOPO5 2020)")
 
 plt.show()
-
+```
 
 
 ![png](../data/figs/fig-02ML-topo.png)
