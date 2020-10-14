@@ -1,5 +1,5 @@
 ---
-title: "Deep Learning Time Series with Python, tensorflow, and a GPU"
+title: "03a. -Deep Learning Time Series with Python, tensorflow, and a GPU"
 teaching: 20
 exercises: 20
 questions:
@@ -18,9 +18,9 @@ Python offers many ways to make use of the compute capability in your GPU. A ver
 
 ### You can run through the steps on you local machine using the Jupyter notebook example
 
-Open up ```timeseries.ipynb``` on your local machine. Feel free to step through the notebook. We are looking at temperature data in Sydney for the last 150 years with daily measurements. We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. The batch mode version removes this restrition, but feel free to adjust the numbers as you like.
+We are looking at temperature data in Sydney for the last 150 years with daily measurements. We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. The batch mode version removes this restrition, but feel free to adjust the numbers as you like.
 
-## Run the straight python script to do everything in "batch" mode. This is how we have to run it on Artmeis.
+## Run the straight python script to do everything in "batch" mode. 
 
 Assuming the dataset, ```sydney_temperature.csv```, and python script, ```timeseries.py``` are in the same directory, to run in batch mode, simply envoke:
 ```
