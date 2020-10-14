@@ -254,13 +254,7 @@ def timescale(t):
 ```python
 timescale(1)
 ```
-
     1
-
-
-
-
-
     'Cenozoic'
 
 
