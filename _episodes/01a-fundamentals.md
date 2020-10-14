@@ -552,6 +552,7 @@ copper=cudata4[:,2]
 
 fig = plt.figure(figsize=(6,4),dpi=150)
 
+#Restrict the colour range between 0 and 1000
 plt.scatter(longs,lats,s=age/1000,c=copper,vmin=0, vmax=1000,cmap=plt.cm.copper)
 plt.title('Copper Deposits from EarthChem.org')
 plt.ylabel('Latitude')
@@ -614,7 +615,7 @@ age=cudata4[:,3]
 #######
 
 #Create a figure object
-fig = plt.figure(figsize=(16,12),dpi=150)
+fig = plt.figure(figsize=(12,8),dpi=150)
 
 #Make a map projection to plot on.
 ax = plt.axes(projection=ccrs.Robinson())
@@ -626,9 +627,9 @@ ax.stock_img()
 ax.gridlines()
 
 #Make a scatter plot of the data coloured by age. 
-#Restrict the colour range between 0 and 2000
+#Restrict the colour range between 0 and 100
 #And also set the scatter plot as a variable 'mapscat' so we can reference it later
-mapscat=ax.scatter(longs,lats,marker=".",c=age,vmin=0,vmax=100,transform=ccrs.Geodetic(),zorder=4,cmap=plt.cm.copper)
+mapscat=ax.scatter(longs,lats,marker=".",s=0.5,c=age,vmin=0,vmax=100,transform=ccrs.Geodetic(),zorder=4,cmap=plt.cm.hsv)
 
 #Make a Colorbar
 cbar=plt.colorbar(mapscat, ax=ax, orientation="horizontal", pad=0.05, fraction=0.15, shrink=0.5,extend='max')
@@ -639,26 +640,32 @@ plt.title('Age of Copper Deposits in the EarthChem.org database')
 plt.show()
 ```
 
+![png](../fig/fig-01Intro-cupc.png)
 
+You can explore the different color maps at [https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html](https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html).
 
-# Exercise
-Pick a new element from the EarthChem data and make a similar map. Here is a link the data to download https://www.dropbox.com/sh/b1tkoi6k1xmmcka/AADmxEMNwTbv1DZHifMOWzzPa?dl=0 
+# Exercises
+
+Pick a new element from the EarthChem data and make a similar map. Here is a link to download the data for indiviual elements [https://www.dropbox.com/sh/b1tkoi6k1xmmcka/AADmxEMNwTbv1DZHifMOWzzPa?dl=0](https://www.dropbox.com/sh/b1tkoi6k1xmmcka/AADmxEMNwTbv1DZHifMOWzzPa?dl=0)
 Create a new notebook and display the diagnostic steps leading up to your final map.
 
 
 ```python
-#These were the steps used to make individual files
+#Note: These were the steps used to make individual Earthchem files (from the full dataset)
 # import pandas as pd
 # filename = '../data/EarthChem_all.csv'
 # chemdata=pd.read_csv(filename, sep=',', skipinitialspace=True)
 
+#Check column names
 # chemdata.columns.values
 
-
+#Set the element we will pull out
 # c='SN'
 
+#Get the column number for the element name
 # a=chemdata.columns.get_loc(c)
 
+#Get the lat,lon,age, and element column
 # df1=chemdata.iloc[:,[6,7,10,a]]
 # df1=df1[(df1 != 0).all(1)]
 # df1=df1.dropna()
