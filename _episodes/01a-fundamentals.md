@@ -640,7 +640,7 @@ plt.title('Age of Copper Deposits in the EarthChem.org database')
 plt.show()
 ```
 
-![png](../fig/fig-01Intro-cupc.png)
+![png](../fig/fig-01Intro-cuage.png)
 
 You can explore the different color maps at [https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html](https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html).
 
