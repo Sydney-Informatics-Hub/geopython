@@ -991,9 +991,5 @@ plt.show()
 ```
 
 # Exercise
-Go to http://www.bom.gov.au/water/groundwater/explorer/map.shtml and pick another River Region. Download the dataset in "Shapefile" format (this will downlaod the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. Submit your jupyter notebook for review.
+Go to http://www.bom.gov.au/water/groundwater/explorer/map.shtml and pick another River Region. Download the dataset in "Shapefile" format (this will downlaod the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
 
-
-```python
-
-```
