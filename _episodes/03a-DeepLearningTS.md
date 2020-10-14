@@ -90,7 +90,7 @@ plt.ylabel("Temperature (degrees Celsius)")
 
 
 
-![png](../fig/fig-03DL-temperature.png.png)
+![png](../fig/fig-03DL-temperature.png)
 
 
 
