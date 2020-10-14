@@ -1,9 +1,21 @@
-
-# Data Science for Geoscience
+---
+title: "02. Machine Learning for Geoscience"
+teaching: 10
+exercises: 0
+questions:
+- "What data science tools and techniques can be used in Python?"
+- "How do I do it?"
+objectives:
+- "Learn fundamental Machine Learning packages."
+- "Learn to further explore data."
+keypoints:
+- "Applying ML workflows"
+- "Wrnagling data."
+---
 
 Let's use some standard Machine Learning tools available in Python packages to analyse some data.
 
-We have a dataset (from Butterworth et al 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.
+We have a dataset (from Butterworth et al. 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.
 
 Run the next cell to see an animation representing this data
 
