@@ -15,17 +15,16 @@ keypoints:
 
 # Introduction to Python for Geoscientists
 
-This is a "Jupyter Notebook". Formerly an IPython Notebook. It is a good way to document workflows and analysis pipelines. You can have Python, R, Fortran, Julia, etc notebooks. This is a "Markdown" cell, you can write notes, equations in latex style, $E=\kappa A ^m (\nabla z)^n$, or embed figures. 
-
-Today we are using a Python kernel to do some cool stuff with Geoscience data. The following cell is your first Python code
-
-
+Generally cells like this are what to type into your Python shell/notebook/colab:
 ```python
 2+4*10
 ```
+Cells like this are the expected output:
 ```
     42
 ``` 
+
+Look at that, your first Python code! Who knew Python is just a big ol' calculator! But it can do so much more...
     
 ```python
 #This is a comment. This is for a human to read (so you remember what your code does!)
