@@ -2010,8 +2010,7 @@ plt.show()
 
 # Exercise
 Do the same analysis but using a different Machine Learning algorith for your classification. You can use this as a guide for picking a good classification algorithm https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html. 
-Additionaly, determine which parameters are best for learning. For robust results ***learn*** which parameters are most important! 
-Present your results on a map, and compare it with the Random Forrest method. Explain why the parameters you have chosen are probably the most important. Explain why there are differences in the ML algorithms.
+Present your results on a map, and compare it with the Random Forest method. 
 
 # Datasets
 
@@ -2027,12 +2026,3 @@ GPlates2.0. https://www.gplates.org/
 Age Grid
 Zahirovic etal 2016. ftp://ftp.earthbyte.org/Data_Collections/Zahirovic_etal_2016_ESR_AgeGrid/
     
-
-```python
-
-```
-
-
-```python
-
-```
