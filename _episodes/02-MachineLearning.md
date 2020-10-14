@@ -20,7 +20,7 @@ We have a dataset (from Butterworth et al. 2016) with a collection of tectonomag
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
 
-![SegmentLocal](../data/figs/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](../fig/MullerConvergenceSmall.gif "segment")
 
 ### Now, import most of the modules we need
 By convention module loads go at the top of your workflows.
@@ -454,7 +454,7 @@ plt.show()
 
 
 
-![png](../data/figs/fig-02ML-featimp.png)
+![png](../fig/fig-02ML-featimp.png)
 
 
 Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifer we can predict a probability that porphyry copper deposits have formed
@@ -559,7 +559,7 @@ for i, nshp in enumerate(range(Nshp)):
 plt.show()
 ```
 
-![png](../data/figs/fig-02ML-plates.png)
+![png](../fig/fig-02ML-plates.png)
 
 
 ### Make a prettier map
@@ -661,7 +661,7 @@ Added shapes
 Added deposit probability
 ```
 
-![png](../data/figs/fig-02ML-porphyry.png)
+![png](../fig/fig-02ML-porphyry.png)
 
 
 # Exercise
