@@ -51,6 +51,9 @@ Other programming languages and tools such as R, Julia, C++, bash, Matlab?
 
 ## What is a notebook? What is a terminal?
 
+What is google colab?
+How do I get this code working?
+What is Docker?
 Traditionally, Python was executed in a terminal environemnt.
 You have a ***Python Shell*** but now (modelled from Mathematica's Notebooks) you can use a Jupyter Notebook.
 
