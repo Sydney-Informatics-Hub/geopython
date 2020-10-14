@@ -1,12 +1,12 @@
 ---
-title: "0. Python for Geoscientists"
+title: "00. Python for Geoscientists"
 teaching: 10
 exercises: 0
 questions:
 - "Who are the Sydney Informatics Hub?"
 - "Why do you want to learn Python?"
 objectives:
-- "Understand the Python ecosystem."
+- "Understand the Python ecosystem and other tools."
 keypoints:
 - "SIH is cool!"
 - "Python is cool!."
@@ -47,9 +47,12 @@ Version 3!
 You can automate a workflow! 
 
 ## How does it compare to...
-Other tools, R, Julia, C++, bash
+Other programming languages and tools such as R, Julia, C++, bash, Matlab?
 
+## What is a notebook? What is a terminal?
 
-Let's get started with some examples....
+Traditionally, Python was executed in a terminal environemnt.
+You have a ***Python Shell*** but now (modelled from Mathematica's Notebooks) you can use a Jupyter Notebook.
+
 
 
