@@ -15,17 +15,16 @@ keypoints:
 
 # Introduction to Python for Geoscientists
 
-Generally cells like this are what to type into your Python shell/notebook/colab:
+Generally, cells like this are what to type into your Python shell/notebook/colab:
 ```python
 2+4*10
 ```
 Cells like this are the expected output:
 ```
-    42
+42
 ``` 
 
 Look at that, your first Python code! Who knew Python is just a big ol' calculator! But it can do so much more...
-    
 ```python
 #This is a comment. This is for a human to read (so you remember what your code does!)
 #Python ignores anything behind the '#'.
@@ -41,16 +40,18 @@ Note: A variable (e.g. time) must start with a letter or underscore, and can inc
 #Now you can use that variable in different ways.... firstly print it out to the screen
 print("The age of the sample is", time, " Million years")
 ```
-
-    ('The age of the sample is', 145, ' Million years')
-
+```
+The age of the sample is 145  Million years
+```
 
 
 ```python
 #Make a new variable called 'endtime' and add a constant to our 'time' variable
 endtime=time+56
 ```
-
+```
+ 
+```
 
 ```python
 #Nothing printed out above? Good. Jupyter Notebooks won't always do that so let's tell Python to print it.
@@ -69,7 +70,7 @@ geological_age='Jurassic'
 print("My sample is ", endtime, " Million years old from the", geological_age, " age.")
 ```
 
-    ('My sample is ', 201, ' Million years old from the', 'Jurassic', ' age.')
+    My sample is  201  Million years old from the Jurassic  age.
 
 
 
@@ -174,14 +175,14 @@ Sometimes you need to loop through a list, but simultaneously keep track of whic
 for myindex, mything in enumerate(times):
     print("index:",myindex," The thing in my 'times' list:",mything)
 ```
-
-    ('index:', 0, " The thing in my 'times' list:", 1)
-    ('index:', 1, " The thing in my 'times' list:", 4.5)
-    ('index:', 2, " The thing in my 'times' list:", 8.2)
-    ('index:', 3, " The thing in my 'times' list:", 'Jurassic')
-    ('index:', 4, " The thing in my 'times' list:", 'Another string')
-    ('index:', 5, " The thing in my 'times' list:", True)
-
+```
+index: 0  The thing in my 'times' list: 1
+index: 1  The thing in my 'times' list: 4.5
+index: 2  The thing in my 'times' list: 8.2
+index: 3  The thing in my 'times' list: Jurassic
+index: 4  The thing in my 'times' list: Another string
+index: 5  The thing in my 'times' list: True
+```
 
 You don't always need a pre-defined list
 
@@ -194,12 +195,13 @@ while age < time:
     print("time:", time, " age:", age, " difference:",time-age)
     age=age+1
 ```
-
-    ('time:', 145, ' age:', 140, ' difference:', 5)
-    ('time:', 145, ' age:', 141, ' difference:', 4)
-    ('time:', 145, ' age:', 142, ' difference:', 3)
-    ('time:', 145, ' age:', 143, ' difference:', 2)
-    ('time:', 145, ' age:', 144, ' difference:', 1)
+```
+time: 145  age: 140  difference: 5
+time: 145  age: 141  difference: 4
+time: 145  age: 142  difference: 3
+time: 145  age: 143  difference: 2
+time: 145  age: 144  difference: 1
+```
 
 
 #### Control statements
@@ -333,7 +335,7 @@ help(numpy.loadtxt)
     
 
 
-Or really just google the function!
+Or really, just [search](http://letmegooglethat.com/?q=numpy+loadtxt) the function! Online documentation and discussion boards are filled with great content.
 
 ## Exploring your data
 #### It is often a good idea to look at the data to have some idea of what you are working with
@@ -422,7 +424,7 @@ plt.show()
 ```
 
 
-![png](output_42_0.png)
+![png](../fig/fig-01Intro-latlon.png)
 
 
 This does not look right... It is a messy dataset! This is not uncommon. 
@@ -447,14 +449,15 @@ plt.show()
 ```
 
 
-![png](output_44_0.png)
+![png](../fig/fig-01Intro-lat.png)
 
 
 
-![png](output_44_1.png)
+![png](../fig/fig-01Intro-lon.png)
 
 
-There are definitely some outliers with latitudes and longitudes. So let's restrict just our points to range -180:180 and -90:90.
+This kind of casual data interrogation is a really handy way to exploring your data.
+There are definitely some outliers with latitudes and longitudes. There are quite a few ways clean the data, but let's simply restrict our data range to -180:180 and -90:90.
 
 
 ```python
@@ -463,6 +466,7 @@ There are definitely some outliers with latitudes and longitudes. So let's restr
 #Find all the "chemdata" column 1 (i.e. longitude) data points that are greater than -180, save it in a new variable
 where_longitude_above_min = chemdata[:,1]>-180
 cudata=chemdata[where_longitude_above_min]
+
 #Repeat for less than 180
 where_longitude_below_max = cudata[:,1]<180
 cudata2=cudata[where_longitude_below_max]
@@ -511,17 +515,15 @@ cudata2
 
 
 ```python
-
 #Repeat for latitudes less than 90
 cudata3=cudata2[cudata2[:,0]<90]
 #Repeat for greater than -90
 cudata4=cudata3[cudata3[:,0]>-90]
 
-
 print("We have removed", chemdata.shape[0]-cudata4.shape[0], "samples")
 ```
 
-    ('We have removed', 47, 'samples')
+    We have removed 47 samples
 
 
 
@@ -531,15 +533,16 @@ plt.title('Copper Deposits from EarthChem.org')
 plt.ylabel('Latitude')
 plt.xlabel('Longitude')
 plt.show()
-
 ```
 
 
-![png](output_52_0.png)
+![png](../fig/fig-01Intro-cudeps.png)
 
 
+Now make a more informative plot:
 
 ```python
+#Set reasonable variable names
 lats=cudata4[:,0]
 longs=cudata4[:,1]
 age=cudata4[:,3]
@@ -557,7 +560,7 @@ plt.show()
 ```
 
 
-![png](output_53_0.png)
+![png](../fig/fig-01Intro-cu.png)
 
 
 
@@ -584,17 +587,17 @@ filtered_age=reject_outliers(copper)
     ('removed:', 20407)
 
 
+Just plotting the Cu content implies that better filtering could be applied (a homework exercise perhaps). Remember this is a pretty messy dataset, some Cu is reported as ppm, ppb, or %! 
 
 ```python
 plt.plot(copper[copper>1],'k.')
 plt.show()
 ```
 
+![png](../fig/fig-01Intro-cupc.png)
 
-![png](output_56_0.png)
 
-
-### Let's make a nicer map
+### Let's make an even nicer map
 
 
 ```python
@@ -636,20 +639,6 @@ plt.title('Age of Copper Deposits in the EarthChem.org database')
 plt.show()
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ImportError                               Traceback (most recent call last)
-
-    <ipython-input-41-6c3a6bda1186> in <module>()
-          1 #Import another module called Cartopy - great for plotting things on globes
-    ----> 2 import cartopy.crs as ccrs
-          3 
-          4 #Make new variables from our array (so it is easier to see what we are doing)
-          5 lats=cudata4[:,0]
-
-
-    ImportError: No module named cartopy.crs
 
 
 # Exercise
