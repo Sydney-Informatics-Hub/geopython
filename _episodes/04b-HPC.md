@@ -1,5 +1,5 @@
 ---
-title: "3. Connecting to Artemis HPC"
+title: "04. Connecting to a remote HPC"
 teaching: 5
 exercises: 5
 questions:
