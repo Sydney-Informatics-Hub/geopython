@@ -278,8 +278,8 @@ import numpy
 #Pandas is a module that is great for dealing with tables of data
 import pandas
 
-#This is a library for making figures (orignally based off Matlab plotting routines)
-#We use the alias 'plt' because we don't want to type out the whole name everytime we reference it!
+#This is a library for making figures (originally based off Matlab plotting routines)
+#We use the alias 'plt' because we don't want to type out the whole name every time we reference it!
 import matplotlib.pyplot as plt 
 ```
 
@@ -472,7 +472,7 @@ where_longitude_below_max = cudata[:,1]<180
 cudata2=cudata[where_longitude_below_max]
 ```
 
-We can make that a litte clearer for the latitude values to see what is actually going on...
+We can make that a little clearer now for the latitude values to see what is actually going on, by stepping through each part of the variable assignment...
 
 
 ```python
