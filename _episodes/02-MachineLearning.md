@@ -1,7 +1,7 @@
 ---
 title: "02. Machine Learning for Geoscience"
-teaching: 10
-exercises: 0
+teaching: 120
+exercises: 60
 questions:
 - "What data science tools and techniques can be used in Python?"
 - "How do I do it?"
@@ -10,7 +10,7 @@ objectives:
 - "Learn to further explore data."
 keypoints:
 - "Applying ML workflows"
-- "Wrnagling data."
+- "Wrangling data."
 ---
 
 Let's use some standard Machine Learning tools available in Python packages to analyse some data.
@@ -22,7 +22,7 @@ Below is an animation of the tectonomagmatic evolution of the South American pla
 
 ![SegmentLocal](../fig/MullerConvergenceSmall.gif "segment")
 
-### Now, import most of the modules we need
+# Start by importing most of the modules we need
 By convention module loads go at the top of your workflows.
 
 
@@ -457,7 +457,7 @@ plt.show()
 ![png](../fig/fig-02ML-featimp.png)
 
 
-Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifer we can predict a probability that porphyry copper deposits have formed
+Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifier we can predict a probability that porphyry copper deposits have formed
 
 
 ```python
@@ -495,7 +495,7 @@ topoX=data.variables['X'][:]
 topoY=data.variables['Y'][:]
 topoZ=np.array(data.variables['elev'][:])
 
-#Some filetypes and readers (like netcdf) can actually change the data directly on disk
+#Some file types and readers (like netcdf) can actually change the data directly on disk
 #Good practice, is to close the file when done (for safety and memory saving)
 data.close()
 ```
@@ -665,7 +665,7 @@ Added deposit probability
 
 
 # Exercise
-Do the same analysis but using a different Machine Learning algorith for your classification. You can use this as a guide for picking a good classification algorithm https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html. 
+Do the same analysis but using a different Machine Learning algorithm for your classification. You can use this as a guide for picking a good classification algorithm https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html. 
 Present your results on a map, and compare it with the Random Forest method. 
 
 # Datasets
@@ -678,6 +678,3 @@ Butterworth et al 2016 https://doi.org/10.1002/2016TC004289
 
 #### Shapefile plate polygons
 GPlates2.0. https://www.gplates.org/
-
-
-    
