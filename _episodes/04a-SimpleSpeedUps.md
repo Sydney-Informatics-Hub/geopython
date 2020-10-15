@@ -7,7 +7,7 @@ questions:
 - "How do I utilise traditional python approaches to multi cpu and nodes"
 objectives:
 - "Learn simples methods to profile your code"
-- "See how numpy and pandas use Vectorising to improve perfomance for some data"
+- "See how numpy and pandas use Vectorising to improve performance for some data"
 - "Use MPI to communicate between workers"
 - "Discover python multiprocessing and mpi execution"
 keypoints:
@@ -20,7 +20,7 @@ This episode shows you a few of the basic tools that we can use in Python to mak
 
 # Acceleration, Parallelisation, Vectorising, Threading, make-Python-go-fast 
 
-We will cover a few of the ways that you can potentially speed up Python. As we will learn there are multitudes of methods to make Python code more efficient, and also different implentations of libraries, tools, techniques that can all be utilised depending on how your code and/or data is organised. This is a rich and evolving ecosystem and there is no one perfect way to implement efficiencies.
+We will cover a few of the ways that you can potentially speed up Python. As we will learn there are multitudes of methods to make Python code more efficient, and also different implementations of libraries, tools, techniques that can all be utilised depending on how your code and/or data is organised. This is a rich and evolving ecosystem and there is no one perfect way to implement efficiencies.
 
 Some key words that might come up:
 
@@ -32,9 +32,9 @@ Some key words that might come up:
 
 <br>
 # What does *parallel* mean?
-Seperate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isloated ecosystem where computation is performed Communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data. 
+Separate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isolated ecosystem where computation is performed Communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data. 
 
-Generally speaking parallel workflows fit different categories, which can make you think about how to write your code and what approaches to take.
+Generally speaking, parallel workflows fit different categories which can make you think about how to write your code and what approaches to take.
 
 ### Embarrassingly parallel:
 Requires no communication between processors. Utilise shared memory spaces.
@@ -51,14 +51,26 @@ Requires occasional or frequent communication between processors
 * MPI implementations.
 * Some examples are finite difference time-stepping on parallel grid, finite element methods.
 
-Traditional implemententations of paralellism  are done on a low level. However, open source software has ***evolved*** dramatically over the last few years allowing more ***high level implementations and concise 'pythonic' syntax*** that wraps around low level tools. The focus on this course is to use these modern high level implementations for use on Artemis.
+Traditional implementations of parallelism  are done on a low level. However, open source software has ***evolved*** dramatically over the last few years allowing more ***high level implementations and concise 'pythonic' syntax*** that wraps around low level tools. 
 
 
 # Profiling your code
 
-Before you get stuck into making things fast, it is important to find out what is exactly slow in your code. Is it a particular function running slow? Or are you calling a really fast function a million times? You can save yourself a lot development time by profiling your code to give you an idea for where efficiencies can be found. Let's profile a simple Python script and then think about how we could make it faster.
+Before you get stuck into making things fast, it is important to find out what is exactly slow in your code. Is it a particular function running slow? Or are you calling a really fast function a million times? You can save yourself a lot development time by profiling your code to give you an idea for where efficiencies can be found. Try out Jupyter's ```%timeit``` magic function.
 
-Put this code in a script (or download from [here](https://sydney-informatics-hub.github.io/training.artemis.python/files/faster.py)):
+```python
+%%timeit
+import time
+time.sleep(1)
+```
+```
+1 loop, best of 3: 1 s per loop
+```
+
+A neat little feature to check how fast some of your cells are running.
+Now let's profile a simple Python script and then think about how we could make it faster.
+
+Put this code in a script:
 ~~~
 #A test function to see how you can profile code for speedups
 
