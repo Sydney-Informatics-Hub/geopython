@@ -51,7 +51,6 @@ dataset = dataset.astype('float32')
 # normalize the dataset to be betwenn 0 and 1
 scaler = MinMaxScaler(feature_range=(0, 1))
 datasetScaled = scaler.fit_transform(dataset)
-
 ```
 
 
@@ -97,10 +96,9 @@ plt.ylabel("Temperature (degrees Celsius)")
 ```python
 # split into train and test sets
 #Use the first 58000 days as training
-train=datasetScaled[50000:58000,:]
 train=datasetScaled[0:58000,:]
-#Use from 50000 to 58316 as testing set, 
-#that means we will test on 8000 days we know the answer for, 
+#Use from 55000 to 58316 as testing set, 
+#that means we will test on 3000 days we know the answer for, 
 #leaving 316 that the algorithm has never seen!
 test=datasetScaled[55000:,:]
 
