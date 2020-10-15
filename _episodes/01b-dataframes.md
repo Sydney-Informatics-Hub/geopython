@@ -497,7 +497,7 @@ log_data.shape     # number of rows and columns
 
 
 ```python
-log_data.values    # underlying numpy array — df are stored as numpy arrays for effeciencies.
+log_data.values    # underlying numpy array — df are stored as numpy arrays for efficiencies.
 ```
 
 
@@ -991,5 +991,5 @@ plt.show()
 ```
 
 # Exercise
-Go to http://www.bom.gov.au/water/groundwater/explorer/map.shtml and pick another River Region. Download the dataset in "Shapefile" format (this will downlaod the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
+Go to [http://www.bom.gov.au/water/groundwater/explorer/map.shtml](http://www.bom.gov.au/water/groundwater/explorer/map.shtml) and pick another River Region. Download the dataset in "Shapefile" format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
 
