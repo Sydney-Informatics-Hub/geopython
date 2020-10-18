@@ -68,6 +68,12 @@ You will hav to follow along to keep up, and the exercises can be demanding.
 Break out rooms?
 Feedback session. Recap before each one. 30 mins to byo problems?
 
+# Timings
 
+Start at 1:03pm promptly. Discuss feedback and summarise previous week 
+1:05. 1 hour + 10 min break
+1 hour + 10 min break
+1 hour + 10 min break
+summary + hack session til close.
 
 
