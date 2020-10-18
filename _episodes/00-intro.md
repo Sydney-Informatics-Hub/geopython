@@ -65,7 +65,7 @@ Everything will be done via zoom. Sessions will be recorded for you only.
 Interrupt when you want!
 Ideally, have your camera on and interact as much as possible. But understand it is very easy to check your emails or whatever in the background.
 You will hav to follow along to keep up, and the exercises can be demanding.
-Break out rooms?
+Break out rooms if needed with Darya, Ben, and myself.
 Feedback session. Recap before each one. 30 mins to byo problems?
 
 # Timings
@@ -74,6 +74,6 @@ Start at 1:03pm promptly. Discuss feedback and summarise previous week
 1:05. 1 hour + 10 min break
 1 hour + 10 min break
 1 hour + 10 min break
-summary + hack session til close.
+summary + hack session til close (email in advance.. group exercise.. particular dataset.. or we can schedule a 10 min one-on-one over the 4 weeks).
 
 
