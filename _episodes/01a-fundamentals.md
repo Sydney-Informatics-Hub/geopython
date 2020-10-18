@@ -30,15 +30,15 @@ Look at that, your first Python code! Who knew Python is just a big ol' calculat
 #Python ignores anything behind the '#'.
 
 #The next line is an example of a 'variable'. Assign values using a single '=' sign.
-time=145
+timeStart=145
 ```
 
-Note: A variable (e.g. time) must start with a letter or underscore, and can include a number
+Note: A variable (e.g. timeStart) must start with a letter or underscore, and can include a number
 
 
 ```python
 #Now you can use that variable in different ways.... firstly print it out to the screen
-print("The age of the sample is", time, " Million years")
+print("The age of the sample is", timeStart, " Million years")
 ```
 ```
 The age of the sample is 145  Million years
@@ -46,8 +46,8 @@ The age of the sample is 145  Million years
 
 
 ```python
-#Make a new variable called 'endtime' and add a constant to our 'time' variable
-endtime=time+56
+#Make a new variable called 'endtime' and add a constant to our 'timeStart' variable
+endtime=timeStart+56
 ```
 ```
  
@@ -189,10 +189,11 @@ You don't always need a pre-defined list
 
 ```python
 age=140
-# What is the value of "time" ?
-# age < time is a "logical" data-type. It's either True or False
-while age < time:
-    print("time:", time, " age:", age, " difference:",time-age)
+# What is the value of "timeStart" ?
+# age < timeStart is a "logical" data-type. It's either True or False
+while age < timeStart:
+    print("time:", timeStart, " age:", age, " difference:",timeStart-age)
+    #Increment the age variable
     age=age+1
 ```
 ```
@@ -209,8 +210,8 @@ time: 145  age: 144  difference: 1
 
 ```python
 #Control statements: if, for, while, try, 
-if time < 200:
-    print(time)
+if timeStart < 200:
+    print(timeStart)
 ```
 
     145
@@ -218,9 +219,9 @@ if time < 200:
 
 
 ```python
-if time <= 200:
+if timeStart <= 200:
     print(geological_age)
-elif time > 200:
+elif timeStart > 200:
     print("Triassic age")
 else:
     pass #This option is not necessarily needed, but can be useful in some scenarios
