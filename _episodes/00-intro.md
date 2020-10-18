@@ -57,5 +57,17 @@ What is Docker?
 Traditionally, Python was executed in a terminal environemnt.
 You have a ***Python Shell*** but now (modelled from Mathematica's Notebooks) you can use a Jupyter Notebook.
 
+## Code of Conduct
+Be excellent
+
+## Zoom ettiquette and how we interact
+Everything will be done via zoom. Sessions will be recorded for you only. 
+Interrupt when you want!
+Ideally, have your camera on and interact as much as possible. But understand it is very easy to check your emails or whatever in the background.
+You will hav to follow along to keep up, and the exercises can be demanding.
+Break out rooms?
+Feedback session. Recap before each one. 30 mins to byo problems?
+
+
 
 
