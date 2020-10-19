@@ -21,9 +21,9 @@ Python offers many ways to make use of the compute capability in your GPU. A ver
 We are looking at temperature data in Sydney for the last 150 years with daily measurements (Based on an example from 
 https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/). We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. But feel free to adjust the numbers as you like. Using a GPU trained deep-learning framework to predict time series data. Specifically we are using a Long Short-Term Memory (LSTM) deep learning network
 
-The data is from the Australian Bureau of Meteorology (BOM) representing the daily maximum temperatures for the last 150 years. http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_display_type=dailyZippedDataFile&p_stn_num=066214&p_c=-877001456&p_nccObsCode=122&p_startYear=2020
+The data is from the Australian Bureau of Meteorology (BOM) representing the [daily maximum temperatures for the last 150 years from the Sydney Observatory](http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_nccObsCode=122&p_display_type=dailyDataFile&p_startYear=&p_c=&p_stn_num=066062)
 
-A problem might be, given the last few decades of temperature cycles, what will next years' be? Let's try and predict the future!
+A problem might be, given the last few decades of temperature cycles, what will tomorrow's weather be? Let's try and predict the future!
 
 
 ```python
