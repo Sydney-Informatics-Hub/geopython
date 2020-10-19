@@ -264,6 +264,9 @@ Depending on the environment you are working in, you will have to use a differen
 
 In Deep Learning, *training* the model can take a seriously long time, so we often only want to do this once and then tweak our model. In which case we can do that by saving out our data as as a *\*.hdf5* file. 
 
+# Exercise
+Pick another site at [http://www.bom.gov.au/climate/data/](http://www.bom.gov.au/climate/data/) and re-run the analysis. 
+
 
 
 
