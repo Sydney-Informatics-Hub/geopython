@@ -13,6 +13,8 @@ However you can do all the exercises using remote resources for the training ses
 ## 2. Python environemnt
 To run all the commands today in your own Python installation, you can set up an environemnt with something like this:
 
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
+
 ~~~
 conda create -n dd dask==2.11.0 distributed==2.11.0 netCDF4==1.5.3 numpy==1.18.1 pandas==1.0.1 scipy==1.4.1 xarray==0.15.0 mpi4py==3.0.3 -c conda-forge
 ~~~
