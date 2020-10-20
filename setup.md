@@ -57,6 +57,13 @@ Head to [https://mobaxterm.mobatek.net/](https://mobaxterm.mobatek.net/download-
 
 Install Ubuntu or some other Linux distro on the Windows Subsystem for Linux see [here for details](https://ubuntu.com/tutorials/tutorial-ubuntu-on-windows#1-overview). This one will give you a full suite of Linux functions and I like it for emulating Linux.
 
+```
+ sudo apt-get update
+ sudo apt-get install build-essential
+ sudo apt install libopenmpi-dev
+ pip install dask==2.11.0 distributed==2.11.0 netCDF4==1.5.3 numpy==1.18.1 pandas==1.0.1 scipy==1.4.1 xarray==0.15.0 mpi4py==3.0.3 jupyter pyshp pandas swifter shapely
+ ```
+
 <br>
 
 
