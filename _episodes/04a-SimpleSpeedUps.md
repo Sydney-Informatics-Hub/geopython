@@ -31,7 +31,7 @@ Some key words that might come up:
 * Python decorators and functional programming.
 
 <br>
-# What does *parallel* mean?
+## What does *parallel* mean?
 Separate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isolated ecosystem where computation is performed. In this case communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data. 
 
 Generally speaking, parallel workflows fit different categories of data handling which can make you think about how to write your code and what approaches to take.
