@@ -36,7 +36,7 @@ We also aim to cultivate a **data community** at USyd, organising monthly [Hacky
 
 <br>
 # Course pre-requisites
-None. This is an introductory course. The ability to navigate around directories and use a command line is helpful, but we will be working through these tasks. 
+None. This is an introductory course. The ability to navigate around directories and use a command line is helpful, but we will be working through these tasks. We will learn how to read the manual. We want you to be able to identify what you can automate, then have a set of tools and examples you can copy from to get started, and to know the right terms to search for. We have 16 hours together. 
 
 # Python
 
