@@ -19,7 +19,7 @@ keypoints:
 - "Xarray for holding scientific data"
 ---
 
-# What is Dask?
+# DASK
 Dask is a flexible library for parallel computing in Python.
 
 Dask is composed of two parts:
@@ -44,10 +44,6 @@ Dask emphasizes the following virtues:
 Dask provides high level collections - these are ***Dask Dataframes, bags, and arrays***.
 On a low level, dask dynamic task schedulers to scale up or down processes, and presents parallel computations by implementing task graphs. It provides an alternative to scaling out tasks instead of threading (IO Bound) and multiprocessing (cpu bound).
 
-Special note regarding dask on ***Artemis***:  Dask has a library called dask_jobqueue that allows the pbs specification to be submitted from python script. ***dask_jobqueue has been known not to work on Artemis*** due to different interconnects used in head nodes and compute nodes. Please do not use this library and rely on the traditional way we submit jobs to artemis. 
-
-# Dask Dataframes
-
 A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.
 
 <figure>
@@ -66,33 +62,8 @@ your data fits comfortable in RAM - Use pandas only!
 If you need a proper database.
 You need functions not implemented by dask dataframes - see Dask Delayed.
 
-# Lets begin
-Lets activate a conda environment with all the python packages pre installed for ease of use with these tutorials.
-We will interactively learn dask dataframe fundamentals, so running on the compute nodes interactively is advisable for this section.
 
-~~~
-qsub -I -P Training -l select=1:ncpus=2:mem=6GB -l walltime=00:30:00
-source /project/Training/kmarTrain/miniconda3/bin/activate
-~~~
-
-You should see an extra conda environment named dask which we will activate
-~~~
-conda info --envs 
-~~~
-
-~~~
-                         /home/kmar7637/miniconda3
-base                  *  /project/Training/kmarTrain/miniconda3
-dask                     /project/Training/kmarTrain/miniconda3/envs/dask
-~~~
-{: .output}
-
-Activate the dask conda environment. Notice the environment on the left of the terminal change to (dask). We will interactively play with dask dataframes in ipython to get a feel for dataframe manipulations and outputs it causes.
-~~~
-conda activate dask
-cd /project/Training/myname/files
-ipython
-~~~
+# Dask Dataframes
 
 We will generate some data using one of the python files makedata.py by importing it in ipython. 
 ~~~
@@ -193,21 +164,13 @@ data[data.city == 'Madison Heights'].compute().to_csv('Madison.csv')
 ~~~
 {: .python}
 
-### Custom made operations.... dask.delayed
+# Dask Delayed with custom made operations
 
-But what if you need to run your own function, or a function outside of the pandas subset that dask dataframes make available? Dask delayed is your friend. It uses ***python decorator syntax*** to convert a function into a lazy executable. The functions can then be applied to build data pipeline operations in a similar manner to what we have just encountered.
+What if you need to run your own function, or a function outside of the pandas subset that dask dataframes make available? Dask delayed is your friend. It uses ***python decorator syntax*** to convert a function into a lazy executable. The functions can then be applied to build data pipeline operations in a similar manner to what we have just encountered.
 
 Let's explore a larger example of using dask dataframes and dask delayed functions.
 
 In the ```/files``` directory, use your preferred editor to view the ```complex_system.py``` file. This script uses dask delayed functions that are applied to a sequence of data using pythonic ***list comprehension syntax*** . The code simulates financial defaults in a very theoretical way, and outputs the summation of these predicted defaults. 
-
-Please exit your ipython shell with  ```exit```, and then exit interactive session if you are still in it (a quick check can be made by looking at the shell location  ```ict_hpctrain1@hpc213``` you are on a compute node or ```ict_hpctrain1@login3``` is you are on a login node). Use the command ```exit``` here also to end the interactive session. Now submit this PBS script in the traditional way to the scheduler. i.e
-
-~~~
-qsub complex_system.pbs
-~~~
-
-When that script has completed, the output file ```testcomplex.o??????``` should contain something like this:
 
 ~~~
 Delayed('add-c62bfd969d75abe76f3d8dcf2a9ef99c')
@@ -217,31 +180,19 @@ Delayed('add-c62bfd969d75abe76f3d8dcf2a9ef99c')
 
 <br>
 
-## Exercise 1 - Medium to Difficult:
+## Exercise 2:
+Given what you know of dask delayed function, please alter the file called ```computepi_pawsey.py```, which calculated estimates of pi without using extra parallel libraries, and alter the code with a dask delayed wrapper to make it lazy and fast 
+
+<br>
+
+## Exercise 1:
 The above script is a great example of dask delayed functions that are applied to lists, made in an elegant pythonic syntax. Let's try using these delayed default functions on our data of income and occupations. 
 
 Make your own lazy function using the decorator syntax, and perform the computation you have described on a column of the data previously used in the makedata.data() helper file. For bonus points perform an aggregation on this column.
 
 <br>
 
-## Exercise 2 - Easy:
-Given what you know of dask delayed function, please alter the file called ```computepi_pawsey.py```, which calculated estimates of pi without using extra parallel libraries, and alter the code with a dask delayed wrapper to make it lazy and fast 
- 
-<br>
-
-## Helpful links
-
-Dask Dataframe intro
-[https://docs.dask.org/en/latest/dataframe.html](https://docs.dask.org/en/latest/dataframe.html)
-
-API list for Dask Dataframes
-[https://docs.dask.org/en/latest/dataframe.html](https://docs.dask.org/en/latest/dataframe-api.html)
-
-What are decorators
-[https://realpython.com/primer-on-python-decorators/](https://realpython.com/primer-on-python-decorators/)
-
-
-# What is Dask Bag
+# Dask Bag
 Dask Bag implements operations like map, filter, groupby and aggregations on collections of Python objects. It does this in parallel and in small memory using Python iterators.
 
 Dask Bags are often used to do simple preprocessing on log files, JSON records, or other user defined Python objects
@@ -256,25 +207,11 @@ Because the multiprocessing scheduler requires moving functions between multiple
 
 What are the ***drawbacks*** ?
 
- - Bag operations tend to be slower than array/DataFrame computations in the same way that standard Python containers tend to be slower than NumPy arrays and Pandas DataFrames
- 
- - Bags are immutable and so you can not change individual elements
- 
- - By default, bag relies on the multiprocessing scheduler, which has known limitations - the main ones being:
+* Bag operations tend to be slower than array/DataFrame computations in the same way that standard Python containers tend to be slower than NumPy arrays and Pandas DataFrames
+* Bags are immutable and so you can not change individual elements
+* By default, bag relies on the multiprocessing scheduler, which has known limitations - the main ones being: 
   	a, The multiprocessing scheduler must serialize data between workers and the central process, which can be expensive
-	b, The multiprocessing scheduler must serialize functions between workers, which can fail. The Dask site recommends using 		cloudpickle to enable the transfer of more complex functions.
-
-### To learn Bag - Lets get our hands dirty with some examples
-
-Lets get back to ipython, ensuring that the dask conda environment is still activate.
-
-~~~
-qsub -I -P Training -l select=1:ncpus=2:mem=4GB -l walltime=00:20:00
-source /project/Training/kmarTrain/miniconda3/bin/activate
-conda activate dask
-cd /project/Training/myname
-ipython
-~~~
+	b, The multiprocessing scheduler must serialize functions between workers, which can fail. The Dask site recommends using cloudpickle to enable the transfer of more complex functions.
 
 We will investigate data located on the web that logs all juypter notebook instances run on the net. Two files are 
 1. Log files of every entry specific to a certain day
@@ -336,7 +273,7 @@ print(index)
 ~~~
 {: .bash}
 
-### PANGEO GEOSCIENCE EXAMPLE
+# PANGEO EXAMPLE
 Pangeo is a community promoting open, reproducible, and scalable science.
 
 In practice it is not realy a python package, but a collection of packages, supported datasets, tutorials and documentation used to promote scalable science. Its motivation was driven by data becoming increasingly large, the fragmentation of software making reproducability difficult, and a growing technology gap between industry and traditional science.
@@ -347,7 +284,7 @@ The example we will submit is an altered version of Pangeos meteorology use case
 https://pangeo.io/use_cases/meteorology/newmann_ensemble_meteorology.html
 
 
-### What is Xarray
+## Xarray
 
 Rather than using a dask dataframe, data is loaded from multiple netcdf files in the data folder relative to where the script resides. 
 Xarray is an opensource python package that uses dask in its inner workings. Its design to make working with multi-dimensional data easier by introducing labels in the form of dimensions, coordinates and attributes on top of raw NumPy-like arrays, which allows for a more intuitive, more concise, and less error-prone developer experience.
@@ -355,11 +292,6 @@ Xarray is an opensource python package that uses dask in its inner workings. Its
 It is particulary suited for working with netcdf files and is tightly integrated with dask parallel computing. 
 
 Let's investigate a small portion of the data before looking at the complete script. Open an ipython terminal inside the data folder
-
-~~~
-cd /project/Training/myname/data
-ipython
-~~~
 
 And have a look at the data
 ~~~
@@ -455,9 +387,9 @@ display variance_temp.png &
 
 
 
-### Some links:
+# Helpful Links:
 
-on dask bag fundamentals
+Dask bag fundamentals
 [https://docs.dask.org/en/latest/bag.html](https://docs.dask.org/en/latest/bag.html)
 
 Bag API's:
@@ -475,13 +407,12 @@ Xarray:
 Xarray API:
 [http://xarray.pydata.org/en/stable/generated/xarray.open_dataset.html](http://xarray.pydata.org/en/stable/generated/xarray.open_dataset.html)
 
-<br>
+Dask Dataframe intro
+[https://docs.dask.org/en/latest/dataframe.html](https://docs.dask.org/en/latest/dataframe.html)
 
+API list for Dask Dataframes
+[https://docs.dask.org/en/latest/dataframe.html](https://docs.dask.org/en/latest/dataframe-api.html)
 
+What are decorators
+[https://realpython.com/primer-on-python-decorators/](https://realpython.com/primer-on-python-decorators/)
 
-___
-**Notes**   
-<sup id="f1">1[↩](#a1)</sup>As you should recall from the [Introduction to Artemis HPC]({{ site.sih_pages }}/training.artemis.introhpc/) course, the **scheduler** is the software that runs the cluster, allocating jobs to physical compute resources. Artemis HPC provides us with a separate 'mini-cluster' for _Training_, which has a separate PBS scheduler instance and dedicated resources.
-
-___
-<br>
