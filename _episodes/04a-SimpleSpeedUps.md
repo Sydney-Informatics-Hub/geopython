@@ -260,8 +260,11 @@ print(recs[10])
 
 polygonShape=shapes[10].points
 poly=np.array(polygonShape)
+polygons=np.arange(Nshp)
+
 plt.plot(poly[:,0], poly[:,1], c='k',zorder=1)
 ~~~
+{: .python}
 
 <figure>
   <img src="{{ page.root }}/fig/fig-04MP-polygon.png" style="margin:6px;width:300px"/>
