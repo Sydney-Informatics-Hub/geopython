@@ -126,7 +126,7 @@ You can now interrogate your code and see where you should devote your time to i
 
 Special note on style: Developing python software in a ***modular*** manner assists with debugging and time profiling. This is a bit different to the sequential notebooks we have been creating. But re-writing certain snippets in self-contained functions can be a fun task.
 
-# Exercise
+## Exercise
 Revisit some of the codes we have run previously. You can do this from a Jupyter Notebook by clicking ```File > Downlad as > Python (.py)```. You may need to comment-out some sections, espiecially where figures are displayed, to get them to run. Run it using **cProfile** and look at the results. Can you identify where improvements could be made?
 
 <br>
