@@ -192,29 +192,6 @@ Which one is faster? Note the use of some really basic timing functions, these c
 
 
 <br>
-# MPI: Message Passing Interface
-MPI is a standardized and portable message-passing system designed to function on a wide variety of parallel computers.
-The standard defines the syntax and semantics of a core of library routines useful to a wide range of users writing portable message-passing programs in C, C++, and Fortran. There are several well-tested and efficient implementations of MPI, many of which are open-source or in the public domain.
-
-MPI for Python, found in [mpi4py](https://mpi4py.readthedocs.io/en/stable/index.html), provides bindings of the MPI standard for the Python programming language, allowing any Python program to exploit multiple processors. [This simple code](https://sydney-informatics-hub.github.io/training.artemis.python/files/mpi.py) demonstrates the collection of resources and how code is run on different processes:
-
-~~~
-#Run with:
-#mpiexec -np 4 python mpi.py
-
-from mpi4py import MPI
-
-comm = MPI.COMM_WORLD
-size = comm.Get_size()
-rank = comm.Get_rank()
-
-print("I am rank %d in group of %d processes." % (rank, size))
-~~~
-{: .python}
-
-
-Let's now get stuck into some more specific use-cases and tools to use.
-
 
 
 # Python Multiprocessing
@@ -242,42 +219,13 @@ Back to python, the multiprocessing library was designed to break down the **Glo
 
 In Python, the things that are occurring simultaneously are called by different names (thread, task, process). While they all fall under the definition of concurrency (multiple things happening anaologous to different trains of thought), only multiprocessing actually runs these trains of thought at literally the same time. We will only cover multiprocessing here which assists in CPU bound operations - but keep in mind other methods exist (threading), whose implementation tends to be more low level. 
 
-## Small demonstration of python multiprocessing library
+## Simple multiprocessing example
 
 Some basic concepts in the multiprocessing library are:
 1. the ```Pool(processes)``` object creates a pool of processes. ```processes``` is the number of worker processes to use (i.e Python interpreters). If ```processes``` is ```None``` then the number returned by ```os.cpu_count()``` is used.
 2. The ```map(function,list)``` attribute of this object uses the pool to map a defined function to a list/iterator object
 
-To implement multiprocessing in its basic form.
-Create a small python file called ```basic.py``` with the below code.
-~~~
-from multiprocessing import Pool
-
-def addit(x):
-        return x + 1
-
-def main():
-        print(addit(4))
-        with Pool(2) as p:
-                print(p.map(addit,[1,2,3]))
-
-main()
-~~~
-{: .python}
-
-And run it with:
-~~~
-python basic.py
-~~~
-{: .output}
-
-The output should be:
-~~~
-5
-[2, 3, 4]
-~~~
-
-## More advanced exercise:
+To implement multiprocessing in its basic form. You can complete this exercise in a notebook or a script.
 
 Import the libraries we will need
 ~~~
@@ -287,11 +235,13 @@ import matplotlib.pyplot as plt
 import multiprocessing
 import time
 ~~~
+{: .python}
 
 Check how many cpus are availble on your computer
 ~~~
 multiprocessing.cpu_count()
 ~~~
+{: .python}
 
 Read in the shapefile that we will use
 ~~~
@@ -301,6 +251,7 @@ shapes  = sf.shapes()
 fields  = sf.fields
 Nshp    = len(shapes)
 ~~~
+{: .python}
 
 Get some details about the shapefile. Plot one of the polygons.
 Let us find the areas of each of the polygons in the shapefile.
@@ -312,7 +263,11 @@ poly=np.array(polygonShape)
 plt.plot(poly[:,0], poly[:,1], c='k',zorder=1)
 ~~~
 
-Impliment a function to calcualte the area of a polygon.
+<figure>
+  <img src="{{ page.root }}/fig/fig-04MP-polygon.png" style="margin:6px;width:300px"/>
+</figure><br>
+
+Implement a function to calcualte the area of a polygon.
 ~~~
 # Area of Polygon using Shoelace formula
 # http://en.wikipedia.org/wiki/Shoelace_formula
@@ -322,7 +277,7 @@ def PolygonArea(nshp):
     corners=np.array(polygonShape)
     n = len(corners) # of corners
     
-    #Area calculation using shoelace forula
+    #Area calculation using Shoelace forula
     area = 0.0
     for i in range(n):
         j = (i + 1) % n
@@ -331,7 +286,7 @@ def PolygonArea(nshp):
     area = abs(area) / 2.0
     
     endtime=time.time() - start_time
-    print("Process {} Finished in {:0.4f}s. \n".format(nshp,endtime)) #New print format
+    print("Process {} Finished in {:0.4f}s. \n".format(nshp,endtime))
     return(area)
 ~~~
 {: .python}
@@ -344,6 +299,7 @@ for i in polygons:
     Areas1.append(PolygonArea(i))
 print("Final Runtime", time.time() - start_time)
 ~~~
+{: .python}
 
 Run it again, but this time, use the multiprocessing capabilities
 ~~~
@@ -352,6 +308,7 @@ with multiprocessing.Pool() as pool:
     Areas2 = pool.map(PolygonArea,polygons)
 print("Final Runtime", time.time() - start_time)
 ~~~
+{: .python}
 
 Is there any speed up? What could explain the timings.
 
@@ -376,6 +333,25 @@ There is generally a sweet spot in how many processes you create to optimise the
 
 [https://pawseysc.github.io/training.html](https://pawseysc.github.io/training.html)
 
+# MPI: Message Passing Interface
+MPI is a standardized and portable message-passing system designed to function on a wide variety of parallel computers.
+The standard defines the syntax and semantics of a core of library routines useful to a wide range of users writing portable message-passing programs in C, C++, and Fortran. There are several well-tested and efficient implementations of MPI, many of which are open-source or in the public domain.
+
+MPI for Python, found in [mpi4py](https://mpi4py.readthedocs.io/en/stable/index.html), provides bindings of the MPI standard for the Python programming language, allowing any Python program to exploit multiple processors. [This simple code](https://sydney-informatics-hub.github.io/training.artemis.python/files/mpi.py) demonstrates the collection of resources and how code is run on different processes:
+
+~~~
+#Run with:
+#mpiexec -np 4 python mpi.py
+
+from mpi4py import MPI
+
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+
+print("I am rank %d in group of %d processes." % (rank, size))
+~~~
+{: .python}
 
 
 
