@@ -277,52 +277,94 @@ The output should be:
 [2, 3, 4]
 ~~~
 
-## Getting Data and Files for this Course:
+## More advanced exercise:
 
-You will need some files for this and other training demonstrations covered today. 
-
-If your not still in an interactive session, create another one. This is option but will make transfers faster - if there are enough cpu resources on the training node.
-
+Import the libraries we will need
 ~~~
-qsub -I -P Training -l select=1:ncpus=6:mem=6GB -l walltime=00:10:00
-~~~
-
-Lets create a working folder and copy data to it. This holds both data and files we'll use for the rest of this training session.
-
-~~~
-mkdir /project/Training/myname 
-cd /project/Training/myname 
-rsync -av /project/Training/AdvPyTrain/files/* ./files
-rsync -av /project/Training/AdvPyTrain/data/* ./data
+import shapefile
+import numpy as np
+import matplotlib.pyplot as plt 
+import multiprocessing
+import time
 ~~~
 
-Please exit the interactive session once files and data has been loaded into your directory
+Check how many cpus are availble on your computer
 ~~~
-exit
-~~~
-
-## Calculation of pi - submitting two scripts to compare multiprocessing advantage
-
-<figure>
-  <img src="{{ page.root }}/fig/calc_pi.png" style="margin:5px;width:400px"/>
-</figure><br>
-
-Navigate to the computepi_multiprocs.py file located in the files directory. Notice how the Pool object and map function sets off simulating an estimate of pi given a sequence of trails - the larger the trail number the closer the estimate is to pi. 
-
-Run two scripts by sumitting the run_pi.pbs file to the scheduler. This pbs script should submit two jobs that approximate pi in the same way, except one using the multiprocessing library and is slightly faster even though the same Artemis resources are requested.
-
-~~~
-cd files
-qsub run_pi.pbs
+multiprocessing.cpu_count()
 ~~~
 
-While it is running, have a look at the code.
+Read in the shapefile that we will use
+~~~
+sf = shapefile.Reader("data/topology_platepolygons_0.00Ma.shp")
+recs    = sf.records()
+shapes  = sf.shapes()
+fields  = sf.fields
+Nshp    = len(shapes)
+~~~
 
-When it is completed, check out the output of the two methods in ```out_pi.o?????```. Which method was faster? Did you get the kind of speed-up you were expecting?
+Get some details about the shapefile. Plot one of the polygons.
+Let us find the areas of each of the polygons in the shapefile.
+~~~
+print(recs[10])
 
-## Keep in Mind
+polygonShape=shapes[10].points
+poly=np.array(polygonShape)
+plt.plot(poly[:,0], poly[:,1], c='k',zorder=1)
+~~~
 
-There is generally a sweet spot in how many processes you create to optimise the run time. A large number of python processes is generally not advisable, as it involves a large fixed cost in setting up many python interpreters and its supporting infrastructure. Play around with different numbers of processes in the pool(processes) statement to see how the runtime varies. 
+Impliment a function to calcualte the area of a polygon.
+~~~
+# Area of Polygon using Shoelace formula
+# http://en.wikipedia.org/wiki/Shoelace_formula
+def PolygonArea(nshp):
+    start_time = time.time()
+    polygonShape=shapes[nshp].points
+    corners=np.array(polygonShape)
+    n = len(corners) # of corners
+    
+    #Area calculation using shoelace forula
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += corners[i][0] * corners[j][1]
+        area -= corners[j][0] * corners[i][1]
+    area = abs(area) / 2.0
+    
+    endtime=time.time() - start_time
+    print("Process {} Finished in {:0.4f}s. \n".format(nshp,endtime)) #New print format
+    return(area)
+~~~
+{: .python}
+
+Run the function for each polygon/plate in the shapefile:
+~~~
+start_time = time.time()
+Areas1=[]
+for i in polygons:
+    Areas1.append(PolygonArea(i))
+print("Final Runtime", time.time() - start_time)
+~~~
+
+Run it again, but this time, use the multiprocessing capabilities
+~~~
+start_time = time.time()
+with multiprocessing.Pool() as pool:
+    Areas2 = pool.map(PolygonArea,polygons)
+print("Final Runtime", time.time() - start_time)
+~~~
+
+Is there any speed up? What could explain the timings.
+
+## Exercise
+The *pyshp/shapefile* library contains the function ```signed_area``` which can calculate the area of a polygon. Replace the calculation of ***area*** using the *shoelace* formula in the ```PolygonArea``` function with the ```signed_area``` method:
+~~~
+area=shapefile.signed_area(corners)
+~~~
+{: .python}
+
+How does change the timings of your speed tests?
+
+There is generally a sweet spot in how many processes you create to optimise the run time. A large number of python processes is generally not advisable, as it involves a large fixed cost in setting up many python interpreters and its supporting infrastructure. Play around with different numbers of processes in the pool(processes) statement to see how the runtime varies. Also, well developed libraries often have nicely optimised algorithms, you may not have to reinvent the wheel (Haha at this Python pun).
 
 ## Useful links
 
@@ -334,13 +376,6 @@ There is generally a sweet spot in how many processes you create to optimise the
 
 [https://pawseysc.github.io/training.html](https://pawseysc.github.io/training.html)
 
-<br>
 
-___
-**Notes**   
-<sup id="f1">1[↩](#a1)</sup>As you should recall from the [Introduction to Artemis HPC]({{ site.sih_pages }}/training.artemis.introhpc/) course, the **scheduler** is the software that runs the cluster, allocating jobs to physical compute resources. Artemis HPC provides us with a separate 'mini-cluster' for _Training_, which has a separate PBS scheduler instance and dedicated resources.
-
-___
-<br>
 
 
