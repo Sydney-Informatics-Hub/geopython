@@ -1,5 +1,5 @@
 ---
-title: "02b. Clustering of data using sci-kit learn"
+title: "02b. Clustering of data using scikit-learn"
 teaching: 20
 exercises: 20
 questions:
@@ -14,9 +14,9 @@ keypoints:
 - "New ways to plot data"
 ---
 
-Here we want to explore a neat an efficient away of exploring a (seisimic tomography) dataset in Python. We will be using a Machine Learning algorithm known as [K-Means clustering](https://scikit-learn.org/stable/modules/clustering.html#k-means). 
+Here we want to explore a neat and efficient way of exploring a (seisimic tomography) dataset in Python. We will be using a Machine Learning algorithm known as [K-Means clustering](https://scikit-learn.org/stable/modules/clustering.html#k-means). 
 
-Data is from: * Li, C., van der Hilst, R. D., Engdahl, E. R., and Burdick, S. (2008), A new global model for P wave speed variations in Earth's mantle, Geochem. Geophys. Geosyst., 9, Q05018, doi:10.1029/2007GC001806 *
+Data is from: *Li, C., van der Hilst, R. D., Engdahl, E. R., and Burdick, S. (2008), A new global model for P wave speed variations in Earth's mantle, Geochem. Geophys. Geosyst., 9, Q05018, doi:10.1029/2007GC001806*
 
 
 ```python
@@ -44,12 +44,12 @@ kmeans = KMeans(n_clusters=10, random_state=0).fit(dvp.reshape(-1, 1))
 
 #When completed, check the clusters the algorithm has identified.
 print(kmeans.cluster_centers_)
+```
 
-```python
 Note, many functions have been "parallelised" and tuned to best take advantage of your computer, see e.g. for more details [https://scikit-learn.org/stable/modules/computing.html#parallelism](https://scikit-learn.org/stable/modules/computing.html#parallelism)
 
 
-Choose one of the clusters to visualise, and subset the data into new vectors accordingly
+Choose one of the clusters to visualise, so subset the data into new vectors accordingly
 
 ```python
 centre=0
