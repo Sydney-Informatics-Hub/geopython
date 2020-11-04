@@ -66,3 +66,6 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(lon, lat, -depth, c=dvp)
 ```
+
+![png](../fig/fig-02CL-tomo.png)
+
