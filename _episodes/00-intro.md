@@ -61,7 +61,7 @@ You have a ***Python Shell*** but now (modelled from Mathematica's Notebooks) yo
 Be excellent
 
 ## Zoom ettiquette and how we interact
-Everything will be done via zoom. Sessions will be recorded for you only. 
+Everything will be done via zoom. Sessions will be recorded for you only. And it is set up to only record the host shared screen and host audio. So please ask embarrassing and stupid questions.
 Interrupt when you want!
 Ideally, have your camera on and interact as much as possible. But understand it is very easy to check your emails or whatever in the background.
 You will hav to follow along to keep up, and the exercises can be demanding.
