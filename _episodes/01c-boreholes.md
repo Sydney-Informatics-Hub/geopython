@@ -1,6 +1,6 @@
 ---
 title: "01c. Python Fundamentals - niche packages"
-teaching: 10
+teaching: 30
 exercises: 0
 questions:
 - "What else can Python do?"
@@ -245,6 +245,263 @@ plt.gca().invert_yaxis()
 
     
 ![png](fig-01-prettywell.png)
+
+
+# SEGY Seismic data processing
+```python
+from obspy.io.segy.segy import _read_segy
+import matplotlib.pyplot as plt
+import numpy as np
+
+#Adapted from https://agilescientific.com/blog/2016/9/21/x-lines-of-python-read-and-write-seg-y
+#See the notebooks here for more good examples
+#https://hub-binder.mybinder.ovh/user/agile-geoscience-xlines-n1mojurk
+```
+
+
+```python
+#Set the filename of the segy data
+
+filename="james/james_1959_pstm_tvfk_gain.sgy"
+
+#Title: 2006 James 3D Seismic Survey.
+#Author: White, A.
+#Prepared by: Terrex Seismic Pty Ltd; Pioneer Surveys Pty Ltd; WestenGeco
+#Tenement: PPL00182
+#Operator: Santos Ltd
+#https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/wci/Record?r=0&m=1&w=catno=2035790
+```
+
+
+```python
+stream = _read_segy(filename, headonly=True)
+stream
+```
+
+
+
+
+    48832 traces in the SEG Y structure.
+
+
+
+
+```python
+one_trace = stream.traces[10000]
+
+plt.figure(figsize=(16,2))
+plt.plot(one_trace.data)
+plt.show()
+```
+
+
+    
+![png](fig-01seis-trace.png)
+    
+
+
+
+```python
+data = np.stack(t.data for t in stream.traces[12320:12320+500])
+```
+
+
+```python
+stream.traces[10000]
+```
+
+
+
+
+    Trace sequence number within line: 10001
+    1001 samples, dtype=float32, 250.00 Hz
+
+
+
+
+```python
+np.shape(stream.traces)
+```
+
+
+
+
+    (48832,)
+
+
+
+
+```python
+data.shape
+```
+
+
+
+
+    (500, 1001)
+
+
+
+
+```python
+vm = np.percentile(data, 95)
+print("The 95th percentile is {:.0f}; the max amplitude is {:.0f}".format(vm, data.max()))
+```
+
+    The 95th percentile is 4365; the max amplitude is 34148
+
+
+
+```python
+plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fcc47d1ce90>
+
+
+
+
+    
+![png](fig-01seis-seis1.png)
+    
+
+
+
+```python
+plt.figure(figsize=(16,8))
+plt.imshow(data.T, cmap="RdBu", vmin=-vm, vmax=vm, aspect='auto')
+plt.colorbar()
+plt.show()
+```
+
+
+    
+![png](fig-01seis-seis2.png)
+    
+
+
+
+```python
+print(stream.textual_file_header.decode())
+```
+
+    C 1 CLIENT SANTOS                 COMPANY                       CREW NO         C 2 LINE    2000.00 AREA JAMES3D                                                C 3 REEL NO           DAY-START OF REEL     YEAR      OBSERVER                  C 4 INSTRUMENT  MFG            MODEL            SERIAL NO                       C 5 DATA TRACES/RECORD 24569  AUXILIARY TRACES/RECORD       0 CDP FOLD    40    C 6 SAMPLE INTERVAL  4.00   SAMPLES/TRACE  1001 BITS/IN      BYTES/SAMPLE  4    C 7 RECORDING FORMAT        FORMAT THIS REEL SEG-Y  MEASUREMENT SYSTEM METERS   C 8 SAMPLE CODE FLOATING PT                                                     C09 JAMES 3D                                                                    C10 WESTERNGECO                                                                 C11 MARCH 2007                                                                  C12 VERSION : James3D_pstm_tvfk_gain                                            C13 FILTERED TRIM PSTM STACK                                                    C14                                                                             C15 GEOMETRY APPLY-TAR-MINP-                                                    C16 NOISE REDUCTION - SWATT                                                     C17  SC DECON - SCAC                                                            C18 RESIDUAL_STATICS                                                            C19  TRIM_STATICS - INVERSE_TAR - SORT                                          C20 PSTM  - SORT  - GAIN                                                        C21 TRIM_STATICS - STACK                                                        C22 SPECW_10-70HZ -TVF_10-75HZ-TRACE_BALANCE                                    C23                                                                             C24                                                                             C25                                                                             C26                                                                             C27                                                                             C28                                                                             C29                                                                             C30                                                                             C31                                                                             C32                                                                             C33                                                                             C34                                                                             C35                                                                             C36                                                                             C37                                                                             C38                                                                             C39                                                                             C40 END EBCDIC                                                                  
+
+
+
+```python
+print(stream.traces[50].header)
+```
+
+    trace_sequence_number_within_line: 51
+    trace_sequence_number_within_segy_file: 51
+    original_field_record_number: 2000
+    trace_number_within_the_original_field_record: 1
+    energy_source_point_number: 10055
+    ensemble_number: 10055
+    trace_number_within_the_ensemble: 51
+    trace_identification_code: 1
+    number_of_vertically_summed_traces_yielding_this_trace: 1
+    number_of_horizontally_stacked_traces_yielding_this_trace: 24
+    data_use: 1
+    distance_from_center_of_the_source_point_to_the_center_of_the_receiver_group: 0
+    receiver_group_elevation: 0
+    surface_elevation_at_source: 0
+    source_depth_below_surface: 0
+    datum_elevation_at_receiver_group: 0
+    datum_elevation_at_source: 0
+    water_depth_at_source: 0
+    water_depth_at_group: 0
+    scalar_to_be_applied_to_all_elevations_and_depths: 1
+    scalar_to_be_applied_to_all_coordinates: 1
+    source_coordinate_x: 482680
+    source_coordinate_y: 7035256
+    group_coordinate_x: 482680
+    group_coordinate_y: 7035256
+    coordinate_units: 1
+    weathering_velocity: 0
+    subweathering_velocity: 0
+    uphole_time_at_source_in_ms: 0
+    uphole_time_at_group_in_ms: 0
+    source_static_correction_in_ms: 0
+    group_static_correction_in_ms: 0
+    total_static_applied_in_ms: -70
+    lag_time_A: 0
+    lag_time_B: 0
+    delay_recording_time: 0
+    mute_time_start_time_in_ms: 0
+    mute_time_end_time_in_ms: 20
+    number_of_samples_in_this_trace: 1001
+    sample_interval_in_ms_for_this_trace: 4000
+    gain_type_of_field_instruments: 0
+    instrument_gain_constant: 0
+    instrument_early_or_initial_gain: 0
+    correlated: 0
+    sweep_frequency_at_start: 0
+    sweep_frequency_at_end: 0
+    sweep_length_in_ms: 0
+    sweep_type: 0
+    sweep_trace_taper_length_at_start_in_ms: 0
+    sweep_trace_taper_length_at_end_in_ms: 0
+    taper_type: 0
+    alias_filter_frequency: 0
+    alias_filter_slope: 0
+    notch_filter_frequency: 0
+    notch_filter_slope: 0
+    low_cut_frequency: 0
+    high_cut_frequency: 0
+    low_cut_slope: 0
+    high_cut_slope: 0
+    year_data_recorded: 0
+    day_of_year: 0
+    hour_of_day: 0
+    minute_of_hour: 0
+    second_of_minute: 0
+    time_basis_code: 0
+    trace_weighting_factor: 0
+    geophone_group_number_of_roll_switch_position_one: 0
+    geophone_group_number_of_trace_number_one: 0
+    geophone_group_number_of_last_trace: 0
+    gap_size: 0
+    over_travel_associated_with_taper: 0
+    x_coordinate_of_ensemble_position_of_this_trace: 0
+    y_coordinate_of_ensemble_position_of_this_trace: 0
+    for_3d_poststack_data_this_field_is_for_in_line_number: 0
+    for_3d_poststack_data_this_field_is_for_cross_line_number: -4587520
+    shotpoint_number: 2000
+    scalar_to_be_applied_to_the_shotpoint_number: 0
+    trace_value_measurement_unit: 10055
+    transduction_constant_mantissa: 0
+    transduction_constant_exponent: 0
+    transduction_units: 0
+    device_trace_identifier: 0
+    scalar_to_be_applied_to_times: 57
+    source_type_orientation: 0
+    source_energy_direction_mantissa: 0
+    source_energy_direction_exponent: 584
+    source_measurement_mantissa: 0
+    source_measurement_exponent: 0
+    source_measurement_unit: 0
+    
+
+
+
+```python
+dt = stream.traces[0].header.sample_interval_in_ms_for_this_trace / 1e6
+dt
+```
+
+
+
+
+    0.004
+
+
+
+
     
 
 
