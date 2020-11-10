@@ -11,7 +11,7 @@ carpentry: "sih"
 
 # Overall title for pages.
 title: "Introduction to Python for Geoscientists"
-series_name: "SIH Series"
+series_name: "Home"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
