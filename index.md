@@ -10,7 +10,7 @@ The course is presented by the ***Sydney Informatics Hub*** on behalf of the ***
 
 <figure>
   <img src="{{ page.root }}/fig/pesa.jpg" style="margin:10px;width:400px"/>
-  <a href="https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/">https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/</a>
+  <figcaption>  <a href="https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/">https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/</a></figcaption>
 </figure><br>
 
 <figure>
@@ -33,8 +33,7 @@ We also aim to cultivate a **data community**, organising monthly [Hacky Hours](
 No previous programming experience is required, but **Session 1 is a pre-requisite for the other sessions**. Training will be delivered online, so you will need access to a modern computer with a stable internet connection and around 5GB of storage space downloaded prior to the course. Participants are encouraged to setup a Python environment on their local computer (instructions to be provided), but participation using Google Colab will also be supported (Google account required).
 
 ## Setup Instructions
-Please complete these **before the course**.
-[https://sydney-informatics-hub.github.io/geopython/setup.html](https://sydney-informatics-hub.github.io/geopython/setup.html)
+Please complete the [Setup Instructions](https://sydney-informatics-hub.github.io/geopython/setup.html) **before the course**.
 
 If you have any trouble, please get in contact with us ASAP.
 
