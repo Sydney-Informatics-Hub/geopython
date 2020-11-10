@@ -1,5 +1,5 @@
 ---
-title: "02. Machine Learning for Geoscience"
+title: "02c. Machine Learning for Geoscience"
 teaching: 120
 exercises: 60
 questions:
