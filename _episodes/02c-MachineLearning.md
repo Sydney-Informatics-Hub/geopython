@@ -47,6 +47,9 @@ from matplotlib import cm
 #For easy geographic projections on a map
 import cartopy.crs as ccrs
 
+#For dealing with shapefiles
+import shapefile
+
 ```
 
 
