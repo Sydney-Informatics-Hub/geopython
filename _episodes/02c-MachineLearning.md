@@ -591,10 +591,6 @@ gl.xlines = False
 gl.ylines = False
 gl.xlocator = mticker.FixedLocator([-75,-60, -45,-30])
 gl.ylocator = mticker.FixedLocator([-60, -45, -30, -15, 0,15])
-ax.set_xticks([-75,-60, -45,-30])
-ax.set_xticklabels([''])
-ax.set_yticks([-60, -45, -30, -15, 0,15])
-ax.set_yticklabels([''])
 gl.xformatter = LONGITUDE_FORMATTER
 gl.yformatter = LATITUDE_FORMATTER
 #gl.xlabel_style = {'size': 15, 'color': 'gray'}
