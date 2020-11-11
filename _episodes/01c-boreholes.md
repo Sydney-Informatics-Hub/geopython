@@ -262,7 +262,7 @@ import numpy as np
 ```python
 #Set the filename of the segy data
 
-filename="james/james_1959_pstm_tvfk_gain.sgy"
+filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 
 #Title: 2006 James 3D Seismic Survey.
 #Author: White, A.
@@ -296,7 +296,7 @@ plt.show()
 
 
     
-![png](fig-01seis-trace.png)
+![png](../fig/fig-01seis-trace.png)
     
 
 
@@ -316,31 +316,22 @@ stream.traces[10000]
     Trace sequence number within line: 10001
     1001 samples, dtype=float32, 250.00 Hz
 
+```python
+data.shape
+```
 
+```
+(500, 1001)
+```
 
 
 ```python
 np.shape(stream.traces)
 ```
 
-
-
-
-    (48832,)
-
-
-
-
-```python
-data.shape
 ```
-
-
-
-
-    (500, 1001)
-
-
+(48832,)
+```
 
 
 ```python
@@ -365,7 +356,7 @@ plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
 
 
     
-![png](fig-01seis-seis1.png)
+![png](../fig/fig-01seis-seis1.png)
     
 
 
@@ -379,7 +370,7 @@ plt.show()
 
 
     
-![png](fig-01seis-seis2.png)
+![png](../fig/fig-01seis-seis2.png)
     
 
 
