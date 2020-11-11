@@ -642,7 +642,7 @@ yh= ml_data_np[ml_data_np[:,-1]==1,1]
 l2 = ax.scatter(xh, yh, 500, marker='.',c=pRF[:147,1],cmap=plt.cm.copper,zorder=3,transform=ccrs.PlateCarree(),vmin=0,vmax=1)
 #l2 = pmap.scatter(xh, yh, 20, marker='.',edgecolor='dimgrey',linewidth=0.5,c=pRF[:147,1],cmap=plt.cm.copper,zorder=3)
 cbar=fig.colorbar(l2, ax=ax, orientation="horizontal", pad=0.05, fraction=0.05, shrink=0.2,ticks=[0,0.5,1.0])
-cbar.set_clim(-0.1, 1.1)
+l2.set_clim(-0.1, 1.1)
 cbar.set_label('Prediction Probability (%)')
 
 ###Plot the ore deposit Age
@@ -650,7 +650,7 @@ xh=ml_data_np[ml_data_np[:,-1]==1,0]
 yh = ml_data_np[ml_data_np[:,-1]==1,1]
 l2 = ax.scatter(xh, yh, 50, marker='.',c=ml_data_np[ml_data_np[:,-1]==1,4],cmap=plt.cm.hsv,zorder=3)
 cbar=fig.colorbar(l2, ax=ax, orientation="horizontal", pad=0.1, fraction=0.05, shrink=0.2,extend='max',ticks=[0,50,100,150])
-cbar.set_clim(0, 170)
+l2.set_clim(0, 170)
 cbar.set_label('Age of Deposit (Ma)')
 
 print("Added deposit probability")
