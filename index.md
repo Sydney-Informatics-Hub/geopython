@@ -52,9 +52,9 @@ Participants will be provided with a Zoom link. Trainers will be broadcasting fr
 
 <br>
 # Zoom etiquette and how we interact
-Everything will be done via zoom. Sessions will be recorded for attendees only, and it is set up to only record the host shared screen and host audio. So please ask embarrassing and stupid questions. We will try and get these uploaded to this site as soon as possible.
-Please interrupt when you want! Ideally, have your camera on and interact as much as possible. But we understand it is very easy to check your emails or whatever in the background. 4 hours is a long zoom session so we have got plenty of breaks, some parts are more demo, others are exercises, but most of it will be pretty hands on with everyone writing code. 
-We will use Zoom break-out rooms if needed with Darya, Ben, and Nate.
+Everything will be done via zoom. Sessions will be recorded for attendees only, and it is set up to only record the host shared screen and host audio. We will try and get these uploaded to this site as soon as possible. 
+Please interrupt whenever you want! Ideally, have your camera on and interact as much as possible. And there will be someone monitoring the chat-window with any questions you would like to post there.  Four hours is a long Zoom session so we have got plenty of scheduled breaks, a mixed up the content to be delivered as demos, other sections are independent exercises, but most of it will be pretty-hands on with everyone writing their own code. 
+We will use Zoom break-out rooms if needed with Darya, Ben, Kris, and Nate.
 
 <br>
 # Code of Conduct
