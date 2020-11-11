@@ -447,7 +447,7 @@ dvp=tomo[:,3]
 Now run the clustering algorithm
 
 ```python
-kmeans = KMeans(n_clusters=10, random_state=0).fit(dvp.reshape(-1, 1))
+kmeans = KMeans(n_clusters=5, random_state=0).fit(dvp.reshape(-1, 1))
 
 #When completed, check the clusters the algorithm has identified.
 print(kmeans.cluster_centers_)
@@ -455,11 +455,18 @@ print(kmeans.cluster_centers_)
 
 Note, many functions have been "parallelised" and tuned to best take advantage of your computer, see e.g. for more details [https://scikit-learn.org/stable/modules/computing.html#parallelism](https://scikit-learn.org/stable/modules/computing.html#parallelism)
 
+You can have a look what the labels look like. It is essentially a vector the same length as the data indicating which label it has classified.
+```python
+kmeans.labels_
+```
+```
+array([5, 5, 5, ..., 0, 0, 0], dtype=int32)
+```
 
 Choose one of the clusters to visualise, so subset the data into new vectors accordingly
 
 ```python
-centre=0
+centre=1
 
 latClust=lat[kmeans.labels_==centre]
 lonClust=lon[kmeans.labels_==centre]
