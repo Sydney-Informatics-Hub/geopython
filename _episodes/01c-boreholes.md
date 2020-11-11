@@ -47,21 +47,21 @@ import re
 
 ```python
 #Build a list of filenames to read
-read_files = glob.glob("WELL/*.las")
+read_files = glob.glob("../data/WELL/*.las")
 read_files
 ```
 
 
 
 
-    ['WELL/Balnaves.las',
-     'WELL/Banyula.las',
-     'WELL/Beachport1.las',
-     'WELL/BeachportEast1.las',
-     'WELL/BiscuitFlat1.las',
-     'WELL/BoolLagoon1.las',
-     'WELL/Bungaloo1.las',
-     'WELL/Burrungule1.las']
+    ['../data/WELL/Balnaves.las',
+ '../data/WELL/Banyula.las',
+ '../data/WELL/Beachport1.las',
+ '../data/WELL/BeachportEast1.las',
+ '../data/WELL/BiscuitFlat1.las',
+ '../data/WELL/BoolLagoon1.las',
+ '../data/WELL/Bungaloo1.las',
+ '../data/WELL/Burrungule1.las']
 
 
 
@@ -71,9 +71,9 @@ read_files
 well_names = []
 for file in read_files:
     print("FILE:", file)
-    well=re.split('/|\.',file)
+    well=re.split('/|.las',file)
     print("SPLIT:", well)
-    well_names.append(well[1])
+    well_names.append(well[3])
 
 print("There are ", len(well_names), "wells.")
 print(well_names)
@@ -201,7 +201,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
     
-![png](fig/fig-01-well.png)
+![png](../fig/fig-01-well.png)
     
 
 
@@ -244,7 +244,7 @@ plt.gca().invert_yaxis()
 
 
     
-![png](fig-01-prettywell.png)
+![png](../fig/fig-01-prettywell.png)
 
 
 # SEGY Seismic data processing
