@@ -1,9 +1,9 @@
 ---
-title: "03b. Deep Learning Time Series with Python, tensorflow, and a GPU"
+title: "03b. Deep Learning with Time Series data"
 teaching: 30
 exercises: 30
 questions:
-- "Why is deep learning so special?"
+- "What is deep learning?"
 - "What is a GPU and why do I care?"
 objectives:
 - "Set up your own Python environemnt"
