@@ -630,7 +630,7 @@ ax.gridlines()
 #Make a scatter plot of the data coloured by age. 
 #Restrict the colour range between 0 and 100
 #And also set the scatter plot as a variable 'mapscat' so we can reference it later
-mapscat=ax.scatter(longs,lats,marker=".",s=0.5,c=age,vmin=0,vmax=100,transform=ccrs.Geodetic(),zorder=4,cmap=plt.cm.hsv)
+mapscat=ax.scatter(longs,lats,marker=".",s=0.5,c=age,vmin=0,vmax=100,transform=ccrs.PlateCarree(),zorder=4,cmap=plt.cm.hsv)
 
 #Make a Colorbar
 cbar=plt.colorbar(mapscat, ax=ax, orientation="horizontal", pad=0.05, fraction=0.15, shrink=0.5,extend='max')
