@@ -20,11 +20,11 @@ Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications F
 
 <br>
 
-# 2. Setup your Python environemnt (install required packages and libraries)
+# 2. Setup your Python environment (install required packages and libraries)
 
-Next we need to set up an evironment with all the additional packages and libraries we will be using throughout the course.
+Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.
 
-* Launch an Anconda Prompt (or equivalent).
+* Launch an Anaconda Prompt (or equivalent).
 * Type in each of these commands sequentially. Each should take a minute or so to complete:
 
 ~~~
@@ -45,7 +45,7 @@ python -m pip install "dask[complete]"
 pip install jupyter==1.0 
 ~~~
 
-At anytime in the future you can install additional packages or create seperate environments. This particular environemnt should have the correct balance of versions with any dependacies accounted for.
+At anytime in the future you can install additional packages or create seperate environments. We will discuss this more in the course. This particular environment should have the correct balance of versions with any dependencies accounted for.
 
 Also, setup your workspace where we will be creating files and generating data, you can do this in your prompt (or just in Windows Explorer/OSX Finder). For me I will be working in top-level folder on my Desktop called ```geopython``` and a subdirectory called ```notebooks```.
 
@@ -65,6 +65,7 @@ python
 
 to launch Python!
 
+![png](../fig/setup-python.png)
 
 <br>
 
@@ -74,6 +75,9 @@ Download the data from all the exercises from here:
 
 Extract this to a directory you can work in.
 Your file tree should look like something like this
+
+![png](../fig/setup-folder.png)
+
 
 ```
 .
@@ -91,6 +95,10 @@ Your file tree should look like something like this
 ## Google Colab
 
 If the above options do not work for you, [Google Colab](https://colab.research.google.com/) can be used for an on-demand Python notebook. You will require a Google Account for this.
+
+## Docker
+
+If you are familiar with Docker you may use our Docker image (to be provided).
 
 <br>
 
