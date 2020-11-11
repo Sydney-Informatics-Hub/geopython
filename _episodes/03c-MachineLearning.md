@@ -1,7 +1,7 @@
 ---
-title: "02c. Machine Learning for Geoscience"
-teaching: 120
-exercises: 60
+title: "03a. Machine Learning for Geoscience"
+teaching: 90
+exercises: 30
 questions:
 - "What data science tools and techniques can be used in Python?"
 - "How do I do it?"
