@@ -245,7 +245,7 @@ multiprocessing.cpu_count()
 
 Read in the shapefile that we will use
 ~~~
-sf = shapefile.Reader("data/topology_platepolygons_0.00Ma.shp")
+sf = shapefile.Reader("../data/platepolygons/topology_platepolygons_0.00Ma.shp")
 recs    = sf.records()
 shapes  = sf.shapes()
 fields  = sf.fields
