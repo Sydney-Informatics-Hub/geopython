@@ -73,6 +73,8 @@ to launch Python!
 
 Download the data (280 MB inflated to 500 MB) for all the exercises from here:
 
+[https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0](https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0)
+
 Extract this to a directory you can work in.
 Your file tree should look like something like this
 
