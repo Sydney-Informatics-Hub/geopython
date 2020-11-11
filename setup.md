@@ -65,18 +65,18 @@ python
 
 to launch Python!
 
-![png](../fig/setup-python.png)
+![png](fig/setup-python.png)
 
 <br>
 
 # 3. Download the data
 
-Download the data from all the exercises from here:
+Download the data (280 MB inflated to 500 MB) for all the exercises from here:
 
 Extract this to a directory you can work in.
 Your file tree should look like something like this
 
-![png](../fig/setup-folder.png)
+![png](fig/setup-folder.png)
 
 
 ```
