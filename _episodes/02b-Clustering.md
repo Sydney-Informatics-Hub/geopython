@@ -44,6 +44,7 @@ case we interpret \\( \theta \\) as the excess temperature (above room temperatu
 %pylab inline
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 theta_0 = 1.0
 
@@ -52,10 +53,7 @@ time_values = np.linspace(0,1.0,1000)
 for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
 
     exact_theta_values = theta_0 * np.exp(-const_k * time_values)
-    plot(time_values, exact_theta_values)
-
-
-pass
+    plt.plot(time_values, exact_theta_values)
 ```
 
     Populating the interactive namespace from numpy and matplotlib
@@ -143,8 +141,8 @@ for i in range(1, steps):
 
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
     
-plot(time_values, exact_theta_values, linewidth=5.0)
-plot(time_values, theta_values, linewidth=3.0, color="red")
+plt.plot(time_values, exact_theta_values, linewidth=5.0)
+plt.plot(time_values, theta_values, linewidth=3.0, color="red")
 
 ```
 
