@@ -1,12 +1,13 @@
 ---
-title: "01b. Python Fundamentals - shapefiles and dataframes"
+title: "01b. Python libraries and packages"
 teaching: 10
 exercises: 0
 questions:
 - "What else can Python do?"
 - "What are libraries and packages?"
 objectives:
-- "Learn the ."
+- "Learn how to deal with specialty datatypes."
+- "Learn about pandas, pyshp, lasio, obspy."
 keypoints:
 - "Shapefiles"
 - "Pandas dataframes"
