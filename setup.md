@@ -5,7 +5,7 @@ root: "."
 ---
 
 # 1. Get a Python client
-We generally use and recommend Miniconda Python distribution: [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html). But feel free to use whatever one works for you. We will be using Miniconda3-py37_4.8.3.
+We generally use and recommend Miniconda Python distribution: [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html). But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py37_4.8.3.
 
 You can get this specific version here for:
 
@@ -15,54 +15,82 @@ You can get this specific version here for:
 
 * [Linux Download](https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh)
 
+Follow the prompts (the default recommendations in the installer are generally fine.) 
+Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications Folder to begin your Python adventure. 
 
 <br>
 
 # 2. Setup your Python environemnt (install required packages and libraries)
-To run all the commands in your own Python installation, you can set up an environemnt with something like this:
+
+Next we need to set up an evironment with all the additional packages and libraries we will be using throughout the course.
+
+* Launch an Anconda Prompt (or equivalent).
+* Type in each of these commands sequentially. Each should take a minute or so to complete:
 
 ~~~
-conda create -n geopython
-conda activate geopython
+conda create -n geopy python=3.7
+
+conda activate geopy
+
+conda install pip
+
+pip install numpy==1.18 pandas==1.0.1 matplotlib==3.3.2 pyshp==2.1.2 lasio==0.28 obspy==1.2.2 scipy==1.4.1 scikit-learn==0.23 
 
 conda install -c conda-forge cartopy=0.18
-pip install 
+
+pip install tensorflow==2.3 
+
+python -m pip install "dask[complete]"
+
+pip install jupyter==1.0 
 ~~~
+
+At anytime in the future you can install additional packages or create seperate environments. This particular environemnt should have the correct balance of versions with any dependacies accounted for.
+
+Also, setup your workspace where we will be creating files and generating data, you can do this in your prompt (or just in Windows Explorer/OSX Finder). For me I will be working in top-level folder on my Desktop called ```geopython``` and a subdirectory called ```notebooks```.
+
+~~~
+cd C:\Users\Administrator\Desktop\
+mkdir geopython
+cd geopython
+mkdir notebooks
+cd notebooks
+~~~
+
+Now type:
+
+~~~
+python
+~~~
+
+to launch Python!
+
+
+<br>
 
 # 3. Download the data
 
 Download the data from all the exercises from here:
 
-Extract this .
+Extract this to a directory you can work in.
+Your file tree should look like something like this
 
-Your file tree should look like this
+```
+.
+|-- geopython
+|   +-- notebooks
+|   +-- data
+|       |   +-- ...
 
-geopython
-  |
-  |--notebooks
-  |--data
-
+```
 
 <br>
 
 # Other Options
 
-## Docker
-
-## For Windows use WSL with Ubuntu 
-
-Install Ubuntu or some other Linux distro on the Windows Subsystem for Linux see [here for details](https://ubuntu.com/tutorials/tutorial-ubuntu-on-windows#1-overview). This one will give you a full suite of Linux functions and I like it for emulating Linux.
-
-```
- sudo apt-get update
- sudo apt-get install build-essential
- sudo apt install libopenmpi-dev
- pip install dask==2.11.0 distributed==2.11.0 netCDF4==1.5.3 numpy==1.18.1 pandas==1.0.1 scipy==1.4.1 xarray==0.15.0 mpi4py==3.0.3 jupyter pyshp pandas swifter shapely
- ```
-
 ## Google Colab
 
-
+If the above options do not work for you, [Google Colab](https://colab.research.google.com/) can be used for an on-demand Python notebook. You will require a Google Account for this.
 
 <br>
 
