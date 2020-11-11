@@ -23,6 +23,9 @@ To run all the commands in your own Python installation, you can set up an envir
 
 ~~~
 conda create -n geopython
+conda activate geopython
+
+conda install -c conda-forge cartopy=0.18
 pip install 
 ~~~
 
