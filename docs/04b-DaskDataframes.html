@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>04b. Dask and Dask Dataframes</title>
+
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="lesson.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00-intro.html">Introduction</a>
+    </li>
+    <li>
+      <a href="01a-fundamentals.html">Fundamentals</a>
+    </li>
+    <li>
+      <a href="01b-dataframes.html">Data frames and Shapefiles</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02a-mapping.html">Mapping</a>
+    </li>
+    <li>
+      <a href="02b-Clustering.html">Clustering</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="03a-MachineLearning.html">Machine Learning</a>
+    </li>
+    <li>
+      <a href="03b-DeepLearningTS.html">Deep Learning &amp; Time Series</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="04a-SimpleSpeedUps.html">Simple Speed Ups</a>
+    </li>
+    <li>
+      <a href="04b-DaskDataframes.html">Dask data frames</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">04b. Dask and Dask Dataframes</h1>
+
+</div>
+
+
+<div id="dask" class="section level1">
+<h1>DASK</h1>
+<p>Dask is a flexible library for parallel computing in Python.</p>
+<p>Dask is composed of two parts: Dynamic task scheduling optimized for computation. This is similar to Airflow, Luigi, Celery, or Make, but optimized for interactive computational workloads. “Big Data” collections like parallel arrays, dataframes, and lists that extend common interfaces like <strong><em>NumPy, Pandas, or Python iterators</em></strong> to larger-than-memory or distributed environments. These parallel collections run on top of dynamic task schedulers.</p>
+<p>Dask emphasizes the following virtues:</p>
+<ul>
+<li>Familiar: Provides parallelized NumPy array and Pandas DataFrame objects</li>
+<li>Flexible: Provides a task scheduling interface for more custom workloads and integration with other projects.</li>
+<li>Native: Enables distributed computing in pure Python with access to the PyData stack.</li>
+<li>Fast: Operates with low overhead, low latency, and minimal serialization necessary for fast numerical algorithms</li>
+<li>Scales up: Runs resiliently on clusters with 1000s of cores</li>
+<li>Scales down: Trivial to set up and run on a laptop in a single process</li>
+<li>Responsive: Designed with interactive computing in mind, it provides rapid feedback and diagnostics to aid humans</li>
+</ul>
+<figure>
+<img src="{{ page.root }}/fig/dask_pic1.png" style="margin:10px;width:600px"/>
+<figcaption>
+Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.dask.org/en/latest/</a>
+</figcaption>
+</figure>
+<p><br></p>
+<p>Dask provides high level collections - these are <strong><em>Dask Dataframes, bags, and arrays</em></strong>. On a low level, dask dynamic task schedulers to scale up or down processes, and presents parallel computations by implementing task graphs. It provides an alternative to scaling out tasks instead of threading (IO Bound) and multiprocessing (cpu bound).</p>
+<p>A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.</p>
+<figure>
+<img src="{{ page.root }}/fig/dask_pic2.png" style="margin:6px;width:400px"/>
+<figcaption>
+Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/">https://docs.dask.org/en/latest/dataframe.html/</a>
+</figcaption>
+</figure>
+<p><br></p>
+<p>Common Use Cases: Dask DataFrame is used in situations where Pandas is commonly needed, usually when Pandas fails due to data size or computation speed: - Manipulating large datasets, even when those datasets don’t fit in memory - Accelerating long computations by using many cores - Distributed computing on large datasets with standard Pandas operations like groupby, join, and time series computations</p>
+<p>Dask Dataframes <strong>may not be the best choice</strong> if: your data fits comfortable in RAM - Use pandas only! If you need a proper database. You need functions not implemented by dask dataframes - see Dask Delayed.</p>
+</div>
+<div id="dask-dataframes" class="section level1">
+<h1>Dask Dataframes</h1>
+<p>We will generate some data using one of the python files makedata.py by importing it in ipython. ~~~ import makedata data = makedata.data() data ~~~ {: .python}</p>
+<p>The data is preloaded into a dask dataframe. Notice the output to data shows the dataframe metadata.</p>
+<p>The concept of splitting the dask dataframe into pandas sub dataframes can be seen by the <strong><em>nopartitians=10</em></strong> output. This is the number of partitians the dataframe is split into and in this case was automatically calibrated, but can be specified. There is a trade off between splitting data too much that improves memory management, and the number of extra tasks it generates. For instance, if you have a 1000 GB of data and are using 10 MB chunks, then you have 100,000 partitions. Every operation on such a collection will generate at least 100,000 tasks. But more on this later. For now lets become familiar with some basic Dataframe operations.</p>
+<p>Let’s inspect the data in its types, and also take the first 5 rows.</p>
+<p>By default, dataframe operations are <strong><em>lazy</em></strong> meaning no computation takes place until specified. The <strong><em>.compute()</em></strong> triggers such a computation - and we will see later on that it converts a dask dataframe into a pandas dataframe. <strong><em>head(rows)</em></strong> also triggers a computation - but is really helpful in exploring the underlying data. ~~~ data.dtypes data.head(5) ~~~ {: .python}</p>
+<p>You should see the below output ~~~ In [6]: data.head(5) Out[6]: age occupation telephone … street-address city income 0 54 Acupuncturist (528) 747-6949 … 1242 Gough Crescent Laguna Beach 116640 1 38 Shelf Filler 111.247.5833 … 10 Brook Court Paragould 57760 2 29 Tax Manager 035-458-1895 … 278 Homestead Trace Scottsdale 33640 3 19 Publisher +1-(018)-082-3905 … 310 Ada Sideline East Ridge 14440 4 25 Stationer 1-004-960-0770 … 711 Card Mall Grayslake 2500 ~~~ {: .output}</p>
+<p>Let’s perform some familiar operations for those who use pandas.</p>
+<p>filter operation - filter people who are older than 60 and assign to another dask array called data2</p>
+<pre><code>data2 = data[data.age &gt; 60]</code></pre>
+<p>{: .python}</p>
+<p>Apply a function to a column ~~~ data.income.apply(lambda x: x * 1000).head(5) ~~~ {: .python}</p>
+<p>Assign values to a new column</p>
+<pre><code>data = data.assign(dummy = 1)</code></pre>
+<p>{: .python}</p>
+<p>group by operation - calculate the average incomes by occupation. Notice the compute() trigger that performs the operations.</p>
+<pre><code>data.groupby(&#39;occupation&#39;).income.mean().compute()</code></pre>
+<p>{: .python}</p>
+<p>A memory efficient style is to create pipelines of operations and trigger a final compute at the end. ~~~ datapipe = data[data.age &lt; 20] datapipe = datapipe.groupby(‘income’).mean() datapipe.head(4) ~~~ {: .python}</p>
+<pre><code>        age
+income
+10240   16.0
+11560   17.0
+12960   18.0
+14440   19.0</code></pre>
+<p>{: .output}</p>
+<p>Chaining syntax can also be used to do the same thing, but keep readability in your code in mind. ~~~ pandasdata = (data[data.age &lt; 20].groupby(‘income’).mean()).compute() ~~~ {: .python}</p>
+<p>sort operation - get the occupations with the largest people working in them ~~~ data.occupation.value_counts().nlargest(5).compute() ~~~ {: .python}</p>
+<p>write the output of a filter result to csv ~~~ data[data.city == ‘Madison Heights’].compute().to_csv(‘Madison.csv’) ~~~ {: .python}</p>
+</div>
+<div id="dask-delayed-with-custom-made-operations" class="section level1">
+<h1>Dask Delayed with custom made operations</h1>
+<p>What if you need to run your own function, or a function outside of the pandas subset that dask dataframes make available? Dask delayed is your friend. It uses <strong><em>python decorator syntax</em></strong> to convert a function into a lazy executable. The functions can then be applied to build data pipeline operations in a similar manner to what we have just encountered.</p>
+<p>Let’s explore a larger example of using dask dataframes and dask delayed functions.</p>
+<p>In the <code>/files</code> directory, use your preferred editor to view the <code>complex_system.py</code> file. This script uses dask delayed functions that are applied to a sequence of data using pythonic <strong><em>list comprehension syntax</em></strong> . The code simulates financial defaults in a very theoretical way, and outputs the summation of these predicted defaults.</p>
+<pre><code>Delayed(&#39;add-c62bfd969d75abe76f3d8dcf2a9ef99c&#39;)
+407.5</code></pre>
+<p>{: .output}</p>
+<p><br></p>
+<div id="exercise-2" class="section level2">
+<h2>Exercise 2:</h2>
+<p>Given what you know of dask delayed function, please alter the file called <code>computepi_pawsey.py</code>, which calculated estimates of pi without using extra parallel libraries, and alter the code with a dask delayed wrapper to make it lazy and fast</p>
+<p><br></p>
+</div>
+<div id="exercise-1" class="section level2">
+<h2>Exercise 1:</h2>
+<p>The above script is a great example of dask delayed functions that are applied to lists, made in an elegant pythonic syntax. Let’s try using these delayed default functions on our data of income and occupations.</p>
+<p>Make your own lazy function using the decorator syntax, and perform the computation you have described on a column of the data previously used in the makedata.data() helper file. For bonus points perform an aggregation on this column.</p>
+<p><br></p>
+</div>
+</div>
+<div id="dask-bag" class="section level1">
+<h1>Dask Bag</h1>
+<p>Dask Bag implements operations like map, filter, groupby and aggregations on collections of Python objects. It does this in parallel and in small memory using Python iterators.</p>
+<p>Dask Bags are often used to do simple preprocessing on log files, JSON records, or other user defined Python objects</p>
+<p>Execution on bags provide two <strong><em>benefits</em></strong>: 1. <strong><em>Parallel:</em></strong> data is split up, allowing multiple cores or machines to execute in parallel 2. <strong><em>Iterating:</em></strong> data processes lazily, allowing smooth execution of <strong><em>larger-than-memory data</em></strong>, even on a single machine within a single partition</p>
+<p>By default, dask.bag uses dask.multiprocessing for computation. As a benefit, Dask bypasses the GIL and uses multiple cores on pure Python objects. As a drawback, Dask Bag doesn’t perform well on computations that include a great deal of inter-worker communication.</p>
+<p>Because the multiprocessing scheduler requires moving functions between multiple processes, we encourage that Dask Bag users also install the cloudpickle library to enable the transfer of more complex functions</p>
+<p>What are the <strong><em>drawbacks</em></strong> ?</p>
+<ul>
+<li>Bag operations tend to be slower than array/DataFrame computations in the same way that standard Python containers tend to be slower than NumPy arrays and Pandas DataFrames</li>
+<li>Bags are immutable and so you can not change individual elements</li>
+<li>By default, bag relies on the multiprocessing scheduler, which has known limitations - the main ones being: a, The multiprocessing scheduler must serialize data between workers and the central process, which can be expensive b, The multiprocessing scheduler must serialize functions between workers, which can fail. The Dask site recommends using cloudpickle to enable the transfer of more complex functions.</li>
+</ul>
+<p>We will investigate data located on the web that logs all juypter notebook instances run on the net. Two files are 1. Log files of every entry specific to a certain day 2. An index of daily log files</p>
+<p>Before we start, some python packages are needed. Types these commands directly into ipython ~~~ import dask.bag as db import json import os import re import time ~~~ {: .bash}</p>
+<p>Investigate underlying data by reading text file that houses daily data into a bag. First few rows are displayed ~~~ db.read_text(‘<a href="https://archive.analytics.mybinder.org/events-2018-11-03.jsonl" class="uri">https://archive.analytics.mybinder.org/events-2018-11-03.jsonl</a>’).take(3) ~~~ {: .bash}</p>
+<p>The output should give you a task for the underlying data in the daily log files. Essential this is a text file in json format. ~~~ (‘{“timestamp”: “2018-11-03T00:00:00+00:00”, “schema”: “binderhub.jupyter.org/launch”, “version”: 1, “provider”: “GitHub”, “spe c”: “Qiskit/qiskit-tutorial/master”, “status”: “success”}’, ‘{“timestamp”: “2018-11-03T00:00:00+00:00”, “schema”: “binderhub.jupyter.org/launch”, “version”: 1, “provider”: “GitHub”, “spe c”: “ipython/ipython-in-depth/master”, “status”: “success”}’, ‘{“timestamp”: “2018-11-03T00:00:00+00:00”, “schema”: “binderhub.jupyter.org/launch”, “version”: 1, “provider”: “GitHub”, “spe c”: “QISKit/qiskit-tutorial/master”, “status”: “success”}’)</p>
+<pre><code>{: .output}
+
+Index file loaded as a bag. No data transfer or computation kicked off - just organising mapping the file to a json structure</code></pre>
+<p>index = db.read_text(‘<a href="https://archive.analytics.mybinder.org/index.jsonl" class="uri">https://archive.analytics.mybinder.org/index.jsonl</a>’).map(json.loads) index index.take(2) ~~~ {: .bash}</p>
+<p>These files aren’t big at all - a sign is the number of partitians of 1. Dask would automatically split the data up for large data. ~~~ In [5]: index = db.read_text(‘<a href="https://archive.analytics.mybinder.org/index.jsonl" class="uri">https://archive.analytics.mybinder.org/index.jsonl</a>’).map(json.loads) In [6]: index Out[6]: dask.bag&lt;loads, npartitions=1&gt; In [7]: index.take(2) Out[7]: ({‘name’: ‘events-2018-11-03.jsonl’, ‘date’: ‘2018-11-03’, ‘count’: ‘7057’}, {‘name’: ‘events-2018-11-04.jsonl’, ‘date’: ‘2018-11-04’, ‘count’: ‘7489’}) ~~~ {: .output}</p>
+<p>We can perform some operations on these two files. Please note the Dask Bag API (in the provided links section) for the signatures of available functions and their requirements.</p>
+<p>Read the index file as a dask bag and perform a mapping of the data to the function json.loads(). This function loads strings into a json object - given it adheres to the json structure.</p>
+<pre><code>index = db.read_text(&#39;https://archive.analytics.mybinder.org/index.jsonl&#39;).map(json.loads)
+print(index)</code></pre>
+<p>{: .bash}</p>
+</div>
+<div id="pangeo-example" class="section level1">
+<h1>PANGEO EXAMPLE</h1>
+<p>Pangeo is a community promoting open, reproducible, and scalable science.</p>
+<p>In practice it is not realy a python package, but a collection of packages, supported datasets, tutorials and documentation used to promote scalable science. Its motivation was driven by data becoming increasingly large, the fragmentation of software making reproducability difficult, and a growing technology gap between industry and traditional science.</p>
+<p>As such the Pangeo community supports using dask on HPC. We will run through an example of using our new found knowledge of dask on large dataset computation and visualisation.Specifically this pangeo example is a good illustration of dealing with an IO bound task.</p>
+<p>The example we will submit is an altered version of Pangeos meteorology use case found here: <a href="https://pangeo.io/use_cases/meteorology/newmann_ensemble_meteorology.html" class="uri">https://pangeo.io/use_cases/meteorology/newmann_ensemble_meteorology.html</a></p>
+<div id="xarray" class="section level2">
+<h2>Xarray</h2>
+<p>Rather than using a dask dataframe, data is loaded from multiple netcdf files in the data folder relative to where the script resides. Xarray is an opensource python package that uses dask in its inner workings. Its design to make working with multi-dimensional data easier by introducing labels in the form of dimensions, coordinates and attributes on top of raw NumPy-like arrays, which allows for a more intuitive, more concise, and less error-prone developer experience.</p>
+<p>It is particulary suited for working with netcdf files and is tightly integrated with dask parallel computing.</p>
+<p>Let’s investigate a small portion of the data before looking at the complete script. Open an ipython terminal inside the data folder</p>
+<p>And have a look at the data ~~~ import xarray as xr data = xr.open_dataset(‘conus_daily_eighth_2008_ens_mean.nc4’) data ~~~ {: .python}</p>
+<p>You should see the following metadata that holds 3 dimenstional information (latitude, longditude and time) on temperature and precipitation measurements. ~~~</p>
+<p>In [41]: data = xr.open_dataset(‘conus_daily_eighth_2008_ens_mean.nc4’)</p>
+<p>In [42]: data Out[42]: &lt;xarray.Dataset&gt; Dimensions: (lat: 224, lon: 464, time: 366) Coordinates: * time (time) datetime64[ns] 2008-01-01 2008-01-02 … 2008-12-31 * lat (lat) float64 25.12 25.25 25.38 25.5 … 52.62 52.75 52.88 53.0 * lon (lon) float64 -124.9 -124.8 -124.6 -124.5 … -67.25 -67.12 -67.0 Data variables: elevation (lat, lon) float64 … pcp (time, lat, lon) float32 … t_mean (time, lat, lon) float32 … t_range (time, lat, lon) float32 … Attributes: history: Wed Oct 24 13:59:29 2018: ncks -4 -L 1 conus_daily_eighth_2… NCO: netCDF Operators version 4.7.4 (<a href="http://nco.sf.net" class="uri">http://nco.sf.net</a>) institution: National Center fo Atmospheric Research (NCAR), Boulder, CO… title: CONUS daily 12-km gridded ensemble precipitation and temper… ~~~ {: .output}</p>
+<p>Find out how large is the file. ~~~ print(‘memory gb’,format(data.nbytes / 1e9)) ~~~ {: .python}</p>
+<p>What is the average elevation over lat and long dimensions. ~~~ data.elevation.mean() ~~~ {: .python}</p>
+<pre><code>In [50]: data.elevation.mean()
+Out[50]:
+&lt;xarray.DataArray &#39;elevation&#39; ()&gt;
+array(709.99515723)</code></pre>
+<p>{: .output}</p>
+<p>What is the average elevation for each longitude ~~~ data.elevation.mean(dim=‘lat’) ~~~ {: .python}</p>
+<p>Exit from your ipython session. Now we will now run a script to the scheduler that loads multiple files, performs calculations on the xarray data and plots the results.</p>
+<p>Steps to do: 1. In the files directory, open the python script we will run called pangeo.py. ~~~ cd /project/Training/myname/files nano pangeo.py ~~~</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Alter the instance of the Client() object by redirecting the path in the local_directory argument to your /project/Training/myname folder. The Client object sets up a local cluster that uses all availble resources. In this case it is created on one compute node. The optional local_directory specifies a storage area that allows dask to copy temporary data on if RAM is insufficient to work on large datasets - i.e. its a path where dask can spill over some data to still perform data calculations.</p></li>
+<li><p>Notice the xarray open_mfdaset function loads multiple files that match a naming pattern. Chunking size is specific to the axis <strong><em>time</em></strong>, one chunck for each year.</p></li>
+<li><p>Submit the <code>pangeo.pbs</code> file to the scheduler.</p></li>
+</ol>
+<pre><code>qsub pangeo.pbs</code></pre>
+<p>Png files should be created based on calculation in the code that measure the variance in temperatures (max minus min observations). As seen before, these calculations are triggered by a <strong><em>.compute()</em></strong> call. Two images are created, with one demostrating how we can persist the xarray dataset in memory for quick retrievals via the <strong><em>.persist()</em></strong> call.</p>
+<p>Lets see the image. If you have X11 forwarding enabled you can view it directly from artemis. Alternatively, use scp to copy it locally and view. ~~~ module load imagemagick display variance_temp.png &amp; ~~~</p>
+<figure>
+<img src="{{ page.root }}/fig/USA_Temp.png" style="margin:10px;width:600px"/>
+<figcaption>
+Dask Temperature visualisation
+</figcaption>
+</figure>
+<p><br></p>
+</div>
+</div>
+<div id="helpful-links" class="section level1">
+<h1>Helpful Links:</h1>
+<p>Dask bag fundamentals <a href="https://docs.dask.org/en/latest/bag.html">https://docs.dask.org/en/latest/bag.html</a></p>
+<p>Bag API’s: <a href="https://docs.dask.org/en/latest/bag.html">https://docs.dask.org/en/latest/bag-api.html</a></p>
+<p>Dask bag limitations: <a href="https://docs.dask.org/en/latest/bag.html">https://docs.dask.org/en/latest/shared.html</a></p>
+<p>Pangeo info: <a href="https://pangeo.io/#what-is-pangeo">https://pangeo.io/#what-is-pangeo</a></p>
+<p>Xarray: <a href="http://xarray.pydata.org/en/stable/">http://xarray.pydata.org/en/stable/</a></p>
+<p>Xarray API: <a href="http://xarray.pydata.org/en/stable/generated/xarray.open_dataset.html">http://xarray.pydata.org/en/stable/generated/xarray.open_dataset.html</a></p>
+<p>Dask Dataframe intro <a href="https://docs.dask.org/en/latest/dataframe.html">https://docs.dask.org/en/latest/dataframe.html</a></p>
+<p>API list for Dask Dataframes <a href="https://docs.dask.org/en/latest/dataframe-api.html">https://docs.dask.org/en/latest/dataframe.html</a></p>
+<p>What are decorators <a href="https://realpython.com/primer-on-python-decorators/">https://realpython.com/primer-on-python-decorators/</a></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

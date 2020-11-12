@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>03b. Deep Learning with Time Series data</title>
+
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="lesson.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00-intro.html">Introduction</a>
+    </li>
+    <li>
+      <a href="01a-fundamentals.html">Fundamentals</a>
+    </li>
+    <li>
+      <a href="01b-dataframes.html">Data frames and Shapefiles</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02a-mapping.html">Mapping</a>
+    </li>
+    <li>
+      <a href="02b-Clustering.html">Clustering</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="03a-MachineLearning.html">Machine Learning</a>
+    </li>
+    <li>
+      <a href="03b-DeepLearningTS.html">Deep Learning &amp; Time Series</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="04a-SimpleSpeedUps.html">Simple Speed Ups</a>
+    </li>
+    <li>
+      <a href="04b-DaskDataframes.html">Dask data frames</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">03b. Deep Learning with Time Series data</h1>
+
+</div>
+
+
+<p>Python offers many ways to make use of the compute capability in your GPU. A very common application is deep learning using the tensorflow and keras packages. In this example we are going to look at forecasting a timeseries using recurrent neural netowrks based on the history of the time series itself.</p>
+<div id="you-can-run-through-the-steps-on-you-local-machine-using-the-jupyter-notebook-example" class="section level3">
+<h3>You can run through the steps on you local machine using the Jupyter notebook example</h3>
+<p>We are looking at temperature data in Sydney for the last 150 years with daily measurements (Based on an example from <a href="https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/" class="uri">https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/</a>). We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. But feel free to adjust the numbers as you like. Using a GPU trained deep-learning framework to predict time series data. Specifically we are using a Long Short-Term Memory (LSTM) deep learning network</p>
+<p>The data is from the Australian Bureau of Meteorology (BOM) representing the <a href="http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_nccObsCode=122&amp;p_display_type=dailyDataFile&amp;p_startYear=&amp;p_c=&amp;p_stn_num=066062">daily maximum temperatures for the last 150 years from the Sydney Observatory</a></p>
+<p>A problem might be, given the last few decades of temperature cycles, what will tomorrow’s weather be? Let’s try and predict the future!</p>
+<pre class="python"><code>#import all the libraries we need
+import numpy
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import math
+import tensorflow as tf
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import MaxAbsScaler </code></pre>
+<pre class="python"><code>#Load in the dataset
+filename=&#39;../data/sydney_temperature.csv&#39;
+dataframe = pd.read_csv(filename, usecols=[5], engine=&#39;python&#39;)
+dataset = dataframe.dropna()
+dataset = dataset.values
+dataset = dataset.astype(&#39;float32&#39;)
+
+# normalize the dataset to be betwenn 0 and 1
+scaler = MinMaxScaler(feature_range=(0, 1))
+datasetScaled = scaler.fit_transform(dataset)</code></pre>
+<pre class="python"><code>#Print some stats about the data
+print(dataframe.describe())</code></pre>
+<pre><code>       Maximum temperature (Degree C)
+count                    58316.000000
+mean                        21.731120
+std                          4.669517
+min                          7.700000
+25%                         18.200000
+50%                         21.600000
+75%                         24.900000
+max                         45.800000</code></pre>
+<pre class="python"><code>#Look at some of the data set
+#This is the temperature throughout the year.
+#The summer and winter cycles are obvious
+#But there is a fair bit of variablity day-to-day
+plt.plot(dataset[50000:])
+plt.xlabel(&quot;Day&quot;)
+plt.ylabel(&quot;Temperature (degrees Celsius)&quot;)</code></pre>
+<pre><code>Text(0, 0.5, &#39;Temperature (degrees Celsius)&#39;)</code></pre>
+<div class="figure">
+<img src="../fig/fig-03DL-temperature.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code># split into train and test sets
+#Use the first 58000 days as training
+train=datasetScaled[0:58000,:]
+#Use from 55000 to 58316 as testing set, 
+#that means we will test on 3000 days we know the answer for, 
+#leaving 316 that the algorithm has never seen!
+test=datasetScaled[55000:,:]
+
+print(&quot;Traing set is: &quot;, train.shape)
+print(&quot;Test set is: &quot;, test.shape)</code></pre>
+<pre><code>Traing set is:  (58000, 1)
+Test set is:  (3316, 1)</code></pre>
+<pre class="python"><code># convert an array of values into a dataset matrix
+def create_dataset(dataset, look_back=1):
+    dataX, dataY = [], []
+    for i in range(len(dataset)-look_back-1):
+        a = dataset[i:(i+look_back), 0]
+        dataX.append(a)
+        dataY.append(dataset[i + look_back, 0])
+    return numpy.array(dataX), numpy.array(dataY)
+
+# previous time steps to use as input variables to predict the next time period
+look_back = 30 
+
+# reshape into X=t and Y=t+look_back
+trainX, trainY = create_dataset(train, look_back)
+testX, testY = create_dataset(test, look_back)
+
+# reshape input to be [samples, time steps, features]
+trainX = numpy.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
+testX = numpy.reshape(testX, (testX.shape[0], testX.shape[1], 1))</code></pre>
+<pre class="python"><code># create the LSTM network
+#The network has a visible layer with 1 input, 
+#a hidden layer with 4 LSTM blocks or neurons, 
+#and an output layer that makes a single value prediction. 
+#The default sigmoid activation function is used for the LSTM blocks. 
+#The network is trained for 4 epochs and a batch size of 1 is used.
+
+print(&quot;Running model...&quot;)
+model = tf.keras.models.Sequential()
+
+print(&quot;Adding LSTM.&quot;)
+model.add(tf.keras.layers.LSTM(4, input_shape=(look_back, 1)))
+
+print(&quot;Adding dense.&quot;)
+model.add(tf.keras.layers.Dense(1))
+
+print(&quot;Compiling.&quot;)
+model.compile(loss=&#39;mean_squared_error&#39;, optimizer=&#39;adam&#39;)</code></pre>
+<pre><code>Running model...
+Adding LSTM.
+Adding dense.
+Compiling.</code></pre>
+<pre class="python"><code>#Fit the model, this takes the longest time
+print(&quot;fitting...&quot;)
+startT=time.time()
+model.fit(trainX, trainY, epochs=4, batch_size=30, verbose=1)
+endT=time.time()
+
+print(&quot;Time taken: &quot;, endT-startT)</code></pre>
+<pre><code>fitting...
+Train on 57969 samples
+Epoch 1/4
+57969/57969 [==============================] - 41s 699us/sample - loss: 0.0066
+Epoch 2/4
+57969/57969 [==============================] - 43s 741us/sample - loss: 0.0062
+Epoch 3/4
+57969/57969 [==============================] - 43s 745us/sample - loss: 0.0060
+Epoch 4/4
+57969/57969 [==============================] - 42s 731us/sample - loss: 0.0059
+Time taken:  169.15610480308533</code></pre>
+<pre class="python"><code>#Save or load the model
+#model.save(&#39;kerasmodel.hdf5&#39;)
+#model = tf.keras.models.load_model(&#39;kerasmodel.hdf5&#39;)</code></pre>
+<pre class="python"><code>#make predictions
+trainPredict = model.predict(trainX)
+testPredict = model.predict(testX)
+
+# invert and rescale predictions
+trainPredicti = scaler.inverse_transform(trainPredict)
+trainYi = scaler.inverse_transform([trainY])
+testPredicti = scaler.inverse_transform(testPredict)
+testYi = scaler.inverse_transform([testY])
+
+# calculate root mean squared error
+trainScore = math.sqrt(mean_squared_error(trainYi[0], trainPredicti[:,0]))
+print(&#39;Train Score: %.4f RMSE&#39; % (trainScore))
+testScore = math.sqrt(mean_squared_error(testYi[0], testPredicti[:,0]))
+print(&#39;Test Score: %.4f RMSE&#39; % (testScore))
+</code></pre>
+<pre><code>Train Score: 2.9142 RMSE
+Test Score: 2.9692 RMSE</code></pre>
+<pre class="python"><code>#PLOT the result
+
+#Create a dataset that is the same size as the testing/training set 
+dummyfull=numpy.ones((datasetScaled.shape[0]-test.shape[0],1))*numpy.mean(testPredict)
+print(dummyfull.shape,testPredicti.shape,datasetScaled.shape)
+testvec = numpy.concatenate((dummyfull,testPredict))
+
+#Scale the data
+transformer = MaxAbsScaler().fit(train[:])
+testScale= transformer.transform(testvec)
+
+print(trainPredict.shape,testPredict.shape,testvec.shape)
+
+train=datasetScaled[50000:58000,:]
+train=datasetScaled[0:58000,:]
+#Use from 50000 to 58316 as testing set, 
+#that means we will test on 8000 days we know the answer for, 
+#leaving 316 that the algorithm has never seen!
+test=datasetScaled[55000:,:]
+
+plt.plot(datasetScaled[:])
+plt.plot(train[:],&#39;r&#39;)
+plt.plot(testScale[:],&#39;k&#39;)
+
+plt.legend([&quot;All Data&quot;,&quot;Training Data&quot;,&quot;Predicted data&quot;])
+plt.xlabel(&quot;Day&quot;)
+plt.ylabel(&quot;Scaled Temperature&quot;)
+plt.xlim([54000,58500])
+plt.show()</code></pre>
+<pre><code>(55000, 1) (3285, 1) (58316, 1)
+(57969, 1) (3285, 1) (58285, 1)</code></pre>
+<div class="figure">
+<img src="../fig/fig-03DL-prediction.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>Depending on the environment you are working in, you will have to use a different combo of python/cuda/tensorflow/keras versions and GPU hardware. Check compatability for <a href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html">NVIDIA Drivers/CUDA</a>, <a href="https://www.tensorflow.org/install/source#tested_build_configurations">CUDA/Python/Tensorflow</a>.</p>
+<p>In Deep Learning, <em>training</em> the model can take a seriously long time, so we often only want to do this once and then tweak our model. In which case we can do that by saving out our data as as a <em>*.hdf5</em> file.</p>
+</div>
+<div id="exercise" class="section level1">
+<h1>Exercise</h1>
+<p>Pick another site at <a href="http://www.bom.gov.au/climate/data/">http://www.bom.gov.au/climate/data/</a> and re-run the analysis.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

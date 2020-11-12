@@ -1,0 +1,3738 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>01b-dataframes.utf8</title>
+
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="lesson.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00-intro.html">Introduction</a>
+    </li>
+    <li>
+      <a href="01a-fundamentals.html">Fundamentals</a>
+    </li>
+    <li>
+      <a href="01b-dataframes.html">Data frames and Shapefiles</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02a-mapping.html">Mapping</a>
+    </li>
+    <li>
+      <a href="02b-Clustering.html">Clustering</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="03a-MachineLearning.html">Machine Learning</a>
+    </li>
+    <li>
+      <a href="03b-DeepLearningTS.html">Deep Learning &amp; Time Series</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="04a-SimpleSpeedUps.html">Simple Speed Ups</a>
+    </li>
+    <li>
+      <a href="04b-DaskDataframes.html">Dask data frames</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="python-packages-for-working-with-shapefiles-and-tabular-data" class="section level1">
+<h1>Python packages for working with shapefiles and tabular data</h1>
+<div id="questions" class="section level3 questions">
+<h3>Questions</h3>
+<ul>
+<li>How can I load shapefiles and tabular data into python?</li>
+<li>What are libraries and packages?</li>
+</ul>
+</div>
+<div id="objectives" class="section level3 objectives">
+<h3>Objectives</h3>
+<ul>
+<li>Learn how to deal with specialty data types.</li>
+<li>Learn about pandas, pyshp, lasio, obspy.</li>
+</ul>
+</div>
+<div id="dealing-with-other-data-types" class="section level2">
+<h2>Dealing with other data types</h2>
+<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the “pyshp” (for dealing with shapefiles) and “pandas” (great for tables and time series) packages.</p>
+<p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
+<div id="shapefiles" class="section level3">
+<h3>Shapefiles</h3>
+<p>Shapefiles are a very common file format for GIS data.</p>
+</div>
+</div>
+<div id="dealing-with-other-data-types-1" class="section level2">
+<h2>Dealing with other data types</h2>
+<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the “pyshp” (for dealing with shapefiles) and “pandas” (great for tables and time series) packages.</p>
+<p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
+</div>
+</div>
+<div id="shapefiles-1" class="section level1">
+<h1>Shapefiles</h1>
+<p>Shapefiles are a very common file format for GIS data.</p>
+<pre class="python"><code>#Load the required modules
+import shapefile
+
+#NOTE: Weirdly and confusingly, this package is called &quot;pyshp&quot; but you call it via the name &quot;shapefile&quot;</code></pre>
+<pre class="python"><code>help(shapefile)
+#Or check out the help pages https://github.com/GeospatialPython/pyshp</code></pre>
+<pre><code>Help on module shapefile:
+
+NAME
+    shapefile
+
+DESCRIPTION
+    shapefile.py
+    Provides read and write support for ESRI Shapefiles.
+    author: jlawhead&lt;at&gt;geospatialpython.com
+    version: 2.1.2
+    Compatible with Python versions 2.7-3.x
+
+CLASSES
+    builtins.Exception(builtins.BaseException)
+        ShapefileException
+    builtins.list(builtins.object)
+        ShapeRecords
+        Shapes
+    builtins.object
+        Reader
+        Shape
+        ShapeRecord
+        Writer
+    
+    class Reader(builtins.object)
+     |  Reader(*args, **kwargs)
+     |  
+     |  Reads the three files of a shapefile as a unit or
+     |  separately.  If one of the three files (.shp, .shx,
+     |  .dbf) is missing no exception is thrown until you try
+     |  to call a method that depends on that particular file.
+     |  The .shx index file is used if available for efficiency
+     |  but is not required to read the geometry from the .shp
+     |  file. The &quot;shapefile&quot; argument in the constructor is the
+     |  name of the file you want to open.
+     |  
+     |  You can instantiate a Reader without specifying a shapefile
+     |  and then specify one later with the load() method.
+     |  
+     |  Only the shapefile headers are read upon loading. Content
+     |  within each file is only accessed when required and as
+     |  efficiently as possible. Shapefiles are usually not large
+     |  but they can be.
+     |  
+     |  Methods defined here:
+     |  
+     |  __del__(self)
+     |  
+     |  __enter__(self)
+     |      Enter phase of context manager.
+     |  
+     |  __exit__(self, exc_type, exc_val, exc_tb)
+     |      Exit phase of context manager, close opened files.
+     |  
+     |  __init__(self, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __iter__(self)
+     |      Iterates through the shapes/records in the shapefile.
+     |  
+     |  __len__(self)
+     |      Returns the number of shapes/records in the shapefile.
+     |  
+     |  __str__(self)
+     |      Use some general info on the shapefile as __str__
+     |  
+     |  close(self)
+     |  
+     |  iterRecords(self)
+     |      Returns a generator of records in a dbf file.
+     |      Useful for large shapefiles or dbf files.
+     |  
+     |  iterShapeRecords(self)
+     |      Returns a generator of combination geometry/attribute records for
+     |      all records in a shapefile.
+     |  
+     |  iterShapes(self)
+     |      Returns a generator of shapes in a shapefile. Useful
+     |      for handling large shapefiles.
+     |  
+     |  load(self, shapefile=None)
+     |      Opens a shapefile from a filename or file-like
+     |      object. Normally this method would be called by the
+     |      constructor with the file name as an argument.
+     |  
+     |  load_dbf(self, shapefile_name)
+     |      Attempts to load file with .dbf extension as both lower and upper case
+     |  
+     |  load_shp(self, shapefile_name)
+     |      Attempts to load file with .shp extension as both lower and upper case
+     |  
+     |  load_shx(self, shapefile_name)
+     |      Attempts to load file with .shx extension as both lower and upper case
+     |  
+     |  record(self, i=0)
+     |      Returns a specific dbf record based on the supplied index.
+     |  
+     |  records(self)
+     |      Returns all records in a dbf file.
+     |  
+     |  shape(self, i=0)
+     |      Returns a shape object for a shape in the geometry
+     |      record file.
+     |  
+     |  shapeRecord(self, i=0)
+     |      Returns a combination geometry and attribute record for the
+     |      supplied record index.
+     |  
+     |  shapeRecords(self)
+     |      Returns a list of combination geometry/attribute records for
+     |      all records in a shapefile.
+     |  
+     |  shapes(self)
+     |      Returns all shapes in a shapefile.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  __geo_interface__
+     |  
+     |  shapeTypeName
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+    class Shape(builtins.object)
+     |  Shape(shapeType=0, points=None, parts=None, partTypes=None)
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, shapeType=0, points=None, parts=None, partTypes=None)
+     |      Stores the geometry of the different shape types
+     |      specified in the Shapefile spec. Shape types are
+     |      usually point, polyline, or polygons. Every shape type
+     |      except the &quot;Null&quot; type contains points at some level for
+     |      example vertices in a polygon. If a shape type has
+     |      multiple shapes containing points within a single
+     |      geometry record then those shapes are called parts. Parts
+     |      are designated by their starting index in geometry record&#39;s
+     |      list of shapes. For MultiPatch geometry, partTypes designates
+     |      the patch type of each of the parts.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  __geo_interface__
+     |  
+     |  shapeTypeName
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+    class ShapeRecord(builtins.object)
+     |  ShapeRecord(shape=None, record=None)
+     |  
+     |  A ShapeRecord object containing a shape along with its attributes.
+     |  Provides the GeoJSON __geo_interface__ to return a Feature dictionary.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, shape=None, record=None)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  __geo_interface__
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+    class ShapeRecords(builtins.list)
+     |  ShapeRecords(iterable=(), /)
+     |  
+     |  A class to hold a list of ShapeRecord objects. Subclasses list to ensure compatibility with
+     |  former work and to reuse all the optimizations of the builtin list.
+     |  In addition to the list interface, this also provides the GeoJSON __geo_interface__
+     |  to return a FeatureCollection dictionary.
+     |  
+     |  Method resolution order:
+     |      ShapeRecords
+     |      builtins.list
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __repr__(self)
+     |      Return repr(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  __geo_interface__
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.list:
+     |  
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |  
+     |  __contains__(self, key, /)
+     |      Return key in self.
+     |  
+     |  __delitem__(self, key, /)
+     |      Delete self[key].
+     |  
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |  
+     |  __ge__(self, value, /)
+     |      Return self&gt;=value.
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) &lt;==&gt; x[y]
+     |  
+     |  __gt__(self, value, /)
+     |      Return self&gt;value.
+     |  
+     |  __iadd__(self, value, /)
+     |      Implement self+=value.
+     |  
+     |  __imul__(self, value, /)
+     |      Implement self*=value.
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __iter__(self, /)
+     |      Implement iter(self).
+     |  
+     |  __le__(self, value, /)
+     |      Return self&lt;=value.
+     |  
+     |  __len__(self, /)
+     |      Return len(self).
+     |  
+     |  __lt__(self, value, /)
+     |      Return self&lt;value.
+     |  
+     |  __mul__(self, value, /)
+     |      Return self*value.
+     |  
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |  
+     |  __reversed__(self, /)
+     |      Return a reverse iterator over the list.
+     |  
+     |  __rmul__(self, value, /)
+     |      Return value*self.
+     |  
+     |  __setitem__(self, key, value, /)
+     |      Set self[key] to value.
+     |  
+     |  __sizeof__(self, /)
+     |      Return the size of the list in memory, in bytes.
+     |  
+     |  append(self, object, /)
+     |      Append object to the end of the list.
+     |  
+     |  clear(self, /)
+     |      Remove all items from list.
+     |  
+     |  copy(self, /)
+     |      Return a shallow copy of the list.
+     |  
+     |  count(self, value, /)
+     |      Return number of occurrences of value.
+     |  
+     |  extend(self, iterable, /)
+     |      Extend list by appending elements from the iterable.
+     |  
+     |  index(self, value, start=0, stop=9223372036854775807, /)
+     |      Return first index of value.
+     |      
+     |      Raises ValueError if the value is not present.
+     |  
+     |  insert(self, index, object, /)
+     |      Insert object before index.
+     |  
+     |  pop(self, index=-1, /)
+     |      Remove and return item at index (default last).
+     |      
+     |      Raises IndexError if list is empty or index is out of range.
+     |  
+     |  remove(self, value, /)
+     |      Remove first occurrence of value.
+     |      
+     |      Raises ValueError if the value is not present.
+     |  
+     |  reverse(self, /)
+     |      Reverse *IN PLACE*.
+     |  
+     |  sort(self, /, *, key=None, reverse=False)
+     |      Sort the list in ascending order and return None.
+     |      
+     |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
+     |      order of two equal elements is maintained).
+     |      
+     |      If a key function is given, apply it once to each list item and sort them,
+     |      ascending or descending, according to their function values.
+     |      
+     |      The reverse flag can be set to sort in descending order.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from builtins.list:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from builtins.list:
+     |  
+     |  __hash__ = None
+    
+    class ShapefileException(builtins.Exception)
+     |  An exception to handle shapefile specific problems.
+     |  
+     |  Method resolution order:
+     |      ShapefileException
+     |      builtins.Exception
+     |      builtins.BaseException
+     |      builtins.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.Exception:
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from builtins.Exception:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.BaseException:
+     |  
+     |  __delattr__(self, name, /)
+     |      Implement delattr(self, name).
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __reduce__(...)
+     |      Helper for pickle.
+     |  
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |  
+     |  __setattr__(self, name, value, /)
+     |      Implement setattr(self, name, value).
+     |  
+     |  __setstate__(...)
+     |  
+     |  __str__(self, /)
+     |      Return str(self).
+     |  
+     |  with_traceback(...)
+     |      Exception.with_traceback(tb) --
+     |      set self.__traceback__ to tb and return self.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from builtins.BaseException:
+     |  
+     |  __cause__
+     |      exception cause
+     |  
+     |  __context__
+     |      exception context
+     |  
+     |  __dict__
+     |  
+     |  __suppress_context__
+     |  
+     |  __traceback__
+     |  
+     |  args
+    
+    class Shapes(builtins.list)
+     |  Shapes(iterable=(), /)
+     |  
+     |  A class to hold a list of Shape objects. Subclasses list to ensure compatibility with
+     |  former work and to reuse all the optimizations of the builtin list.
+     |  In addition to the list interface, this also provides the GeoJSON __geo_interface__
+     |  to return a GeometryCollection dictionary.
+     |  
+     |  Method resolution order:
+     |      Shapes
+     |      builtins.list
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __repr__(self)
+     |      Return repr(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  __geo_interface__
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from builtins.list:
+     |  
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |  
+     |  __contains__(self, key, /)
+     |      Return key in self.
+     |  
+     |  __delitem__(self, key, /)
+     |      Delete self[key].
+     |  
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |  
+     |  __ge__(self, value, /)
+     |      Return self&gt;=value.
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) &lt;==&gt; x[y]
+     |  
+     |  __gt__(self, value, /)
+     |      Return self&gt;value.
+     |  
+     |  __iadd__(self, value, /)
+     |      Implement self+=value.
+     |  
+     |  __imul__(self, value, /)
+     |      Implement self*=value.
+     |  
+     |  __init__(self, /, *args, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __iter__(self, /)
+     |      Implement iter(self).
+     |  
+     |  __le__(self, value, /)
+     |      Return self&lt;=value.
+     |  
+     |  __len__(self, /)
+     |      Return len(self).
+     |  
+     |  __lt__(self, value, /)
+     |      Return self&lt;value.
+     |  
+     |  __mul__(self, value, /)
+     |      Return self*value.
+     |  
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |  
+     |  __reversed__(self, /)
+     |      Return a reverse iterator over the list.
+     |  
+     |  __rmul__(self, value, /)
+     |      Return value*self.
+     |  
+     |  __setitem__(self, key, value, /)
+     |      Set self[key] to value.
+     |  
+     |  __sizeof__(self, /)
+     |      Return the size of the list in memory, in bytes.
+     |  
+     |  append(self, object, /)
+     |      Append object to the end of the list.
+     |  
+     |  clear(self, /)
+     |      Remove all items from list.
+     |  
+     |  copy(self, /)
+     |      Return a shallow copy of the list.
+     |  
+     |  count(self, value, /)
+     |      Return number of occurrences of value.
+     |  
+     |  extend(self, iterable, /)
+     |      Extend list by appending elements from the iterable.
+     |  
+     |  index(self, value, start=0, stop=9223372036854775807, /)
+     |      Return first index of value.
+     |      
+     |      Raises ValueError if the value is not present.
+     |  
+     |  insert(self, index, object, /)
+     |      Insert object before index.
+     |  
+     |  pop(self, index=-1, /)
+     |      Remove and return item at index (default last).
+     |      
+     |      Raises IndexError if list is empty or index is out of range.
+     |  
+     |  remove(self, value, /)
+     |      Remove first occurrence of value.
+     |      
+     |      Raises ValueError if the value is not present.
+     |  
+     |  reverse(self, /)
+     |      Reverse *IN PLACE*.
+     |  
+     |  sort(self, /, *, key=None, reverse=False)
+     |      Sort the list in ascending order and return None.
+     |      
+     |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
+     |      order of two equal elements is maintained).
+     |      
+     |      If a key function is given, apply it once to each list item and sort them,
+     |      ascending or descending, according to their function values.
+     |      
+     |      The reverse flag can be set to sort in descending order.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from builtins.list:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from builtins.list:
+     |  
+     |  __hash__ = None
+    
+    class Writer(builtins.object)
+     |  Writer(target=None, shapeType=None, autoBalance=False, **kwargs)
+     |  
+     |  Provides write support for ESRI Shapefiles.
+     |  
+     |  Methods defined here:
+     |  
+     |  __del__(self)
+     |  
+     |  __enter__(self)
+     |      Enter phase of context manager.
+     |  
+     |  __exit__(self, exc_type, exc_val, exc_tb)
+     |      Exit phase of context manager, finish writing and close the files.
+     |  
+     |  __init__(self, target=None, shapeType=None, autoBalance=False, **kwargs)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  __len__(self)
+     |      Returns the current number of features written to the shapefile. 
+     |      If shapes and records are unbalanced, the length is considered the highest
+     |      of the two.
+     |  
+     |  balance(self)
+     |      Adds corresponding empty attributes or null geometry records depending
+     |      on which type of record was created to make sure all three files
+     |      are in synch.
+     |  
+     |  bbox(self)
+     |      Returns the current bounding box for the shapefile which is
+     |      the lower-left and upper-right corners. It does not contain the
+     |      elevation or measure extremes.
+     |  
+     |  close(self)
+     |      Write final shp, shx, and dbf headers, close opened files.
+     |  
+     |  field(self, name, fieldType=&#39;C&#39;, size=&#39;50&#39;, decimal=0)
+     |      Adds a dbf field descriptor to the shapefile.
+     |  
+     |  line(self, lines)
+     |      Creates a POLYLINE shape.
+     |      Lines is a collection of lines, each made up of a list of xy values.
+     |  
+     |  linem(self, lines)
+     |      Creates a POLYLINEM shape.
+     |      Lines is a collection of lines, each made up of a list of xym values.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  linez(self, lines)
+     |      Creates a POLYLINEZ shape.
+     |      Lines is a collection of lines, each made up of a list of xyzm values.
+     |      If the z (elevation) value is not included, it defaults to 0.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  mbox(self)
+     |      Returns the current m extremes for the shapefile.
+     |  
+     |  multipatch(self, parts, partTypes)
+     |      Creates a MULTIPATCH shape.
+     |      Parts is a collection of 3D surface patches, each made up of a list of xyzm values.
+     |      PartTypes is a list of types that define each of the surface patches.
+     |      The types can be any of the following module constants: TRIANGLE_STRIP,
+     |      TRIANGLE_FAN, OUTER_RING, INNER_RING, FIRST_RING, or RING.
+     |      If the z (elavation) value is not included, it defaults to 0.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  multipoint(self, points)
+     |      Creates a MULTIPOINT shape.
+     |      Points is a list of xy values.
+     |  
+     |  multipointm(self, points)
+     |      Creates a MULTIPOINTM shape.
+     |      Points is a list of xym values.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  multipointz(self, points)
+     |      Creates a MULTIPOINTZ shape.
+     |      Points is a list of xyzm values.
+     |      If the z (elevation) value is not included, it defaults to 0.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  null(self)
+     |      Creates a null shape.
+     |  
+     |  point(self, x, y)
+     |      Creates a POINT shape.
+     |  
+     |  pointm(self, x, y, m=None)
+     |      Creates a POINTM shape.
+     |      If the m (measure) value is not set, it defaults to NoData.
+     |  
+     |  pointz(self, x, y, z=0, m=None)
+     |      Creates a POINTZ shape.
+     |      If the z (elevation) value is not set, it defaults to 0.
+     |      If the m (measure) value is not set, it defaults to NoData.
+     |  
+     |  poly(self, polys)
+     |      Creates a POLYGON shape.
+     |      Polys is a collection of polygons, each made up of a list of xy values.
+     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
+     |      If some of the polygons are holes, these must run in a counterclockwise direction.
+     |  
+     |  polym(self, polys)
+     |      Creates a POLYGONM shape.
+     |      Polys is a collection of polygons, each made up of a list of xym values.
+     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
+     |      If some of the polygons are holes, these must run in a counterclockwise direction.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  polyz(self, polys)
+     |      Creates a POLYGONZ shape.
+     |      Polys is a collection of polygons, each made up of a list of xyzm values.
+     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
+     |      If some of the polygons are holes, these must run in a counterclockwise direction.
+     |      If the z (elevation) value is not included, it defaults to 0.
+     |      If the m (measure) value is not included, it defaults to None (NoData).
+     |  
+     |  record(self, *recordList, **recordDict)
+     |      Creates a dbf attribute record. You can submit either a sequence of
+     |      field values or keyword arguments of field names and values. Before
+     |      adding records you must add fields for the record values using the
+     |      field() method. If the record values exceed the number of fields the
+     |      extra ones won&#39;t be added. In the case of using keyword arguments to specify
+     |      field/value pairs only fields matching the already registered fields
+     |      will be added.
+     |  
+     |  shape(self, s)
+     |  
+     |  zbox(self)
+     |      Returns the current z extremes for the shapefile.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  shapeTypeName
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    b(v, encoding=&#39;utf-8&#39;, encodingErrors=&#39;strict&#39;)
+    
+    bbox_contains(bbox1, bbox2)
+        Tests whether bbox1 fully contains bbox2, returning a boolean
+    
+    bbox_overlap(bbox1, bbox2)
+        Tests whether two bounding boxes overlap, returning a boolean
+    
+    calcsize(format, /)
+        Return size in bytes of the struct described by the format string.
+    
+    is_string(v)
+    
+    organize_polygon_rings(rings)
+        Organize a list of coordinate rings into one or more polygons with holes.
+        Returns a list of polygons, where each polygon is composed of a single exterior
+        ring, and one or more interior holes.
+        
+        Rings must be closed, and cannot intersect each other (non-self-intersecting polygon).
+        Rings are determined as exteriors if they run in clockwise direction, or interior
+        holes if they run in counter-clockwise direction. This method is used to construct
+        GeoJSON (multi)polygons from the shapefile polygon shape type, which does not
+        explicitly store the structure of the polygons beyond exterior/interior ring orientation.
+    
+    pack(...)
+        pack(format, v1, v2, ...) -&gt; bytes
+        
+        Return a bytes object containing the values v1, v2, ... packed according
+        to the format string.  See help(struct) for more on format strings.
+    
+    ring_bbox(coords)
+        Calculates and returns the bounding box of a ring.
+    
+    ring_contains_point(coords, p)
+        Fast point-in-polygon crossings algorithm, MacMartin optimization.
+        
+        Adapted from code by Eric Haynes
+        http://www.realtimerendering.com/resources/GraphicsGems//gemsiv/ptpoly_haines/ptinpoly.c
+        
+        Original description:
+            Shoot a test ray along +X axis.  The strategy, from MacMartin, is to
+            compare vertex Y values to the testing point&#39;s Y and quickly discard
+            edges which are entirely to one side of the test ray.
+    
+    ring_contains_ring(coords1, coords2)
+        Returns True if all vertexes in coords2 are fully inside coords1.
+    
+    ring_sample(coords, ccw=False)
+        Return a sample point guaranteed to be within a ring, by efficiently
+        finding the first centroid of a coordinate triplet whose orientation
+        matches the orientation of the ring and passes the point-in-ring test.
+        The orientation of the ring is assumed to be clockwise, unless ccw
+        (counter-clockwise) is set to True.
+    
+    signed_area(coords)
+        Return the signed area enclosed by a ring using the linear time
+        algorithm. A value &gt;= 0 indicates a counter-clockwise oriented ring.
+    
+    test(**kwargs)
+        # Begin Testing
+    
+    u(v, encoding=&#39;utf-8&#39;, encodingErrors=&#39;strict&#39;)
+    
+    unpack(format, buffer, /)
+        Return a tuple containing values unpacked according to the format string.
+        
+        The buffer&#39;s size in bytes must be calcsize(format).
+        
+        See help(struct) for more on format strings.
+
+DATA
+    FIRST_RING = 4
+    INNER_RING = 3
+    MISSING = [None, &#39;&#39;]
+    MULTIPATCH = 31
+    MULTIPOINT = 8
+    MULTIPOINTM = 28
+    MULTIPOINTZ = 18
+    NODATA = -1e+39
+    NULL = 0
+    OUTER_RING = 2
+    PARTTYPE_LOOKUP = {0: &#39;TRIANGLE_STRIP&#39;, 1: &#39;TRIANGLE_FAN&#39;, 2: &#39;OUTER_R...
+    POINT = 1
+    POINTM = 21
+    POINTZ = 11
+    POLYGON = 5
+    POLYGONM = 25
+    POLYGONZ = 15
+    POLYLINE = 3
+    POLYLINEM = 23
+    POLYLINEZ = 13
+    PYTHON3 = True
+    RING = 5
+    SHAPETYPE_LOOKUP = {0: &#39;NULL&#39;, 1: &#39;POINT&#39;, 3: &#39;POLYLINE&#39;, 5: &#39;POLYGON&#39;...
+    TRIANGLE_FAN = 1
+    TRIANGLE_STRIP = 0
+
+VERSION
+    2.1.2
+
+FILE
+    /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py</code></pre>
+<pre class="python"><code>#Set the filename
+boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
+
+#read in the file
+shapeRead = shapefile.Reader(boreshape)
+
+#And save out some of the shape file attributes
+recs    = shapeRead.records()
+shapes  = shapeRead.shapes()
+fields  = shapeRead.fields
+Nshp    = len(shapes)</code></pre>
+<pre class="python"><code>print(Nshp) #print the Number of items in the shapefile</code></pre>
+<pre><code>7635
+
+
+7635</code></pre>
+<pre class="python"><code>fields[:]#print the fields</code></pre>
+<pre><code>[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
+ [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;HydroCode&#39;, &#39;C&#39;, 30, 0],
+ [&#39;BoreID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;TopElev&#39;, &#39;F&#39;, 19, 11],
+ [&#39;BottomElev&#39;, &#39;F&#39;, 19, 11],
+ [&#39;HGUID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
+ [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
+ [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]
+
+
+
+
+
+
+
+[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
+ [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;HydroCode&#39;, &#39;C&#39;, 30, 0],
+ [&#39;BoreID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;TopElev&#39;, &#39;F&#39;, 19, 11],
+ [&#39;BottomElev&#39;, &#39;F&#39;, 19, 11],
+ [&#39;HGUID&#39;, &#39;N&#39;, 10, 0],
+ [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
+ [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
+ [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]</code></pre>
+<pre class="python"><code>recs[0] #print the first record, then this is a list that can be subscripted further</code></pre>
+<pre><code>Record #0: [32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
+
+
+
+
+
+
+
+[32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]</code></pre>
+<pre class="python"><code>shapes[0].points #print the point values of the first shape</code></pre>
+<pre><code>[(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]</code></pre>
+<div id="challenge.-todo" class="section level3 challenge">
+<h3>Challenge. TODO</h3>
+<ul>
+<li>Look at the data above. It provides the coordinates of the wells as points.</li>
+<li>How many coordinates are provided for each well? Why do you think this is?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<p>There are two coordinates.</p>
+<pre class="python"><code></code></pre>
+</details>
+</div>
+<p>Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used “pyshp” imported with the name “shapefile” (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.</p>
+<div id="more-table-manipulation" class="section level2">
+<h2>More table manipulation</h2>
+<pre class="python"><code>import pandas</code></pre>
+<pre class="python"><code>#read in the data
+log_data=pandas.read_csv(&quot;../data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,\
+                         header=0,sep=&#39;,&#39;,skipinitialspace=True,quotechar =&#39;&quot;&#39;,\
+                         usecols=list(range(0,13)),\
+                         skiprows=[453,456,458,460,689,697,720,723,726,839,880,884,885,890,898,934])
+
+#This data was weird because it has quotation marks to signify inches inside comments within the file, 
+#making automatic reading of it tricky</code></pre>
+<pre class="python"><code>log_data           # print the first 30 and last 30 rows</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+OBJECTID
+</th>
+<th>
+BoreID
+</th>
+<th>
+HydroCode
+</th>
+<th>
+RefElev
+</th>
+<th>
+RefElevDesc
+</th>
+<th>
+FromDepth
+</th>
+<th>
+ToDepth
+</th>
+<th>
+TopElev
+</th>
+<th>
+BottomElev
+</th>
+<th>
+MajorLithCode
+</th>
+<th>
+MinorLithCode
+</th>
+<th>
+Description
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+1769789
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+18.0
+</td>
+<td>
+19.5
+</td>
+<td>
+39.25
+</td>
+<td>
+37.75
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+1769790
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+19.5
+</td>
+<td>
+22.0
+</td>
+<td>
+37.75
+</td>
+<td>
+35.25
+</td>
+<td>
+ROCK
+</td>
+<td>
+None
+</td>
+<td>
+Rocks and sand
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1769791
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+22.0
+</td>
+<td>
+24.0
+</td>
+<td>
+35.25
+</td>
+<td>
+33.25
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+1770725
+</td>
+<td>
+30141910
+</td>
+<td>
+662816624
+</td>
+<td>
+4.0
+</td>
+<td>
+NGS
+</td>
+<td>
+0.0
+</td>
+<td>
+6.0
+</td>
+<td>
+4.0
+</td>
+<td>
+-2.0
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+No sample
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+1770726
+</td>
+<td>
+30141910
+</td>
+<td>
+662816624
+</td>
+<td>
+4.0
+</td>
+<td>
+NGS
+</td>
+<td>
+6.0
+</td>
+<td>
+15.0
+</td>
+<td>
+-2.0
+</td>
+<td>
+-11.0
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay - orange-red grey, mottled; stiff-sticky….
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+70152
+</th>
+<td>
+4120345
+</td>
+<td>
+30304039
+</td>
+<td>
+662829228
+</td>
+<td>
+None
+</td>
+<td>
+UNK
+</td>
+<td>
+9.0
+</td>
+<td>
+10.0
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Sandy clay
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+70153
+</th>
+<td>
+4120346
+</td>
+<td>
+30304039
+</td>
+<td>
+662829228
+</td>
+<td>
+None
+</td>
+<td>
+UNK
+</td>
+<td>
+10.0
+</td>
+<td>
+12.5
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+SAND
+</td>
+<td>
+None
+</td>
+<td>
+Clay sand
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+70154
+</th>
+<td>
+4120347
+</td>
+<td>
+30304050
+</td>
+<td>
+652802882
+</td>
+<td>
+None
+</td>
+<td>
+UNK
+</td>
+<td>
+0.0
+</td>
+<td>
+0.3
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+FILL
+</td>
+<td>
+None
+</td>
+<td>
+Fill
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+70155
+</th>
+<td>
+4120348
+</td>
+<td>
+30304050
+</td>
+<td>
+652802882
+</td>
+<td>
+None
+</td>
+<td>
+UNK
+</td>
+<td>
+0.3
+</td>
+<td>
+0.8
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+SAND
+</td>
+<td>
+None
+</td>
+<td>
+Clayey sand
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+<tr>
+<th>
+70156
+</th>
+<td>
+4120349
+</td>
+<td>
+30304050
+</td>
+<td>
+652802882
+</td>
+<td>
+None
+</td>
+<td>
+UNK
+</td>
+<td>
+0.8
+</td>
+<td>
+3.5
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+SAND
+</td>
+<td>
+None
+</td>
+<td>
+Sand
+</td>
+<td>
+SAGeodata
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+70157 rows × 13 columns
+</p>
+</div>
+<pre class="python"><code># add a new column as a function of existing columns
+log_data[&#39;Thickness&#39;] = log_data.ToDepth - log_data.FromDepth</code></pre>
+<pre class="python"><code>type(log_data)     # see what Python type the DataFrame is</code></pre>
+<pre><code>pandas.core.frame.DataFrame</code></pre>
+<pre class="python"><code>log_data.head(3)    # print the first 3 rows</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+OBJECTID
+</th>
+<th>
+BoreID
+</th>
+<th>
+HydroCode
+</th>
+<th>
+RefElev
+</th>
+<th>
+RefElevDesc
+</th>
+<th>
+FromDepth
+</th>
+<th>
+ToDepth
+</th>
+<th>
+TopElev
+</th>
+<th>
+BottomElev
+</th>
+<th>
+MajorLithCode
+</th>
+<th>
+MinorLithCode
+</th>
+<th>
+Description
+</th>
+<th>
+Source
+</th>
+<th>
+Thickness
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+1769789
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+18.0
+</td>
+<td>
+19.5
+</td>
+<td>
+39.25
+</td>
+<td>
+37.75
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay
+</td>
+<td>
+SAGeodata
+</td>
+<td>
+1.5
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+1769790
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+19.5
+</td>
+<td>
+22.0
+</td>
+<td>
+37.75
+</td>
+<td>
+35.25
+</td>
+<td>
+ROCK
+</td>
+<td>
+None
+</td>
+<td>
+Rocks and sand
+</td>
+<td>
+SAGeodata
+</td>
+<td>
+2.5
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+1769791
+</td>
+<td>
+30062892
+</td>
+<td>
+662815923
+</td>
+<td>
+57.25
+</td>
+<td>
+NGS
+</td>
+<td>
+22.0
+</td>
+<td>
+24.0
+</td>
+<td>
+35.25
+</td>
+<td>
+33.25
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay
+</td>
+<td>
+SAGeodata
+</td>
+<td>
+2.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="python"><code>log_data.index     # “the index” (aka “the labels”). 
+#Pandas is great for using timeseries data, where the index can be the timestamps</code></pre>
+<pre><code>RangeIndex(start=0, stop=70157, step=1)</code></pre>
+<pre class="python"><code>log_data.columns   # column names (which is “an index”)</code></pre>
+<pre><code>Index([&#39;OBJECTID&#39;, &#39;BoreID&#39;, &#39;HydroCode&#39;, &#39;RefElev&#39;, &#39;RefElevDesc&#39;,
+       &#39;FromDepth&#39;, &#39;ToDepth&#39;, &#39;TopElev&#39;, &#39;BottomElev&#39;, &#39;MajorLithCode&#39;,
+       &#39;MinorLithCode&#39;, &#39;Description&#39;, &#39;Source&#39;, &#39;Thickness&#39;],
+      dtype=&#39;object&#39;)</code></pre>
+<pre class="python"><code>log_data.dtypes    # data types of each column</code></pre>
+<pre><code>OBJECTID           int64
+BoreID             int64
+HydroCode          int64
+RefElev           object
+RefElevDesc       object
+FromDepth        float64
+ToDepth          float64
+TopElev           object
+BottomElev        object
+MajorLithCode     object
+MinorLithCode     object
+Description       object
+Source            object
+Thickness        float64
+dtype: object</code></pre>
+<pre class="python"><code>log_data.shape     # number of rows and columns</code></pre>
+<pre><code>(70157, 14)</code></pre>
+<pre class="python"><code>log_data.values    # underlying numpy array — df are stored as numpy arrays for efficiencies.</code></pre>
+<pre><code>array([[1769789, 30062892, 662815923, ..., &#39;Clay&#39;, &#39;SAGeodata&#39;, 1.5],
+       [1769790, 30062892, 662815923, ..., &#39;Rocks and sand&#39;, &#39;SAGeodata&#39;,
+        2.5],
+       [1769791, 30062892, 662815923, ..., &#39;Clay&#39;, &#39;SAGeodata&#39;, 2.0],
+       ...,
+       [4120347, 30304050, 652802882, ..., &#39;Fill&#39;, &#39;SAGeodata&#39;, 0.3],
+       [4120348, 30304050, 652802882, ..., &#39;Clayey sand&#39;, &#39;SAGeodata&#39;,
+        0.5],
+       [4120349, 30304050, 652802882, ..., &#39;Sand&#39;, &#39;SAGeodata&#39;, 2.7]],
+      dtype=object)</code></pre>
+<pre class="python"><code>#log_data[&#39;MajorLithCode&#39;]         # select one column
+##Equivalent to 
+#log_data.MajorLithCode 
+##and
+#log_data.iloc[:,9]</code></pre>
+<pre class="python"><code>type(log_data[&#39;MajorLithCode&#39;])   # determine datatype of column (e.g., Series)</code></pre>
+<pre><code>pandas.core.series.Series</code></pre>
+<pre class="python"><code>#describe the data frame
+log_data.describe(include=&#39;all&#39;)     </code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+OBJECTID
+</th>
+<th>
+BoreID
+</th>
+<th>
+HydroCode
+</th>
+<th>
+RefElev
+</th>
+<th>
+RefElevDesc
+</th>
+<th>
+FromDepth
+</th>
+<th>
+ToDepth
+</th>
+<th>
+TopElev
+</th>
+<th>
+BottomElev
+</th>
+<th>
+MajorLithCode
+</th>
+<th>
+MinorLithCode
+</th>
+<th>
+Description
+</th>
+<th>
+Source
+</th>
+<th>
+Thickness
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+count
+</th>
+<td>
+7.015700e+04
+</td>
+<td>
+7.015700e+04
+</td>
+<td>
+7.015700e+04
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157.000000
+</td>
+<td>
+70157.000000
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157
+</td>
+<td>
+70157.000000
+</td>
+</tr>
+<tr>
+<th>
+unique
+</th>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+5068
+</td>
+<td>
+4
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+27777
+</td>
+<td>
+27878
+</td>
+<td>
+81
+</td>
+<td>
+42
+</td>
+<td>
+33598
+</td>
+<td>
+39
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+top
+</th>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+None
+</td>
+<td>
+NGS
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+None
+</td>
+<td>
+None
+</td>
+<td>
+CLYU
+</td>
+<td>
+None
+</td>
+<td>
+Clay
+</td>
+<td>
+SAGeodata
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+freq
+</th>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+18514
+</td>
+<td>
+44946
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+18514
+</td>
+<td>
+18514
+</td>
+<td>
+25857
+</td>
+<td>
+62797
+</td>
+<td>
+4603
+</td>
+<td>
+70119
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+mean
+</th>
+<td>
+2.505842e+06
+</td>
+<td>
+3.018201e+07
+</td>
+<td>
+6.624491e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+24.942443
+</td>
+<td>
+30.626594
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+5.684151
+</td>
+</tr>
+<tr>
+<th>
+std
+</th>
+<td>
+9.276598e+05
+</td>
+<td>
+8.068098e+04
+</td>
+<td>
+2.130462e+06
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+45.435866
+</td>
+<td>
+48.609957
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+9.943264
+</td>
+</tr>
+<tr>
+<th>
+min
+</th>
+<td>
+1.769789e+06
+</td>
+<td>
+3.002715e+07
+</td>
+<td>
+6.528000e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+0.000000
+</td>
+<td>
+0.010000
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+0.000000
+</td>
+</tr>
+<tr>
+<th>
+25%
+</th>
+<td>
+1.932799e+06
+</td>
+<td>
+3.014558e+07
+</td>
+<td>
+6.628129e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+0.800000
+</td>
+<td>
+4.000000
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+1.000000
+</td>
+</tr>
+<tr>
+<th>
+50%
+</th>
+<td>
+1.999036e+06
+</td>
+<td>
+3.018487e+07
+</td>
+<td>
+6.628196e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+7.000000
+</td>
+<td>
+11.580000
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+2.800000
+</td>
+</tr>
+<tr>
+<th>
+75%
+</th>
+<td>
+3.967159e+06
+</td>
+<td>
+3.025487e+07
+</td>
+<td>
+6.628248e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+25.900000
+</td>
+<td>
+34.750000
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+7.000000
+</td>
+</tr>
+<tr>
+<th>
+max
+</th>
+<td>
+4.120349e+06
+</td>
+<td>
+3.030405e+07
+</td>
+<td>
+6.728042e+08
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+610.300000
+</td>
+<td>
+620.160000
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+300.500000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="python"><code># summarise a pandas Series
+log_data.FromDepth.describe()   # describe a single column</code></pre>
+<pre><code>count    70157.000000
+mean        24.942443
+std         45.435866
+min          0.000000
+25%          0.800000
+50%          7.000000
+75%         25.900000
+max        610.300000
+Name: FromDepth, dtype: float64</code></pre>
+<pre class="python"><code>#calculate mean of 5th column (&quot;FromDepth&quot;)
+log_data.iloc[:,5].mean()      </code></pre>
+<pre><code>24.9424428068475</code></pre>
+<pre class="python"><code>#alternate method to calculate mean of FromDepth column (the 5th one)
+log_data[&quot;FromDepth&quot;].mean()    </code></pre>
+<pre><code>24.9424428068475</code></pre>
+<pre class="python"><code>#Count how many Lith Codes there are
+lithCounts=log_data.MajorLithCode.value_counts()</code></pre>
+<pre class="python"><code>#Print the lithcodes, use .index or .values 
+lithCounts</code></pre>
+<pre><code>CLYU    25857
+SAND    12772
+SLAT     4069
+FILL     4020
+SDST     3207
+        ...  
+REGO        1
+LMSD        1
+ARKS        1
+DIOR        1
+DUST        1
+Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
+<pre class="python"><code>#plot a bar chart of the lith codes
+lithCounts.plot.bar(rot=90,figsize=(15,5))</code></pre>
+<pre><code>&lt;AxesSubplot:&gt;</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_35_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>#Plot a bar chart of the lith codes for the rarer lithologies
+lithCounts[(lithCounts &lt; 50)].plot.bar(rot=90,figsize=(15,5))</code></pre>
+<pre><code>&lt;AxesSubplot:&gt;</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_36_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>import numpy as np
+import matplotlib.mlab as mlab
+import matplotlib.pyplot as plt
+ 
+# example data
+mu = np.mean(log_data[&#39;Thickness&#39;].values) # mean of distribution
+sigma = np.std(log_data[&#39;Thickness&#39;].values) # standard deviation of distribution
+x = log_data[&#39;Thickness&#39;].values
+# the histogram of the data
+plt.hist(x, bins=[0,0.25,0.5,0.75,1.0,1.25,1.5,1.75,2,2.25,2.5,2.75,3.0], alpha=0.5)
+plt.xlabel(&#39;Thickness (m)&#39;)
+plt.ylabel(&#39;Count&#39;)
+mystring=&quot;Histogram with a mean of &quot;+ str(mu)
+plt.title(mystring)
+ 
+# Tweak spacing to prevent clipping of ylabel
+#plt.subplots_adjust(left=0.15)
+plt.show()
+
+
+</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_37_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code># import numpy as np
+# cmap = plt.get_cmap(&#39;viridis&#39;)
+# colors = cmap(np.linspace(0, 1, len(lithCounts.index)))
+# colors
+
+# for row in log_data.itertuples():
+#     boreid=row[3]
+#     for ind,value in enumerate(recs):  
+#         try:
+#             value.index(boreid)
+#             print(recs)
+#         except:
+#             continue
+#     #(row[3])
+
+
+
+# for ind, value in enumerate(recs):
+#     #Get the lat lon value
+#     lon=value[18]
+#     lat=value[17]
+#     #Get the Lithology unit
+#     value[]
+    
+#     #Now plot it
+#     plt.plot(lon,lat,&quot;|&quot;)</code></pre>
+</div>
+</div>
+<div id="exercise" class="section level1">
+<h1>Exercise</h1>
+<p>Go to <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a> and pick another River Region. Download the dataset in “Shapefile” format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region.</p>
+</div>
+<div id="log-ascii-files" class="section level1">
+<h1>Log ASCII Files</h1>
+<p>Python has some very specific packages/libraries. You can often create your own tools for doing niche tasks, but often you will find a variety of tools to make things simpler for you. We will show some simple tasks to perfrom on borehole data (in .las format) with the <a href="https://lasio.readthedocs.io/en/latest/">lasio</a> library.</p>
+<p>This tutorial based off <a href="https://towardsdatascience.com/handling-big-volume-of-well-log-data-with-a-boosted-time-efficiency-with-python-dfe0319daf26" class="uri">https://towardsdatascience.com/handling-big-volume-of-well-log-data-with-a-boosted-time-efficiency-with-python-dfe0319daf26</a></p>
+<p>Original Data from: <a href="https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/image/DDD/PEDP013LOGS.zip" class="uri">https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/image/DDD/PEDP013LOGS.zip</a></p>
+<p>Title: Cooper Basin selected well logs in LAS format. Publication Date: November 20 Prepared by: Energy Resources Division, Department of the Premier and Cabinet This Record URL: <a href="https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/wci/Record?r=0&amp;m=1&amp;w=catno=2040037" class="uri">https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/wci/Record?r=0&amp;m=1&amp;w=catno=2040037</a></p>
+<pre class="python"><code>#For plotting
+import matplotlib.pyplot as plt
+
+#Library specifically for &quot;well data&quot;
+import lasio
+
+#To read files
+import glob
+
+#For &quot;regular expression manipulation&quot;
+import re</code></pre>
+<pre class="python"><code>#Build a list of filenames to read
+read_files = glob.glob(&quot;data/WELL/*.las&quot;)
+read_files</code></pre>
+<pre><code>[&#39;data/WELL/BoolLagoon1.las&#39;,
+ &#39;data/WELL/Bungaloo1.las&#39;,
+ &#39;data/WELL/BeachportEast1.las&#39;,
+ &#39;data/WELL/BiscuitFlat1.las&#39;,
+ &#39;data/WELL/Balnaves.las&#39;,
+ &#39;data/WELL/Banyula.las&#39;,
+ &#39;data/WELL/Burrungule1.las&#39;,
+ &#39;data/WELL/Beachport1.las&#39;]</code></pre>
+<pre class="python"><code>#Cut out just the name of the well from the filenames
+well_names = []
+for file in read_files:
+    print(&quot;FILE:&quot;, file)
+    well=re.split(&#39;/|.las&#39;,file)
+    print(&quot;SPLIT:&quot;, well)
+    well_names.append(well[3])
+
+print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
+print(well_names)</code></pre>
+<pre><code>FILE: data/WELL/BoolLagoon1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;]
+FILE: data/WELL/Bungaloo1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;]
+FILE: data/WELL/BeachportEast1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;]
+FILE: data/WELL/BiscuitFlat1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;]
+FILE: data/WELL/Balnaves.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;]
+FILE: data/WELL/Banyula.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;]
+FILE: data/WELL/Burrungule1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;]
+FILE: data/WELL/Beachport1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;]
+There are  8 wells.
+[&#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</code></pre>
+<pre class="python"><code>#Read in the log files to lasio
+lases = []
+for files in read_files:
+    las = lasio.read(files)
+    lases.append(las)</code></pre>
+<pre class="python"><code>#You can get an idea of what you can interogate using the help function
+help(lases)</code></pre>
+<pre><code>Help on list object:
+
+class list(object)
+ |  list(iterable=(), /)
+ |  
+ |  Built-in mutable sequence.
+ |  
+ |  If no argument is given, the constructor creates a new empty list.
+ |  The argument must be an iterable if specified.
+ |  
+ |  Methods defined here:
+ |  
+ |  __add__(self, value, /)
+ |      Return self+value.
+ |  
+ |  __contains__(self, key, /)
+ |      Return key in self.
+ |  
+ |  __delitem__(self, key, /)
+ |      Delete self[key].
+ |  
+ |  __eq__(self, value, /)
+ |      Return self==value.
+ |  
+ |  __ge__(self, value, /)
+ |      Return self&gt;=value.
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __getitem__(...)
+ |      x.__getitem__(y) &lt;==&gt; x[y]
+ |  
+ |  __gt__(self, value, /)
+ |      Return self&gt;value.
+ |  
+ |  __iadd__(self, value, /)
+ |      Implement self+=value.
+ |  
+ |  __imul__(self, value, /)
+ |      Implement self*=value.
+ |  
+ |  __init__(self, /, *args, **kwargs)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |  
+ |  __iter__(self, /)
+ |      Implement iter(self).
+ |  
+ |  __le__(self, value, /)
+ |      Return self&lt;=value.
+ |  
+ |  __len__(self, /)
+ |      Return len(self).
+ |  
+ |  __lt__(self, value, /)
+ |      Return self&lt;value.
+ |  
+ |  __mul__(self, value, /)
+ |      Return self*value.
+ |  
+ |  __ne__(self, value, /)
+ |      Return self!=value.
+ |  
+ |  __repr__(self, /)
+ |      Return repr(self).
+ |  
+ |  __reversed__(self, /)
+ |      Return a reverse iterator over the list.
+ |  
+ |  __rmul__(self, value, /)
+ |      Return value*self.
+ |  
+ |  __setitem__(self, key, value, /)
+ |      Set self[key] to value.
+ |  
+ |  __sizeof__(self, /)
+ |      Return the size of the list in memory, in bytes.
+ |  
+ |  append(self, object, /)
+ |      Append object to the end of the list.
+ |  
+ |  clear(self, /)
+ |      Remove all items from list.
+ |  
+ |  copy(self, /)
+ |      Return a shallow copy of the list.
+ |  
+ |  count(self, value, /)
+ |      Return number of occurrences of value.
+ |  
+ |  extend(self, iterable, /)
+ |      Extend list by appending elements from the iterable.
+ |  
+ |  index(self, value, start=0, stop=9223372036854775807, /)
+ |      Return first index of value.
+ |      
+ |      Raises ValueError if the value is not present.
+ |  
+ |  insert(self, index, object, /)
+ |      Insert object before index.
+ |  
+ |  pop(self, index=-1, /)
+ |      Remove and return item at index (default last).
+ |      
+ |      Raises IndexError if list is empty or index is out of range.
+ |  
+ |  remove(self, value, /)
+ |      Remove first occurrence of value.
+ |      
+ |      Raises ValueError if the value is not present.
+ |  
+ |  reverse(self, /)
+ |      Reverse *IN PLACE*.
+ |  
+ |  sort(self, /, *, key=None, reverse=False)
+ |      Sort the list in ascending order and return None.
+ |      
+ |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
+ |      order of two equal elements is maintained).
+ |      
+ |      If a key function is given, apply it once to each list item and sort them,
+ |      ascending or descending, according to their function values.
+ |      
+ |      The reverse flag can be set to sort in descending order.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Static methods defined here:
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __hash__ = None</code></pre>
+<pre class="python"><code>#This is just a regular Python list! But the list contains
+#in this case, special objects known as &quot;LasFile(s)&quot; or lasio.las object.
+#Get some details using help again
+help(lases[1])</code></pre>
+<pre><code>Help on LASFile in module lasio.las object:
+
+class LASFile(builtins.object)
+ |  LASFile(file_ref=None, **read_kwargs)
+ |  
+ |  LAS file object.
+ |  
+ |  Keyword Arguments:
+ |      file_ref (file-like object, str): either a filename, an open file
+ |          object, or a string containing the contents of a file.
+ |  
+ |  See these routines for additional keyword arguments you can use when
+ |  reading in a LAS file:
+ |  
+ |  * :func:`lasio.reader.open_with_codecs` - manage issues relate to character
+ |    encodings
+ |  * :meth:`lasio.LASFile.read` - control how NULL values and errors are
+ |    handled during parsing
+ |  
+ |  Attributes:
+ |      encoding (str or None): the character encoding used when reading the
+ |          file in from disk
+ |  
+ |  Methods defined here:
+ |  
+ |  __getitem__(self, key)
+ |      Provide access to curve data.
+ |      
+ |      Arguments:
+ |          key (str, int): either a curve mnemonic or the column index.
+ |      
+ |      Returns:
+ |          1D :class:`numpy.ndarray` (the data for the curve)
+ |  
+ |  __init__(self, file_ref=None, **read_kwargs)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |  
+ |  __setitem__(self, key, value)
+ |      Append a curve.
+ |      
+ |      Arguments:
+ |          key (str): the curve mnemonic
+ |          value (1D data or CurveItem): either the curve data, or a CurveItem
+ |      
+ |      See :meth:`lasio.LASFile.append_curve_item` or
+ |      :meth:`lasio.LASFile.append_curve` for more details.
+ |  
+ |  add_curve(self, *args, **kwargs)
+ |      Deprecated. Use append_curve() or insert_curve() instead.
+ |  
+ |  add_curve_raw(self, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
+ |      Deprecated. Use append_curve_item() or insert_curve_item() instead.
+ |  
+ |  append_curve(self, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
+ |      Add a curve.
+ |      
+ |      Arguments:
+ |          mnemonic (str): the curve mnemonic
+ |          data (1D ndarray): the curve data
+ |      
+ |      Keyword Arguments:
+ |          unit (str): curve unit
+ |          descr (str): curve description
+ |          value (int/float/str): value e.g. API code.
+ |  
+ |  append_curve_item(self, curve_item)
+ |      Add a CurveItem.
+ |      
+ |      Args:
+ |          curve_item (lasio.CurveItem)
+ |  
+ |  delete_curve(self, mnemonic=None, ix=None)
+ |      Delete a curve.
+ |      
+ |      Keyword Arguments:
+ |          ix (int): index of curve in LASFile.curves.
+ |          mnemonic (str): mnemonic of curve.
+ |      
+ |      The index takes precedence over the mnemonic.
+ |  
+ |  df(self)
+ |      Return data as a :class:`pandas.DataFrame` structure.
+ |      
+ |      The first Curve of the LASFile object is used as the pandas
+ |      DataFrame&#39;s index.
+ |  
+ |  get_curve(self, mnemonic)
+ |      Return CurveItem object.
+ |      
+ |      Arguments:
+ |          mnemonic (str): the name of the curve
+ |      
+ |      Returns:
+ |          :class:`lasio.CurveItem` (not just the data array)
+ |  
+ |  insert_curve(self, ix, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
+ |      Insert a curve.
+ |      
+ |      Arguments:
+ |          ix (int): position to insert curve at i.e. 0 for start.
+ |          mnemonic (str): the curve mnemonic
+ |          data (1D ndarray): the curve data
+ |      
+ |      Keyword Arguments:
+ |          unit (str): curve unit
+ |          descr (str): curve description
+ |          value (int/float/str): value e.g. API code.
+ |  
+ |  insert_curve_item(self, ix, curve_item)
+ |      Insert a CurveItem.
+ |      
+ |      Args:
+ |          ix (int): position to insert CurveItem i.e. 0 for start
+ |          curve_item (lasio.CurveItem)
+ |  
+ |  items(self)
+ |      Return mnemonics and data for all curves.
+ |  
+ |  iteritems(self)
+ |  
+ |  iterkeys(self)
+ |  
+ |  itervalues(self)
+ |  
+ |  keys(self)
+ |      Return curve mnemonics.
+ |  
+ |  match_raw_section(self, pattern, re_func=&#39;match&#39;, flags=re.IGNORECASE)
+ |      Find raw section with a regular expression.
+ |      
+ |      Arguments:
+ |          pattern (str): regular expression (you need to include the tilde)
+ |      
+ |      Keyword Arguments:
+ |          re_func (str): either &quot;match&quot; or &quot;search&quot;, see python ``re`` module.
+ |          flags (int): flags for :func:`re.compile`
+ |      
+ |      Returns:
+ |          dict
+ |      
+ |      Intended for internal use only.
+ |  
+ |  read(self, file_ref, ignore_data=False, read_policy=&#39;default&#39;, null_policy=&#39;strict&#39;, ignore_header_errors=False, ignore_comments=(&#39;#&#39;,), mnemonic_case=&#39;upper&#39;, index_unit=None, remove_data_line_filter=&#39;#&#39;, **kwargs)
+ |      Read a LAS file.
+ |      
+ |      Arguments:
+ |          file_ref (file-like object, str): either a filename, an open file
+ |              object, or a string containing the contents of a file.
+ |      
+ |      Keyword Arguments:
+ |          null_policy (str or list): see
+ |              http://lasio.readthedocs.io/en/latest/data-section.html#handling-invalid-data-indicators-automatically
+ |          ignore_data (bool): if True, do not read in any of the actual data,
+ |              just the header metadata. False by default.
+ |          ignore_header_errors (bool): ignore LASHeaderErrors (False by
+ |              default)
+ |          ignore_comments (tuple/str): ignore comments beginning with characters
+ |              e.g. ``(&quot;#&quot;, &#39;&quot;&#39;)`` in header sections
+ |          mnemonic_case (str): &#39;preserve&#39;: keep the case of HeaderItem mnemonics
+ |                               &#39;upper&#39;: convert all HeaderItem mnemonics to uppercase
+ |                               &#39;lower&#39;: convert all HeaderItem mnemonics to lowercase
+ |          index_unit (str): Optionally force-set the index curve&#39;s unit to &quot;m&quot; or &quot;ft&quot;
+ |          remove_data_line_filter (str, func): string or function for removing/ignoring lines
+ |              in the data section e.g. a function which accepts a string (a line from the
+ |              data section) and returns either True (do not parse the line) or False
+ |              (parse the line). If this argument is a string it will instead be converted
+ |              to a function which rejects all lines starting with that value e.g. ``&quot;#&quot;``
+ |              will be converted to ``lambda line: line.strip().startswith(&quot;#&quot;)``
+ |      
+ |      See :func:`lasio.reader.open_with_codecs` for additional keyword
+ |      arguments which help to manage issues relate to character encodings.
+ |  
+ |  set_data(self, array_like, names=None, truncate=False)
+ |      Set the data for the LAS; actually sets data on individual curves.
+ |      
+ |      Arguments:
+ |          array_like (array_like or :class:`pandas.DataFrame`): 2-D data array
+ |      
+ |      Keyword Arguments:
+ |          names (list, optional): used to replace the names of the existing
+ |              :class:`lasio.CurveItem` objects.
+ |          truncate (bool): remove any columns which are not included in the
+ |              Curves (~C) section.
+ |      
+ |      Note: you can pass a :class:`pandas.DataFrame` to this method.
+ |  
+ |  set_data_from_df(self, df, **kwargs)
+ |      Set the LAS file data from a :class:`pandas.DataFrame`.
+ |      
+ |      Arguments:
+ |          df (pandas.DataFrame): curve mnemonics are the column names.
+ |              The depth column for the curves must be the index of the
+ |              DataFrame.
+ |      
+ |      Keyword arguments are passed to :meth:`lasio.LASFile.set_data`.
+ |  
+ |  stack_curves(self, mnemonic, sort_curves=True)
+ |      Stack multi-channel curve data to a numpy 2D ndarray. Provide a
+ |      stub name (prefix shared by all curves that will be stacked) or a
+ |      list of curve mnemonic strings.
+ |      
+ |      Keyword Arguments:
+ |          mnemonic (str or list): Supply the first several characters of
+ |              the channel set to be stacked. Alternatively, supply a list
+ |              of the curve names (mnemonics strings) to be stacked.
+ |          sort_curves (bool): Natural sort curves based on mnemonic prior
+ |              to stacking.
+ |      
+ |      Returns:
+ |          2-D numpy array
+ |  
+ |  to_csv(self, file_ref, mnemonics=True, units=True, units_loc=&#39;line&#39;, **kwargs)
+ |      Export to a CSV file.
+ |      
+ |      Arguments:
+ |          file_ref (open file-like object or str): a file-like object opening
+ |              for writing, or a filename.
+ |      
+ |      Keyword Arguments:
+ |          mnemonics (list, True, False): write mnemonics as a header line at the
+ |              start. If list, use the supplied items as mnemonics. If True,
+ |              use the curve mnemonics.
+ |          units (list, True, False): as for mnemonics.
+ |          units_loc (str or None): either &#39;line&#39;, &#39;[]&#39; or &#39;()&#39;. &#39;line&#39; will put
+ |              units on the line following the mnemonics (good for WellCAD).
+ |              &#39;[]&#39; and &#39;()&#39; will put the units in either brackets or
+ |              parentheses following the mnemonics, on the single header line
+ |              (better for Excel)
+ |          **kwargs: passed to :class:`csv.writer`. Note that if
+ |              ``lineterminator`` is **not** specified here, then it will be
+ |              sent to :class:`csv.writer` as ``lineterminator=&#39;\n&#39;``.
+ |  
+ |  to_excel(self, filename)
+ |      Export LAS file to a Microsoft Excel workbook.
+ |      
+ |      This function will raise an :exc:`ImportError` if ``openpyxl`` is not
+ |      installed.
+ |      
+ |      Arguments:
+ |          filename (str)
+ |  
+ |  to_json(self)
+ |  
+ |  to_json_old(self)
+ |      deprecated: to_json_old version=0.25.1 since=20200507 remove=20210508
+ |      replacement_options: to_json()
+ |  
+ |  values(self)
+ |      Return data for each curve.
+ |  
+ |  write(self, file_ref, **kwargs)
+ |      Write LAS file to disk.
+ |      
+ |      Arguments:
+ |          file_ref (open file-like object or str): a file-like object opening
+ |              for writing, or a filename.
+ |      
+ |      All ``**kwargs`` are passed to :func:`lasio.writer.write` -- please
+ |      check the docstring of that function for more keyword arguments you can
+ |      use here!
+ |      
+ |      Examples:
+ |      
+ |          &gt;&gt;&gt; import lasio
+ |          &gt;&gt;&gt; las = lasio.read(&quot;tests/examples/sample.las&quot;)
+ |          &gt;&gt;&gt; with open(&#39;test_output.las&#39;, mode=&#39;w&#39;) as f:
+ |          ...     las.write(f, version=2.0)   # &lt;-- this method
+ |  
+ |  ----------------------------------------------------------------------
+ |  Readonly properties defined here:
+ |  
+ |  curvesdict
+ |      Curve information and data from the Curves (~C) and data section..
+ |      
+ |      Returns:
+ |          dict
+ |  
+ |  depth_ft
+ |      Return the index as feet.
+ |  
+ |  depth_m
+ |      Return the index as metres.
+ |  
+ |  header
+ |      All header information
+ |      
+ |      Returns:
+ |          dict
+ |  
+ |  index
+ |      Return data from the first column of the LAS file data (depth/time).
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  curves
+ |      Curve information and data from the Curves (~C) and data section..
+ |      
+ |      Returns:
+ |          :class:`lasio.SectionItems` object.
+ |  
+ |  data
+ |  
+ |  json
+ |      Return object contents as a JSON string.
+ |  
+ |  other
+ |      Header information from the Other (~O) section.
+ |      
+ |      Returns:
+ |          str
+ |  
+ |  params
+ |      Header information from the Parameter (~P) section.
+ |      
+ |      Returns:
+ |          :class:`lasio.SectionItems` object.
+ |  
+ |  version
+ |      Header information from the Version (~V) section.
+ |      
+ |      Returns:
+ |          :class:`lasio.SectionItems` object.
+ |  
+ |  well
+ |      Header information from the Well (~W) section.
+ |      
+ |      Returns:
+ |          :class:`lasio.SectionItems` object.</code></pre>
+<pre class="python"><code>#From there we can get some info from each of the wells
+j=0
+for well in lases:
+    #e.g. pull out the varaibles availble from the wells
+    print(&quot;Wellid:&quot;, j, well_names[j])
+    j+=1
+    print(well.keys())</code></pre>
+<pre><code>Wellid: 0 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 1 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 2 
+[&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 3 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 4 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 5 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 6 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 7 
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
+<pre class="python"><code>#Set a wellid you want to explore more
+wellid=1</code></pre>
+<pre class="python"><code>#Make a plot of one of the wells
+plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f842a6fb9a0&gt;]</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_49_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>TODO: What does this plot show us??? What is the conclusion?</p>
+<pre class="python"><code>#Get some more info out of the well data
+print(lases[wellid].curves)</code></pre>
+<pre><code>Mnemonic  Unit   Value  Description                                                                                        
+--------  ----   -----  -----------                                                                                        
+DEPTH     M             Depth                                                                                              
+CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
+DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
+DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
+GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
+NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
+PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
+RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
+SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              </code></pre>
+<pre class="python"><code># Finally, make a reasonable plot
+var = &#39;RHOB&#39; 
+print(&quot;Param:&quot;, var, &quot;of well:&quot;, well_names[wellid])
+plt.figure(figsize=(5,10))
+plt.plot((lases[wellid][var]), (lases[wellid][&#39;DEPTH&#39;]))
+
+#And change some details on the plot
+plt.xlabel(var); plt.ylabel(&quot;Depth (m)&quot;)
+plt.grid(True)
+plt.gca().invert_yaxis()</code></pre>
+<pre><code>Param: RHOB of well: </code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_52_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>TODO: Why is this plot reasonable? What does it show?</p>
+</div>
+<div id="segy-seismic-data-processing" class="section level1">
+<h1>SEGY Seismic data processing</h1>
+<pre class="python"><code>from obspy.io.segy.segy import _read_segy
+import matplotlib.pyplot as plt
+import numpy as np
+
+#Adapted from https://agilescientific.com/blog/2016/9/21/x-lines-of-python-read-and-write-seg-y
+#See the notebooks here for more good examples
+#https://hub-binder.mybinder.ovh/user/agile-geoscience-xlines-n1mojurk</code></pre>
+<pre class="python"><code>#Set the filename of the segy data
+
+filename=&quot;data/james/james_1959_pstm_tvfk_gain.sgy&quot;
+
+#Title: 2006 James 3D Seismic Survey.
+#Author: White, A.
+#Prepared by: Terrex Seismic Pty Ltd; Pioneer Surveys Pty Ltd; WestenGeco
+#Tenement: PPL00182
+#Operator: Santos Ltd
+#https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/wci/Record?r=0&amp;m=1&amp;w=catno=2035790</code></pre>
+<pre class="python"><code>stream = _read_segy(filename, headonly=True)
+stream</code></pre>
+<pre><code>48832 traces in the SEG Y structure.</code></pre>
+<pre class="python"><code>one_trace = stream.traces[10000]
+
+plt.figure(figsize=(16,2))
+plt.plot(one_trace.data)
+plt.show()</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_58_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>data = np.stack(t.data for t in stream.traces[12320:12320+500])</code></pre>
+<pre><code>/Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/IPython/core/interactiveshell.py:3338: FutureWarning: arrays to stack must be passed as a &quot;sequence&quot; type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  if (await self.run_code(code, result,  async_=asy)):</code></pre>
+<pre class="python"><code>stream.traces[10000]</code></pre>
+<pre><code>Trace sequence number within line: 10001
+1001 samples, dtype=float32, 250.00 Hz</code></pre>
+<pre class="python"><code>data.shape</code></pre>
+<pre><code>(500, 1001)</code></pre>
+<pre class="python"><code>np.shape(stream.traces)</code></pre>
+<pre><code>(48832,)</code></pre>
+<pre class="python"><code>vm = np.percentile(data, 95)
+print(&quot;The 95th percentile is {:.0f}; the max amplitude is {:.0f}&quot;.format(vm, data.max()))</code></pre>
+<pre><code>The 95th percentile is 4365; the max amplitude is 34148</code></pre>
+<pre class="python"><code>plt.imshow(data.T, cmap=&quot;Greys&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7f8414587ac0&gt;</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_64_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>plt.figure(figsize=(16,8))
+plt.imshow(data.T, cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)
+plt.colorbar()
+plt.show()</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_65_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>print(stream.textual_file_header.decode())</code></pre>
+<pre><code>C 1 CLIENT SANTOS                 COMPANY                       CREW NO         C 2 LINE    2000.00 AREA JAMES3D                                                C 3 REEL NO           DAY-START OF REEL     YEAR      OBSERVER                  C 4 INSTRUMENT  MFG            MODEL            SERIAL NO                       C 5 DATA TRACES/RECORD 24569  AUXILIARY TRACES/RECORD       0 CDP FOLD    40    C 6 SAMPLE INTERVAL  4.00   SAMPLES/TRACE  1001 BITS/IN      BYTES/SAMPLE  4    C 7 RECORDING FORMAT        FORMAT THIS REEL SEG-Y  MEASUREMENT SYSTEM METERS   C 8 SAMPLE CODE FLOATING PT                                                     C09 JAMES 3D                                                                    C10 WESTERNGECO                                                                 C11 MARCH 2007                                                                  C12 VERSION : James3D_pstm_tvfk_gain                                            C13 FILTERED TRIM PSTM STACK                                                    C14                                                                             C15 GEOMETRY APPLY-TAR-MINP-                                                    C16 NOISE REDUCTION - SWATT                                                     C17  SC DECON - SCAC                                                            C18 RESIDUAL_STATICS                                                            C19  TRIM_STATICS - INVERSE_TAR - SORT                                          C20 PSTM  - SORT  - GAIN                                                        C21 TRIM_STATICS - STACK                                                        C22 SPECW_10-70HZ -TVF_10-75HZ-TRACE_BALANCE                                    C23                                                                             C24                                                                             C25                                                                             C26                                                                             C27                                                                             C28                                                                             C29                                                                             C30                                                                             C31                                                                             C32                                                                             C33                                                                             C34                                                                             C35                                                                             C36                                                                             C37                                                                             C38                                                                             C39                                                                             C40 END EBCDIC                                                                  </code></pre>
+<pre class="python"><code>print(stream.traces[50].header)</code></pre>
+<pre><code>trace_sequence_number_within_line: 51
+trace_sequence_number_within_segy_file: 51
+original_field_record_number: 2000
+trace_number_within_the_original_field_record: 1
+energy_source_point_number: 10055
+ensemble_number: 10055
+trace_number_within_the_ensemble: 51
+trace_identification_code: 1
+number_of_vertically_summed_traces_yielding_this_trace: 1
+number_of_horizontally_stacked_traces_yielding_this_trace: 24
+data_use: 1
+distance_from_center_of_the_source_point_to_the_center_of_the_receiver_group: 0
+receiver_group_elevation: 0
+surface_elevation_at_source: 0
+source_depth_below_surface: 0
+datum_elevation_at_receiver_group: 0
+datum_elevation_at_source: 0
+water_depth_at_source: 0
+water_depth_at_group: 0
+scalar_to_be_applied_to_all_elevations_and_depths: 1
+scalar_to_be_applied_to_all_coordinates: 1
+source_coordinate_x: 482680
+source_coordinate_y: 7035256
+group_coordinate_x: 482680
+group_coordinate_y: 7035256
+coordinate_units: 1
+weathering_velocity: 0
+subweathering_velocity: 0
+uphole_time_at_source_in_ms: 0
+uphole_time_at_group_in_ms: 0
+source_static_correction_in_ms: 0
+group_static_correction_in_ms: 0
+total_static_applied_in_ms: -70
+lag_time_A: 0
+lag_time_B: 0
+delay_recording_time: 0
+mute_time_start_time_in_ms: 0
+mute_time_end_time_in_ms: 20
+number_of_samples_in_this_trace: 1001
+sample_interval_in_ms_for_this_trace: 4000
+gain_type_of_field_instruments: 0
+instrument_gain_constant: 0
+instrument_early_or_initial_gain: 0
+correlated: 0
+sweep_frequency_at_start: 0
+sweep_frequency_at_end: 0
+sweep_length_in_ms: 0
+sweep_type: 0
+sweep_trace_taper_length_at_start_in_ms: 0
+sweep_trace_taper_length_at_end_in_ms: 0
+taper_type: 0
+alias_filter_frequency: 0
+alias_filter_slope: 0
+notch_filter_frequency: 0
+notch_filter_slope: 0
+low_cut_frequency: 0
+high_cut_frequency: 0
+low_cut_slope: 0
+high_cut_slope: 0
+year_data_recorded: 0
+day_of_year: 0
+hour_of_day: 0
+minute_of_hour: 0
+second_of_minute: 0
+time_basis_code: 0
+trace_weighting_factor: 0
+geophone_group_number_of_roll_switch_position_one: 0
+geophone_group_number_of_trace_number_one: 0
+geophone_group_number_of_last_trace: 0
+gap_size: 0
+over_travel_associated_with_taper: 0
+x_coordinate_of_ensemble_position_of_this_trace: 0
+y_coordinate_of_ensemble_position_of_this_trace: 0
+for_3d_poststack_data_this_field_is_for_in_line_number: 0
+for_3d_poststack_data_this_field_is_for_cross_line_number: -4587520
+shotpoint_number: 2000
+scalar_to_be_applied_to_the_shotpoint_number: 0
+trace_value_measurement_unit: 10055
+transduction_constant_mantissa: 0
+transduction_constant_exponent: 0
+transduction_units: 0
+device_trace_identifier: 0
+scalar_to_be_applied_to_times: 57
+source_type_orientation: 0
+source_energy_direction_mantissa: 0
+source_energy_direction_exponent: 584
+source_measurement_mantissa: 0
+source_measurement_exponent: 0
+source_measurement_unit: 0</code></pre>
+<pre class="python"><code>dt = stream.traces[0].header.sample_interval_in_ms_for_this_trace / 1e6
+dt</code></pre>
+<pre><code>0.004</code></pre>
+<div class="challenge">
+
+<div id="challenge.-todo-1" class="section level3">
+<h3>Challenge. TODO</h3>
+<ul>
+<li>This needs a HW challenge!</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<p>…</p>
+<pre class="python"><code></code></pre>
+</div>
+<div id="key-points" class="section level3 keypoints">
+<h3>Key points</h3>
+<ul>
+<li>Shapefiles</li>
+<li>Pandas dataframes</li>
+</ul>
+</div>
+<pre><code>0.004</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

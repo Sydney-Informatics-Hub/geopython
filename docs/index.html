@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>SIH Python for Geoscientists</title>
+
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="lesson.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="setup.html">Setup</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00-intro.html">Introduction</a>
+    </li>
+    <li>
+      <a href="01a-fundamentals.html">Fundamentals</a>
+    </li>
+    <li>
+      <a href="01b-dataframes.html">Data frames and Shapefiles</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02a-mapping.html">Mapping</a>
+    </li>
+    <li>
+      <a href="02b-Clustering.html">Clustering</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="03a-MachineLearning.html">Machine Learning</a>
+    </li>
+    <li>
+      <a href="03b-DeepLearningTS.html">Deep Learning &amp; Time Series</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="04a-SimpleSpeedUps.html">Simple Speed Ups</a>
+    </li>
+    <li>
+      <a href="04b-DaskDataframes.html">Dask data frames</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">SIH Python for Geoscientists</h1>
+
+</div>
+
+
+<p>This course is aimed at researchers, students, and industry professionals who want to learn about the capabilities of Python and get experience using it applied to real-world problems. This course we will introduce you to foundations of Python programming. We will utilise common geoscience data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets.</p>
+<p>The course is presented by the <a href="https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html">Sydney Informatics Hub</a> on behalf of the <a href="https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/">Petroleum Exploration Society of Australia</a>.</p>
+<figure>
+<img src="fig/pesa.jpg" style="margin:10px;width:400px"/>
+</figure>
+<figure>
+<img src="fig/SIH_logo.jpg" style="margin:10px;width:400px"/>
+</figure>
+<p>The Sydney Informatics Hub (SIH) is a <em><a href="https://sydney.edu.au/research/facilities.html">Core Research Facility</a></em> of the University of Sydney. Core Research Facilities centralise essential research equipment and services that would otherwise be too expensive or impractical for individual Faculties to purchase and maintain. We provide a wide range of research services to aid investigators, such as:</p>
+<ul>
+<li><a href="https://sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training.html">Training and workshops</a></li>
+<li><a href="https://sydney.edu.au/research/facilities/sydney-informatics-hub/project-support.html">Project consulting and assistance</a> with Statistics, Data Science, Research Engineering, Bioinformatics, Modeling/Simulation/Visualisation, High Performance Computing.</li>
+<li><a href="https://sydney.edu.au/research/facilities/sydney-informatics-hub/digital-research-infrastructure.html">Research data management</a> consulting and platform support.</li>
+</ul>
+<p>We also aim to cultivate a <strong>data community</strong>, organising monthly <a href="https://sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/hacky-hour.html">Hacky Hours</a>, outside training events (eg NVIDIA, Pawsey Center), and data/coding-related events. Look out for everything happening on our <a href="https://www.sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/training-calendar.html">calendar</a> or contact us (at <a href="mailto:sih.info@sydney.edu.au" class="email">sih.info@sydney.edu.au</a>) to get some digital collaboration going.</p>
+<div id="course-pre-requisites-and-setup-requirements" class="section level1">
+<h1>Course pre-requisites and setup requirements</h1>
+<p>No previous programming experience is required, but <strong>Session 1 is a pre-requisite for the other sessions</strong>. Training will be delivered online, so you will need access to a modern computer with a stable internet connection and around 5GB of storage space downloaded prior to the course. Participants are encouraged to setup a Python environment on their local computer (instructions to be provided), but participation using Google Colab will also be supported (Google account required).</p>
+<div id="setup-instructions" class="section level2">
+<h2>Setup Instructions</h2>
+<p>Please complete the <a href="https://sydney-informatics-hub.github.io/geopython/setup.html">Setup Instructions</a> <strong>before the course</strong>.</p>
+<p>If you have any trouble, please get in contact with us ASAP.</p>
+</div>
+</div>
+<div id="venue-online-via-zoom" class="section level1">
+<h1>Venue, online via Zoom</h1>
+<p>Participants will be provided with a Zoom link. Trainers will be broadcasting from Sydney.</p>
+</div>
+<div id="trainers" class="section level1">
+<h1>Trainers</h1>
+<ul>
+<li>Nathaniel (Nate) Butterworth (PhD Computational Tectonics), <a href="mailto:nathaniel.butterworth@sydney.edu.au" class="email">nathaniel.butterworth@sydney.edu.au</a></li>
+<li>Ben Mather (PhD Computational Geophysics)</li>
+<li>Darya Vanichkina (PhD Bioinformatics, FHEA)</li>
+</ul>
+</div>
+<div id="zoom-etiquette-and-how-we-interact" class="section level1">
+<h1>Zoom etiquette and how we interact</h1>
+<p>Everything will be done via zoom. Sessions will be recorded for attendees only, and it is set up to only record the host shared screen and host audio. We will try and get these uploaded to this site as soon as possible.</p>
+<p>Please interrupt whenever you want! Ideally, have your camera on and interact as much as possible. And there will be someone monitoring the chat-window with any questions you would like to post there. Four hours is a long Zoom session so we have got plenty of scheduled breaks, a mixed up the content to be delivered as demos, other sections are independent exercises, but most of it will be pretty-hands on with everyone writing their own code.</p>
+<p>We will use Zoom break-out rooms if needed with Darya, Ben, Kris, and Nate.</p>
+</div>
+<div id="code-of-conduct" class="section level1">
+<h1>Code of Conduct</h1>
+<p>We expect all attendees of our training to follow our code of conduct, including bullying, harassment and discrimination prevention policies.</p>
+<p>In order to foster a positive and professional learning environment we encourage the following kinds of behaviours at all our events and on our platforms:</p>
+<ul>
+<li>Use welcoming and inclusive language</li>
+<li>Be respectful of different viewpoints and experiences</li>
+<li>Gracefully accept constructive criticism</li>
+<li>Focus on what is best for the community</li>
+<li>Show courtesy and respect towards other community members</li>
+</ul>
+<p>Our full CoC, with incident reporting guidelines, is available at <a href="https://pages.github.sydney.edu.au/informatics/sih_codeofconduct/">https://pages.github.sydney.edu.au/informatics/sih_codeofconduct/</a></p>
+</div>
+<div id="general-session-timings" class="section level1">
+<h1>General session timings</h1>
+<ul>
+<li>Start at 12:35pm promptly.</li>
+<li>5 min to discuss feedback and summarise previous week.</li>
+<li>1 hour of content.</li>
+<li>10 min break.</li>
+<li>1 hour content</li>
+<li>10 min break</li>
+<li>1 hour content</li>
+<li>10 min break</li>
+<li>Until 16:25pm summary + hack session til close. This will be an opportunity to get one-on-one support, or we will deviate from lesson plans if interesting questions arise. If there are particular problems or datasets you would be interested in solving/exploring, email us in advanced and we can either do it as a group (if appropriate) or break out into smaller groups.</li>
+</ul>
+</div>
+<div id="date-time-in-aest-brisbane-time" class="section level1">
+<h1>Date &amp; Time (in AEST-Brisbane time):</h1>
+<p>We will be working through the following episodes over our 4 sessions together.</p>
+<p><strong>Session 01 Python fundamentals</strong> Wed Nov 18, 12:30 pm - 4:30 pm (AEST)</p>
+<p><strong>Session 02 Specialist python libraries and data analysis for geoscience</strong> Wed Nov 25, 12:30 pm - 4:30 pm (AEST)</p>
+<p><strong>Session 03 Pattern recognition and prediction in geoscience</strong> Wed Dec 2, 12:30 pm - 4:30 pm (AEST)</p>
+<p><strong>Session 04 Large data and long running workflow strategies</strong> Wed Dec 9, 12:30 pm - 4:30 pm (AEST)</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
