@@ -3,7 +3,7 @@ title: "01b. Python libraries and packages"
 teaching: 10
 exercises: 0
 questions:
-- "What else can Python do?"
+- "How can I load shapefiles and tabular data into python?"
 - "What are libraries and packages?"
 objectives:
 - "Learn how to deal with specialty datatypes."
@@ -1227,7 +1227,7 @@ plt.gca().invert_yaxis()
 
 
 
-    
+
 ![png](../fig/fig-01-prettywell.png)
 
 
@@ -1279,7 +1279,7 @@ plt.show()
 ```
 
 
-    
+
 ![png](../fig/fig-01seis-trace.png)
     
 
@@ -1353,7 +1353,7 @@ plt.show()
 ```
 
 
-    
+
 ![png](../fig/fig-01seis-seis2.png)
     
 

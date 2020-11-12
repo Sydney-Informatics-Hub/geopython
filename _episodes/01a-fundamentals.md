@@ -8,8 +8,10 @@ questions:
 objectives:
 - "Learn the basic Python commands."
 keypoints:
-- "Loops"
-- "Control statements."
+- "You can store things in python in variables"
+- "Lists can be used to store objects of different types"
+- "Loops with for can be used to iterate over each object in a list"
+- "Functions are used to write (and debug) repetitive code once"
 - "Indexing"
 ---
 
@@ -115,6 +117,8 @@ print(times[4][0])
 ### Functions
 These are bits of code you want to perhaps use many times, or keep self contained, or refer to at different points. They can take values as input and give values back (or not). 
 
+In day to day life, you can think of functions as recipes - if you make your own mayonnaise or tomato sauce, you probably don't keep the instructions for making it in each recipe that uses these as ingredients - instead, you have a single recipe card for each, and update/modify that as needed.
+
 
 ```python
 #Declare the name of the function
@@ -148,10 +152,50 @@ add_numbers(1,2)
 
     3
 
+> ## Challenge
+>
+> Write a function to convert map scale. For example, on a 1:25,000 map (good for hiking!)
+> the distance between two points is 15 cm. How far apart are these in real life? (3750 m).
+> 
+> [Reminder: 15 cm * 25000 = 375000 cm = 3750 m]
+> 
+> Your function should take as input two numbers:  the distance on the map (in cm)
+> and the second number of the scale and, i.e. 
+> calculate_distance(15, 25000) 
+> should return 375000
+>
+> {: .source}
+>
+> > ## Solution
+> > 
+> > ~~~
+> > ```python
+> > #Declare the name of the function
+> > def calculate_distance(distance_cm,scale):
+> >     '''calculates distance based on map and scale
+> >     usage: calculate_distance(distance_cm,scale)
+> >     returns: z
+> >     inputs: distance_cm,scale
+> >     distance_cm and scale are two integers
+> >     returns the product of distance_cm and scale
+> >     '''  
+> >     
+> >     return(distance_cm * scale)
+> > ```
+> > 
+> > ~~~
+> > 
+> > 
+> > 
+> > 
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
 
 
 ### Loops, operators, conditions
-Python is great for doing something a million times. It can be useful if you have many samples/datapoints and you want to operate or manipulate those points.
+Python is great for doing something a million times. It can be useful if you have many samples/data points and you want to operate or manipulate those points.
 
 
 ```python
@@ -184,7 +228,9 @@ index: 4  The thing in my 'times' list: Another string
 index: 5  The thing in my 'times' list: True
 ```
 
-You don't always need a pre-defined list
+Notice that the index in python starts at 0 (zero) - the "first" element is always assigned this index.
+
+You don't always need a pre-defined list:
 
 
 ```python
@@ -207,6 +253,8 @@ time: 145  age: 144  difference: 1
 
 #### Control statements
 
+
+Control statements include the functions `if`, `for`, `while`, `try`.
 
 ```python
 #Control statements: if, for, while, try, 
@@ -336,7 +384,7 @@ help(numpy.loadtxt)
     
 
 
-Or really, just [search](http://letmegooglethat.com/?q=numpy+loadtxt) the function! Online documentation and discussion boards are filled with great content.
+Or really, [search](http://letmegooglethat.com/?q=numpy+loadtxt) the function! Online documentation and discussion boards are filled with great content.
 
 ## Exploring your data
 #### It is often a good idea to look at the data to have some idea of what you are working with
@@ -367,7 +415,7 @@ print(chemdata.shape)
     (207431, 4)
 
 
-207431 rows! A good example for why we use Python and not something like Excel.
+207431 rows! 
 
 ### Accessing data from an array
 chemdata is a table of data: an array with two dimensions. So to access/look at/change parts of it, we need to specify both row and column
@@ -409,6 +457,27 @@ print(chemdata[[2,5,6],0:2])
     [[  41.206 -117.272]
      [  41.186 -117.417]
      [  41.177 -117.485]]
+
+> ## Challenge
+>
+> Print the second and third columns for row 20-30. 
+>
+> 
+> {: .source}
+>
+> > ## Solution
+> > 
+> > ~~~
+> > print(chemdata[19:29,1:3])
+> > 
+> > 
+> > 
+> > 
+> > ~~~
+> > 
+> > {: .output}
+> {: .solution}
+{: .challenge}
 
 
 ## Plotting data

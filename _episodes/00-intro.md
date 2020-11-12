@@ -8,8 +8,8 @@ questions:
 objectives:
 - "Understand the Python ecosystem and other tools."
 keypoints:
-- "SIH is cool!"
-- "Python is cool!."
+- "This course will introduce you to key Python tools and libraries to do your work faster and more efficiently."
+- "The Sydney Informatics Hub is a data science unit at the University of Sydney which supports excellence in data driven research at the University, including in geoscience."
 ---
 
 This course we will introduce you to foundations of Python programming. We will utilise common geosicence data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets. 
