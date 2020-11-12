@@ -1,24 +1,26 @@
----
-title: "03a. Machine Learning for Geoscience"
-teaching: 90
-exercises: 30
-questions:
-- "What data science tools and techniques can be used in Python?"
-- "How do I do it?"
-objectives:
-- "Learn fundamental Machine Learning packages."
-- "Learn to further explore data."
-keypoints:
-- "Applying ML workflows"
-- "Wrangling data."
----
+# Machine Learning for Geoscience
+
+<div class="questions">  
+### Questions
+
+- What data science tools and techniques can be used in Python?
+- How do I do it?
+</div>
+
+<div class="objectives">  
+### Objectives
+
+- Learn fundamental Machine Learning packages.
+- Learn to further explore data.
+</div>
+
 Let's use some standard Machine Learning tools available in Python packages to analyse some data.
 
 We have a dataset (from Butterworth et al. 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.
 
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
-![SegmentLocal](../fig/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](fig/MullerConvergenceSmall.gif "segment")
 
 # Start by importing most of the modules we need
 By convention module loads go at the top of your workflows.
@@ -341,10 +343,9 @@ print("Positive (deposits) examples: ",np.shape(ml_data_np[ml_data_np[:,20]==1,:
 print("Negative (non-deposits) examples: ",np.shape(ml_data_np[ml_data_np[:,20]==0,:]))
 ```
 
-    ('Shape of ML data array: ', (301, 21))
-    ('Positive (deposits) examples: ', (147, 21))
-    ('Negative (non-deposits) examples: ', (154, 21))
-
+    Shape of ML data array:  (301, 21)
+    Positive (deposits) examples:  (147, 21)
+    Negative (non-deposits) examples:  (154, 21)
 
 
 
@@ -373,8 +374,9 @@ print(rf.predict(features))
     Make the classifiers
     Random Forest...
     Done RF
-    ('RF Scores: ', array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]))
-    ('SCORE Mean: 1.00', 'STD: 0.00', '\n')
+    RF Scores:  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+    SCORE Mean: 1.00 STD: 0.00 
+    
     Targets (expected result):
     [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
      1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
@@ -406,7 +408,6 @@ print(rf.predict(features))
 
 
 
-
 ```python
 #Make a list of labels for our chosen features
 paramColumns=np.array(ml_data.columns)
@@ -435,29 +436,33 @@ plt.show()
 
     Importance 	 Feature
     0.014 		 0 Present day longitude (degrees)
-    0.013 		 1 Present day latitude (degrees)
-    0.049 		 2 Reconstructed longitude (degrees)
-    0.014 		 3 Reconstructed latitude (degrees)
-    0.054 		 4 Age (Ma)
+    0.009 		 1 Present day latitude (degrees)
+    0.055 		 2 Reconstructed longitude (degrees)
+    0.016 		 3 Reconstructed latitude (degrees)
+    0.051 		 4 Age (Ma)
     0.000 		 5 Time before mineralisation (Myr)
-    0.040 		 6 Seafloor age (Myr)
-    0.018 		 7 Segment length (km)
-    0.025 		 8 Slab length (km)
-    0.032 		 9 Distance to trench edge (km)
-    0.022 		 10 Subducting plate normal velocity (km/Myr)
-    0.019 		 11 Subducting plate parallel velocity (km/Myr)
-    0.027 		 12 Overriding plate normal velocity (km/Myr)
-    0.022 		 13 Overriding plate parallel velocity (km/Myr)
-    0.019 		 14 Convergence normal rate (km/Myr)
+    0.036 		 6 Seafloor age (Myr)
+    0.022 		 7 Segment length (km)
+    0.026 		 8 Slab length (km)
+    0.030 		 9 Distance to trench edge (km)
+    0.021 		 10 Subducting plate normal velocity (km/Myr)
+    0.020 		 11 Subducting plate parallel velocity (km/Myr)
+    0.021 		 12 Overriding plate normal velocity (km/Myr)
+    0.017 		 13 Overriding plate parallel velocity (km/Myr)
+    0.023 		 14 Convergence normal rate (km/Myr)
     0.013 		 15 Convergence parallel rate (km/Myr)
-    0.016 		 16 Subduction polarity (degrees)
-    0.031 		 17 Subduction obliquity (degrees)
-    0.012 		 18 Distance along margin (km)
-    0.015 		 19 Subduction obliquity signed (radians)
-    0.546 		 20 Ore Deposits Binary Flag (1 or 0)
+    0.015 		 16 Subduction polarity (degrees)
+    0.029 		 17 Subduction obliquity (degrees)
+    0.011 		 18 Distance along margin (km)
+    0.013 		 19 Subduction obliquity signed (radians)
+    0.558 		 20 Ore Deposits Binary Flag (1 or 0)
 
 
-![png](../fig/fig-02ML-featimp.png)
+
+    
+![png](03a-MachineLearning_files/03a-MachineLearning_12_1.png)
+    
+
 
 Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifier we can predict a probability that porphyry copper deposits have formed
 
@@ -473,6 +478,7 @@ print("Done RF")
     RF...
     Done RF
 
+
 ## Maps!
 
 
@@ -486,12 +492,9 @@ data.variables
 
 
 
-
-    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f0d0>),
-                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f450>),
-                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f590>)])
-
-
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x7ffa419c31f0>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x7ffa4195cd90>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x7ffa4195cf70>)])
 
 
 
@@ -505,6 +508,10 @@ topoZ=np.array(data.variables['elev'][:])
 #Good practice, is to close the file when done (for safety and memory saving)
 data.close()
 ```
+
+    /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/scipy/io/netcdf.py:308: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
+      warnings.warn((
+
 
 
 ```python
@@ -535,13 +542,17 @@ plt.title("Bathymetry and Topography of the World \n (ETOPO5 2020)")
 plt.show()
 ```
 
-![png](../fig/fig-02ML-topo.png)
+
+    
+![png](03a-MachineLearning_files/03a-MachineLearning_18_0.png)
+    
+
 
 ### For loops plotting shapefiles
 
 
-
-```python
+```
+TODO this cell generates an error!
 #Load in plate polygons for plotting
 topologyFile='../data/topology_platepolygons_0.00Ma.shp'
 
@@ -570,8 +581,8 @@ plt.show()
 ### Make a prettier map
 
 
-
-```python
+```
+# TODO also an error
 ###Set up the figure
 fig = plt.figure(figsize=(16,12),dpi=150)
 
@@ -680,3 +691,17 @@ Butterworth et al 2016 https://doi.org/10.1002/2016TC004289
 
 #### Shapefile plate polygons
 GPlates2.0. https://www.gplates.org/
+
+<div class="keypoints">
+### Key points
+
+- Applying ML workflows
+- Wrangling data.
+</div>
+
+
+
+
+```python
+
+```

@@ -11,7 +11,7 @@
 
 
 
-<title>03a. Machine Learning for Geoscience</title>
+<title>03a-MachineLearning.utf8</title>
 
 <script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -436,17 +436,33 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">03a. Machine Learning for Geoscience</h1>
 
 </div>
 
 
+<div id="machine-learning-for-geoscience" class="section level1">
+<h1>Machine Learning for Geoscience</h1>
+<div id="questions" class="section level3 questions">
+<h3>Questions</h3>
+<ul>
+<li>What data science tools and techniques can be used in Python?</li>
+<li>How do I do it?</li>
+</ul>
+</div>
+<div id="objectives" class="section level3 objectives">
+<h3>Objectives</h3>
+<ul>
+<li>Learn fundamental Machine Learning packages.</li>
+<li>Learn to further explore data.</li>
+</ul>
+</div>
 <p>Let’s use some standard Machine Learning tools available in Python packages to analyse some data.</p>
 <p>We have a dataset (from Butterworth et al. 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.</p>
 <p>Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.</p>
 <div class="figure">
-<img src="../fig/MullerConvergenceSmall.gif" title="segment" alt="" />
+<img src="fig/MullerConvergenceSmall.gif" title="segment" alt="" />
 <p class="caption">SegmentLocal</p>
+</div>
 </div>
 <div id="start-by-importing-most-of-the-modules-we-need" class="section level1">
 <h1>Start by importing most of the modules we need</h1>
@@ -1142,9 +1158,9 @@ targets=ml_data_np[:,20]
 print(&quot;Shape of ML data array: &quot;, ml_data_norm.shape)
 print(&quot;Positive (deposits) examples: &quot;,np.shape(ml_data_np[ml_data_np[:,20]==1,:]))
 print(&quot;Negative (non-deposits) examples: &quot;,np.shape(ml_data_np[ml_data_np[:,20]==0,:]))</code></pre>
-<pre><code>(&#39;Shape of ML data array: &#39;, (301, 21))
-(&#39;Positive (deposits) examples: &#39;, (147, 21))
-(&#39;Negative (non-deposits) examples: &#39;, (154, 21))</code></pre>
+<pre><code>Shape of ML data array:  (301, 21)
+Positive (deposits) examples:  (147, 21)
+Negative (non-deposits) examples:  (154, 21)</code></pre>
 <pre class="python"><code>print(&#39;Make the classifiers&#39;)
 
 print(&#39;Random Forest...&#39;)
@@ -1167,8 +1183,9 @@ print(rf.predict(features))</code></pre>
 <pre><code>Make the classifiers
 Random Forest...
 Done RF
-(&#39;RF Scores: &#39;, array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.]))
-(&#39;SCORE Mean: 1.00&#39;, &#39;STD: 0.00&#39;, &#39;\n&#39;)
+RF Scores:  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+SCORE Mean: 1.00 STD: 0.00 
+
 Targets (expected result):
 [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
  1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
@@ -1222,28 +1239,28 @@ plt.show()
 </code></pre>
 <pre><code>Importance   Feature
 0.014        0 Present day longitude (degrees)
-0.013        1 Present day latitude (degrees)
-0.049        2 Reconstructed longitude (degrees)
-0.014        3 Reconstructed latitude (degrees)
-0.054        4 Age (Ma)
+0.009        1 Present day latitude (degrees)
+0.055        2 Reconstructed longitude (degrees)
+0.016        3 Reconstructed latitude (degrees)
+0.051        4 Age (Ma)
 0.000        5 Time before mineralisation (Myr)
-0.040        6 Seafloor age (Myr)
-0.018        7 Segment length (km)
-0.025        8 Slab length (km)
-0.032        9 Distance to trench edge (km)
-0.022        10 Subducting plate normal velocity (km/Myr)
-0.019        11 Subducting plate parallel velocity (km/Myr)
-0.027        12 Overriding plate normal velocity (km/Myr)
-0.022        13 Overriding plate parallel velocity (km/Myr)
-0.019        14 Convergence normal rate (km/Myr)
+0.036        6 Seafloor age (Myr)
+0.022        7 Segment length (km)
+0.026        8 Slab length (km)
+0.030        9 Distance to trench edge (km)
+0.021        10 Subducting plate normal velocity (km/Myr)
+0.020        11 Subducting plate parallel velocity (km/Myr)
+0.021        12 Overriding plate normal velocity (km/Myr)
+0.017        13 Overriding plate parallel velocity (km/Myr)
+0.023        14 Convergence normal rate (km/Myr)
 0.013        15 Convergence parallel rate (km/Myr)
-0.016        16 Subduction polarity (degrees)
-0.031        17 Subduction obliquity (degrees)
-0.012        18 Distance along margin (km)
-0.015        19 Subduction obliquity signed (radians)
-0.546        20 Ore Deposits Binary Flag (1 or 0)</code></pre>
+0.015        16 Subduction polarity (degrees)
+0.029        17 Subduction obliquity (degrees)
+0.011        18 Distance along margin (km)
+0.013        19 Subduction obliquity signed (radians)
+0.558        20 Ore Deposits Binary Flag (1 or 0)</code></pre>
 <div class="figure">
-<img src="../fig/fig-02ML-featimp.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_12_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifier we can predict a probability that porphyry copper deposits have formed</p>
@@ -1260,9 +1277,9 @@ Done RF</code></pre>
 data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 data.variables</code></pre>
-<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f0d0&gt;),
-             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f450&gt;),
-             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fec3cd4f590&gt;)])</code></pre>
+<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa419c31f0&gt;),
+             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa4195cd90&gt;),
+             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa4195cf70&gt;)])</code></pre>
 <pre class="python"><code>topoX=data.variables[&#39;X&#39;][:]
 topoY=data.variables[&#39;Y&#39;][:]
 topoZ=np.array(data.variables[&#39;elev&#39;][:])
@@ -1270,6 +1287,8 @@ topoZ=np.array(data.variables[&#39;elev&#39;][:])
 #Some file types and readers (like netcdf) can actually change the data directly on disk
 #Good practice, is to close the file when done (for safety and memory saving)
 data.close()</code></pre>
+<pre><code>/Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/scipy/io/netcdf.py:308: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
+  warnings.warn((</code></pre>
 <pre class="python"><code>#Make a figure object
 plt.figure()
 
@@ -1296,12 +1315,13 @@ plt.title(&quot;Bathymetry and Topography of the World \n (ETOPO5 2020)&quot;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="../fig/fig-02ML-topo.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_18_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div id="for-loops-plotting-shapefiles" class="section level3">
 <h3>For loops plotting shapefiles</h3>
-<pre class="python"><code>#Load in plate polygons for plotting
+<pre><code>TODO this cell generates an error!
+#Load in plate polygons for plotting
 topologyFile=&#39;../data/topology_platepolygons_0.00Ma.shp&#39;
 
 #read in the file
@@ -1329,7 +1349,8 @@ plt.show()</code></pre>
 </div>
 <div id="make-a-prettier-map" class="section level3">
 <h3>Make a prettier map</h3>
-<pre class="python"><code>###Set up the figure
+<pre><code># TODO also an error
+###Set up the figure
 fig = plt.figure(figsize=(16,12),dpi=150)
 
 ax = plt.axes(projection=ccrs.PlateCarree())
@@ -1441,6 +1462,14 @@ Added deposit probability</code></pre>
 <h4>Shapefile plate polygons</h4>
 <p>GPlates2.0. <a href="https://www.gplates.org/" class="uri">https://www.gplates.org/</a></p>
 </div>
+<div id="key-points" class="section level3 keypoints">
+<h3>Key points</h3>
+<ul>
+<li>Applying ML workflows</li>
+<li>Wrangling data.</li>
+</ul>
+</div>
+<pre class="python"><code></code></pre>
 </div>
 
 
