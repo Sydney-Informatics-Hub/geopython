@@ -1,5 +1,5 @@
 ---
-title: "SIH Introduction to Python for Geoscientists"
+title: "Introduction to Python for Geoscience"
 output:
   html_document:
     toc: false
