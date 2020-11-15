@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>01b-dataframes.utf8</title>
+<title>01b-dataframes.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -440,12 +465,14 @@ div.tocify {
 </div>
 
 
-<div id="python-packages-for-working-with-shapefiles-and-tabular-data" class="section level1">
-<h1>Python packages for working with shapefiles and tabular data</h1>
+<div id="python-packages-for-different-data" class="section level1">
+<h1>Python packages for different data</h1>
 <div id="questions" class="section level3 questions">
 <h3>Questions</h3>
 <ul>
-<li>How can I load shapefiles and tabular data into python?</li>
+<li>How can I load tabular date into Python?</li>
+<li>How can I load shapefiles?</li>
+<li>How can I load segy and las data?</li>
 <li>What are libraries and packages?</li>
 </ul>
 </div>
@@ -508,793 +535,9 @@ CLASSES
      |  Reader(*args, **kwargs)
      |  
      |  Reads the three files of a shapefile as a unit or
-     |  separately.  If one of the three files (.shp, .shx,
-     |  .dbf) is missing no exception is thrown until you try
-     |  to call a method that depends on that particular file.
-     |  The .shx index file is used if available for efficiency
-     |  but is not required to read the geometry from the .shp
-     |  file. The &quot;shapefile&quot; argument in the constructor is the
-     |  name of the file you want to open.
-     |  
-     |  You can instantiate a Reader without specifying a shapefile
-     |  and then specify one later with the load() method.
-     |  
-     |  Only the shapefile headers are read upon loading. Content
-     |  within each file is only accessed when required and as
-     |  efficiently as possible. Shapefiles are usually not large
-     |  but they can be.
-     |  
-     |  Methods defined here:
-     |  
-     |  __del__(self)
-     |  
-     |  __enter__(self)
-     |      Enter phase of context manager.
-     |  
-     |  __exit__(self, exc_type, exc_val, exc_tb)
-     |      Exit phase of context manager, close opened files.
-     |  
-     |  __init__(self, *args, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  __iter__(self)
-     |      Iterates through the shapes/records in the shapefile.
-     |  
-     |  __len__(self)
-     |      Returns the number of shapes/records in the shapefile.
-     |  
-     |  __str__(self)
-     |      Use some general info on the shapefile as __str__
-     |  
-     |  close(self)
-     |  
-     |  iterRecords(self)
-     |      Returns a generator of records in a dbf file.
-     |      Useful for large shapefiles or dbf files.
-     |  
-     |  iterShapeRecords(self)
-     |      Returns a generator of combination geometry/attribute records for
-     |      all records in a shapefile.
-     |  
-     |  iterShapes(self)
-     |      Returns a generator of shapes in a shapefile. Useful
-     |      for handling large shapefiles.
-     |  
-     |  load(self, shapefile=None)
-     |      Opens a shapefile from a filename or file-like
-     |      object. Normally this method would be called by the
-     |      constructor with the file name as an argument.
-     |  
-     |  load_dbf(self, shapefile_name)
-     |      Attempts to load file with .dbf extension as both lower and upper case
-     |  
-     |  load_shp(self, shapefile_name)
-     |      Attempts to load file with .shp extension as both lower and upper case
-     |  
-     |  load_shx(self, shapefile_name)
-     |      Attempts to load file with .shx extension as both lower and upper case
-     |  
-     |  record(self, i=0)
-     |      Returns a specific dbf record based on the supplied index.
-     |  
-     |  records(self)
-     |      Returns all records in a dbf file.
-     |  
-     |  shape(self, i=0)
-     |      Returns a shape object for a shape in the geometry
-     |      record file.
-     |  
-     |  shapeRecord(self, i=0)
-     |      Returns a combination geometry and attribute record for the
-     |      supplied record index.
-     |  
-     |  shapeRecords(self)
-     |      Returns a list of combination geometry/attribute records for
-     |      all records in a shapefile.
-     |  
-     |  shapes(self)
-     |      Returns all shapes in a shapefile.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  __geo_interface__
-     |  
-     |  shapeTypeName
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-    
-    class Shape(builtins.object)
-     |  Shape(shapeType=0, points=None, parts=None, partTypes=None)
-     |  
-     |  Methods defined here:
-     |  
-     |  __init__(self, shapeType=0, points=None, parts=None, partTypes=None)
-     |      Stores the geometry of the different shape types
-     |      specified in the Shapefile spec. Shape types are
-     |      usually point, polyline, or polygons. Every shape type
-     |      except the &quot;Null&quot; type contains points at some level for
-     |      example vertices in a polygon. If a shape type has
-     |      multiple shapes containing points within a single
-     |      geometry record then those shapes are called parts. Parts
-     |      are designated by their starting index in geometry record&#39;s
-     |      list of shapes. For MultiPatch geometry, partTypes designates
-     |      the patch type of each of the parts.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  __geo_interface__
-     |  
-     |  shapeTypeName
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-    
-    class ShapeRecord(builtins.object)
-     |  ShapeRecord(shape=None, record=None)
-     |  
-     |  A ShapeRecord object containing a shape along with its attributes.
-     |  Provides the GeoJSON __geo_interface__ to return a Feature dictionary.
-     |  
-     |  Methods defined here:
-     |  
-     |  __init__(self, shape=None, record=None)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  __geo_interface__
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-    
-    class ShapeRecords(builtins.list)
-     |  ShapeRecords(iterable=(), /)
-     |  
-     |  A class to hold a list of ShapeRecord objects. Subclasses list to ensure compatibility with
-     |  former work and to reuse all the optimizations of the builtin list.
-     |  In addition to the list interface, this also provides the GeoJSON __geo_interface__
-     |  to return a FeatureCollection dictionary.
-     |  
-     |  Method resolution order:
-     |      ShapeRecords
-     |      builtins.list
-     |      builtins.object
-     |  
-     |  Methods defined here:
-     |  
-     |  __repr__(self)
-     |      Return repr(self).
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  __geo_interface__
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.list:
-     |  
-     |  __add__(self, value, /)
-     |      Return self+value.
-     |  
-     |  __contains__(self, key, /)
-     |      Return key in self.
-     |  
-     |  __delitem__(self, key, /)
-     |      Delete self[key].
-     |  
-     |  __eq__(self, value, /)
-     |      Return self==value.
-     |  
-     |  __ge__(self, value, /)
-     |      Return self&gt;=value.
-     |  
-     |  __getattribute__(self, name, /)
-     |      Return getattr(self, name).
-     |  
-     |  __getitem__(...)
-     |      x.__getitem__(y) &lt;==&gt; x[y]
-     |  
-     |  __gt__(self, value, /)
-     |      Return self&gt;value.
-     |  
-     |  __iadd__(self, value, /)
-     |      Implement self+=value.
-     |  
-     |  __imul__(self, value, /)
-     |      Implement self*=value.
-     |  
-     |  __init__(self, /, *args, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  __iter__(self, /)
-     |      Implement iter(self).
-     |  
-     |  __le__(self, value, /)
-     |      Return self&lt;=value.
-     |  
-     |  __len__(self, /)
-     |      Return len(self).
-     |  
-     |  __lt__(self, value, /)
-     |      Return self&lt;value.
-     |  
-     |  __mul__(self, value, /)
-     |      Return self*value.
-     |  
-     |  __ne__(self, value, /)
-     |      Return self!=value.
-     |  
-     |  __reversed__(self, /)
-     |      Return a reverse iterator over the list.
-     |  
-     |  __rmul__(self, value, /)
-     |      Return value*self.
-     |  
-     |  __setitem__(self, key, value, /)
-     |      Set self[key] to value.
-     |  
-     |  __sizeof__(self, /)
-     |      Return the size of the list in memory, in bytes.
-     |  
-     |  append(self, object, /)
-     |      Append object to the end of the list.
-     |  
-     |  clear(self, /)
-     |      Remove all items from list.
-     |  
-     |  copy(self, /)
-     |      Return a shallow copy of the list.
-     |  
-     |  count(self, value, /)
-     |      Return number of occurrences of value.
-     |  
-     |  extend(self, iterable, /)
-     |      Extend list by appending elements from the iterable.
-     |  
-     |  index(self, value, start=0, stop=9223372036854775807, /)
-     |      Return first index of value.
-     |      
-     |      Raises ValueError if the value is not present.
-     |  
-     |  insert(self, index, object, /)
-     |      Insert object before index.
-     |  
-     |  pop(self, index=-1, /)
-     |      Remove and return item at index (default last).
-     |      
-     |      Raises IndexError if list is empty or index is out of range.
-     |  
-     |  remove(self, value, /)
-     |      Remove first occurrence of value.
-     |      
-     |      Raises ValueError if the value is not present.
-     |  
-     |  reverse(self, /)
-     |      Reverse *IN PLACE*.
-     |  
-     |  sort(self, /, *, key=None, reverse=False)
-     |      Sort the list in ascending order and return None.
-     |      
-     |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
-     |      order of two equal elements is maintained).
-     |      
-     |      If a key function is given, apply it once to each list item and sort them,
-     |      ascending or descending, according to their function values.
-     |      
-     |      The reverse flag can be set to sort in descending order.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Static methods inherited from builtins.list:
-     |  
-     |  __new__(*args, **kwargs) from builtins.type
-     |      Create and return a new object.  See help(type) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from builtins.list:
-     |  
-     |  __hash__ = None
-    
-    class ShapefileException(builtins.Exception)
-     |  An exception to handle shapefile specific problems.
-     |  
-     |  Method resolution order:
-     |      ShapefileException
-     |      builtins.Exception
-     |      builtins.BaseException
-     |      builtins.object
-     |  
-     |  Data descriptors defined here:
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.Exception:
-     |  
-     |  __init__(self, /, *args, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Static methods inherited from builtins.Exception:
-     |  
-     |  __new__(*args, **kwargs) from builtins.type
-     |      Create and return a new object.  See help(type) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.BaseException:
-     |  
-     |  __delattr__(self, name, /)
-     |      Implement delattr(self, name).
-     |  
-     |  __getattribute__(self, name, /)
-     |      Return getattr(self, name).
-     |  
-     |  __reduce__(...)
-     |      Helper for pickle.
-     |  
-     |  __repr__(self, /)
-     |      Return repr(self).
-     |  
-     |  __setattr__(self, name, value, /)
-     |      Implement setattr(self, name, value).
-     |  
-     |  __setstate__(...)
-     |  
-     |  __str__(self, /)
-     |      Return str(self).
-     |  
-     |  with_traceback(...)
-     |      Exception.with_traceback(tb) --
-     |      set self.__traceback__ to tb and return self.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from builtins.BaseException:
-     |  
-     |  __cause__
-     |      exception cause
-     |  
-     |  __context__
-     |      exception context
-     |  
-     |  __dict__
-     |  
-     |  __suppress_context__
-     |  
-     |  __traceback__
-     |  
-     |  args
-    
-    class Shapes(builtins.list)
-     |  Shapes(iterable=(), /)
-     |  
-     |  A class to hold a list of Shape objects. Subclasses list to ensure compatibility with
-     |  former work and to reuse all the optimizations of the builtin list.
-     |  In addition to the list interface, this also provides the GeoJSON __geo_interface__
-     |  to return a GeometryCollection dictionary.
-     |  
-     |  Method resolution order:
-     |      Shapes
-     |      builtins.list
-     |      builtins.object
-     |  
-     |  Methods defined here:
-     |  
-     |  __repr__(self)
-     |      Return repr(self).
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  __geo_interface__
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from builtins.list:
-     |  
-     |  __add__(self, value, /)
-     |      Return self+value.
-     |  
-     |  __contains__(self, key, /)
-     |      Return key in self.
-     |  
-     |  __delitem__(self, key, /)
-     |      Delete self[key].
-     |  
-     |  __eq__(self, value, /)
-     |      Return self==value.
-     |  
-     |  __ge__(self, value, /)
-     |      Return self&gt;=value.
-     |  
-     |  __getattribute__(self, name, /)
-     |      Return getattr(self, name).
-     |  
-     |  __getitem__(...)
-     |      x.__getitem__(y) &lt;==&gt; x[y]
-     |  
-     |  __gt__(self, value, /)
-     |      Return self&gt;value.
-     |  
-     |  __iadd__(self, value, /)
-     |      Implement self+=value.
-     |  
-     |  __imul__(self, value, /)
-     |      Implement self*=value.
-     |  
-     |  __init__(self, /, *args, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  __iter__(self, /)
-     |      Implement iter(self).
-     |  
-     |  __le__(self, value, /)
-     |      Return self&lt;=value.
-     |  
-     |  __len__(self, /)
-     |      Return len(self).
-     |  
-     |  __lt__(self, value, /)
-     |      Return self&lt;value.
-     |  
-     |  __mul__(self, value, /)
-     |      Return self*value.
-     |  
-     |  __ne__(self, value, /)
-     |      Return self!=value.
-     |  
-     |  __reversed__(self, /)
-     |      Return a reverse iterator over the list.
-     |  
-     |  __rmul__(self, value, /)
-     |      Return value*self.
-     |  
-     |  __setitem__(self, key, value, /)
-     |      Set self[key] to value.
-     |  
-     |  __sizeof__(self, /)
-     |      Return the size of the list in memory, in bytes.
-     |  
-     |  append(self, object, /)
-     |      Append object to the end of the list.
-     |  
-     |  clear(self, /)
-     |      Remove all items from list.
-     |  
-     |  copy(self, /)
-     |      Return a shallow copy of the list.
-     |  
-     |  count(self, value, /)
-     |      Return number of occurrences of value.
-     |  
-     |  extend(self, iterable, /)
-     |      Extend list by appending elements from the iterable.
-     |  
-     |  index(self, value, start=0, stop=9223372036854775807, /)
-     |      Return first index of value.
-     |      
-     |      Raises ValueError if the value is not present.
-     |  
-     |  insert(self, index, object, /)
-     |      Insert object before index.
-     |  
-     |  pop(self, index=-1, /)
-     |      Remove and return item at index (default last).
-     |      
-     |      Raises IndexError if list is empty or index is out of range.
-     |  
-     |  remove(self, value, /)
-     |      Remove first occurrence of value.
-     |      
-     |      Raises ValueError if the value is not present.
-     |  
-     |  reverse(self, /)
-     |      Reverse *IN PLACE*.
-     |  
-     |  sort(self, /, *, key=None, reverse=False)
-     |      Sort the list in ascending order and return None.
-     |      
-     |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
-     |      order of two equal elements is maintained).
-     |      
-     |      If a key function is given, apply it once to each list item and sort them,
-     |      ascending or descending, according to their function values.
-     |      
-     |      The reverse flag can be set to sort in descending order.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Static methods inherited from builtins.list:
-     |  
-     |  __new__(*args, **kwargs) from builtins.type
-     |      Create and return a new object.  See help(type) for accurate signature.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and other attributes inherited from builtins.list:
-     |  
-     |  __hash__ = None
-    
-    class Writer(builtins.object)
-     |  Writer(target=None, shapeType=None, autoBalance=False, **kwargs)
-     |  
-     |  Provides write support for ESRI Shapefiles.
-     |  
-     |  Methods defined here:
-     |  
-     |  __del__(self)
-     |  
-     |  __enter__(self)
-     |      Enter phase of context manager.
-     |  
-     |  __exit__(self, exc_type, exc_val, exc_tb)
-     |      Exit phase of context manager, finish writing and close the files.
-     |  
-     |  __init__(self, target=None, shapeType=None, autoBalance=False, **kwargs)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |  
-     |  __len__(self)
-     |      Returns the current number of features written to the shapefile. 
-     |      If shapes and records are unbalanced, the length is considered the highest
-     |      of the two.
-     |  
-     |  balance(self)
-     |      Adds corresponding empty attributes or null geometry records depending
-     |      on which type of record was created to make sure all three files
-     |      are in synch.
-     |  
-     |  bbox(self)
-     |      Returns the current bounding box for the shapefile which is
-     |      the lower-left and upper-right corners. It does not contain the
-     |      elevation or measure extremes.
-     |  
-     |  close(self)
-     |      Write final shp, shx, and dbf headers, close opened files.
-     |  
-     |  field(self, name, fieldType=&#39;C&#39;, size=&#39;50&#39;, decimal=0)
-     |      Adds a dbf field descriptor to the shapefile.
-     |  
-     |  line(self, lines)
-     |      Creates a POLYLINE shape.
-     |      Lines is a collection of lines, each made up of a list of xy values.
-     |  
-     |  linem(self, lines)
-     |      Creates a POLYLINEM shape.
-     |      Lines is a collection of lines, each made up of a list of xym values.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  linez(self, lines)
-     |      Creates a POLYLINEZ shape.
-     |      Lines is a collection of lines, each made up of a list of xyzm values.
-     |      If the z (elevation) value is not included, it defaults to 0.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  mbox(self)
-     |      Returns the current m extremes for the shapefile.
-     |  
-     |  multipatch(self, parts, partTypes)
-     |      Creates a MULTIPATCH shape.
-     |      Parts is a collection of 3D surface patches, each made up of a list of xyzm values.
-     |      PartTypes is a list of types that define each of the surface patches.
-     |      The types can be any of the following module constants: TRIANGLE_STRIP,
-     |      TRIANGLE_FAN, OUTER_RING, INNER_RING, FIRST_RING, or RING.
-     |      If the z (elavation) value is not included, it defaults to 0.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  multipoint(self, points)
-     |      Creates a MULTIPOINT shape.
-     |      Points is a list of xy values.
-     |  
-     |  multipointm(self, points)
-     |      Creates a MULTIPOINTM shape.
-     |      Points is a list of xym values.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  multipointz(self, points)
-     |      Creates a MULTIPOINTZ shape.
-     |      Points is a list of xyzm values.
-     |      If the z (elevation) value is not included, it defaults to 0.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  null(self)
-     |      Creates a null shape.
-     |  
-     |  point(self, x, y)
-     |      Creates a POINT shape.
-     |  
-     |  pointm(self, x, y, m=None)
-     |      Creates a POINTM shape.
-     |      If the m (measure) value is not set, it defaults to NoData.
-     |  
-     |  pointz(self, x, y, z=0, m=None)
-     |      Creates a POINTZ shape.
-     |      If the z (elevation) value is not set, it defaults to 0.
-     |      If the m (measure) value is not set, it defaults to NoData.
-     |  
-     |  poly(self, polys)
-     |      Creates a POLYGON shape.
-     |      Polys is a collection of polygons, each made up of a list of xy values.
-     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
-     |      If some of the polygons are holes, these must run in a counterclockwise direction.
-     |  
-     |  polym(self, polys)
-     |      Creates a POLYGONM shape.
-     |      Polys is a collection of polygons, each made up of a list of xym values.
-     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
-     |      If some of the polygons are holes, these must run in a counterclockwise direction.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  polyz(self, polys)
-     |      Creates a POLYGONZ shape.
-     |      Polys is a collection of polygons, each made up of a list of xyzm values.
-     |      Note that for ordinary polygons the coordinates must run in a clockwise direction.
-     |      If some of the polygons are holes, these must run in a counterclockwise direction.
-     |      If the z (elevation) value is not included, it defaults to 0.
-     |      If the m (measure) value is not included, it defaults to None (NoData).
-     |  
-     |  record(self, *recordList, **recordDict)
-     |      Creates a dbf attribute record. You can submit either a sequence of
-     |      field values or keyword arguments of field names and values. Before
-     |      adding records you must add fields for the record values using the
-     |      field() method. If the record values exceed the number of fields the
-     |      extra ones won&#39;t be added. In the case of using keyword arguments to specify
-     |      field/value pairs only fields matching the already registered fields
-     |      will be added.
-     |  
-     |  shape(self, s)
-     |  
-     |  zbox(self)
-     |      Returns the current z extremes for the shapefile.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Readonly properties defined here:
-     |  
-     |  shapeTypeName
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |  
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-
-FUNCTIONS
-    b(v, encoding=&#39;utf-8&#39;, encodingErrors=&#39;strict&#39;)
-    
-    bbox_contains(bbox1, bbox2)
-        Tests whether bbox1 fully contains bbox2, returning a boolean
-    
-    bbox_overlap(bbox1, bbox2)
-        Tests whether two bounding boxes overlap, returning a boolean
-    
-    calcsize(format, /)
-        Return size in bytes of the struct described by the format string.
-    
-    is_string(v)
-    
-    organize_polygon_rings(rings)
-        Organize a list of coordinate rings into one or more polygons with holes.
-        Returns a list of polygons, where each polygon is composed of a single exterior
-        ring, and one or more interior holes.
-        
-        Rings must be closed, and cannot intersect each other (non-self-intersecting polygon).
-        Rings are determined as exteriors if they run in clockwise direction, or interior
-        holes if they run in counter-clockwise direction. This method is used to construct
-        GeoJSON (multi)polygons from the shapefile polygon shape type, which does not
-        explicitly store the structure of the polygons beyond exterior/interior ring orientation.
-    
-    pack(...)
-        pack(format, v1, v2, ...) -&gt; bytes
-        
-        Return a bytes object containing the values v1, v2, ... packed according
-        to the format string.  See help(struct) for more on format strings.
-    
-    ring_bbox(coords)
-        Calculates and returns the bounding box of a ring.
-    
-    ring_contains_point(coords, p)
-        Fast point-in-polygon crossings algorithm, MacMartin optimization.
-        
-        Adapted from code by Eric Haynes
-        http://www.realtimerendering.com/resources/GraphicsGems//gemsiv/ptpoly_haines/ptinpoly.c
-        
-        Original description:
-            Shoot a test ray along +X axis.  The strategy, from MacMartin, is to
-            compare vertex Y values to the testing point&#39;s Y and quickly discard
-            edges which are entirely to one side of the test ray.
-    
-    ring_contains_ring(coords1, coords2)
-        Returns True if all vertexes in coords2 are fully inside coords1.
-    
-    ring_sample(coords, ccw=False)
-        Return a sample point guaranteed to be within a ring, by efficiently
-        finding the first centroid of a coordinate triplet whose orientation
-        matches the orientation of the ring and passes the point-in-ring test.
-        The orientation of the ring is assumed to be clockwise, unless ccw
-        (counter-clockwise) is set to True.
-    
-    signed_area(coords)
-        Return the signed area enclosed by a ring using the linear time
-        algorithm. A value &gt;= 0 indicates a counter-clockwise oriented ring.
-    
-    test(**kwargs)
-        # Begin Testing
-    
-    u(v, encoding=&#39;utf-8&#39;, encodingErrors=&#39;strict&#39;)
-    
-    unpack(format, buffer, /)
-        Return a tuple containing values unpacked according to the format string.
-        
-        The buffer&#39;s size in bytes must be calcsize(format).
-        
-        See help(struct) for more on format strings.
-
-DATA
-    FIRST_RING = 4
-    INNER_RING = 3
-    MISSING = [None, &#39;&#39;]
-    MULTIPATCH = 31
-    MULTIPOINT = 8
-    MULTIPOINTM = 28
-    MULTIPOINTZ = 18
-    NODATA = -1e+39
-    NULL = 0
-    OUTER_RING = 2
-    PARTTYPE_LOOKUP = {0: &#39;TRIANGLE_STRIP&#39;, 1: &#39;TRIANGLE_FAN&#39;, 2: &#39;OUTER_R...
-    POINT = 1
-    POINTM = 21
-    POINTZ = 11
-    POLYGON = 5
-    POLYGONM = 25
-    POLYGONZ = 15
-    POLYLINE = 3
-    POLYLINEM = 23
-    POLYLINEZ = 13
-    PYTHON3 = True
-    RING = 5
-    SHAPETYPE_LOOKUP = {0: &#39;NULL&#39;, 1: &#39;POINT&#39;, 3: &#39;POLYLINE&#39;, 5: &#39;POLYGON&#39;...
-    TRIANGLE_FAN = 1
-    TRIANGLE_STRIP = 0
-
-VERSION
+     |  separately.  If one of the three files (.shp, .shx,</code></pre>
+<p>… POLYLINEZ = 13 PYTHON3 = True RING = 5 SHAPETYPE_LOOKUP = {0: ‘NULL’, 1: ‘POINT’, 3: ‘POLYLINE’, 5: ‘POLYGON’… TRIANGLE_FAN = 1 TRIANGLE_STRIP = 0</p>
+<pre><code>VERSION
     2.1.2
 
 FILE
@@ -2953,131 +2196,8 @@ class list(object)
  |  If no argument is given, the constructor creates a new empty list.
  |  The argument must be an iterable if specified.
  |  
- |  Methods defined here:
- |  
- |  __add__(self, value, /)
- |      Return self+value.
- |  
- |  __contains__(self, key, /)
- |      Return key in self.
- |  
- |  __delitem__(self, key, /)
- |      Delete self[key].
- |  
- |  __eq__(self, value, /)
- |      Return self==value.
- |  
- |  __ge__(self, value, /)
- |      Return self&gt;=value.
- |  
- |  __getattribute__(self, name, /)
- |      Return getattr(self, name).
- |  
- |  __getitem__(...)
- |      x.__getitem__(y) &lt;==&gt; x[y]
- |  
- |  __gt__(self, value, /)
- |      Return self&gt;value.
- |  
- |  __iadd__(self, value, /)
- |      Implement self+=value.
- |  
- |  __imul__(self, value, /)
- |      Implement self*=value.
- |  
- |  __init__(self, /, *args, **kwargs)
- |      Initialize self.  See help(type(self)) for accurate signature.
- |  
- |  __iter__(self, /)
- |      Implement iter(self).
- |  
- |  __le__(self, value, /)
- |      Return self&lt;=value.
- |  
- |  __len__(self, /)
- |      Return len(self).
- |  
- |  __lt__(self, value, /)
- |      Return self&lt;value.
- |  
- |  __mul__(self, value, /)
- |      Return self*value.
- |  
- |  __ne__(self, value, /)
- |      Return self!=value.
- |  
- |  __repr__(self, /)
- |      Return repr(self).
- |  
- |  __reversed__(self, /)
- |      Return a reverse iterator over the list.
- |  
- |  __rmul__(self, value, /)
- |      Return value*self.
- |  
- |  __setitem__(self, key, value, /)
- |      Set self[key] to value.
- |  
- |  __sizeof__(self, /)
- |      Return the size of the list in memory, in bytes.
- |  
- |  append(self, object, /)
- |      Append object to the end of the list.
- |  
- |  clear(self, /)
- |      Remove all items from list.
- |  
- |  copy(self, /)
- |      Return a shallow copy of the list.
- |  
- |  count(self, value, /)
- |      Return number of occurrences of value.
- |  
- |  extend(self, iterable, /)
- |      Extend list by appending elements from the iterable.
- |  
- |  index(self, value, start=0, stop=9223372036854775807, /)
- |      Return first index of value.
- |      
- |      Raises ValueError if the value is not present.
- |  
- |  insert(self, index, object, /)
- |      Insert object before index.
- |  
- |  pop(self, index=-1, /)
- |      Remove and return item at index (default last).
- |      
- |      Raises IndexError if list is empty or index is out of range.
- |  
- |  remove(self, value, /)
- |      Remove first occurrence of value.
- |      
- |      Raises ValueError if the value is not present.
- |  
- |  reverse(self, /)
- |      Reverse *IN PLACE*.
- |  
- |  sort(self, /, *, key=None, reverse=False)
- |      Sort the list in ascending order and return None.
- |      
- |      The sort is in-place (i.e. the list itself is modified) and stable (i.e. the
- |      order of two equal elements is maintained).
- |      
- |      If a key function is given, apply it once to each list item and sort them,
- |      ascending or descending, according to their function values.
- |      
- |      The reverse flag can be set to sort in descending order.
- |  
- |  ----------------------------------------------------------------------
- |  Static methods defined here:
- |  
- |  __new__(*args, **kwargs) from builtins.type
- |      Create and return a new object.  See help(type) for accurate signature.
- |  
- |  ----------------------------------------------------------------------
- |  Data and other attributes defined here:
- |  
- |  __hash__ = None</code></pre>
+ |  Methods defined here:</code></pre>
+<p>…</p>
 <pre class="python"><code>#This is just a regular Python list! But the list contains
 #in this case, special objects known as &quot;LasFile(s)&quot; or lasio.las object.
 #Get some details using help again
@@ -3091,332 +2211,8 @@ class LASFile(builtins.object)
  |  
  |  Keyword Arguments:
  |      file_ref (file-like object, str): either a filename, an open file
- |          object, or a string containing the contents of a file.
- |  
- |  See these routines for additional keyword arguments you can use when
- |  reading in a LAS file:
- |  
- |  * :func:`lasio.reader.open_with_codecs` - manage issues relate to character
- |    encodings
- |  * :meth:`lasio.LASFile.read` - control how NULL values and errors are
- |    handled during parsing
- |  
- |  Attributes:
- |      encoding (str or None): the character encoding used when reading the
- |          file in from disk
- |  
- |  Methods defined here:
- |  
- |  __getitem__(self, key)
- |      Provide access to curve data.
- |      
- |      Arguments:
- |          key (str, int): either a curve mnemonic or the column index.
- |      
- |      Returns:
- |          1D :class:`numpy.ndarray` (the data for the curve)
- |  
- |  __init__(self, file_ref=None, **read_kwargs)
- |      Initialize self.  See help(type(self)) for accurate signature.
- |  
- |  __setitem__(self, key, value)
- |      Append a curve.
- |      
- |      Arguments:
- |          key (str): the curve mnemonic
- |          value (1D data or CurveItem): either the curve data, or a CurveItem
- |      
- |      See :meth:`lasio.LASFile.append_curve_item` or
- |      :meth:`lasio.LASFile.append_curve` for more details.
- |  
- |  add_curve(self, *args, **kwargs)
- |      Deprecated. Use append_curve() or insert_curve() instead.
- |  
- |  add_curve_raw(self, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
- |      Deprecated. Use append_curve_item() or insert_curve_item() instead.
- |  
- |  append_curve(self, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
- |      Add a curve.
- |      
- |      Arguments:
- |          mnemonic (str): the curve mnemonic
- |          data (1D ndarray): the curve data
- |      
- |      Keyword Arguments:
- |          unit (str): curve unit
- |          descr (str): curve description
- |          value (int/float/str): value e.g. API code.
- |  
- |  append_curve_item(self, curve_item)
- |      Add a CurveItem.
- |      
- |      Args:
- |          curve_item (lasio.CurveItem)
- |  
- |  delete_curve(self, mnemonic=None, ix=None)
- |      Delete a curve.
- |      
- |      Keyword Arguments:
- |          ix (int): index of curve in LASFile.curves.
- |          mnemonic (str): mnemonic of curve.
- |      
- |      The index takes precedence over the mnemonic.
- |  
- |  df(self)
- |      Return data as a :class:`pandas.DataFrame` structure.
- |      
- |      The first Curve of the LASFile object is used as the pandas
- |      DataFrame&#39;s index.
- |  
- |  get_curve(self, mnemonic)
- |      Return CurveItem object.
- |      
- |      Arguments:
- |          mnemonic (str): the name of the curve
- |      
- |      Returns:
- |          :class:`lasio.CurveItem` (not just the data array)
- |  
- |  insert_curve(self, ix, mnemonic, data, unit=&#39;&#39;, descr=&#39;&#39;, value=&#39;&#39;)
- |      Insert a curve.
- |      
- |      Arguments:
- |          ix (int): position to insert curve at i.e. 0 for start.
- |          mnemonic (str): the curve mnemonic
- |          data (1D ndarray): the curve data
- |      
- |      Keyword Arguments:
- |          unit (str): curve unit
- |          descr (str): curve description
- |          value (int/float/str): value e.g. API code.
- |  
- |  insert_curve_item(self, ix, curve_item)
- |      Insert a CurveItem.
- |      
- |      Args:
- |          ix (int): position to insert CurveItem i.e. 0 for start
- |          curve_item (lasio.CurveItem)
- |  
- |  items(self)
- |      Return mnemonics and data for all curves.
- |  
- |  iteritems(self)
- |  
- |  iterkeys(self)
- |  
- |  itervalues(self)
- |  
- |  keys(self)
- |      Return curve mnemonics.
- |  
- |  match_raw_section(self, pattern, re_func=&#39;match&#39;, flags=re.IGNORECASE)
- |      Find raw section with a regular expression.
- |      
- |      Arguments:
- |          pattern (str): regular expression (you need to include the tilde)
- |      
- |      Keyword Arguments:
- |          re_func (str): either &quot;match&quot; or &quot;search&quot;, see python ``re`` module.
- |          flags (int): flags for :func:`re.compile`
- |      
- |      Returns:
- |          dict
- |      
- |      Intended for internal use only.
- |  
- |  read(self, file_ref, ignore_data=False, read_policy=&#39;default&#39;, null_policy=&#39;strict&#39;, ignore_header_errors=False, ignore_comments=(&#39;#&#39;,), mnemonic_case=&#39;upper&#39;, index_unit=None, remove_data_line_filter=&#39;#&#39;, **kwargs)
- |      Read a LAS file.
- |      
- |      Arguments:
- |          file_ref (file-like object, str): either a filename, an open file
- |              object, or a string containing the contents of a file.
- |      
- |      Keyword Arguments:
- |          null_policy (str or list): see
- |              http://lasio.readthedocs.io/en/latest/data-section.html#handling-invalid-data-indicators-automatically
- |          ignore_data (bool): if True, do not read in any of the actual data,
- |              just the header metadata. False by default.
- |          ignore_header_errors (bool): ignore LASHeaderErrors (False by
- |              default)
- |          ignore_comments (tuple/str): ignore comments beginning with characters
- |              e.g. ``(&quot;#&quot;, &#39;&quot;&#39;)`` in header sections
- |          mnemonic_case (str): &#39;preserve&#39;: keep the case of HeaderItem mnemonics
- |                               &#39;upper&#39;: convert all HeaderItem mnemonics to uppercase
- |                               &#39;lower&#39;: convert all HeaderItem mnemonics to lowercase
- |          index_unit (str): Optionally force-set the index curve&#39;s unit to &quot;m&quot; or &quot;ft&quot;
- |          remove_data_line_filter (str, func): string or function for removing/ignoring lines
- |              in the data section e.g. a function which accepts a string (a line from the
- |              data section) and returns either True (do not parse the line) or False
- |              (parse the line). If this argument is a string it will instead be converted
- |              to a function which rejects all lines starting with that value e.g. ``&quot;#&quot;``
- |              will be converted to ``lambda line: line.strip().startswith(&quot;#&quot;)``
- |      
- |      See :func:`lasio.reader.open_with_codecs` for additional keyword
- |      arguments which help to manage issues relate to character encodings.
- |  
- |  set_data(self, array_like, names=None, truncate=False)
- |      Set the data for the LAS; actually sets data on individual curves.
- |      
- |      Arguments:
- |          array_like (array_like or :class:`pandas.DataFrame`): 2-D data array
- |      
- |      Keyword Arguments:
- |          names (list, optional): used to replace the names of the existing
- |              :class:`lasio.CurveItem` objects.
- |          truncate (bool): remove any columns which are not included in the
- |              Curves (~C) section.
- |      
- |      Note: you can pass a :class:`pandas.DataFrame` to this method.
- |  
- |  set_data_from_df(self, df, **kwargs)
- |      Set the LAS file data from a :class:`pandas.DataFrame`.
- |      
- |      Arguments:
- |          df (pandas.DataFrame): curve mnemonics are the column names.
- |              The depth column for the curves must be the index of the
- |              DataFrame.
- |      
- |      Keyword arguments are passed to :meth:`lasio.LASFile.set_data`.
- |  
- |  stack_curves(self, mnemonic, sort_curves=True)
- |      Stack multi-channel curve data to a numpy 2D ndarray. Provide a
- |      stub name (prefix shared by all curves that will be stacked) or a
- |      list of curve mnemonic strings.
- |      
- |      Keyword Arguments:
- |          mnemonic (str or list): Supply the first several characters of
- |              the channel set to be stacked. Alternatively, supply a list
- |              of the curve names (mnemonics strings) to be stacked.
- |          sort_curves (bool): Natural sort curves based on mnemonic prior
- |              to stacking.
- |      
- |      Returns:
- |          2-D numpy array
- |  
- |  to_csv(self, file_ref, mnemonics=True, units=True, units_loc=&#39;line&#39;, **kwargs)
- |      Export to a CSV file.
- |      
- |      Arguments:
- |          file_ref (open file-like object or str): a file-like object opening
- |              for writing, or a filename.
- |      
- |      Keyword Arguments:
- |          mnemonics (list, True, False): write mnemonics as a header line at the
- |              start. If list, use the supplied items as mnemonics. If True,
- |              use the curve mnemonics.
- |          units (list, True, False): as for mnemonics.
- |          units_loc (str or None): either &#39;line&#39;, &#39;[]&#39; or &#39;()&#39;. &#39;line&#39; will put
- |              units on the line following the mnemonics (good for WellCAD).
- |              &#39;[]&#39; and &#39;()&#39; will put the units in either brackets or
- |              parentheses following the mnemonics, on the single header line
- |              (better for Excel)
- |          **kwargs: passed to :class:`csv.writer`. Note that if
- |              ``lineterminator`` is **not** specified here, then it will be
- |              sent to :class:`csv.writer` as ``lineterminator=&#39;\n&#39;``.
- |  
- |  to_excel(self, filename)
- |      Export LAS file to a Microsoft Excel workbook.
- |      
- |      This function will raise an :exc:`ImportError` if ``openpyxl`` is not
- |      installed.
- |      
- |      Arguments:
- |          filename (str)
- |  
- |  to_json(self)
- |  
- |  to_json_old(self)
- |      deprecated: to_json_old version=0.25.1 since=20200507 remove=20210508
- |      replacement_options: to_json()
- |  
- |  values(self)
- |      Return data for each curve.
- |  
- |  write(self, file_ref, **kwargs)
- |      Write LAS file to disk.
- |      
- |      Arguments:
- |          file_ref (open file-like object or str): a file-like object opening
- |              for writing, or a filename.
- |      
- |      All ``**kwargs`` are passed to :func:`lasio.writer.write` -- please
- |      check the docstring of that function for more keyword arguments you can
- |      use here!
- |      
- |      Examples:
- |      
- |          &gt;&gt;&gt; import lasio
- |          &gt;&gt;&gt; las = lasio.read(&quot;tests/examples/sample.las&quot;)
- |          &gt;&gt;&gt; with open(&#39;test_output.las&#39;, mode=&#39;w&#39;) as f:
- |          ...     las.write(f, version=2.0)   # &lt;-- this method
- |  
- |  ----------------------------------------------------------------------
- |  Readonly properties defined here:
- |  
- |  curvesdict
- |      Curve information and data from the Curves (~C) and data section..
- |      
- |      Returns:
- |          dict
- |  
- |  depth_ft
- |      Return the index as feet.
- |  
- |  depth_m
- |      Return the index as metres.
- |  
- |  header
- |      All header information
- |      
- |      Returns:
- |          dict
- |  
- |  index
- |      Return data from the first column of the LAS file data (depth/time).
- |  
- |  ----------------------------------------------------------------------
- |  Data descriptors defined here:
- |  
- |  __dict__
- |      dictionary for instance variables (if defined)
- |  
- |  __weakref__
- |      list of weak references to the object (if defined)
- |  
- |  curves
- |      Curve information and data from the Curves (~C) and data section..
- |      
- |      Returns:
- |          :class:`lasio.SectionItems` object.
- |  
- |  data
- |  
- |  json
- |      Return object contents as a JSON string.
- |  
- |  other
- |      Header information from the Other (~O) section.
- |      
- |      Returns:
- |          str
- |  
- |  params
- |      Header information from the Parameter (~P) section.
- |      
- |      Returns:
- |          :class:`lasio.SectionItems` object.
- |  
- |  version
- |      Header information from the Version (~V) section.
- |      
- |      Returns:
- |          :class:`lasio.SectionItems` object.
- |  
- |  well
- |      Header information from the Well (~W) section.
- |      
- |      Returns:
- |          :class:`lasio.SectionItems` object.</code></pre>
+ |          object, or a string containing the contents of a file.</code></pre>
+<p>…</p>
 <pre class="python"><code>#From there we can get some info from each of the wells
 j=0
 for well in lases:
@@ -3672,56 +2468,13 @@ Solution
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

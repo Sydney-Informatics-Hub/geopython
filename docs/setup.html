@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Setup</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
@@ -23,15 +22,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -94,6 +84,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -242,7 +233,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -254,6 +244,18 @@ $(document).ready(function () {
   display: none;
 }
 </style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
 
 <!-- code folding -->
 
@@ -409,6 +411,22 @@ cd notebooks</code></pre>
 <pre class="sh"><code>python</code></pre>
 <p>to launch Python!</p>
 <p><img src="fig/setup-python.png" /></p>
+<div id="launching-the-jupyterpython-notebook" class="section level2">
+<h2>Launching the Jupyter/Python Notebook</h2>
+<p>Now you have built your environment with all the packages we need, you can launch it. As you just saw, typing Python into the terminal/command prompt runs the Python interpreter. But we will be working mostly with Python Notebooks. Each time you restart your work you will have to follow these steps:</p>
+<ul>
+<li>Launch an Anaconda Prompt (or equivalent).</li>
+<li>Change directories to your workspace.</li>
+<li>Activate the <code>geopy</code> environment.</li>
+<li>Launch the Jupyter/Python Notebook server.</li>
+</ul>
+<pre><code>cd C:\Users\Administrator\Desktop\geopython
+conda activate geopy
+jupyter notebook</code></pre>
+<p><img src="fig/jupyter.png" /></p>
+<p>This will launch the Notebook server (and may automatically launch a web-browser and take you to the page). If the Notebook does not automatically start, copy the generated link into a browser.</p>
+<p><img src="fig/jupyter_browser.png" /></p>
+</div>
 </div>
 <div id="download-the-data" class="section level1">
 <h1>3. Download the data</h1>
@@ -428,10 +446,14 @@ cd notebooks</code></pre>
 <div id="google-colab" class="section level2">
 <h2>Google Colab</h2>
 <p>If the above options do not work for you, <a href="https://colab.research.google.com/">Google Colab</a> can be used for an on-demand Python notebook. You will require a Google Account for this.</p>
+<p>The data and example colab notebook are shared here: <a href="https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing" class="uri">https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing</a></p>
 </div>
 <div id="docker" class="section level2">
 <h2>Docker</h2>
-<p>If you are familiar with Docker you may use our Docker image (to be provided).</p>
+<p>If you are familiar with Docker you may use our Docker image with something like:</p>
+<pre><code>sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c &quot;jupyter notebook --allow-root --ip=0.0.0.0 --no-browser&quot;</code></pre>
+<p>This will launch the Python notebok server in the <code>/notebooks</code> folder. Access the notebook by entering the genereated link in a web-browser, e.g.</p>
+<pre><code>http://127.0.0.1:8888/?token=9b16287ab91dc69d6b265e6c9c31a49586a35291bb20d0ab</code></pre>
 </div>
 </div>
 
@@ -444,7 +466,7 @@ cd notebooks</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -452,23 +474,6 @@ $(document).ready(function () {
 
 
 </script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
