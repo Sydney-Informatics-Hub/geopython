@@ -2,10 +2,10 @@
 
 <div class="questions">  
 ### Questions
-- How can I load tabular date into Python?
+- What are libraries and packages?
+- How can I load tabular data into Python?
 - How can I load shapefiles?
 - How can I load segy and las data?
-- What are libraries and packages?
 </div>
 
 <div class="objectives">  
@@ -36,6 +36,7 @@ help(shapefile)
 #Or check out the help pages https://github.com/GeospatialPython/pyshp
 ```
 
+```
     Help on module shapefile:
     
     NAME
@@ -77,10 +78,8 @@ help(shapefile)
         2.1.2
     
     FILE
-        /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py
-    
-    
-
+        /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py   
+```
 
 
 ```python
@@ -101,22 +100,14 @@ Nshp    = len(shapes)
 ```python
 print(Nshp) #print the Number of items in the shapefile
 ```
-
+```
     7635
-
-
-    7635
-
-
-
+```
 
 ```python
 fields[:]#print the fields
 ```
-
-
-
-
+```
     [('DeletionFlag', 'C', 1, 0),
      ['HydroID', 'N', 10, 0],
      ['HydroCode', 'C', 30, 0],
@@ -127,65 +118,26 @@ fields[:]#print the fields
      ['HGUNumber', 'N', 10, 0],
      ['NafHGUNumb', 'N', 10, 0],
      ['SHAPE_Leng', 'F', 19, 11]]
-
-
-
-
-
-
-
-    [('DeletionFlag', 'C', 1, 0),
-     ['HydroID', 'N', 10, 0],
-     ['HydroCode', 'C', 30, 0],
-     ['BoreID', 'N', 10, 0],
-     ['TopElev', 'F', 19, 11],
-     ['BottomElev', 'F', 19, 11],
-     ['HGUID', 'N', 10, 0],
-     ['HGUNumber', 'N', 10, 0],
-     ['NafHGUNumb', 'N', 10, 0],
-     ['SHAPE_Leng', 'F', 19, 11]]
-
-
-
-
+```
 
 
 ```python
 recs[0] #print the first record, then this is a list that can be subscripted further
 ```
-
-
-
-
-    Record #0: [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
-
-
-
-
-
-
-
-    [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
-
-
-
-
-
+```
+Record #0: [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
+```
 
 ```python
 shapes[0].points #print the point values of the first shape
 ```
-
-
-
-
+```
     [(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]
-
-
+```
 
 <div class="challenge">
 
-### Challenge. TODO
+## Challenge. TODO
 
 - Look at the data above. It provides the coordinates of the wells as points. 
 - How many coordinates are provided for each well? Why do you think this is?
