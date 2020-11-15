@@ -91,8 +91,8 @@ Wed Dec 2, 12:30 pm - 4:30 pm (AEST)
 **Session 04 Large data and long running workflow strategies**
 Wed Dec 9, 12:30 pm - 4:30 pm (AEST)
 
-
-## Setup Instructions
+<br>
+# Setup Instructions
 Please complete the [Setup Instructions](https://sydney-informatics-hub.github.io/geopython/setup.html) **before the course**.
 
 If you have any trouble, please get in contact with us ASAP.
