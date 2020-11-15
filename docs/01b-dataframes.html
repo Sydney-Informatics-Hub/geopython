@@ -470,10 +470,10 @@ div.tocify {
 <div id="questions" class="section level3 questions">
 <h3>Questions</h3>
 <ul>
-<li>How can I load tabular date into Python?</li>
+<li>What are libraries and packages?</li>
+<li>How can I load tabular data into Python?</li>
 <li>How can I load shapefiles?</li>
 <li>How can I load segy and las data?</li>
-<li>What are libraries and packages?</li>
 </ul>
 </div>
 <div id="objectives" class="section level3 objectives">
@@ -495,41 +495,48 @@ import shapefile
 #NOTE: Weirdly and confusingly, this package is called &quot;pyshp&quot; but you call it via the name &quot;shapefile&quot;</code></pre>
 <pre class="python"><code>help(shapefile)
 #Or check out the help pages https://github.com/GeospatialPython/pyshp</code></pre>
-<pre><code>Help on module shapefile:
-
-NAME
-    shapefile
-
-DESCRIPTION
-    shapefile.py
-    Provides read and write support for ESRI Shapefiles.
-    author: jlawhead&lt;at&gt;geospatialpython.com
-    version: 2.1.2
-    Compatible with Python versions 2.7-3.x
-
-CLASSES
-    builtins.Exception(builtins.BaseException)
-        ShapefileException
-    builtins.list(builtins.object)
-        ShapeRecords
-        Shapes
-    builtins.object
-        Reader
-        Shape
-        ShapeRecord
-        Writer
+<pre><code>    Help on module shapefile:
     
-    class Reader(builtins.object)
-     |  Reader(*args, **kwargs)
-     |  
-     |  Reads the three files of a shapefile as a unit or
-     |  separately.  If one of the three files (.shp, .shx,</code></pre>
-<p>… POLYLINEZ = 13 PYTHON3 = True RING = 5 SHAPETYPE_LOOKUP = {0: ‘NULL’, 1: ‘POINT’, 3: ‘POLYLINE’, 5: ‘POLYGON’… TRIANGLE_FAN = 1 TRIANGLE_STRIP = 0</p>
-<pre><code>VERSION
-    2.1.2
-
-FILE
-    /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py</code></pre>
+    NAME
+        shapefile
+    
+    DESCRIPTION
+        shapefile.py
+        Provides read and write support for ESRI Shapefiles.
+        author: jlawhead&lt;at&gt;geospatialpython.com
+        version: 2.1.2
+        Compatible with Python versions 2.7-3.x
+    
+    CLASSES
+        builtins.Exception(builtins.BaseException)
+            ShapefileException
+        builtins.list(builtins.object)
+            ShapeRecords
+            Shapes
+        builtins.object
+            Reader
+            Shape
+            ShapeRecord
+            Writer
+        
+        class Reader(builtins.object)
+         |  Reader(*args, **kwargs)
+         |  
+         |  Reads the three files of a shapefile as a unit or
+         |  separately.  If one of the three files (.shp, .shx,
+...
+        POLYLINEZ = 13
+        PYTHON3 = True
+        RING = 5
+        SHAPETYPE_LOOKUP = {0: &#39;NULL&#39;, 1: &#39;POINT&#39;, 3: &#39;POLYLINE&#39;, 5: &#39;POLYGON&#39;...
+        TRIANGLE_FAN = 1
+        TRIANGLE_STRIP = 0
+    
+    VERSION
+        2.1.2
+    
+    FILE
+        /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py   </code></pre>
 <pre class="python"><code>#Set the filename
 boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
@@ -542,52 +549,24 @@ shapes  = shapeRead.shapes()
 fields  = shapeRead.fields
 Nshp    = len(shapes)</code></pre>
 <pre class="python"><code>print(Nshp) #print the Number of items in the shapefile</code></pre>
-<pre><code>7635
-
-
-7635</code></pre>
+<pre><code>    7635</code></pre>
 <pre class="python"><code>fields[:]#print the fields</code></pre>
-<pre><code>[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
- [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
- [&#39;HydroCode&#39;, &#39;C&#39;, 30, 0],
- [&#39;BoreID&#39;, &#39;N&#39;, 10, 0],
- [&#39;TopElev&#39;, &#39;F&#39;, 19, 11],
- [&#39;BottomElev&#39;, &#39;F&#39;, 19, 11],
- [&#39;HGUID&#39;, &#39;N&#39;, 10, 0],
- [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
- [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
- [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]
-
-
-
-
-
-
-
-[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
- [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
- [&#39;HydroCode&#39;, &#39;C&#39;, 30, 0],
- [&#39;BoreID&#39;, &#39;N&#39;, 10, 0],
- [&#39;TopElev&#39;, &#39;F&#39;, 19, 11],
- [&#39;BottomElev&#39;, &#39;F&#39;, 19, 11],
- [&#39;HGUID&#39;, &#39;N&#39;, 10, 0],
- [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
- [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
- [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]</code></pre>
+<pre><code>    [(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
+     [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
+     [&#39;HydroCode&#39;, &#39;C&#39;, 30, 0],
+     [&#39;BoreID&#39;, &#39;N&#39;, 10, 0],
+     [&#39;TopElev&#39;, &#39;F&#39;, 19, 11],
+     [&#39;BottomElev&#39;, &#39;F&#39;, 19, 11],
+     [&#39;HGUID&#39;, &#39;N&#39;, 10, 0],
+     [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
+     [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
+     [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]</code></pre>
 <pre class="python"><code>recs[0] #print the first record, then this is a list that can be subscripted further</code></pre>
-<pre><code>Record #0: [32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
-
-
-
-
-
-
-
-[32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]</code></pre>
+<pre><code>Record #0: [32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]</code></pre>
 <pre class="python"><code>shapes[0].points #print the point values of the first shape</code></pre>
-<pre><code>[(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]</code></pre>
-<div id="challenge.-todo" class="section level3 challenge">
-<h3>Challenge. TODO</h3>
+<pre><code>    [(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]</code></pre>
+<div id="challenge.-todo" class="section level2 challenge">
+<h2>Challenge. TODO</h2>
 <ul>
 <li>Look at the data above. It provides the coordinates of the wells as points.</li>
 <li>How many coordinates are provided for each well? Why do you think this is?</li>
