@@ -14,15 +14,6 @@
 - Learn about pandas, pyshp, lasio, obspy.
 </div>
 
-## Dealing with other data types
-Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the "pyshp" (for dealing with shapefiles) and "pandas" (great for tables and time series) packages.
-
-Data for this exercised was downloaded from http://www.bom.gov.au/water/groundwater/explorer/map.shtml
-
-### Shapefiles
-Shapefiles are a very common file format for GIS data.
-
-## Dealing with other data types
 Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the "pyshp" (for dealing with shapefiles) and "pandas" (great for tables and time series) packages.
 
 Data for this exercised was downloaded from http://www.bom.gov.au/water/groundwater/explorer/map.shtml
@@ -211,7 +202,7 @@ There are two coordinates.
 
 Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used "pyshp" imported with the name "shapefile" (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.
 
-## More table manipulation
+# Dataframes and table manipulation
 
 
 ```python
@@ -1100,7 +1091,7 @@ plt.show()
 #     plt.plot(lon,lat,"|")
 ```
 
-# Exercise
+## Exercise
 Go to [http://www.bom.gov.au/water/groundwater/explorer/map.shtml](http://www.bom.gov.au/water/groundwater/explorer/map.shtml) and pick another River Region. Download the dataset in "Shapefile" format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
 
 
@@ -1342,7 +1333,7 @@ plt.gca().invert_yaxis()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_52_1.png)
+![](01b-dataframes_files/01b-dataframes_52_1.png)
     
 
 
@@ -1610,7 +1601,7 @@ dt
 
 <div class="challenge">
 
-### Challenge. TODO
+## Challenge. TODO
 
 - This needs a HW challenge!
 
