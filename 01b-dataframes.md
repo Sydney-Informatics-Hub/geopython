@@ -1,4 +1,4 @@
-# Python packages for different data
+# Useful Python packages for different data types
 
 <div class="questions">  
 ### Questions
@@ -1623,9 +1623,10 @@ dt
 
 <div class="keypoints">
 ### Key points
-    
-- Shapefiles
-- Pandas dataframes
+- Obspy for segy seismic data
+- Lasio for well log data
+- Pyshp for Shapefiles
+- Pandas dataframes for tabular
 </div>
 
 
