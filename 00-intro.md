@@ -4,8 +4,7 @@ title: "Python for Geoscientists"
 
 <div class="questions">  
 ### Questions
-
-- Who are the Sydney Informatics Hub?
+- What is Python?
 - Why do you want to learn Python?
 </div>
 
@@ -55,7 +54,6 @@ Now let's get into in the next session!
 
 <div class="keypoints">
 ### Key points
-
-- This course will introduce you to key Python tools and libraries to do your work faster and more efficiently.
-- The Sydney Informatics Hub is a data science unit at the University of Sydney which supports excellence in data driven research at the University, including in geoscience.
+- Python is a programming language.
+- There is a rich ecosystem of tools around creating and deploying Python code.
 </div>
