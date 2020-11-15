@@ -31,6 +31,7 @@ We also aim to cultivate a **data community**, organising monthly [Hacky Hours](
 * Nathaniel (Nate) Butterworth (PhD Computational Tectonics), nathaniel.butterworth@sydney.edu.au
 * Ben Mather (PhD Computational Geophysics)
 * Darya Vanichkina (PhD Bioinformatics, FHEA) 
+* Kristian Maras (MSc Quant Fin)
 
 # Course pre-requisites and setup requirements
 
