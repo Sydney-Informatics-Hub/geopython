@@ -99,6 +99,9 @@ Your file tree should look like something like this
 
 If the above options do not work for you, [Google Colab](https://colab.research.google.com/) can be used for an on-demand Python notebook. You will require a Google Account for this.
 
+The data and example colab notebook are shared here:
+https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing
+
 ## Docker
 
 If you are familiar with Docker you may use our Docker image with something like:
