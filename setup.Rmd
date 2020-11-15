@@ -101,7 +101,15 @@ If the above options do not work for you, [Google Colab](https://colab.research.
 
 ## Docker
 
-If you are familiar with Docker you may use our Docker image (to be provided).
+If you are familiar with Docker you may use our Docker image with something like:
+```
+sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c "jupyter notebook --allow-root --ip=0.0.0.0 --no-browser"
+```
+This will launch the Python notebok server in the ```/notebooks``` folder. Access the notebook by entering the genereated link in a web-browser, e.g.
+```
+http://127.0.0.1:8888/?token=9b16287ab91dc69d6b265e6c9c31a49586a35291bb20d0ab
+```
+
 
 
 
