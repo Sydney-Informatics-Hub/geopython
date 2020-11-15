@@ -69,6 +69,27 @@ to launch Python!
 ![](fig/setup-python.png)
 
 
+## Launching the Jupyter/Python Notebook
+
+Now you have built your environment with all the packages we need, you can launch it. As you just saw, typing Python into the terminal/command prompt runs the Python interpreter. But we will be working mostly with Python Notebooks. Each time you restart your work you will have to follow these steps:
+
+* Launch an Anaconda Prompt (or equivalent).
+* Change directories to your workspace.
+* Activate the ```geopy``` environment.
+* Launch the Jupyter/Python Notebook server.
+
+```
+cd C:\Users\Administrator\Desktop\geopython
+conda activate geopy
+jupyter notebook
+```
+
+![](fig/jupyter.png)
+
+This will launch the Notebook server (and may automatically launch a web-browser and take you to the page). If the Notebook does not automatically start, copy the generated link into a browser.
+
+![](fig/jupyter_browser.png)
+
 
 # 3. Download the data
 
