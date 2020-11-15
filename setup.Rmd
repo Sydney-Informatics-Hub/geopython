@@ -78,7 +78,7 @@ Now you have built your environment with all the packages we need, you can launc
 * Activate the ```geopy``` environment.
 * Launch the Jupyter/Python Notebook server.
 
-```
+```sh
 cd C:\Users\Administrator\Desktop\geopython
 conda activate geopy
 jupyter notebook
