@@ -400,7 +400,7 @@ div.tocify {
       <a href="01a-fundamentals.html">Fundamentals</a>
     </li>
     <li>
-      <a href="01b-dataframes.html">Data frames and Shapefiles</a>
+      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
     </li>
   </ul>
 </li>
@@ -412,10 +412,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="02a-mapping.html">Mapping</a>
+      <a href="02a-mapping.html">Mapping with Cartopy</a>
     </li>
     <li>
-      <a href="02b-Clustering.html">Clustering</a>
+      <a href="02b-Clustering.html">Numerical approaches</a>
     </li>
   </ul>
 </li>
@@ -465,8 +465,8 @@ div.tocify {
 </div>
 
 
-<div id="python-packages-for-different-data" class="section level1">
-<h1>Python packages for different data</h1>
+<div id="useful-python-packages-for-different-data-types" class="section level1">
+<h1>Useful Python packages for different data types</h1>
 <div id="questions" class="section level3 questions">
 <h3>Questions</h3>
 <ul>
@@ -483,22 +483,10 @@ div.tocify {
 <li>Learn about pandas, pyshp, lasio, obspy.</li>
 </ul>
 </div>
-<div id="dealing-with-other-data-types" class="section level2">
-<h2>Dealing with other data types</h2>
-<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the “pyshp” (for dealing with shapefiles) and “pandas” (great for tables and time series) packages.</p>
-<p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
-<div id="shapefiles" class="section level3">
-<h3>Shapefiles</h3>
-<p>Shapefiles are a very common file format for GIS data.</p>
-</div>
-</div>
-<div id="dealing-with-other-data-types-1" class="section level2">
-<h2>Dealing with other data types</h2>
 <p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the “pyshp” (for dealing with shapefiles) and “pandas” (great for tables and time series) packages.</p>
 <p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
 </div>
-</div>
-<div id="shapefiles-1" class="section level1">
+<div id="shapefiles" class="section level1">
 <h1>Shapefiles</h1>
 <p>Shapefiles are a very common file format for GIS data.</p>
 <pre class="python"><code>#Load the required modules
@@ -613,8 +601,9 @@ Solution
 </details>
 </div>
 <p>Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used “pyshp” imported with the name “shapefile” (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.</p>
-<div id="more-table-manipulation" class="section level2">
-<h2>More table manipulation</h2>
+</div>
+<div id="dataframes-and-table-manipulation" class="section level1">
+<h1>Dataframes and table manipulation</h1>
 <pre class="python"><code>import pandas</code></pre>
 <pre class="python"><code>#read in the data
 log_data=pandas.read_csv(&quot;../data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,\
@@ -2117,11 +2106,10 @@ plt.show()
     
 #     #Now plot it
 #     plt.plot(lon,lat,&quot;|&quot;)</code></pre>
-</div>
-</div>
-<div id="exercise" class="section level1">
-<h1>Exercise</h1>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
 <p>Go to <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a> and pick another River Region. Download the dataset in “Shapefile” format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region.</p>
+</div>
 </div>
 <div id="log-ascii-files" class="section level1">
 <h1>Log ASCII Files</h1>
@@ -2274,10 +2262,7 @@ plt.xlabel(var); plt.ylabel(&quot;Depth (m)&quot;)
 plt.grid(True)
 plt.gca().invert_yaxis()</code></pre>
 <pre><code>Param: RHOB of well: </code></pre>
-<div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_52_1.png" alt="" />
-<p class="caption">png</p>
-</div>
+<p><img src="01b-dataframes_files/01b-dataframes_52_1.png" /></p>
 <p>TODO: Why is this plot reasonable? What does it show?</p>
 </div>
 <div id="segy-seismic-data-processing" class="section level1">
@@ -2435,8 +2420,8 @@ dt</code></pre>
 <pre><code>0.004</code></pre>
 <div class="challenge">
 
-<div id="challenge.-todo-1" class="section level3">
-<h3>Challenge. TODO</h3>
+<div id="challenge.-todo-1" class="section level2">
+<h2>Challenge. TODO</h2>
 <ul>
 <li>This needs a HW challenge!</li>
 </ul>
@@ -2446,15 +2431,17 @@ Solution
 </summary>
 <p>…</p>
 <pre class="python"><code></code></pre>
-</div>
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>
-<li>Shapefiles</li>
-<li>Pandas dataframes</li>
+<li>Obspy for segy seismic data</li>
+<li>Lasio for well log data</li>
+<li>Pyshp for Shapefiles</li>
+<li>Pandas dataframes for tabular</li>
 </ul>
 </div>
 <pre><code>0.004</code></pre>
+</div>
 </div>
 
 
