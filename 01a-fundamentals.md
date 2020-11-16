@@ -148,7 +148,6 @@ add_numbers(1,2)
 
 
 <div class="challenge">
-
 ### Challenge 
 
 Write a function to convert map scale. For example, on a 1:25,000 map (good for hiking!) the distance between two points is 15 cm. How far apart are these in real life? (3750 m).
@@ -309,9 +308,6 @@ That is the basics. Now we are going to load in some data and manipulate it.
 
 #The first is NUMerical PYthon. A very popular matrix, math, array and data manipulation library.
 import numpy
-
-#Pandas is a module that is great for dealing with tables of data
-import pandas
 
 #This is a library for making figures (originally based off Matlab plotting routines)
 #We use the alias 'plt' because we don't want to type out the whole name every time we reference it!
@@ -747,7 +743,7 @@ plt.show()
 
 
 ```python
-#You could come up with a more intelligent way to reject your outliers
+#You could come up with a more intelligent way to reject your outliers, e.g.
 import numpy as np
 def reject_outliers(data):
     m = 2
@@ -848,26 +844,33 @@ You can explore the different color maps at [https://matplotlib.org/3.1.0/tutori
 
     
 ```python
-#Note: These were the steps used to make individual Earthchem files (from the full dataset)
-# import pandas as pd
-# filename = '../_data/EarthChem_all.csv'
-# chemdata=pd.read_csv(filename, sep=',', skipinitialspace=True)
+#We only need numpy and plotting libraries
+import numpy
+import matplotlib.pyplot as plt 
+import cartopy.crs as ccrs
 
-#Check column names
-# chemdata.columns.values
+#Set the correct filename/filepath to where you have downloaded the data
+filename = '../data/EarthChemAG.txt'
 
-#Set the element we will pull out
-# c='SN'
+#Add the "skiprows" flag, because this data has a header row
+chemdata=numpy.loadtxt(filename, delimiter=',',skiprows=1)
+    
+#Set some variable names
+lats=chemdata[:,0]
+longs=chemdata[:,1]
+age=chemdata[:,3]
+silver=chemdata[:,2]
+    
+#Do a quick plot
+plt.plot(longs,lats,'b.')
 
-#Get the column number for the element name
-# a=chemdata.columns.get_loc(c)
-
-#Get the lat,lon,age, and element column
-# df1=chemdata.iloc[:,[6,7,10,a]]
-# df1=df1[(df1 != 0).all(1)]
-# df1=df1.dropna()
-# df1
-# df1.to_csv("EarthChem"+c+".txt",index=False)
+#This set actually looks fine, no filtering necessary!
+#Just make the final plot again, with a new color bar
+plt.scatter(longs,lats,s=age/10,c=silver,vmin=0, vmax=1000,cmap=plt.cm.twilight)
+plt.title('Silver Deposits from EarthChem.org')
+plt.ylabel('Latitude')
+plt.xlabel('Longitude')
+plt.show()
 ```
     
 </details>

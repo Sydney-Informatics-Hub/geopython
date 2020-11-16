@@ -542,7 +542,6 @@ def add_numbers(x,y):
 <pre class="python"><code>add_numbers(1,2)</code></pre>
 <pre><code>3</code></pre>
 <div class="challenge">
-
 </div>
 <div id="challenge" class="section level3">
 <h3>Challenge</h3>
@@ -653,9 +652,6 @@ timescale(1)</code></pre>
 
 #The first is NUMerical PYthon. A very popular matrix, math, array and data manipulation library.
 import numpy
-
-#Pandas is a module that is great for dealing with tables of data
-import pandas
 
 #This is a library for making figures (originally based off Matlab plotting routines)
 #We use the alias &#39;plt&#39; because we don&#39;t want to type out the whole name every time we reference it!
@@ -953,7 +949,7 @@ plt.show()</code></pre>
 <img src="01a-fundamentals_files/01a-fundamentals_57_0.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code>#You could come up with a more intelligent way to reject your outliers
+<pre class="python"><code>#You could come up with a more intelligent way to reject your outliers, e.g.
 import numpy as np
 def reject_outliers(data):
     m = 2
@@ -1033,26 +1029,33 @@ plt.show()</code></pre>
 <summary>
 Solution
 </summary>
-<pre class="python"><code>#Note: These were the steps used to make individual Earthchem files (from the full dataset)
-# import pandas as pd
-# filename = &#39;../_data/EarthChem_all.csv&#39;
-# chemdata=pd.read_csv(filename, sep=&#39;,&#39;, skipinitialspace=True)
+<pre class="python"><code>#We only need numpy and plotting libraries
+import numpy
+import matplotlib.pyplot as plt 
+import cartopy.crs as ccrs
 
-#Check column names
-# chemdata.columns.values
+#Set the correct filename/filepath to where you have downloaded the data
+filename = &#39;../data/EarthChemAG.txt&#39;
 
-#Set the element we will pull out
-# c=&#39;SN&#39;
+#Add the &quot;skiprows&quot; flag, because this data has a header row
+chemdata=numpy.loadtxt(filename, delimiter=&#39;,&#39;,skiprows=1)
+    
+#Set some variable names
+lats=chemdata[:,0]
+longs=chemdata[:,1]
+age=chemdata[:,3]
+silver=chemdata[:,2]
+    
+#Do a quick plot
+plt.plot(longs,lats,&#39;b.&#39;)
 
-#Get the column number for the element name
-# a=chemdata.columns.get_loc(c)
-
-#Get the lat,lon,age, and element column
-# df1=chemdata.iloc[:,[6,7,10,a]]
-# df1=df1[(df1 != 0).all(1)]
-# df1=df1.dropna()
-# df1
-# df1.to_csv(&quot;EarthChem&quot;+c+&quot;.txt&quot;,index=False)</code></pre>
+#This set actually looks fine, no filtering necessary!
+#Just make the final plot again, with a new color bar
+plt.scatter(longs,lats,s=age/10,c=silver,vmin=0, vmax=1000,cmap=plt.cm.twilight)
+plt.title(&#39;Silver Deposits from EarthChem.org&#39;)
+plt.ylabel(&#39;Latitude&#39;)
+plt.xlabel(&#39;Longitude&#39;)
+plt.show()</code></pre>
 </details>
 </div>
 <div id="key-points" class="section level3 keypoints">

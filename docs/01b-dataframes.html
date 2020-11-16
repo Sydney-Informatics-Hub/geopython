@@ -483,7 +483,7 @@ div.tocify {
 <li>Learn about pandas, pyshp, lasio, obspy.</li>
 </ul>
 </div>
-<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the “pyshp” (for dealing with shapefiles) and “pandas” (great for tables and time series) packages.</p>
+<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at “pyshp” (for dealing with shapefiles), “pandas” (great for tables and time series), “lasio” (for las format well log data) and “obspy” (a highly featured seismic data processing suite) packages.</p>
 <p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
 </div>
 <div id="shapefiles" class="section level1">
@@ -519,28 +519,41 @@ Nshp    = len(shapes)</code></pre>
  [&#39;HGUNumber&#39;, &#39;N&#39;, 10, 0],
  [&#39;NafHGUNumb&#39;, &#39;N&#39;, 10, 0],
  [&#39;SHAPE_Leng&#39;, &#39;F&#39;, 19, 11]]</code></pre>
-<pre class="python"><code>recs[0] #print the first record, then this is a list that can be subscripted further</code></pre>
-<pre><code>Record #0: [32001999, &#39;652800645&#39;, 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]</code></pre>
-<pre class="python"><code>shapes[0].points #print the point values of the first shape</code></pre>
+<pre class="python"><code>recs[3] #print the first record, then this is a list that can be subscripted further</code></pre>
+<pre><code>Record #3: [32002002, &#39;652800645&#39;, 30027773, -147.26, -154.26, 31000045, 1044, 125005, 0.0]</code></pre>
+<pre class="python"><code>shapes[1].points #print the point values of the first shape</code></pre>
 <pre><code>[(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]</code></pre>
+<pre class="python"><code>shapeRead.shapeTypeName </code></pre>
+<pre><code>&#39;POLYLINEZ&#39;</code></pre>
+<pre class="python"><code>rec= shapeRead.record(0)
+rec[&#39;TopElev&#39;]</code></pre>
+<pre><code>6.74</code></pre>
 <div id="challenge.-todo" class="section level3 challenge">
 <h3>Challenge. TODO</h3>
 <ul>
 <li>Look at the data above. It provides the coordinates of the wells as points.</li>
 <li>How many coordinates are provided for each well? Why do you think this is?</li>
+<li>What is the Bottom Elevation of the 300th record?</li>
 </ul>
 <details>
 <summary>
 Solution
 </summary>
-<p>There are two coordinates.</p>
-<pre class="python"><code></code></pre>
+<p>There are two coordinates. But they are duplicated.</p>
+<pre class="python"><code>    
+rec= shapeRead.record(299)
+rec[&#39;BottomElev&#39;]
+    
+#or
+    
+recs[299][4]</code></pre>
 </details>
 </div>
 <p>Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used “pyshp” imported with the name “shapefile” (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.</p>
 </div>
 <div id="dataframes-and-table-manipulation" class="section level1">
 <h1>Dataframes and table manipulation</h1>
+<p>Pandas is one of the most useful packages (along with probably numpy and matplotlib).</p>
 <pre class="python"><code>import pandas</code></pre>
 <pre class="python"><code>#read in the data
 log_data=pandas.read_csv(&quot;../data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,\
@@ -1982,14 +1995,14 @@ Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
 lithCounts.plot.bar(rot=90,figsize=(15,5))</code></pre>
 <pre><code>&lt;AxesSubplot:&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_30_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_32_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#Plot a bar chart of the lith codes for the rarer lithologies
 lithCounts[(lithCounts &lt; 50)].plot.bar(rot=90,figsize=(15,5))</code></pre>
 <pre><code>&lt;AxesSubplot:&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_31_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_33_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>import numpy as np
@@ -2011,7 +2024,7 @@ plt.title(mystring)
 #plt.subplots_adjust(left=0.15)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_32_0.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_34_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code># import numpy as np
@@ -2142,7 +2155,7 @@ wellid=1</code></pre>
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
 <pre><code>[&lt;matplotlib.lines.Line2D at 0x7f9e70c636d0&gt;]</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_44_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_46_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You have just plotted the density (DRHO) at each measured depth point. You can clean this up and present it better in the next few cells.</p>
@@ -2172,7 +2185,7 @@ plt.grid(True)
 plt.gca().invert_yaxis()</code></pre>
 <pre><code>Param: RHOB of well: Banyula</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_47_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_49_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>TODO: Why is this plot reasonable? What does it show?</p>
@@ -2207,7 +2220,7 @@ plt.figure(figsize=(16,2))
 plt.plot(one_trace.data)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_53_0.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_55_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>data = np.stack(t.data for t in stream.traces[12320:12320+500])</code></pre>
@@ -2226,7 +2239,7 @@ print(&quot;The 95th percentile is {:.0f}; the max amplitude is {:.0f}&quot;.for
 <pre class="python"><code>plt.imshow(data.T, cmap=&quot;Greys&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)</code></pre>
 <pre><code>&lt;matplotlib.image.AxesImage at 0x7f9e6b61f990&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_59_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_61_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>plt.figure(figsize=(16,8))
@@ -2234,7 +2247,7 @@ plt.imshow(data.T, cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#3
 plt.colorbar()
 plt.show()</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_60_0.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_62_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>print(stream.textual_file_header.decode())</code></pre>

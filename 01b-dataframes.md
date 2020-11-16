@@ -17,7 +17,7 @@
 </div>
 
 
-Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the "pyshp" (for dealing with shapefiles) and "pandas" (great for tables and time series) packages.
+Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at "pyshp" (for dealing with shapefiles), "pandas" (great for tables and time series), "lasio" (for las format well log data) and "obspy" (a highly featured seismic data processing suite) packages.
 
 Data for this exercised was downloaded from http://www.bom.gov.au/water/groundwater/explorer/map.shtml
 
@@ -85,19 +85,19 @@ fields[:]#print the fields
 
 
 ```python
-recs[0] #print the first record, then this is a list that can be subscripted further
+recs[3] #print the first record, then this is a list that can be subscripted further
 ```
 
 
 
 
-    Record #0: [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
+    Record #3: [32002002, '652800645', 30027773, -147.26, -154.26, 31000045, 1044, 125005, 0.0]
 
 
 
 
 ```python
-shapes[0].points #print the point values of the first shape
+shapes[1].points #print the point values of the first shape
 ```
 
 
@@ -107,19 +107,52 @@ shapes[0].points #print the point values of the first shape
 
 
 
+
+```python
+shapeRead.shapeTypeName 
+```
+
+
+
+
+    'POLYLINEZ'
+
+
+
+
+```python
+rec= shapeRead.record(0)
+rec['TopElev']
+```
+
+
+
+
+    6.74
+
+
+
 <div class="challenge">
 
 ### Challenge. TODO
 
 - Look at the data above. It provides the coordinates of the wells as points. 
 - How many coordinates are provided for each well? Why do you think this is?
+- What is the Bottom Elevation of the 300th record?
 
 <details>
 <summary>Solution</summary>
 
-There are two coordinates. 
+There are two coordinates. But they are duplicated.
     
 ```python
+    
+rec= shapeRead.record(299)
+rec['BottomElev']
+    
+#or
+    
+recs[299][4]
 ```
 </details>
 </div>
@@ -127,6 +160,8 @@ There are two coordinates.
 Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used "pyshp" imported with the name "shapefile" (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.
 
 # Dataframes and table manipulation
+
+Pandas is one of the most useful packages (along with probably numpy and matplotlib). 
 
 
 ```python
@@ -925,7 +960,7 @@ lithCounts.plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_30_1.png)
+![png](01b-dataframes_files/01b-dataframes_32_1.png)
     
 
 
@@ -944,7 +979,7 @@ lithCounts[(lithCounts < 50)].plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_31_1.png)
+![png](01b-dataframes_files/01b-dataframes_33_1.png)
     
 
 
@@ -972,7 +1007,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_32_0.png)
+![png](01b-dataframes_files/01b-dataframes_34_0.png)
     
 
 
@@ -1169,7 +1204,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
     
-![png](01b-dataframes_files/01b-dataframes_44_1.png)
+![png](01b-dataframes_files/01b-dataframes_46_1.png)
     
 
 
@@ -1214,7 +1249,7 @@ plt.gca().invert_yaxis()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_47_1.png)
+![png](01b-dataframes_files/01b-dataframes_49_1.png)
     
 
 
@@ -1273,7 +1308,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_53_0.png)
+![png](01b-dataframes_files/01b-dataframes_55_0.png)
     
 
 
@@ -1346,7 +1381,7 @@ plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
 
 
     
-![png](01b-dataframes_files/01b-dataframes_59_1.png)
+![png](01b-dataframes_files/01b-dataframes_61_1.png)
     
 
 
@@ -1360,7 +1395,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_60_0.png)
+![png](01b-dataframes_files/01b-dataframes_62_0.png)
     
 
 
