@@ -496,7 +496,7 @@ print(&quot;The age of the sample is&quot;, timeStart, &quot; Million years&quot
 <pre><code>The age of the sample is 145  Million years</code></pre>
 <pre class="python"><code>#Make a new variable called &#39;endtime&#39; and add a constant to our &#39;timeStart&#39; variable
 endtime=timeStart+56</code></pre>
-<p>Nothing printed out above? Good. Jupyter Notebooks won’t always do that so let’s tell Python to print it.</p>
+<p>Nothing print(endtime)printed out above? Good. Jupyter Notebooks won’t always do that so let’s tell Python to print it.</p>
 <pre class="python"><code>print(endtime)</code></pre>
 <pre><code>201</code></pre>
 <pre class="python"><code>#Make a new &#39;string&#39; variable
@@ -536,13 +536,15 @@ def add_numbers(x,y):
     z=x+y
     
     return(z)</code></pre>
-<p>Note the indentation - Python forces your code to be nicely readable by using ‘whitespace’/indentation to signify what chunks of code are related. You will see this more later.</p>
-<p>Many functions have a header - formatted as a multiline comment with three <code>'''</code>. This hopefully will tell you about the function</p>
+<p><strong>Note the indentation</strong> - Python forces your code to be nicely readable by using ‘whitespace’/indentation to signify what chunks of code are related. You will see this more later, but generally you should try and write readable code and follow <a href="https://www.python.org/dev/peps/pep-0008/">style standards</a></p>
+<p>Many functions have a header - formatted as a multiline comment with three ’’’. This hopefully will tell you about the function</p>
 <p>Anyway, let’s run our function, now that we have initialised it!</p>
 <pre class="python"><code>add_numbers(1,2)</code></pre>
 <pre><code>3</code></pre>
+<div class="challenge">
+
 </div>
-<div id="challenge" class="section level3 challenge">
+<div id="challenge" class="section level3">
 <h3>Challenge</h3>
 <p>Write a function to convert map scale. For example, on a 1:25,000 map (good for hiking!) the distance between two points is 15 cm. How far apart are these in real life? (3750 m).</p>
 <p>[Reminder: 15 cm * 25000 = 375000 cm = 3750 m]</p>
@@ -561,7 +563,6 @@ def calculate_distance(distance_cm,scale):
     &#39;&#39;&#39;  
     
     return(distance_cm * scale)</code></pre>
-</details>
 </div>
 <div id="loops-operators-conditions" class="section level3">
 <h3>Loops, operators, conditions</h3>
@@ -597,8 +598,9 @@ time: 145  age: 141  difference: 4
 time: 145  age: 142  difference: 3
 time: 145  age: 143  difference: 2
 time: 145  age: 144  difference: 1</code></pre>
-<div id="control-statements" class="section level4">
-<h4>Control statements</h4>
+</div>
+<div id="control-statements" class="section level3">
+<h3>Control statements</h3>
 <p>Control statements include the functions <code>if</code>, <code>for</code>, <code>while</code>, <code>try</code>.</p>
 <pre class="python"><code>#Control statements: if, for, while, try, 
 if timeStart &lt; 200:
@@ -634,10 +636,18 @@ def timescale(t):
         return(float(&#39;nan&#39;))
     
 timescale(1)</code></pre>
-<pre><code>    1
-    &#39;Cenozoic&#39;</code></pre>
+<pre><code>1
+
+
+
+
+
+&#39;Cenozoic&#39;</code></pre>
 <p>That is the basics. Now we are going to load in some data and manipulate it.</p>
-<p><br> ## Loading data</p>
+</div>
+</div>
+<div id="dealing-with-data" class="section level1">
+<h1>Dealing with data</h1>
 <pre class="python"><code>#First we have to load some modules to do the work for us.
 #Modules are packages people have written so we do not have to re-invent everything!
 
@@ -661,28 +671,137 @@ chemdata=numpy.loadtxt(filename, delimiter=&#39;,&#39;)
 #chemdata &lt;- the name of a variable we are making that will hold the table of data
 #filename &lt;- this is the name of the variable we declared above
 #delimiter &lt;- this is a csv file</code></pre>
-</div>
-</div>
 <div id="want-more-details-about-a-commandfunction-we-use" class="section level3">
 <h3>Want more details about a command/function we use?</h3>
 <pre class="python"><code>#Try this help command
 help(numpy.loadtxt)</code></pre>
-<pre><code>    Help on function loadtxt in module numpy:
+<pre><code>Help on function loadtxt in module numpy:
+
+loadtxt(fname, dtype=&lt;class &#39;float&#39;&gt;, comments=&#39;#&#39;, delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0, encoding=&#39;bytes&#39;, max_rows=None)
+    Load data from a text file.
     
-    loadtxt(fname, dtype=&lt;class &#39;float&#39;&gt;, comments=&#39;#&#39;, delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0, encoding=&#39;bytes&#39;, max_rows=None)
-        Load data from a text file.
-        
-        Each row in the text file must have the same number of values.
-        
-        Parameters
-        ----------
-        fname : file, str, or pathlib.Path
-            File, filename, or generator to read.  If the filename extension is
-            ``.gz`` or ``.bz2``, the file is first decompressed. Note that
-            generators should return byte strings.
-     ...</code></pre>
+    Each row in the text file must have the same number of values.
+    
+    Parameters
+    ----------
+    fname : file, str, or pathlib.Path
+        File, filename, or generator to read.  If the filename extension is
+        ``.gz`` or ``.bz2``, the file is first decompressed. Note that
+        generators should return byte strings.
+    dtype : data-type, optional
+        Data-type of the resulting array; default: float.  If this is a
+        structured data-type, the resulting array will be 1-dimensional, and
+        each row will be interpreted as an element of the array.  In this
+        case, the number of columns used must match the number of fields in
+        the data-type.
+    comments : str or sequence of str, optional
+        The characters or list of characters used to indicate the start of a
+        comment. None implies no comments. For backwards compatibility, byte
+        strings will be decoded as &#39;latin1&#39;. The default is &#39;#&#39;.
+    delimiter : str, optional
+        The string used to separate values. For backwards compatibility, byte
+        strings will be decoded as &#39;latin1&#39;. The default is whitespace.
+    converters : dict, optional
+        A dictionary mapping column number to a function that will parse the
+        column string into the desired value.  E.g., if column 0 is a date
+        string: ``converters = {0: datestr2num}``.  Converters can also be
+        used to provide a default value for missing data (but see also
+        `genfromtxt`): ``converters = {3: lambda s: float(s.strip() or 0)}``.
+        Default: None.
+    skiprows : int, optional
+        Skip the first `skiprows` lines, including comments; default: 0.
+    usecols : int or sequence, optional
+        Which columns to read, with 0 being the first. For example,
+        ``usecols = (1,4,5)`` will extract the 2nd, 5th and 6th columns.
+        The default, None, results in all columns being read.
+    
+        .. versionchanged:: 1.11.0
+            When a single column has to be read it is possible to use
+            an integer instead of a tuple. E.g ``usecols = 3`` reads the
+            fourth column the same way as ``usecols = (3,)`` would.
+    unpack : bool, optional
+        If True, the returned array is transposed, so that arguments may be
+        unpacked using ``x, y, z = loadtxt(...)``.  When used with a structured
+        data-type, arrays are returned for each field.  Default is False.
+    ndmin : int, optional
+        The returned array will have at least `ndmin` dimensions.
+        Otherwise mono-dimensional axes will be squeezed.
+        Legal values: 0 (default), 1 or 2.
+    
+        .. versionadded:: 1.6.0
+    encoding : str, optional
+        Encoding used to decode the inputfile. Does not apply to input streams.
+        The special value &#39;bytes&#39; enables backward compatibility workarounds
+        that ensures you receive byte arrays as results if possible and passes
+        &#39;latin1&#39; encoded strings to converters. Override this value to receive
+        unicode arrays and pass strings as input to converters.  If set to None
+        the system default is used. The default value is &#39;bytes&#39;.
+    
+        .. versionadded:: 1.14.0
+    max_rows : int, optional
+        Read `max_rows` lines of content after `skiprows` lines. The default
+        is to read all the lines.
+    
+        .. versionadded:: 1.16.0
+    
+    Returns
+    -------
+    out : ndarray
+        Data read from the text file.
+    
+    See Also
+    --------
+    load, fromstring, fromregex
+    genfromtxt : Load data with missing values handled as specified.
+    scipy.io.loadmat : reads MATLAB data files
+    
+    Notes
+    -----
+    This function aims to be a fast reader for simply formatted files.  The
+    `genfromtxt` function provides more sophisticated handling of, e.g.,
+    lines with missing values.
+    
+    .. versionadded:: 1.10.0
+    
+    The strings produced by the Python float.hex method can be used as
+    input for floats.
+    
+    Examples
+    --------
+    &gt;&gt;&gt; from io import StringIO   # StringIO behaves like a file object
+    &gt;&gt;&gt; c = StringIO(&quot;0 1\n2 3&quot;)
+    &gt;&gt;&gt; np.loadtxt(c)
+    array([[0., 1.],
+           [2., 3.]])
+    
+    &gt;&gt;&gt; d = StringIO(&quot;M 21 72\nF 35 58&quot;)
+    &gt;&gt;&gt; np.loadtxt(d, dtype={&#39;names&#39;: (&#39;gender&#39;, &#39;age&#39;, &#39;weight&#39;),
+    ...                      &#39;formats&#39;: (&#39;S1&#39;, &#39;i4&#39;, &#39;f4&#39;)})
+    array([(b&#39;M&#39;, 21, 72.), (b&#39;F&#39;, 35, 58.)],
+          dtype=[(&#39;gender&#39;, &#39;S1&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f4&#39;)])
+    
+    &gt;&gt;&gt; c = StringIO(&quot;1,0,2\n3,0,4&quot;)
+    &gt;&gt;&gt; x, y = np.loadtxt(c, delimiter=&#39;,&#39;, usecols=(0, 2), unpack=True)
+    &gt;&gt;&gt; x
+    array([1., 3.])
+    &gt;&gt;&gt; y
+    array([2., 4.])
+    
+    This example shows how `converters` can be used to convert a field
+    with a trailing minus sign into a negative number.
+    
+    &gt;&gt;&gt; s = StringIO(&#39;10.01 31.25-\n19.22 64.31\n17.57- 63.94&#39;)
+    &gt;&gt;&gt; def conv(fld):
+    ...     return -float(fld[:-1]) if fld.endswith(b&#39;-&#39;) else float(fld)
+    ...
+    &gt;&gt;&gt; np.loadtxt(s, converters={0: conv, 1: conv})
+    array([[ 10.01, -31.25],
+           [ 19.22,  64.31],
+           [-17.57,  63.94]])</code></pre>
 <p>Or really, <a href="http://letmegooglethat.com/?q=numpy+loadtxt">search</a> the function! Online documentation and discussion boards are filled with great content.</p>
-<p><br> ## Exploring your data</p>
+</div>
+<div id="exploring-your-data" class="section level3">
+<h3>Exploring your data</h3>
 <p>It is often a good idea to look at the data to have some idea of what you are working with</p>
 <pre class="python"><code>#What does the data look like. Print it out
 print(chemdata)</code></pre>
@@ -702,7 +821,8 @@ print(chemdata.shape)</code></pre>
 <div id="accessing-data-from-an-array" class="section level3">
 <h3>Accessing data from an array</h3>
 <p>chemdata is a table of data: an array with two dimensions. So to access/look at/change parts of it, we need to specify both row and column</p>
-<pre class="python"><code>#Print the number in the first row and third column. 
+<pre class="python"><code>#Print the number in the first row and third column 
+#(note indexing is different in &quot;numpy arrays&quot; compared &quot;python lists&quot;. 
 #IMPORTANT: Python counts from 0
 print(chemdata[0,2])</code></pre>
 <pre><code>111.0</code></pre>
@@ -738,8 +858,8 @@ Solution
  [ -98.63     2.   ]]</code></pre>
 </details>
 </div>
-<div id="plotting-data" class="section level2">
-<h2>Plotting data</h2>
+<div id="plotting-data" class="section level3">
+<h3>Plotting data</h3>
 <p>Now to make our first plot!</p>
 <pre class="python"><code>#Plot the lats and lons, i.e. the first column vs the second column
 plt.plot(chemdata[:,1],chemdata[:,0],&#39;k.&#39;)
@@ -748,7 +868,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_46_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_45_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This does not look right… It is a messy dataset! This is not uncommon. Maybe the Lats/Lons are stored as Norhtings/Eastings for some samples? Maybe they are missing a decimal place?</p>
@@ -765,11 +885,11 @@ plt.ylabel(&#39;Longitude&#39;)
 plt.xlabel(&#39;Number&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_48_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_47_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_48_1.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_47_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This kind of casual data interrogation is a really handy way to exploring your data. There are definitely some outliers with latitudes and longitudes. There are quite a few ways clean the data, but let’s simply restrict our data range to -180:180 and -90:90.</p>
@@ -809,7 +929,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_56_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_55_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Now make a more informative plot:</p>
@@ -830,10 +950,11 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_58_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_57_0.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code>import numpy as np
+<pre class="python"><code>#You could come up with a more intelligent way to reject your outliers
+import numpy as np
 def reject_outliers(data):
     m = 2
     u = np.mean(data)
@@ -842,7 +963,7 @@ def reject_outliers(data):
     print(&quot;std is:&quot;, s)
     filtered = [e for e in data if (u - 2 * s &lt; e &lt; u + 2 * s)]
     print(&quot;removed:&quot;,np.shape(data)[0] - np.shape(filtered)[0])
-    return filtered
+    return(filtered)
 
 filtered_age=reject_outliers(copper)
 </code></pre>
@@ -853,8 +974,9 @@ removed: 20407</code></pre>
 <pre class="python"><code>plt.plot(copper[copper&gt;1],&#39;k.&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_61_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_60_0.png" alt="" />
 <p class="caption">png</p>
+</div>
 </div>
 <div id="lets-make-an-even-nicer-map" class="section level3">
 <h3>Let’s make an even nicer map</h3>
@@ -895,7 +1017,7 @@ cbar.set_label(&#39;Age (Ma)&#39;)
 plt.title(&#39;Age of Copper Deposits in the EarthChem.org database&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_63_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_62_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You can explore the different color maps at <a href="https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html">https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html</a>.</p>
@@ -942,7 +1064,6 @@ Solution
 <li>Functions are used to write (and debug) repetitive code once</li>
 <li>Indexing</li>
 </ul>
-</div>
 </div>
 </div>
 

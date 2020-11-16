@@ -2,6 +2,7 @@
 
 <div class="questions">  
 ### Questions
+
 - What are libraries and packages?
 - How can I load tabular data into Python?
 - How can I load shapefiles?
@@ -10,9 +11,11 @@
 
 <div class="objectives">  
 ### Objectives
+
 - Learn how to deal with specialty data types.
 - Learn about pandas, pyshp, lasio, obspy.
 </div>
+
 
 Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at the "pyshp" (for dealing with shapefiles) and "pandas" (great for tables and time series) packages.
 
@@ -32,53 +35,8 @@ import shapefile
 
 
 ```python
-help(shapefile)
+#help(shapefile)
 #Or check out the help pages https://github.com/GeospatialPython/pyshp
-```
-
-```
-    Help on module shapefile:
-    
-    NAME
-        shapefile
-    
-    DESCRIPTION
-        shapefile.py
-        Provides read and write support for ESRI Shapefiles.
-        author: jlawhead<at>geospatialpython.com
-        version: 2.1.2
-        Compatible with Python versions 2.7-3.x
-    
-    CLASSES
-        builtins.Exception(builtins.BaseException)
-            ShapefileException
-        builtins.list(builtins.object)
-            ShapeRecords
-            Shapes
-        builtins.object
-            Reader
-            Shape
-            ShapeRecord
-            Writer
-        
-        class Reader(builtins.object)
-         |  Reader(*args, **kwargs)
-         |  
-         |  Reads the three files of a shapefile as a unit or
-         |  separately.  If one of the three files (.shp, .shx,
-...
-        POLYLINEZ = 13
-        PYTHON3 = True
-        RING = 5
-        SHAPETYPE_LOOKUP = {0: 'NULL', 1: 'POINT', 3: 'POLYLINE', 5: 'POLYGON'...
-        TRIANGLE_FAN = 1
-        TRIANGLE_STRIP = 0
-    
-    VERSION
-        2.1.2
-    
-    FILE
-        /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/shapefile.py   
 ```
 
 
@@ -100,14 +58,18 @@ Nshp    = len(shapes)
 ```python
 print(Nshp) #print the Number of items in the shapefile
 ```
-```
+
     7635
-```
+
+
 
 ```python
 fields[:]#print the fields
 ```
-```
+
+
+
+
     [('DeletionFlag', 'C', 1, 0),
      ['HydroID', 'N', 10, 0],
      ['HydroCode', 'C', 30, 0],
@@ -118,26 +80,36 @@ fields[:]#print the fields
      ['HGUNumber', 'N', 10, 0],
      ['NafHGUNumb', 'N', 10, 0],
      ['SHAPE_Leng', 'F', 19, 11]]
-```
+
+
 
 
 ```python
 recs[0] #print the first record, then this is a list that can be subscripted further
 ```
-```
-Record #0: [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
-```
+
+
+
+
+    Record #0: [32001999, '652800645', 30027773, 6.74, -74.26, 31000043, 1042, 104005, 0.0]
+
+
+
 
 ```python
 shapes[0].points #print the point values of the first shape
 ```
-```
+
+
+
+
     [(591975.5150000006, -3816141.8817), (591975.5150000006, -3816141.8817)]
-```
+
+
 
 <div class="challenge">
 
-## Challenge. TODO
+### Challenge. TODO
 
 - Look at the data above. It provides the coordinates of the wells as points. 
 - How many coordinates are provided for each well? Why do you think this is?
@@ -517,9 +489,6 @@ log_data.head(3)    # print the first 3 rows
 
 
 
-
-
-
 ```python
 log_data.index     # “the index” (aka “the labels”). 
 #Pandas is great for using timeseries data, where the index can be the timestamps
@@ -865,9 +834,6 @@ log_data.describe(include='all')
 
 
 
-
-
-
 ```python
 # summarise a pandas Series
 log_data.FromDepth.describe()   # describe a single column
@@ -935,11 +901,11 @@ lithCounts
     FILL     4020
     SDST     3207
             ...  
-    REGO        1
-    LMSD        1
+    ALDG        1
     ARKS        1
-    DIOR        1
-    DUST        1
+    HFLS        1
+    CALU        1
+    SCOR        1
     Name: MajorLithCode, Length: 81, dtype: int64
 
 
@@ -959,7 +925,7 @@ lithCounts.plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_35_1.png)
+![png](01b-dataframes_files/01b-dataframes_30_1.png)
     
 
 
@@ -978,7 +944,7 @@ lithCounts[(lithCounts < 50)].plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_36_1.png)
+![png](01b-dataframes_files/01b-dataframes_31_1.png)
     
 
 
@@ -1002,14 +968,11 @@ plt.title(mystring)
 # Tweak spacing to prevent clipping of ylabel
 #plt.subplots_adjust(left=0.15)
 plt.show()
-
-
-
 ```
 
 
     
-![png](01b-dataframes_files/01b-dataframes_37_0.png)
+![png](01b-dataframes_files/01b-dataframes_32_0.png)
     
 
 
@@ -1029,8 +992,6 @@ plt.show()
 #         except:
 #             continue
 #     #(row[3])
-
-
 
 # for ind, value in enumerate(recs):
 #     #Get the lat lon value
@@ -1057,9 +1018,9 @@ This tutorial based off https://towardsdatascience.com/handling-big-volume-of-we
 Original Data from:
 https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/image/DDD/PEDP013LOGS.zip
 
-Title:	Cooper Basin selected well logs in LAS format.
-Publication Date:	November 20
-Prepared by:	Energy Resources Division, Department of the Premier and Cabinet
+Title:	Cooper Basin selected well logs in LAS format. \
+Publication Date:	November 20 \
+Prepared by:	Energy Resources Division, Department of the Premier and Cabinet \
 This Record URL:	https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/wci/Record?r=0&m=1&w=catno=2040037
 
 
@@ -1083,21 +1044,21 @@ import re
 
 ```python
 #Build a list of filenames to read
-read_files = glob.glob("data/WELL/*.las")
+read_files = glob.glob("../data/WELL/*.las")
 read_files
 ```
 
 
 
 
-    ['data/WELL/BoolLagoon1.las',
-     'data/WELL/Bungaloo1.las',
-     'data/WELL/BeachportEast1.las',
-     'data/WELL/BiscuitFlat1.las',
-     'data/WELL/Balnaves.las',
-     'data/WELL/Banyula.las',
-     'data/WELL/Burrungule1.las',
-     'data/WELL/Beachport1.las']
+    ['../data/WELL/Balnaves.las',
+     '../data/WELL/Banyula.las',
+     '../data/WELL/Beachport1.las',
+     '../data/WELL/BeachportEast1.las',
+     '../data/WELL/BiscuitFlat1.las',
+     '../data/WELL/BoolLagoon1.las',
+     '../data/WELL/Bungaloo1.las',
+     '../data/WELL/Burrungule1.las']
 
 
 
@@ -1115,24 +1076,24 @@ print("There are ", len(well_names), "wells.")
 print(well_names)
 ```
 
-    FILE: data/WELL/BoolLagoon1.las
-    SPLIT: ['data', 'WELL', 'BoolLagoon1', '']
-    FILE: data/WELL/Bungaloo1.las
-    SPLIT: ['data', 'WELL', 'Bungaloo1', '']
-    FILE: data/WELL/BeachportEast1.las
-    SPLIT: ['data', 'WELL', 'BeachportEast1', '']
-    FILE: data/WELL/BiscuitFlat1.las
-    SPLIT: ['data', 'WELL', 'BiscuitFlat1', '']
-    FILE: data/WELL/Balnaves.las
-    SPLIT: ['data', 'WELL', 'Balnaves', '']
-    FILE: data/WELL/Banyula.las
-    SPLIT: ['data', 'WELL', 'Banyula', '']
-    FILE: data/WELL/Burrungule1.las
-    SPLIT: ['data', 'WELL', 'Burrungule1', '']
-    FILE: data/WELL/Beachport1.las
-    SPLIT: ['data', 'WELL', 'Beachport1', '']
+    FILE: ../data/WELL/Balnaves.las
+    SPLIT: ['..', 'data', 'WELL', 'Balnaves', '']
+    FILE: ../data/WELL/Banyula.las
+    SPLIT: ['..', 'data', 'WELL', 'Banyula', '']
+    FILE: ../data/WELL/Beachport1.las
+    SPLIT: ['..', 'data', 'WELL', 'Beachport1', '']
+    FILE: ../data/WELL/BeachportEast1.las
+    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', '']
+    FILE: ../data/WELL/BiscuitFlat1.las
+    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', '']
+    FILE: ../data/WELL/BoolLagoon1.las
+    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', '']
+    FILE: ../data/WELL/Bungaloo1.las
+    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', '']
+    FILE: ../data/WELL/Burrungule1.las
+    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', '']
     There are  8 wells.
-    ['', '', '', '', '', '', '', '']
+    ['Balnaves', 'Banyula', 'Beachport1', 'BeachportEast1', 'BiscuitFlat1', 'BoolLagoon1', 'Bungaloo1', 'Burrungule1']
 
 
 
@@ -1147,45 +1108,16 @@ for files in read_files:
 
 ```python
 #You can get an idea of what you can interogate using the help function
-help(lases)
+#help(lases)
 ```
-
-    Help on list object:
-    
-    class list(object)
-     |  list(iterable=(), /)
-     |  
-     |  Built-in mutable sequence.
-     |  
-     |  If no argument is given, the constructor creates a new empty list.
-     |  The argument must be an iterable if specified.
-     |  
-     |  Methods defined here:
-  ...
-    
-
 
 
 ```python
 #This is just a regular Python list! But the list contains
 #in this case, special objects known as "LasFile(s)" or lasio.las object.
 #Get some details using help again
-help(lases[1])
+#help(lases[1])
 ```
-
-    Help on LASFile in module lasio.las object:
-    
-    class LASFile(builtins.object)
-     |  LASFile(file_ref=None, **read_kwargs)
-     |  
-     |  LAS file object.
-     |  
-     |  Keyword Arguments:
-     |      file_ref (file-like object, str): either a filename, an open file
-     |          object, or a string containing the contents of a file.
- ...
-    
-
 
 
 ```python
@@ -1198,22 +1130,22 @@ for well in lases:
     print(well.keys())
 ```
 
-    Wellid: 0 
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 1 
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 2 
-    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 3 
+    Wellid: 0 Balnaves
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 4 
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 5 
+    Wellid: 1 Banyula
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 6 
-    ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 7 
+    Wellid: 2 Beachport1
     ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
+    Wellid: 3 BeachportEast1
+    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
+    Wellid: 4 BiscuitFlat1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 5 BoolLagoon1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
+    Wellid: 6 Bungaloo1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 7 Burrungule1
+    ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
 
 
 
@@ -1231,17 +1163,17 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f842a6fb9a0>]
+    [<matplotlib.lines.Line2D at 0x7f9e70c636d0>]
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_49_1.png)
+![png](01b-dataframes_files/01b-dataframes_44_1.png)
     
 
 
-TODO: What does this plot show us??? What is the conclusion?
+You have just plotted the density (DRHO) at each measured depth point. You can clean this up and present it better in the next few cells.
 
 
 ```python
@@ -1249,21 +1181,18 @@ TODO: What does this plot show us??? What is the conclusion?
 print(lases[wellid].curves)
 ```
 
-    Mnemonic  Unit   Value  Description                                                                                        
-    --------  ----   -----  -----------                                                                                        
-    DEPTH     M             Depth                                                                                              
-    CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
-    DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-    DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
-    DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
-    GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
-    NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
-    PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
-    RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-    RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-    RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-    RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
-    SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              
+    Mnemonic  Unit   Value  Description                                         
+    --------  ----   -----  -----------                                         
+    DEPTH     M             Depth                                               
+    CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
+    DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
+    DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
+    GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
+    NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
+    RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
+    RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
+    RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
+    SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            
 
 
 
@@ -1280,12 +1209,12 @@ plt.grid(True)
 plt.gca().invert_yaxis()
 ```
 
-    Param: RHOB of well: 
+    Param: RHOB of well: Banyula
 
 
 
     
-![](01b-dataframes_files/01b-dataframes_52_1.png)
+![png](01b-dataframes_files/01b-dataframes_47_1.png)
     
 
 
@@ -1308,7 +1237,7 @@ import numpy as np
 ```python
 #Set the filename of the segy data
 
-filename="data/james/james_1959_pstm_tvfk_gain.sgy"
+filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 
 #Title: 2006 James 3D Seismic Survey.
 #Author: White, A.
@@ -1320,6 +1249,8 @@ filename="data/james/james_1959_pstm_tvfk_gain.sgy"
 
 
 ```python
+#This will take about 1 minute. 
+#When the [*] changes to [58] and the circle in the top right is clear, it has completed
 stream = _read_segy(filename, headonly=True)
 stream
 ```
@@ -1342,7 +1273,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_58_0.png)
+![png](01b-dataframes_files/01b-dataframes_53_0.png)
     
 
 
@@ -1351,7 +1282,7 @@ plt.show()
 data = np.stack(t.data for t in stream.traces[12320:12320+500])
 ```
 
-    /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/IPython/core/interactiveshell.py:3338: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+    /home/nbutter/miniconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py:3337: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
       if (await self.run_code(code, result,  async_=asy)):
 
 
@@ -1409,13 +1340,13 @@ plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
 
 
 
-    <matplotlib.image.AxesImage at 0x7f8414587ac0>
+    <matplotlib.image.AxesImage at 0x7f9e6b61f990>
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_64_1.png)
+![png](01b-dataframes_files/01b-dataframes_59_1.png)
     
 
 
@@ -1429,7 +1360,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_65_0.png)
+![png](01b-dataframes_files/01b-dataframes_60_0.png)
     
 
 
@@ -1553,7 +1484,7 @@ dt
 
 <div class="challenge">
 
-## Challenge. TODO
+### Challenge. TODO
 
 - This needs a HW challenge!
 
@@ -1566,16 +1497,9 @@ dt
 
 <div class="keypoints">
 ### Key points
+    
 - Obspy for segy seismic data
 - Lasio for well log data
 - Pyshp for Shapefiles
 - Pandas dataframes for tabular
 </div>
-
-
-
-
-
-
-    0.004
-
