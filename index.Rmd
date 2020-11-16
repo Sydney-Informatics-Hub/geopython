@@ -92,7 +92,9 @@ Wed Dec 2, 12:30 pm - 4:30 pm (AEST)
 Wed Dec 9, 12:30 pm - 4:30 pm (AEST)
 
 <br>
+
 # Setup Instructions
+
 Please complete the [Setup Instructions](https://sydney-informatics-hub.github.io/geopython/setup.html) **before the course**.
 
 If you have any trouble, please get in contact with us ASAP.
