@@ -64,7 +64,7 @@ print(Nshp) #print the Number of items in the shapefile
 
 
 ```python
-fields[:]#print the fields
+fields #print the fields
 ```
 
 
@@ -157,11 +157,40 @@ recs[299][4]
 </details>
 </div>
 
+
+```python
+#Here is a slightly neater way to read in the data, but it looks confusing at first.
+#But we will need it in this form for our next exercise.
+
+#This type of assignment is known as "list comprehension"
+#fields = [x[0] for x in shapeRead.fields][1:]
+
+#Break this down line by line
+#for x in shapeRead.fields:
+#    print(x)
+
+#Noe just print the 1st (0th) column of each list variable
+#for x in shapeRead.fields:
+#    print(x[0])
+
+#But we want to save these values in a list (not just print them out).
+#fields=[]
+#for x in shapeRead.fields:
+#    fields.append(x[0])
+
+#And we don't want the DeletionFlag field, so we need to just get all the values except the first
+#fields=fields[1:]
+
+
+#Finally reassign the other variables too
+#shps = [s.points for s in shapeRead.shapes()]
+```
+
 Shapefiles are not a native python format, but the community have developed tools for exploring them. The package we have used "pyshp" imported with the name "shapefile" (for some non-consistent weird reason), is one example of working with shapefiles. Alternatives exist.
 
 # Dataframes and table manipulation
 
-Pandas is one of the most useful packages (along with probably numpy and matplotlib). 
+Pandas is one of the most useful packages (along with probably numpy and matplotlib). We will use it several times throughout the course for data handling and manipulation. 
 
 
 ```python
@@ -170,14 +199,405 @@ import pandas
 
 
 ```python
-#read in the data
-log_data=pandas.read_csv("../data/shp_torrens_river/NGIS_LithologyLog.csv",\
-                         header=0,sep=',',skipinitialspace=True,quotechar ='"',\
-                         usecols=list(range(0,13)),\
-                         skiprows=[453,456,458,460,689,697,720,723,726,839,880,884,885,890,898,934])
+#As before, read in the shapefile
+boreshape='../data/shp_torrens_river/NGIS_BoreLine.shp'
 
-#This data was weird because it has quotation marks to signify inches inside comments within the file, 
-#making automatic reading of it tricky
+#Read the shapefile attributes to variables
+shapeRead = shapefile.Reader(boreshape)
+fields = [x[0] for x in shapeRead.fields][1:]
+shps = [s.points for s in shapeRead.shapes()]
+recs= shapeRead.records()
+```
+
+
+```python
+#Now convert the variables to a pandas dataframe
+df = pandas.DataFrame(columns=fields, data=recs)
+
+#See more details at the docs: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html
+```
+
+
+```python
+df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HydroID</th>
+      <th>HydroCode</th>
+      <th>BoreID</th>
+      <th>TopElev</th>
+      <th>BottomElev</th>
+      <th>HGUID</th>
+      <th>HGUNumber</th>
+      <th>NafHGUNumb</th>
+      <th>SHAPE_Leng</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32001999</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>6.74</td>
+      <td>-74.26</td>
+      <td>31000043</td>
+      <td>1042</td>
+      <td>104005</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32002000</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-74.26</td>
+      <td>-125.26</td>
+      <td>31000109</td>
+      <td>1108</td>
+      <td>110002</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32002001</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-125.26</td>
+      <td>-147.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32002002</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-147.26</td>
+      <td>-154.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32002003</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-154.26</td>
+      <td>-168.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7630</th>
+      <td>32145557</td>
+      <td>662810075</td>
+      <td>30057044</td>
+      <td>102.62</td>
+      <td>90.89</td>
+      <td>31000139</td>
+      <td>1138</td>
+      <td>100001</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7631</th>
+      <td>32145558</td>
+      <td>662810075</td>
+      <td>30057044</td>
+      <td>103.08</td>
+      <td>102.62</td>
+      <td>31000139</td>
+      <td>1138</td>
+      <td>100001</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7632</th>
+      <td>32145559</td>
+      <td>662813065</td>
+      <td>30060034</td>
+      <td>535.08</td>
+      <td>451.08</td>
+      <td>31000026</td>
+      <td>1025</td>
+      <td>134001</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7633</th>
+      <td>32145560</td>
+      <td>662813065</td>
+      <td>30060034</td>
+      <td>451.08</td>
+      <td>171.08</td>
+      <td>31000014</td>
+      <td>1013</td>
+      <td>134001</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>7634</th>
+      <td>32145561</td>
+      <td>662814687</td>
+      <td>30061656</td>
+      <td>444.30</td>
+      <td>432.30</td>
+      <td>31000014</td>
+      <td>1013</td>
+      <td>134001</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>7635 rows × 9 columns</p>
+</div>
+
+
+
+
+```python
+#Add a new column called "coords" to the DataFrame 
+df = df.assign(coords=shps)
+```
+
+
+```python
+df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HydroID</th>
+      <th>HydroCode</th>
+      <th>BoreID</th>
+      <th>TopElev</th>
+      <th>BottomElev</th>
+      <th>HGUID</th>
+      <th>HGUNumber</th>
+      <th>NafHGUNumb</th>
+      <th>SHAPE_Leng</th>
+      <th>coords</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32001999</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>6.74</td>
+      <td>-74.26</td>
+      <td>31000043</td>
+      <td>1042</td>
+      <td>104005</td>
+      <td>0.0</td>
+      <td>[(591975.5150000006, -3816141.8817), (591975.5...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32002000</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-74.26</td>
+      <td>-125.26</td>
+      <td>31000109</td>
+      <td>1108</td>
+      <td>110002</td>
+      <td>0.0</td>
+      <td>[(591975.5150000006, -3816141.8817), (591975.5...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32002001</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-125.26</td>
+      <td>-147.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+      <td>[(591975.5150000006, -3816141.8817), (591975.5...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32002002</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-147.26</td>
+      <td>-154.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+      <td>[(591975.5150000006, -3816141.8817), (591975.5...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32002003</td>
+      <td>652800645</td>
+      <td>30027773</td>
+      <td>-154.26</td>
+      <td>-168.26</td>
+      <td>31000045</td>
+      <td>1044</td>
+      <td>125005</td>
+      <td>0.0</td>
+      <td>[(591975.5150000006, -3816141.8817), (591975.5...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>7630</th>
+      <td>32145557</td>
+      <td>662810075</td>
+      <td>30057044</td>
+      <td>102.62</td>
+      <td>90.89</td>
+      <td>31000139</td>
+      <td>1138</td>
+      <td>100001</td>
+      <td>0.0</td>
+      <td>[(605865.9246000014, -3830429.3729999997), (60...</td>
+    </tr>
+    <tr>
+      <th>7631</th>
+      <td>32145558</td>
+      <td>662810075</td>
+      <td>30057044</td>
+      <td>103.08</td>
+      <td>102.62</td>
+      <td>31000139</td>
+      <td>1138</td>
+      <td>100001</td>
+      <td>0.0</td>
+      <td>[(605865.9246000014, -3830429.3729999997), (60...</td>
+    </tr>
+    <tr>
+      <th>7632</th>
+      <td>32145559</td>
+      <td>662813065</td>
+      <td>30060034</td>
+      <td>535.08</td>
+      <td>451.08</td>
+      <td>31000026</td>
+      <td>1025</td>
+      <td>134001</td>
+      <td>0.0</td>
+      <td>[(612545.5916999988, -3832402.8148999996), (61...</td>
+    </tr>
+    <tr>
+      <th>7633</th>
+      <td>32145560</td>
+      <td>662813065</td>
+      <td>30060034</td>
+      <td>451.08</td>
+      <td>171.08</td>
+      <td>31000014</td>
+      <td>1013</td>
+      <td>134001</td>
+      <td>0.0</td>
+      <td>[(612545.5916999988, -3832402.8148999996), (61...</td>
+    </tr>
+    <tr>
+      <th>7634</th>
+      <td>32145561</td>
+      <td>662814687</td>
+      <td>30061656</td>
+      <td>444.30</td>
+      <td>432.30</td>
+      <td>31000014</td>
+      <td>1013</td>
+      <td>134001</td>
+      <td>0.0</td>
+      <td>[(635716.0604999997, -3816751.5364999995), (63...</td>
+    </tr>
+  </tbody>
+</table>
+<p>7635 rows × 10 columns</p>
+</div>
+
+
+
+Pandas more frequently is used to directly read in tables. So let's read in the csv data that came with shapefile (as this gives us some additional fields not stored in the shapefile that we can explore.
+
+
+```python
+#read in the data
+log_data=pandas.read_csv("../data/shp_torrens_river/NGIS_LithologyLog.csv",usecols=list(range(0,13))) 
+
+#What is the "usecols" variable equal to?
+#Try reading the data without using the usecols option, can you solve the error?
 ```
 
 
@@ -319,7 +739,7 @@ log_data           # print the first 30 and last 30 rows
       <td>...</td>
     </tr>
     <tr>
-      <th>70152</th>
+      <th>70168</th>
       <td>4120345</td>
       <td>30304039</td>
       <td>662829228</td>
@@ -335,7 +755,7 @@ log_data           # print the first 30 and last 30 rows
       <td>SAGeodata</td>
     </tr>
     <tr>
-      <th>70153</th>
+      <th>70169</th>
       <td>4120346</td>
       <td>30304039</td>
       <td>662829228</td>
@@ -351,7 +771,7 @@ log_data           # print the first 30 and last 30 rows
       <td>SAGeodata</td>
     </tr>
     <tr>
-      <th>70154</th>
+      <th>70170</th>
       <td>4120347</td>
       <td>30304050</td>
       <td>652802882</td>
@@ -367,7 +787,7 @@ log_data           # print the first 30 and last 30 rows
       <td>SAGeodata</td>
     </tr>
     <tr>
-      <th>70155</th>
+      <th>70171</th>
       <td>4120348</td>
       <td>30304050</td>
       <td>652802882</td>
@@ -383,7 +803,7 @@ log_data           # print the first 30 and last 30 rows
       <td>SAGeodata</td>
     </tr>
     <tr>
-      <th>70156</th>
+      <th>70172</th>
       <td>4120349</td>
       <td>30304050</td>
       <td>652802882</td>
@@ -400,7 +820,7 @@ log_data           # print the first 30 and last 30 rows
     </tr>
   </tbody>
 </table>
-<p>70157 rows × 13 columns</p>
+<p>70173 rows × 13 columns</p>
 </div>
 
 
@@ -532,7 +952,7 @@ log_data.index     # “the index” (aka “the labels”).
 
 
 
-    RangeIndex(start=0, stop=70157, step=1)
+    RangeIndex(start=0, stop=70173, step=1)
 
 
 
@@ -585,7 +1005,7 @@ log_data.shape     # number of rows and columns
 
 
 
-    (70157, 14)
+    (70173, 14)
 
 
 
@@ -677,20 +1097,20 @@ log_data.describe(include='all')
   <tbody>
     <tr>
       <th>count</th>
-      <td>7.015700e+04</td>
-      <td>7.015700e+04</td>
-      <td>7.015700e+04</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157.000000</td>
-      <td>70157.000000</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157</td>
-      <td>70157.000000</td>
+      <td>7.017300e+04</td>
+      <td>7.017300e+04</td>
+      <td>7.017300e+04</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173.000000</td>
+      <td>70173.000000</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173</td>
+      <td>70173.000000</td>
     </tr>
     <tr>
       <th>unique</th>
@@ -701,12 +1121,12 @@ log_data.describe(include='all')
       <td>4</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>27777</td>
-      <td>27878</td>
+      <td>27784</td>
+      <td>27883</td>
       <td>81</td>
       <td>42</td>
-      <td>33598</td>
-      <td>39</td>
+      <td>33614</td>
+      <td>54</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -732,50 +1152,50 @@ log_data.describe(include='all')
       <td>NaN</td>
       <td>NaN</td>
       <td>18514</td>
-      <td>44946</td>
+      <td>44947</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>18514</td>
       <td>18514</td>
-      <td>25857</td>
-      <td>62797</td>
+      <td>25861</td>
+      <td>62812</td>
       <td>4603</td>
       <td>70119</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>2.505842e+06</td>
-      <td>3.018201e+07</td>
+      <td>2.505677e+06</td>
+      <td>3.018198e+07</td>
       <td>6.624491e+08</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>24.942443</td>
-      <td>30.626594</td>
+      <td>24.938020</td>
+      <td>30.621160</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>5.684151</td>
+      <td>5.683139</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>9.276598e+05</td>
-      <td>8.068098e+04</td>
-      <td>2.130462e+06</td>
+      <td>9.276182e+05</td>
+      <td>8.069609e+04</td>
+      <td>2.130226e+06</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>45.435866</td>
-      <td>48.609957</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>45.431762</td>
+      <td>48.605931</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>9.943264</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>9.942400</td>
     </tr>
     <tr>
       <th>min</th>
@@ -796,13 +1216,13 @@ log_data.describe(include='all')
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.932799e+06</td>
-      <td>3.014558e+07</td>
+      <td>1.932741e+06</td>
+      <td>3.014557e+07</td>
       <td>6.628129e+08</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>0.800000</td>
-      <td>4.000000</td>
+      <td>3.960000</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -813,13 +1233,13 @@ log_data.describe(include='all')
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.999036e+06</td>
+      <td>1.999028e+06</td>
       <td>3.018487e+07</td>
       <td>6.628196e+08</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>7.000000</td>
-      <td>11.580000</td>
+      <td>11.500000</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -830,13 +1250,13 @@ log_data.describe(include='all')
     </tr>
     <tr>
       <th>75%</th>
-      <td>3.967159e+06</td>
+      <td>3.967146e+06</td>
       <td>3.025487e+07</td>
       <td>6.628248e+08</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>25.900000</td>
-      <td>34.750000</td>
+      <td>25.800000</td>
+      <td>34.700000</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -877,13 +1297,13 @@ log_data.FromDepth.describe()   # describe a single column
 
 
 
-    count    70157.000000
-    mean        24.942443
-    std         45.435866
+    count    70173.000000
+    mean        24.938020
+    std         45.431762
     min          0.000000
     25%          0.800000
     50%          7.000000
-    75%         25.900000
+    75%         25.800000
     max        610.300000
     Name: FromDepth, dtype: float64
 
@@ -898,7 +1318,7 @@ log_data.iloc[:,5].mean()
 
 
 
-    24.9424428068475
+    24.93802017870121
 
 
 
@@ -911,7 +1331,7 @@ log_data["FromDepth"].mean()
 
 
 
-    24.9424428068475
+    24.93802017870121
 
 
 
@@ -930,17 +1350,17 @@ lithCounts
 
 
 
-    CLYU    25857
+    CLYU    25861
     SAND    12772
-    SLAT     4069
+    SLAT     4071
     FILL     4020
-    SDST     3207
+    SDST     3209
             ...  
-    ALDG        1
+    REGO        1
+    LMSD        1
     ARKS        1
-    HFLS        1
-    CALU        1
-    SCOR        1
+    SANN        1
+    DUST        1
     Name: MajorLithCode, Length: 81, dtype: int64
 
 
@@ -960,7 +1380,7 @@ lithCounts.plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_32_1.png)
+![png](01b-dataframes_files/01b-dataframes_39_1.png)
     
 
 
@@ -979,7 +1399,7 @@ lithCounts[(lithCounts < 50)].plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_33_1.png)
+![png](01b-dataframes_files/01b-dataframes_40_1.png)
     
 
 
@@ -1007,7 +1427,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_34_0.png)
+![png](01b-dataframes_files/01b-dataframes_41_0.png)
     
 
 
@@ -1028,15 +1448,25 @@ plt.show()
 #             continue
 #     #(row[3])
 
+
+#You can plot the location of the bores slowly
 # for ind, value in enumerate(recs):
 #     #Get the lat lon value
-#     lon=value[18]
-#     lat=value[17]
+#     lon=df.coords[ind][0][0]
+#     lat=df.coords[ind][0][1]
 #     #Get the Lithology unit
-#     value[]
+#     #value[]
     
-#     #Now plot it
+#     #Now add the point to the plot
 #     plt.plot(lon,lat,"|")
+    
+# plt.show()
+
+# #or fast
+# lons= [df.coords[i][0][0] for i in range(1,len(recs))] 
+# lats= [df.coords[i][0][1] for i in range(1,len(recs))] 
+# plt.plot(lons,lats,"|")
+# plt.show()
 ```
 
 ## Exercise
@@ -1198,13 +1628,13 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f9e70c636d0>]
+    [<matplotlib.lines.Line2D at 0x7fa6b7da6690>]
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_46_1.png)
+![png](01b-dataframes_files/01b-dataframes_53_1.png)
     
 
 
@@ -1232,14 +1662,21 @@ print(lases[wellid].curves)
 
 
 ```python
-# Finally, make a reasonable plot
+# Finally, make a cleaner plot
+
+#Set the Mnemoic variable to plot
 var = 'RHOB' 
+#Print out what you are plotting
 print("Param:", var, "of well:", well_names[wellid])
+
+#Create the figure
 plt.figure(figsize=(5,10))
-plt.plot((lases[wellid][var]), (lases[wellid]['DEPTH']))
+#Plot the data on it
+plt.plot(lases[wellid][var], lases[wellid]['DEPTH'])
 
 #And change some details on the plot
-plt.xlabel(var); plt.ylabel("Depth (m)")
+plt.xlabel(var) 
+plt.ylabel("Depth (m)")
 plt.grid(True)
 plt.gca().invert_yaxis()
 ```
@@ -1249,11 +1686,9 @@ plt.gca().invert_yaxis()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_49_1.png)
+![png](01b-dataframes_files/01b-dataframes_56_1.png)
     
 
-
-TODO: Why is this plot reasonable? What does it show?
 
 # SEGY Seismic data processing
 
@@ -1285,7 +1720,7 @@ filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 
 ```python
 #This will take about 1 minute. 
-#When the [*] changes to [58] and the circle in the top right is clear, it has completed
+#When the [*] changes to [52] and the circle in the top right is clear, it has completed
 stream = _read_segy(filename, headonly=True)
 stream
 ```
@@ -1308,7 +1743,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_55_0.png)
+![png](01b-dataframes_files/01b-dataframes_61_0.png)
     
 
 
@@ -1375,13 +1810,13 @@ plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
 
 
 
-    <matplotlib.image.AxesImage at 0x7f9e6b61f990>
+    <matplotlib.image.AxesImage at 0x7fa6b270a750>
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_61_1.png)
+![png](01b-dataframes_files/01b-dataframes_67_1.png)
     
 
 
@@ -1395,7 +1830,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_62_0.png)
+![png](01b-dataframes_files/01b-dataframes_68_0.png)
     
 
 
@@ -1506,6 +1941,7 @@ print(stream.traces[50].header)
 
 
 ```python
+#Get the sample interval from the header info
 dt = stream.traces[0].header.sample_interval_in_ms_for_this_trace / 1e6
 dt
 ```
@@ -1519,9 +1955,8 @@ dt
 
 <div class="challenge">
 
-### Challenge. TODO
+### Challenge
 
-- This needs a HW challenge!
 
 <details>
 <summary>Solution</summary>
