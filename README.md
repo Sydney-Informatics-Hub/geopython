@@ -5,7 +5,7 @@ title: "SIH Python for Geoscientists"
 
 Python for geosciences SIH materials
 
-- All notebooks go into `ipynb` folder
+- All notebooks go into `_ipynb` folder
 - Run the below command to render them into markdown files in the right place
 
 ```

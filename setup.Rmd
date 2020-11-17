@@ -55,16 +55,15 @@ cd C:\Users\Administrator\Desktop\
 mkdir geopython
 cd geopython
 mkdir notebooks
-cd notebooks
 ```
 
-Now type:
+Now you can type:
 
 ```sh
 python
 ```
 
-to launch Python!
+to run a Python interpreter (type ```exit()``` to quit back to the terminal/prompt). We will be mostly using *Jupyter Notebooks* to interface with Python, so see the next section on how to launch a Notebook.
 
 ![](fig/setup-python.png)
 
