@@ -3255,12 +3255,37 @@ dt</code></pre>
 
 <div id="challenge" class="section level3">
 <h3>Challenge</h3>
+<p>A single seismic section can be viewed with this snippet of code:</p>
+<pre class="python"><code>#Set number of xlines
+n=262
+#Set start iline
+m=0
+
+print(m,m*n,m*n+n)
+data = np.stack(t.data for t in stream.traces[m*n:m*n+n])
+vm = np.percentile(data, 95)
+plt.figure(figsize=(14,4))
+plt.imshow(data.T,cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)
+plt.show()</code></pre>
+<p>Can you put this in a loop to show multplie sections at once?</p>
 <details>
 <summary>
 Solution
 </summary>
 <p>…</p>
-<pre class="python"><code></code></pre>
+<pre class="python"><code>#Set number of xlines
+n=262
+#Set start iline
+m=0
+
+while m &lt; 10:
+    print(m,m*n,m*n+n)
+    data = np.stack(t.data for t in stream.traces[m*n:m*n+n])
+    vm = np.percentile(data, 95)
+    plt.figure(figsize=(14,4))
+    plt.imshow(data.T,cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)
+    plt.show()
+    m=m+1</code></pre>
 </div>
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>

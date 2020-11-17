@@ -501,11 +501,31 @@ div.tocify {
 <div id="how-do-we-use-python-terminals-and-notebooks." class="section level1">
 <h1>How do we use Python? Terminals and Notebooks.</h1>
 <p>Traditionally one writes a “Python script file”, like a recipe of instructions, and Python executes the script.</p>
+<p>Simply, you can create python files in a text editor:</p>
+<pre><code>print(&quot;Hello World&quot;)</code></pre>
+<p>Save this as <code>hello.py</code> and execute it with <code>python hello.py</code>.</p>
+<p>As you go deeper into Python, you will see more advanced syntax:</p>
+<pre><code>#!/usr/bin/env python
+
+&#39;&#39;&#39;
+A Python program which greets the Earth!
+Nathaniel Butterworth
+PESA/SIH Python course
+
+usage: python helloworld_advanced.py
+&#39;&#39;&#39;
+
+def main():
+    print(&quot;Hello World! This is basically the same result, but a different way to get there.&quot;)
+
+if __name__ == &#39;__main__&#39;:
+    main()</code></pre>
+<p>Once again, you can save this in a text editor as <code>hello_advanced.py</code> and execute with <code>python hello_advanced.py</code>.</p>
 <p>You can also start a Python IDE session, and execute commands one by one.</p>
-<p>A handy tool is the Jupyter Notebook (modelled from Mathematica’s Notebooks).</p>
-<p>There are online environments that can host Python code and notebooks for you.</p>
+<p>A handy tool is the Jupyter Notebook (modelled from Mathematica’s Notebooks), that we will predominately be using throughout this course. They are good for the kind of non-development focused Python tasks you may need.</p>
+<p>There are also online environments that can host Python code and notebooks for you.</p>
 <p>Throughout the course you will see when and why to use different environments.</p>
-<p>Now let’s get into in the next session!</p>
+<p>Now let’s get into in the practical session!</p>
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>

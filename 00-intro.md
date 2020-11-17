@@ -42,15 +42,43 @@ But there are a few reasons to favour Python:
 
 Traditionally one writes a "Python script file", like a recipe of instructions, and Python executes the script.
 
+Simply, you can create python files in a text editor:
+```
+print("Hello World")
+```
+
+Save this as ```hello.py``` and execute it with ```python hello.py```.
+
+As you go deeper into Python, you will see more advanced syntax:
+```
+#!/usr/bin/env python
+
+'''
+A Python program which greets the Earth!
+Nathaniel Butterworth
+PESA/SIH Python course
+
+usage: python helloworld_advanced.py
+'''
+
+def main():
+    print("Hello World! This is basically the same result, but a different way to get there.")
+
+if __name__ == '__main__':
+    main()
+```
+
+Once again, you can save this in a text editor as ```hello_advanced.py``` and execute with ```python hello_advanced.py```.
+
 You can also start a Python IDE session, and execute commands one by one.
 
-A handy tool is the Jupyter Notebook (modelled from Mathematica's Notebooks).
+A handy tool is the Jupyter Notebook (modelled from Mathematica's Notebooks), that we will predominately be using throughout this course. They are good for the kind of non-development focused Python tasks you may need.
 
-There are online environments that can host Python code and notebooks for you.
+There are also online environments that can host Python code and notebooks for you.
 
 Throughout the course you will see when and why to use different environments.
 
-Now let's get into in the next session!
+Now let's get into in the practical session!
 
 <div class="keypoints">
 ### Key points

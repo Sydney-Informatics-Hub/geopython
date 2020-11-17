@@ -1957,12 +1957,43 @@ dt
 
 ### Challenge
 
+A single seismic section can be viewed with this snippet of code:
+ 
+```python
+#Set number of xlines
+n=262
+#Set start iline
+m=0
 
+print(m,m*n,m*n+n)
+data = np.stack(t.data for t in stream.traces[m*n:m*n+n])
+vm = np.percentile(data, 95)
+plt.figure(figsize=(14,4))
+plt.imshow(data.T,cmap="RdBu", vmin=-vm, vmax=vm, aspect='auto')
+plt.show()
+```
+    
+Can you put this in a loop to show multplie sections at once?
+    
+    
 <details>
 <summary>Solution</summary>
 
 ...    
 ```python
+#Set number of xlines
+n=262
+#Set start iline
+m=0
+
+while m < 10:
+    print(m,m*n,m*n+n)
+    data = np.stack(t.data for t in stream.traces[m*n:m*n+n])
+    vm = np.percentile(data, 95)
+    plt.figure(figsize=(14,4))
+    plt.imshow(data.T,cmap="RdBu", vmin=-vm, vmax=vm, aspect='auto')
+    plt.show()
+    m=m+1
 ```
 
 <div class="keypoints">
