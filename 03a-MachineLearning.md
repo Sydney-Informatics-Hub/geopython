@@ -20,9 +20,9 @@ We have a dataset (from Butterworth et al. 2016) with a collection of tectonomag
 
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
-![SegmentLocal](fig/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](../fig/MullerConvergenceSmall.gif "segment")
 
-# Start by importing most of the modules we need
+## Start by importing most of the modules we need
 By convention module loads go at the top of your workflows.
 
 
@@ -210,6 +210,30 @@ ml_data
       <td>1.0</td>
     </tr>
     <tr>
+      <th>4</th>
+      <td>-66.55</td>
+      <td>-27.40</td>
+      <td>-65.366917</td>
+      <td>-28.257580</td>
+      <td>7.0</td>
+      <td>0.0</td>
+      <td>49.340097</td>
+      <td>56.09011</td>
+      <td>2547.29585</td>
+      <td>2547.29585</td>
+      <td>...</td>
+      <td>40.57322</td>
+      <td>-17.43622</td>
+      <td>12.23778</td>
+      <td>102.25748</td>
+      <td>28.80235</td>
+      <td>5.65657</td>
+      <td>15.73067</td>
+      <td>2269.19769</td>
+      <td>0.274552</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
@@ -232,6 +256,54 @@ ml_data
       <td>...</td>
       <td>...</td>
       <td>...</td>
+    </tr>
+    <tr>
+      <th>296</th>
+      <td>-78.67</td>
+      <td>-6.73</td>
+      <td>-70.657487</td>
+      <td>-11.057387</td>
+      <td>39.0</td>
+      <td>0.0</td>
+      <td>62.727249</td>
+      <td>56.14919</td>
+      <td>5373.67650</td>
+      <td>1076.30110</td>
+      <td>...</td>
+      <td>13.21524</td>
+      <td>-25.08597</td>
+      <td>12.24246</td>
+      <td>60.45651</td>
+      <td>-7.46828</td>
+      <td>-22.30925</td>
+      <td>7.04216</td>
+      <td>4708.08568</td>
+      <td>-0.122909</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>297</th>
+      <td>-75.09</td>
+      <td>-13.69</td>
+      <td>-37.112536</td>
+      <td>-19.124363</td>
+      <td>121.0</td>
+      <td>0.0</td>
+      <td>30.740063</td>
+      <td>54.09642</td>
+      <td>269.79929</td>
+      <td>269.79929</td>
+      <td>...</td>
+      <td>-39.68330</td>
+      <td>11.56758</td>
+      <td>7.99788</td>
+      <td>-19.41449</td>
+      <td>-59.05957</td>
+      <td>-46.36908</td>
+      <td>71.80290</td>
+      <td>3761.82099</td>
+      <td>1.253197</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>298</th>
@@ -309,6 +381,10 @@ ml_data
 </table>
 <p>301 rows × 21 columns</p>
 </div>
+
+
+
+
 
 
 There are 21 columns (python (usually) counts from 0) representing different parameters. Some of these parameters may be useful for us. Some are not. The final column contains a binary flag representing whether there is a known porphyry copper deposit at that location or not. The "non-deposits" are required to train our Machine Learning classifier what a porphyry deposit looks like, and also, what a porphyry deposit doesn't look like!
@@ -421,7 +497,7 @@ rects=ax.barh(np.arange(0, datalength, step=1),rf.feature_importances_)
 
 #Label the axes
 ax.set_yticks(np.arange(0, datalength, step=1))
-ax.set_yticklabels(paramLabels,rotation=90)
+ax.set_yticklabels(paramLabels)
 ax.set_xlabel('Feature Importance')
 
 #Print the feature importance to compare with plot
@@ -435,32 +511,32 @@ plt.show()
 ```
 
     Importance 	 Feature
-    0.014 		 0 Present day longitude (degrees)
-    0.009 		 1 Present day latitude (degrees)
-    0.055 		 2 Reconstructed longitude (degrees)
-    0.016 		 3 Reconstructed latitude (degrees)
-    0.051 		 4 Age (Ma)
+    0.012 		 0 Present day longitude (degrees)
+    0.011 		 1 Present day latitude (degrees)
+    0.051 		 2 Reconstructed longitude (degrees)
+    0.015 		 3 Reconstructed latitude (degrees)
+    0.058 		 4 Age (Ma)
     0.000 		 5 Time before mineralisation (Myr)
-    0.036 		 6 Seafloor age (Myr)
-    0.022 		 7 Segment length (km)
-    0.026 		 8 Slab length (km)
-    0.030 		 9 Distance to trench edge (km)
-    0.021 		 10 Subducting plate normal velocity (km/Myr)
-    0.020 		 11 Subducting plate parallel velocity (km/Myr)
+    0.037 		 6 Seafloor age (Myr)
+    0.014 		 7 Segment length (km)
+    0.027 		 8 Slab length (km)
+    0.026 		 9 Distance to trench edge (km)
+    0.017 		 10 Subducting plate normal velocity (km/Myr)
+    0.010 		 11 Subducting plate parallel velocity (km/Myr)
     0.021 		 12 Overriding plate normal velocity (km/Myr)
-    0.017 		 13 Overriding plate parallel velocity (km/Myr)
-    0.023 		 14 Convergence normal rate (km/Myr)
-    0.013 		 15 Convergence parallel rate (km/Myr)
-    0.015 		 16 Subduction polarity (degrees)
-    0.029 		 17 Subduction obliquity (degrees)
-    0.011 		 18 Distance along margin (km)
-    0.013 		 19 Subduction obliquity signed (radians)
-    0.558 		 20 Ore Deposits Binary Flag (1 or 0)
+    0.012 		 13 Overriding plate parallel velocity (km/Myr)
+    0.021 		 14 Convergence normal rate (km/Myr)
+    0.011 		 15 Convergence parallel rate (km/Myr)
+    0.011 		 16 Subduction polarity (degrees)
+    0.025 		 17 Subduction obliquity (degrees)
+    0.008 		 18 Distance along margin (km)
+    0.016 		 19 Subduction obliquity signed (radians)
+    0.598 		 20 Ore Deposits Binary Flag (1 or 0)
 
 
 
     
-![png](03a-MachineLearning_files/03a-MachineLearning_12_1.png)
+![png](03a-MachineLearning_files/03a-MachineLearning_11_1.png)
     
 
 
@@ -492,9 +568,9 @@ data.variables
 
 
 
-    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x7ffa419c31f0>),
-                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x7ffa4195cd90>),
-                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x7ffa4195cf70>)])
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x269572f8f48>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x269572f82c8>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x269551f4788>)])
 
 
 
@@ -509,8 +585,8 @@ topoZ=np.array(data.variables['elev'][:])
 data.close()
 ```
 
-    /Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/scipy/io/netcdf.py:308: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
-      warnings.warn((
+    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\scipy\io\netcdf.py:317: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
+      ), category=RuntimeWarning)
 
 
 
@@ -544,17 +620,17 @@ plt.show()
 
 
     
-![png](03a-MachineLearning_files/03a-MachineLearning_18_0.png)
+![png](03a-MachineLearning_files/03a-MachineLearning_17_0.png)
     
 
 
 ### For loops plotting shapefiles
 
 
-```
-TODO this cell generates an error!
+
+```python
 #Load in plate polygons for plotting
-topologyFile='../data/topology_platepolygons_0.00Ma.shp'
+topologyFile='../data/platepolygons/topology_platepolygons_0.00Ma.shp'
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -576,13 +652,17 @@ for i, nshp in enumerate(range(Nshp)):
 plt.show()
 ```
 
-![png](../fig/fig-02ML-plates.png)
+
+    
+![png](03a-MachineLearning_files/03a-MachineLearning_19_0.png)
+    
+
 
 ### Make a prettier map
 
 
-```
-# TODO also an error
+
+```python
 ###Set up the figure
 fig = plt.figure(figsize=(16,12),dpi=150)
 
@@ -598,9 +678,9 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import matplotlib.ticker as mticker
 from matplotlib import colorbar, colors
 
-gl.xlabels_top = False
-gl.ylabels_left = True
-gl.ylabels_right = False
+gl.top_labels = False
+gl.left_labels = True
+gl.right_labels = False
 gl.xlines = False
 gl.ylines = False
 gl.xlocator = mticker.FixedLocator([-75,-60, -45,-30])
@@ -615,7 +695,7 @@ print("Made base map")
 ###Plot a topography underlay image
 #Make a lat lon grid to fit the topo grid
 lons, lats = np.meshgrid(topoX,topoY)
-im1=ax.pcolormesh(lons,lats,topoZ, shading="flat",cmap=plt.cm.gist_earth,transform=ccrs.PlateCarree())              
+im1=ax.pcolormesh(lons,lats,topoZ, shading="auto",cmap=plt.cm.gist_earth,transform=ccrs.PlateCarree())              
 cbar=plt.colorbar(im1, ax=ax, orientation="horizontal", pad=0.02, fraction=0.05, shrink=0.2,extend='both')
 cbar.set_label('Topography (m)')
 
@@ -623,7 +703,7 @@ print("Added topo")
 
 ###Plot shapefile polygon outlines
 #Load in plate polygons for plotting
-topologyFile='../data/topology_platepolygons_0.00Ma.shp'
+topologyFile='../data/platepolygons/topology_platepolygons_0.00Ma.shp'
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -668,20 +748,23 @@ print("Added deposit probability")
 plt.show()
 ```
 
-```
-Made base map
-Added topo
-Added shapes
-Added deposit probability
-```
+    Made base map
+    Added topo
+    Added shapes
+    Added deposit probability
 
-![png](../fig/fig-02ML-porphyry.png)
 
-# Exercise
+
+    
+![png](03a-MachineLearning_files/03a-MachineLearning_21_1.png)
+    
+
+
+## Exercise
 Do the same analysis but using a different Machine Learning algorithm for your classification. You can use this as a guide for picking a good classification algorithm [https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html](https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html). 
 Present your results on a map, and compare it with the Random Forest method. 
 
-# Datasets
+## Datasets
 
 #### Topography/Bathymetry
 WORLDBATH: ETOPO5 5x5 minute Navy bathymetry. http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NGDC/.ETOPO5/
@@ -700,8 +783,3 @@ GPlates2.0. https://www.gplates.org/
 </div>
 
 
-
-
-```python
-
-```

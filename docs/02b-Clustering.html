@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>02b-Clustering.utf8</title>
+<title>02b-Clustering.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -445,38 +470,43 @@ div.tocify {
 <div id="questions" class="section level3 questions">
 <h3>Questions</h3>
 <ul>
+<li>What computational/numercal techniques can be performed in Python?</li>
+<li>What tools are availble for analysis?</li>
 <li>How can I learn more information about my data?</li>
-<li>What unsupervised approaches are availbe in Python?</li>
 </ul>
 </div>
 <div id="objectives" class="section level3 objectives">
 <h3>Objectives</h3>
 <ul>
-<li>Learn about the scikit-learn k-means algorithm</li>
-<li>Plot 3D data</li>
+<li>Generate a numerical model.</li>
+<li>Interpolate missing data.</li>
+<li>Run the scikit-learn k-means algorithm.</li>
+<li>Plot 3D data.</li>
 </ul>
 </div>
-</div>
-<div id="numerical-models" class="section level1">
-<h1>Numerical models</h1>
+<div id="numerical-models" class="section level2">
+<h2>Numerical models</h2>
 <p>We start with the numerical solution of a very simple differential equation. In fact we choose something simple enough that we already know the answer.</p>
 <p>\[  = - k  \]</p>
 <p>This is the equation which governs radioactive decay, in which case \(\) is the amount of the radioactive isotope remaining and \(d/ dt\) is the activity that we can measure. \(k \) is closely related to the half life.</p>
 <p>The solution to this equation is \[ (t) = _0 e^{-kt} \]</p>
 <p>where \(_0\) is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret \( \) as the excess temperature (above room temperature).</p>
-<p><img src="fig/theta_t1.png" width="66%"></p>
 <pre class="python"><code>%pylab inline
 
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Set the amount of isotope remaining (i.e. 1=100%)
 theta_0 = 1.0
 
+#Create a regularly spaced vector or time values
 time_values = np.linspace(0,1.0,1000)
 
+#Try several different values for the half-life, k
 for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
-
+    #This is the solution to the decay equation, how much isotope remains.
     exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    #Plot the results for different k values
     plt.plot(time_values, exact_theta_values)</code></pre>
 <pre><code>Populating the interactive namespace from numpy and matplotlib</code></pre>
 <div class="figure">
@@ -492,7 +522,7 @@ for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
 <p>To determine the approximation for the derivative therefore becomes the solution to the following equation:</p>
 \[
 <span class="math display">\[\begin{split}
-            &amp; \theta_{n+1} = \theta_n + \beta \Delta t \\
+            &amp; \theta_{n+1} = \theta_n + \beta \Delta t \\ \\
             &amp; \Rightarrow   \beta = \frac{d \theta}{dt} = \frac{\theta_{n+1} - \theta_n}{\Delta t}
         \end{split}\]</span>
 <p>\]</p>
@@ -502,37 +532,132 @@ for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
 <p>\[ _{n+1} = _n (1-k t) \]</p>
 <p>It is an indication of the fact that this problem is really not all that difficult that this difference equation can be written recursively to give: \[ _{n+1} = _0 (1-k t)^n \]</p>
 <p>In a moment we will compute some values for this expression to see how accurate it is. First we consider whether we can improve the accuracy of the approximation by doing a bit more work.</p>
-<pre class="python"><code>steps = 10
+<pre class="python"><code>#Set the known constant values
 theta_0 = 1.0
 const_k = 10.0
+#How many timesteps to solve
+steps = 10
 delta_t = 1.0 / steps
 
-
+#Create an empty array to store the solutions
 theta_values = np.zeros(steps)
 time_values  = np.zeros(steps)
 
-
+#Set the starting values
 theta_values[0] = theta_0
 time_values[0] = 0.0
 
+#Step through the time values
 for i in range(1, steps):
+    #Find the value for theta at this time step
     theta_values[i] = theta_values[i-1] * (1 - const_k * delta_t)
+    #Update the time step
     time_values[i] = time_values[i-1] + delta_t
 
+#Compare with the exact solution
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
-    
+
+#Plot and compare your results
 plt.plot(time_values, exact_theta_values, linewidth=5.0)
 plt.plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)
 </code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fc2888ef9a0&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x1fcd301d888&gt;]</code></pre>
 <div class="figure">
 <img src="02b-Clustering_files/02b-Clustering_4_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
+<div id="higher-order-expansion" class="section level3">
+<h3>Higher order expansion</h3>
+<p>First we try fitting the local expansion for \(\) through an additional point.<br />
+This time we assume that the variation in \((t)\) is quadratic, i.e. <span class="math display">\[
+    \theta(t&#39;) = \theta_{n-1} + \beta t&#39; + \gamma {t&#39;}^2
+\]</span></p>
+<p>The local time coordinate is <span class="math inline">\(t&#39; = t - (n-1)\Delta t\)</span>, and when we differentiate</p>
+<p><span class="math display">\[       
+    \frac{d \theta}{dt} = \beta + 2 \gamma t&#39;
+\]</span></p>
+<p>To solve for \(\) and \(\) we fit the curve through the sample points: <span class="math display">\[
+    \begin{split}
+            \theta_n &amp;= \theta_{n-1} + \beta \Delta t + \gamma (\Delta t)^2 \\
+            \theta_{n+1} &amp;= \theta_{n-1} + 2 \beta \Delta t + 4 \gamma (\Delta t)^2
+     \end{split}
+\]</span></p>
+<p>Which solve to give <span class="math display">\[
+     \begin{split}
+     \beta &amp;= \left( 4 \theta_n - \theta_{n+1} - 3\theta_{n-1} \right) \frac{1}{2\Delta t} \\
+     \gamma &amp;= \left( \theta_{n+1} + \theta_{n-1} -2 \theta_n \right) \frac{1}{2\Delta t^2} 
+     \end{split}
+\]</span></p>
+<p>We can subsitute this back into the equation above and then into the original differential equation and we obtain the following</p>
+<p><span class="math display">\[      
+     \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
+     \frac{1}{2\Delta t} \left( \theta_{n+1} - \theta_{n-1} \right)  = -k \theta_n 
+\]</span></p>
+<p>The difference approximation to the derivative turns out to be the average of the expressions for the previous derivative and the new derivative. We have now included information about the current timestep and the previous timestep in our expression for the value of \(\) at the forthcoming timestep:</p>
+<p><span class="math display">\[
+     \theta_{n+1} = \theta_{n-1} -2k \theta_n \Delta t
+\]</span></p>
 </div>
-<div id="scipy.interpolate" class="section level1">
-<h1><code>scipy.interpolate</code></h1>
+<div id="challenge" class="section level3 challenge">
+<h3>Challenge</h3>
+<ul>
+<li>Can you implement the 2nd order Numerical Solution in Python? Start as before:</li>
+</ul>
+<pre class="python"><code>steps = 10
+theta_0 = 1.0
+const_k = 10.0
+delta_t = 1.0 / steps
+
+theta_values = np.zeros(steps)
+time_values  = np.zeros(steps)
+
+theta_values[0] = theta_0
+time_values[0] = 0.0
+    
+theta_values[1] = ???
+time_values[1] = ???
+    
+for i in range(1, steps):
+    theta_values[i] = ???
+    time_values[i] = ???
+
+exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    
+plt.plot(time_values, exact_theta_values, linewidth=5.0)
+plt.plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)</code></pre>
+<details>
+<summary>
+Solution
+</summary>
+<p>This is my solution</p>
+<pre class="python"><code>steps = 10
+theta_0 = 1.0
+const_k = 10.0
+delta_t = 1.0 / steps
+
+theta_values = np.zeros(steps)
+time_values  = np.zeros(steps)
+
+theta_values[0] = theta_0
+time_values[0] = 0.0
+
+theta_values[1] = theta_values[0] * (1 - const_k * delta_t)
+time_values[1] = delta_t
+
+for i in range(2, steps):
+    theta_values[i] = theta_values[i-2] - 2.0 * theta_values[i-1] * const_k * delta_t
+    time_values[i] = time_values[i-1] + delta_t
+
+exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    
+plot(time_values, exact_theta_values, linewidth=5.0)
+plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)</code></pre>
+</details>
+</div>
+</div>
+<div id="scipy.interpolate" class="section level2">
+<h2><code>scipy.interpolate</code></h2>
 <p>This module provides general interpolation capability for data in 1, 2, and higher dimensions. This list of features is from the documentation:</p>
 <ul>
 <li><p>A class representing an interpolant (interp1d) in 1-D, offering several interpolation methods.</p></li>
@@ -543,8 +668,8 @@ plt.plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)
 <pre class="python"><code>%matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np</code></pre>
-<div id="d-data" class="section level2">
-<h2>1D data</h2>
+<div id="d-data" class="section level3">
+<h3>1D data</h3>
 <pre class="python"><code>from scipy.interpolate import interp1d</code></pre>
 <pre class="python"><code>x = np.linspace(0, 10, num=11, endpoint=True)
 y = np.cos(-x**2/9.0)
@@ -556,8 +681,9 @@ plt.plot(x, y, &#39;o&#39;, xnew, f(xnew), &#39;-&#39;, xnew, f2(xnew), &#39;--&
 plt.legend([&#39;data&#39;, &#39;linear&#39;, &#39;cubic&#39;, &#39;nearest&#39;], loc=&#39;best&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_10_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_12_0.png" alt="" />
 <p class="caption">png</p>
+</div>
 </div>
 </div>
 <div id="nd-data" class="section level2">
@@ -610,12 +736,10 @@ array([[[0, 0, 0, 0, 0],
 &gt;&gt;&gt; np.mgrid[-1:1:5j]
 array([-1. , -0.5,  0. ,  0.5,  1. ])</code></pre>
 <pre class="python"><code># A random sampling within the same area
-
 points = np.random.rand(1000, 2)
 values = func(points[:,0], points[:,1])
 
 # Resample from the values at these points onto the regular mesh
-
 grid_z0 = griddata(points, values, (grid_x, grid_y), method=&#39;nearest&#39;)
 grid_z1 = griddata(points, values, (grid_x, grid_y), method=&#39;linear&#39;)
 grid_z2 = griddata(points, values, (grid_x, grid_y), method=&#39;cubic&#39;)</code></pre>
@@ -635,7 +759,7 @@ plt.title(&#39;Cubic&#39;)
 plt.gcf().set_size_inches(6, 6)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_16_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_18_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -656,7 +780,7 @@ plt.axis([-0.05, 6.33, -1.05, 1.05])
 plt.title(&#39;Cubic-spline interpolation&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_20_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_22_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>plt.figure()
@@ -666,7 +790,7 @@ plt.axis([-0.05, 6.33, -1.05, 1.05])
 plt.title(&#39;Derivative estimation from spline&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_21_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_23_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p><strong>2D splines</strong> are also available</p>
@@ -683,7 +807,7 @@ plt.colorbar()
 plt.title(&quot;Sparsely sampled function.&quot;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_23_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_25_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>xnew, ynew = np.mgrid[-1:1:70j, -1:1:70j]
@@ -698,12 +822,11 @@ plt.colorbar()
 plt.title(&quot;Interpolated function.&quot;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="02b-Clustering_files/02b-Clustering_25_0.png" alt="" />
+<img src="02b-Clustering_files/02b-Clustering_27_0.png" alt="" />
 <p class="caption">png</p>
 </div>
-</div>
-<div id="see-also" class="section level2">
-<h2>See also</h2>
+<div id="see-also" class="section level3">
+<h3>See also</h3>
 <ul>
 <li>Radial basis function interpolation for scattered data in n dimensions (slow for large numbers of points): <code>from scipy.interpolate import Rbf</code></li>
 <li><code>scipy.ndimage</code> for fast interpolation operations on image-like arrays</li>
@@ -711,8 +834,8 @@ plt.show()</code></pre>
 </ul>
 </div>
 </div>
-<div id="clustering-data-with-scikit-learn" class="section level1">
-<h1>Clustering data with scikit-learn</h1>
+<div id="clustering-data-with-scikit-learn" class="section level2">
+<h2>Clustering data with scikit-learn</h2>
 <p>Here we want to explore a neat and efficient way of exploring a (seisimic tomography) dataset in Python. We will be using a Machine Learning algorithm known as <a href="https://scikit-learn.org/stable/modules/clustering.html#k-means">K-Means clustering</a>.</p>
 <p>Data is from: <em>Li, C., van der Hilst, R. D., Engdahl, E. R., and Burdick, S. (2008), A new global model for P wave speed variations in Earth’s mantle, Geochem. Geophys. Geosyst., 9, Q05018, <a href="doi:10.1029/2007GC001806" class="uri">doi:10.1029/2007GC001806</a></em></p>
 <pre class="python"><code>from sklearn.cluster import KMeans
@@ -720,7 +843,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from mpl_toolkits.mplot3d import Axes3D</code></pre>
 <p>Load in the tomography data set. Assign the column vectors to unique variables (for clarity).</p>
-<pre class="python"><code>tomo=np.loadtxt(&#39;data/ggge1202-sup-0002-ds01.txt&#39;, skiprows=1)
+<pre class="python"><code>tomo=np.loadtxt(&#39;../data/ggge1202-sup-0002-ds01.txt&#39;, skiprows=1)
 
 lat=tomo[:,0]
 lon=tomo[:,1]
@@ -739,7 +862,7 @@ print(kmeans.cluster_centers_)</code></pre>
 <p>Note, many functions have been “parallelised” and tuned to best take advantage of your computer, see e.g. for more details <a href="https://scikit-learn.org/stable/modules/computing.html#parallelism">https://scikit-learn.org/stable/modules/computing.html#parallelism</a></p>
 <p>You can have a look what the labels look like. It is essentially a vector the same length as the data indicating which label it has classified.</p>
 <pre class="python"><code>kmeans.labels_</code></pre>
-<pre><code>array([3, 3, 3, ..., 0, 0, 0], dtype=int32)</code></pre>
+<pre><code>array([3, 3, 3, ..., 0, 0, 0])</code></pre>
 <p>Choose one of the clusters to visualise, so subset the data into new vectors accordingly</p>
 <pre class="python"><code>centre=1
 
@@ -751,13 +874,21 @@ dvpClust=dvp[kmeans.labels_==centre]</code></pre>
 <pre class="python"><code>fig = plt.figure()
 ax = fig.add_subplot(111, projection=&#39;3d&#39;)
 ax.scatter(lon, lat, -depth, c=dvp)</code></pre>
+<pre><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1fcd3c8c1c8&gt;</code></pre>
+<div class="figure">
+<img src="02b-Clustering_files/02b-Clustering_40_1.png" alt="" />
+<p class="caption">png</p>
+</div>
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>
-<li>Read the docs to learn more</li>
-<li>More ways to wrangle data</li>
+<li>You can use Python to solve math equations</li>
+<li>scipy for interpolation</li>
+<li>sklearn for clustering</li>
 <li>New ways to plot data</li>
+<li>Read the docs to learn more</li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -772,56 +903,13 @@ ax.scatter(lon, lat, -depth, c=dvp)</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

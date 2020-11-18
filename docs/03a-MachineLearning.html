@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>03a-MachineLearning.utf8</title>
+<title>03a-MachineLearning.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -460,12 +485,11 @@ div.tocify {
 <p>We have a dataset (from Butterworth et al. 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.</p>
 <p>Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.</p>
 <div class="figure">
-<img src="fig/MullerConvergenceSmall.gif" title="segment" alt="" />
+<img src="../fig/MullerConvergenceSmall.gif" title="segment" alt="" />
 <p class="caption">SegmentLocal</p>
 </div>
-</div>
-<div id="start-by-importing-most-of-the-modules-we-need" class="section level1">
-<h1>Start by importing most of the modules we need</h1>
+<div id="start-by-importing-most-of-the-modules-we-need" class="section level2">
+<h2>Start by importing most of the modules we need</h2>
 <p>By convention module loads go at the top of your workflows.</p>
 <pre class="python"><code>import pandas #For dealing with data structures
 import numpy as np #Data array manipulation
@@ -855,6 +879,74 @@ ml_data</code></pre>
 </tr>
 <tr>
 <th>
+4
+</th>
+<td>
+-66.55
+</td>
+<td>
+-27.40
+</td>
+<td>
+-65.366917
+</td>
+<td>
+-28.257580
+</td>
+<td>
+7.0
+</td>
+<td>
+0.0
+</td>
+<td>
+49.340097
+</td>
+<td>
+56.09011
+</td>
+<td>
+2547.29585
+</td>
+<td>
+2547.29585
+</td>
+<td>
+…
+</td>
+<td>
+40.57322
+</td>
+<td>
+-17.43622
+</td>
+<td>
+12.23778
+</td>
+<td>
+102.25748
+</td>
+<td>
+28.80235
+</td>
+<td>
+5.65657
+</td>
+<td>
+15.73067
+</td>
+<td>
+2269.19769
+</td>
+<td>
+0.274552
+</td>
+<td>
+1.0
+</td>
+</tr>
+<tr>
+<th>
 …
 </th>
 <td>
@@ -919,6 +1011,142 @@ ml_data</code></pre>
 </td>
 <td>
 …
+</td>
+</tr>
+<tr>
+<th>
+296
+</th>
+<td>
+-78.67
+</td>
+<td>
+-6.73
+</td>
+<td>
+-70.657487
+</td>
+<td>
+-11.057387
+</td>
+<td>
+39.0
+</td>
+<td>
+0.0
+</td>
+<td>
+62.727249
+</td>
+<td>
+56.14919
+</td>
+<td>
+5373.67650
+</td>
+<td>
+1076.30110
+</td>
+<td>
+…
+</td>
+<td>
+13.21524
+</td>
+<td>
+-25.08597
+</td>
+<td>
+12.24246
+</td>
+<td>
+60.45651
+</td>
+<td>
+-7.46828
+</td>
+<td>
+-22.30925
+</td>
+<td>
+7.04216
+</td>
+<td>
+4708.08568
+</td>
+<td>
+-0.122909
+</td>
+<td>
+0.0
+</td>
+</tr>
+<tr>
+<th>
+297
+</th>
+<td>
+-75.09
+</td>
+<td>
+-13.69
+</td>
+<td>
+-37.112536
+</td>
+<td>
+-19.124363
+</td>
+<td>
+121.0
+</td>
+<td>
+0.0
+</td>
+<td>
+30.740063
+</td>
+<td>
+54.09642
+</td>
+<td>
+269.79929
+</td>
+<td>
+269.79929
+</td>
+<td>
+…
+</td>
+<td>
+-39.68330
+</td>
+<td>
+11.56758
+</td>
+<td>
+7.99788
+</td>
+<td>
+-19.41449
+</td>
+<td>
+-59.05957
+</td>
+<td>
+-46.36908
+</td>
+<td>
+71.80290
+</td>
+<td>
+3761.82099
+</td>
+<td>
+1.253197
+</td>
+<td>
+0.0
 </td>
 </tr>
 <tr>
@@ -1226,7 +1454,7 @@ rects=ax.barh(np.arange(0, datalength, step=1),rf.feature_importances_)
 
 #Label the axes
 ax.set_yticks(np.arange(0, datalength, step=1))
-ax.set_yticklabels(paramLabels,rotation=90)
+ax.set_yticklabels(paramLabels)
 ax.set_xlabel(&#39;Feature Importance&#39;)
 
 #Print the feature importance to compare with plot
@@ -1238,29 +1466,29 @@ for i,label in enumerate(paramLabels):
 plt.show()
 </code></pre>
 <pre><code>Importance   Feature
-0.014        0 Present day longitude (degrees)
-0.009        1 Present day latitude (degrees)
-0.055        2 Reconstructed longitude (degrees)
-0.016        3 Reconstructed latitude (degrees)
-0.051        4 Age (Ma)
+0.012        0 Present day longitude (degrees)
+0.011        1 Present day latitude (degrees)
+0.051        2 Reconstructed longitude (degrees)
+0.015        3 Reconstructed latitude (degrees)
+0.058        4 Age (Ma)
 0.000        5 Time before mineralisation (Myr)
-0.036        6 Seafloor age (Myr)
-0.022        7 Segment length (km)
-0.026        8 Slab length (km)
-0.030        9 Distance to trench edge (km)
-0.021        10 Subducting plate normal velocity (km/Myr)
-0.020        11 Subducting plate parallel velocity (km/Myr)
+0.037        6 Seafloor age (Myr)
+0.014        7 Segment length (km)
+0.027        8 Slab length (km)
+0.026        9 Distance to trench edge (km)
+0.017        10 Subducting plate normal velocity (km/Myr)
+0.010        11 Subducting plate parallel velocity (km/Myr)
 0.021        12 Overriding plate normal velocity (km/Myr)
-0.017        13 Overriding plate parallel velocity (km/Myr)
-0.023        14 Convergence normal rate (km/Myr)
-0.013        15 Convergence parallel rate (km/Myr)
-0.015        16 Subduction polarity (degrees)
-0.029        17 Subduction obliquity (degrees)
-0.011        18 Distance along margin (km)
-0.013        19 Subduction obliquity signed (radians)
-0.558        20 Ore Deposits Binary Flag (1 or 0)</code></pre>
+0.012        13 Overriding plate parallel velocity (km/Myr)
+0.021        14 Convergence normal rate (km/Myr)
+0.011        15 Convergence parallel rate (km/Myr)
+0.011        16 Subduction polarity (degrees)
+0.025        17 Subduction obliquity (degrees)
+0.008        18 Distance along margin (km)
+0.016        19 Subduction obliquity signed (radians)
+0.598        20 Ore Deposits Binary Flag (1 or 0)</code></pre>
 <div class="figure">
-<img src="03a-MachineLearning_files/03a-MachineLearning_12_1.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_11_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Now if we can measure the tectonomagmatic properties at some point. Based on our trained classifier we can predict a probability that porphyry copper deposits have formed</p>
@@ -1271,15 +1499,16 @@ print(&quot;Done RF&quot;)</code></pre>
 <pre><code>RF...
 Done RF</code></pre>
 </div>
+</div>
 <div id="maps" class="section level2">
 <h2>Maps!</h2>
 <pre class="python"><code>filename=&quot;../data/topodata.nc&quot;
 data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 data.variables</code></pre>
-<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa419c31f0&gt;),
-             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa4195cd90&gt;),
-             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7ffa4195cf70&gt;)])</code></pre>
+<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x269572f8f48&gt;),
+             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x269572f82c8&gt;),
+             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x269551f4788&gt;)])</code></pre>
 <pre class="python"><code>topoX=data.variables[&#39;X&#39;][:]
 topoY=data.variables[&#39;Y&#39;][:]
 topoZ=np.array(data.variables[&#39;elev&#39;][:])
@@ -1287,8 +1516,8 @@ topoZ=np.array(data.variables[&#39;elev&#39;][:])
 #Some file types and readers (like netcdf) can actually change the data directly on disk
 #Good practice, is to close the file when done (for safety and memory saving)
 data.close()</code></pre>
-<pre><code>/Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/scipy/io/netcdf.py:308: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
-  warnings.warn((</code></pre>
+<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\scipy\io\netcdf.py:317: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
+  ), category=RuntimeWarning)</code></pre>
 <pre class="python"><code>#Make a figure object
 plt.figure()
 
@@ -1315,14 +1544,13 @@ plt.title(&quot;Bathymetry and Topography of the World \n (ETOPO5 2020)&quot;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03a-MachineLearning_files/03a-MachineLearning_18_0.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_17_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div id="for-loops-plotting-shapefiles" class="section level3">
 <h3>For loops plotting shapefiles</h3>
-<pre><code>TODO this cell generates an error!
-#Load in plate polygons for plotting
-topologyFile=&#39;../data/topology_platepolygons_0.00Ma.shp&#39;
+<pre class="python"><code>#Load in plate polygons for plotting
+topologyFile=&#39;../data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -1343,14 +1571,13 @@ for i, nshp in enumerate(range(Nshp)):
         
 plt.show()</code></pre>
 <div class="figure">
-<img src="../fig/fig-02ML-plates.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_19_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
 <div id="make-a-prettier-map" class="section level3">
 <h3>Make a prettier map</h3>
-<pre><code># TODO also an error
-###Set up the figure
+<pre class="python"><code>###Set up the figure
 fig = plt.figure(figsize=(16,12),dpi=150)
 
 ax = plt.axes(projection=ccrs.PlateCarree())
@@ -1365,9 +1592,9 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import matplotlib.ticker as mticker
 from matplotlib import colorbar, colors
 
-gl.xlabels_top = False
-gl.ylabels_left = True
-gl.ylabels_right = False
+gl.top_labels = False
+gl.left_labels = True
+gl.right_labels = False
 gl.xlines = False
 gl.ylines = False
 gl.xlocator = mticker.FixedLocator([-75,-60, -45,-30])
@@ -1382,7 +1609,7 @@ print(&quot;Made base map&quot;)
 ###Plot a topography underlay image
 #Make a lat lon grid to fit the topo grid
 lons, lats = np.meshgrid(topoX,topoY)
-im1=ax.pcolormesh(lons,lats,topoZ, shading=&quot;flat&quot;,cmap=plt.cm.gist_earth,transform=ccrs.PlateCarree())              
+im1=ax.pcolormesh(lons,lats,topoZ, shading=&quot;auto&quot;,cmap=plt.cm.gist_earth,transform=ccrs.PlateCarree())              
 cbar=plt.colorbar(im1, ax=ax, orientation=&quot;horizontal&quot;, pad=0.02, fraction=0.05, shrink=0.2,extend=&#39;both&#39;)
 cbar.set_label(&#39;Topography (m)&#39;)
 
@@ -1390,7 +1617,7 @@ print(&quot;Added topo&quot;)
 
 ###Plot shapefile polygon outlines
 #Load in plate polygons for plotting
-topologyFile=&#39;../data/topology_platepolygons_0.00Ma.shp&#39;
+topologyFile=&#39;../data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -1438,18 +1665,17 @@ Added topo
 Added shapes
 Added deposit probability</code></pre>
 <div class="figure">
-<img src="../fig/fig-02ML-porphyry.png" alt="" />
+<img src="03a-MachineLearning_files/03a-MachineLearning_21_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
 </div>
-</div>
-<div id="exercise" class="section level1">
-<h1>Exercise</h1>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
 <p>Do the same analysis but using a different Machine Learning algorithm for your classification. You can use this as a guide for picking a good classification algorithm <a href="https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html</a>. Present your results on a map, and compare it with the Random Forest method.</p>
 </div>
-<div id="datasets" class="section level1">
-<h1>Datasets</h1>
+<div id="datasets" class="section level2">
+<h2>Datasets</h2>
 <div id="topographybathymetry" class="section level4">
 <h4>Topography/Bathymetry</h4>
 <p>WORLDBATH: ETOPO5 5x5 minute Navy bathymetry. <a href="http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NGDC/.ETOPO5/" class="uri">http://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NGDC/.ETOPO5/</a></p>
@@ -1469,7 +1695,7 @@ Added deposit probability</code></pre>
 <li>Wrangling data.</li>
 </ul>
 </div>
-<pre class="python"><code></code></pre>
+</div>
 </div>
 
 
@@ -1483,56 +1709,13 @@ Added deposit probability</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

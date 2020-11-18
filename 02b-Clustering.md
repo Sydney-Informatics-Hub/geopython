@@ -3,18 +3,21 @@
 <div class="questions">  
 ### Questions
 
+- What computational/numercal techniques can be performed in Python?
+- What tools are availble for analysis?
 - How can I learn more information about my data?
-- What unsupervised approaches are availbe in Python?
 </div>
 
 <div class="objectives">  
 ### Objectives
 
-- Learn about the scikit-learn k-means algorithm
-- Plot 3D data
+- Generate a numerical model.
+- Interpolate missing data.
+- Run the scikit-learn k-means algorithm.
+- Plot 3D data.
 </div>
 
-# Numerical models
+## Numerical models
 
 We start with the numerical solution of a very simple differential
 equation. In fact we choose something simple enough that we already 
@@ -37,9 +40,6 @@ where \\(\theta_0\\) is the amount of the radioactive material remaining.
 The same equation also describes the cooling of, say, a cup of coffee. In this
 case we interpret \\( \theta \\) as the excess temperature (above room temperature). 
 
-<img src="fig/theta_t1.png" width="66%">
-
-
 
 ```python
 %pylab inline
@@ -47,13 +47,17 @@ case we interpret \\( \theta \\) as the excess temperature (above room temperatu
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Set the amount of isotope remaining (i.e. 1=100%)
 theta_0 = 1.0
 
+#Create a regularly spaced vector or time values
 time_values = np.linspace(0,1.0,1000)
 
+#Try several different values for the half-life, k
 for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
-
+    #This is the solution to the decay equation, how much isotope remains.
     exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    #Plot the results for different k values
     plt.plot(time_values, exact_theta_values)
 ```
 
@@ -91,7 +95,7 @@ becomes the solution to the following equation:
 
 \\[
         \begin{split}
-            & \theta_{n+1} = \theta_n + \beta \Delta t \\
+            & \theta_{n+1} = \theta_n + \beta \Delta t \\ \\
             & \Rightarrow	\beta = \frac{d \theta}{dt} = \frac{\theta_{n+1} - \theta_n}{\Delta t}
         \end{split}
 \\]
@@ -124,25 +128,32 @@ approximation by doing a bit more work.
 
 
 ```python
-steps = 10
+#Set the known constant values
 theta_0 = 1.0
 const_k = 10.0
+#How many timesteps to solve
+steps = 10
 delta_t = 1.0 / steps
 
-
+#Create an empty array to store the solutions
 theta_values = np.zeros(steps)
 time_values  = np.zeros(steps)
 
-
+#Set the starting values
 theta_values[0] = theta_0
 time_values[0] = 0.0
 
+#Step through the time values
 for i in range(1, steps):
+    #Find the value for theta at this time step
     theta_values[i] = theta_values[i-1] * (1 - const_k * delta_t)
+    #Update the time step
     time_values[i] = time_values[i-1] + delta_t
 
+#Compare with the exact solution
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
-    
+
+#Plot and compare your results
 plt.plot(time_values, exact_theta_values, linewidth=5.0)
 plt.plot(time_values, theta_values, linewidth=3.0, color="red")
 
@@ -151,7 +162,7 @@ plt.plot(time_values, theta_values, linewidth=3.0, color="red")
 
 
 
-    [<matplotlib.lines.Line2D at 0x7fc2888ef9a0>]
+    [<matplotlib.lines.Line2D at 0x1fcd301d888>]
 
 
 
@@ -161,7 +172,118 @@ plt.plot(time_values, theta_values, linewidth=3.0, color="red")
     
 
 
-# `scipy.interpolate`
+### Higher order expansion
+
+First we try fitting the local expansion for \\(\theta\\) through an
+additional point.	 
+This time we assume that the variation in \\(\theta(t)\\) is quadratic, i.e.
+$$
+    \theta(t') = \theta_{n-1} + \beta t' + \gamma {t'}^2
+$$
+
+The local time coordinate is $t' = t - (n-1)\Delta t$, and when we differentiate
+
+$$       
+    \frac{d \theta}{dt} = \beta + 2 \gamma t'
+$$  
+
+To solve for \\(\beta\\) and \\(\gamma\\) we fit the curve through the sample points:
+$$
+    \begin{split}
+            \theta_n &= \theta_{n-1} + \beta \Delta t + \gamma (\Delta t)^2 \\
+            \theta_{n+1} &= \theta_{n-1} + 2 \beta \Delta t + 4 \gamma (\Delta t)^2
+     \end{split}
+$$
+
+Which solve to give
+$$
+     \begin{split}
+     \beta &= \left( 4 \theta_n - \theta_{n+1} - 3\theta_{n-1} \right) \frac{1}{2\Delta t} \\
+     \gamma &= \left( \theta_{n+1} + \theta_{n-1} -2 \theta_n \right) \frac{1}{2\Delta t^2} 
+     \end{split}
+$$
+
+We can subsitute this back into the equation above and then into the original differential equation and we obtain the following
+
+$$	 	
+     \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
+     \frac{1}{2\Delta t} \left( \theta_{n+1} - \theta_{n-1} \right)  = -k \theta_n 
+$$
+
+The difference approximation to the derivative turns out to be the average of the expressions for the previous derivative and the new derivative. We have now included information about the current timestep and the previous timestep in our expression for the value of \\(\theta\\) at the forthcoming timestep:	
+
+$$
+     \theta_{n+1} = \theta_{n-1} -2k \theta_n \Delta t
+$$
+
+<div class="challenge">
+
+### Challenge
+
+- Can you implement the 2nd order Numerical Solution in Python?
+Start as before:
+
+```python
+steps = 10
+theta_0 = 1.0
+const_k = 10.0
+delta_t = 1.0 / steps
+
+theta_values = np.zeros(steps)
+time_values  = np.zeros(steps)
+
+theta_values[0] = theta_0
+time_values[0] = 0.0
+    
+theta_values[1] = ???
+time_values[1] = ???
+    
+for i in range(1, steps):
+    theta_values[i] = ???
+    time_values[i] = ???
+
+exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    
+plt.plot(time_values, exact_theta_values, linewidth=5.0)
+plt.plot(time_values, theta_values, linewidth=3.0, color="red")
+```
+
+<details>
+<summary>Solution</summary>
+
+This is my solution
+    
+```python
+steps = 10
+theta_0 = 1.0
+const_k = 10.0
+delta_t = 1.0 / steps
+
+theta_values = np.zeros(steps)
+time_values  = np.zeros(steps)
+
+theta_values[0] = theta_0
+time_values[0] = 0.0
+
+theta_values[1] = theta_values[0] * (1 - const_k * delta_t)
+time_values[1] = delta_t
+
+for i in range(2, steps):
+    theta_values[i] = theta_values[i-2] - 2.0 * theta_values[i-1] * const_k * delta_t
+    time_values[i] = time_values[i-1] + delta_t
+
+exact_theta_values = theta_0 * np.exp(-const_k * time_values)
+    
+plot(time_values, exact_theta_values, linewidth=5.0)
+plot(time_values, theta_values, linewidth=3.0, color="red")
+```
+
+</details>
+</div>
+
+
+
+## `scipy.interpolate`
 
 This module provides general interpolation capability for data in 1, 2, and higher dimensions. This list of features is from the documentation:
 
@@ -181,7 +303,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 ```
 
-## 1D data 
+### 1D data 
 
 
 
@@ -208,7 +330,7 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_10_0.png)
+![png](02b-Clustering_files/02b-Clustering_12_0.png)
     
 
 
@@ -280,12 +402,10 @@ np.info(np.mgrid)
 
 ```python
 # A random sampling within the same area
-
 points = np.random.rand(1000, 2)
 values = func(points[:,0], points[:,1])
 
 # Resample from the values at these points onto the regular mesh
-
 grid_z0 = griddata(points, values, (grid_x, grid_y), method='nearest')
 grid_z1 = griddata(points, values, (grid_x, grid_y), method='linear')
 grid_z2 = griddata(points, values, (grid_x, grid_y), method='cubic')
@@ -312,7 +432,7 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_16_0.png)
+![png](02b-Clustering_files/02b-Clustering_18_0.png)
     
 
 
@@ -348,7 +468,7 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_20_0.png)
+![png](02b-Clustering_files/02b-Clustering_22_0.png)
     
 
 
@@ -364,7 +484,7 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_21_0.png)
+![png](02b-Clustering_files/02b-Clustering_23_0.png)
     
 
 
@@ -389,7 +509,7 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_23_0.png)
+![png](02b-Clustering_files/02b-Clustering_25_0.png)
     
 
 
@@ -414,18 +534,18 @@ plt.show()
 
 
     
-![png](02b-Clustering_files/02b-Clustering_25_0.png)
+![png](02b-Clustering_files/02b-Clustering_27_0.png)
     
 
 
-## See also
+### See also
 
   - Radial basis function interpolation for scattered data in n dimensions (slow for large numbers of points): `from scipy.interpolate import Rbf`
   - `scipy.ndimage` for fast interpolation operations on image-like arrays
   - B-splines on regular arrays are found in the `scipy.signal` module
  
 
-# Clustering data with scikit-learn
+## Clustering data with scikit-learn
 
 Here we want to explore a neat and efficient way of exploring a (seisimic tomography) dataset in Python. We will be using a Machine Learning algorithm known as [K-Means clustering](https://scikit-learn.org/stable/modules/clustering.html#k-means). 
 
@@ -444,7 +564,7 @@ Load in the tomography data set. Assign the column vectors to unique variables (
 
 
 ```python
-tomo=np.loadtxt('data/ggge1202-sup-0002-ds01.txt', skiprows=1)
+tomo=np.loadtxt('../data/ggge1202-sup-0002-ds01.txt', skiprows=1)
 
 lat=tomo[:,0]
 lon=tomo[:,1]
@@ -481,7 +601,7 @@ kmeans.labels_
 
 
 
-    array([3, 3, 3, ..., 0, 0, 0], dtype=int32)
+    array([3, 3, 3, ..., 0, 0, 0])
 
 
 
@@ -506,10 +626,25 @@ ax = fig.add_subplot(111, projection='3d')
 ax.scatter(lon, lat, -depth, c=dvp)
 ```
 
+
+
+
+    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1fcd3c8c1c8>
+
+
+
+
+    
+![png](02b-Clustering_files/02b-Clustering_40_1.png)
+    
+
+
 <div class="keypoints">
 ### Key points
 
-- Read the docs to learn more
-- More ways to wrangle data
+- You can use Python to solve math equations
+- scipy for interpolation
+- sklearn for clustering
 - New ways to plot data
+- Read the docs to learn more
 </div>

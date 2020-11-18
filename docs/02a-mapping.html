@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>02a-mapping.utf8</title>
+<title>02a-mapping.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -445,26 +470,335 @@ div.tocify {
 <div id="questions" class="section level3 questions">
 <h3>Questions</h3>
 <ul>
+<li>What plotting options are available in Pyton?</li>
 <li>What mapping features are availble in Python?</li>
-<li>How to use Cartopy?</li>
 </ul>
 </div>
 <div id="objectives" class="section level3 objectives">
 <h3>Objectives</h3>
 <ul>
-<li>Learn about cartopy</li>
 <li>Learn different approaches to plots and mapping</li>
+<li>Learn about cartopy</li>
 </ul>
 </div>
+<div id="introduction-to-matplotlib" class="section level2">
+<h2>Introduction to matplotlib</h2>
+<p>A more general interface is available and a more structured approach to using <code>matplotlib</code> is helpful.</p>
+<ul>
+<li><a href="../../Documentation/Matplotlib-user-2.0.0.pdf">PDF documentation</a></li>
+<li><a href="http://matplotlib.org/gallery.html">Online gallery / cookbook</a></li>
+</ul>
+<p>Matplotlib fully embraces the python object-oriented model, but for some tasks the design of the object hierarchy is a little bit counter-intuitive. It’s best to find a common pattern for building plots and stick to it.</p>
+<pre class="python"><code>%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(6, 4), facecolor=&quot;none&quot;)
+
+ax = plt.subplot(111) # 1x1 array of plots, ax refers to the 1st of them
+
+# Content is added to the blank axes instance
+# ...
+
+fig.savefig(&quot;test-figure.png&quot;, dpi=150)
+plt.show()  # happens anyway !</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_3_0.png" alt="" />
+<p class="caption">png</p>
 </div>
-<div id="cartopy" class="section level1">
-<h1>Cartopy</h1>
+<pre class="python"><code>fig = plt.figure(figsize=(6,6), facecolor=&quot;none&quot;)
+
+ax = plt.subplot(321)   # 3x2 array of plots, ax refers to the 1st of them
+ax2 = plt.subplot(322) 
+
+ax3 = plt.subplot(323) 
+ax4 = plt.subplot(324) 
+
+ax5 = plt.subplot(325) 
+ax6 = plt.subplot(326) # 3x2 array of plots, ax6 refers to the last of them
+
+
+# Content is added to the blank axes instance
+# ...
+
+fig.savefig(&quot;test-figure2.png&quot;, dpi=150)
+plt.show()  # happens anyway !</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_4_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code># Demo example
+
+x1 = np.linspace(0.0, 5.0)
+x2 = np.linspace(0.0, 2.0)
+
+y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
+y2 = np.cos(2 * np.pi * x2)
+
+plt.subplot(2, 1, 1)
+plt.plot(x1, y1, &#39;o-&#39;)
+plt.title(&#39;A tale of 2 subplots&#39;)
+plt.ylabel(&#39;Damped oscillation&#39;)
+
+plt.subplot(2, 1, 2)
+plt.plot(x2, y2, &#39;.-&#39;)
+plt.xlabel(&#39;time (s)&#39;)
+plt.ylabel(&#39;Undamped&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_5_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code># My preference
+
+x1 = np.linspace(0.0, 5.0)
+x2 = np.linspace(0.0, 2.0)
+
+y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
+y2 = np.cos(2 * np.pi * x2)
+
+# Now set up the plot
+
+fig = plt.figure(figsize=(6,6), facecolor=&quot;none&quot;)
+
+ax  = plt.subplot(211)   # 2s1 array of plots, ax refers to the 1st of them
+ax2 = plt.subplot(212) 
+
+
+ax.plot(x1, y1, &#39;o-&#39;)
+ax.set_title(&#39;A tale of 2 subplots&#39;)
+ax.set_ylabel(&#39;Damped oscillation&#39;)
+
+ax2.plot(x2, y2, &#39;.-&#39;)
+ax2.set_xlabel(&#39;time (s)&#39;)
+ax2.set_ylabel(&#39;Not Damped&#39;)</code></pre>
+<pre><code>Text(0, 0.5, &#39;Not Damped&#39;)</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_6_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>&quot;&quot;&quot;
+==================
+ggplot style sheet
+==================
+
+This example demonstrates the &quot;ggplot&quot; style, which adjusts the style to
+emulate ggplot_ (a popular plotting package for R_).
+
+These settings were shamelessly stolen from [1]_ (with permission).
+
+.. [1] http://www.huyng.com/posts/sane-color-scheme-for-matplotlib/
+
+.. _ggplot: http://ggplot2.org/
+.. _R: https://www.r-project.org/
+
+&quot;&quot;&quot;
+
+plt.style.use(&#39;ggplot&#39;)
+
+
+# This is another way to set up the axes objects
+# and may be preferable, but whichever - choose one and stick with it !
+
+fig, axes = plt.subplots(ncols=2, nrows=2)
+ax1, ax2, ax3, ax4 = axes.ravel()
+fig.set_size_inches((8,8))
+
+# scatter plot (Note: `plt.scatter` doesn&#39;t use default colors)
+x, y = np.random.normal(size=(2, 200))
+ax1.plot(x, y, &#39;o&#39;)
+
+# sinusoidal lines with colors from default color cycle
+L = 2*np.pi
+x = np.linspace(0, L)
+ncolors = len(plt.rcParams[&#39;axes.prop_cycle&#39;])
+shift = np.linspace(0, L, ncolors, endpoint=False)
+for s in shift:
+    ax2.plot(x, np.sin(x + s), &#39;-&#39;)
+ax2.margins(0)
+
+# bar graphs
+x = np.arange(5)
+y1, y2 = np.random.randint(1, 25, size=(2, 5))
+width = 0.25
+ax3.bar(x, y1, width)
+ax3.bar(x + width, y2, width,
+        color=list(plt.rcParams[&#39;axes.prop_cycle&#39;])[2][&#39;color&#39;])
+ax3.set_xticks(x + width)
+ax3.set_xticklabels([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;])
+
+# circles with colors from default color cycle
+for i, color in enumerate(plt.rcParams[&#39;axes.prop_cycle&#39;]):
+    xy = np.random.normal(size=2)
+    ax4.add_patch(plt.Circle(xy, radius=0.3, color=color[&#39;color&#39;]))
+ax4.axis(&#39;equal&#39;)
+ax4.margins(0)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_7_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>
+from matplotlib.colors import LightSource, Normalize
+
+
+def display_colorbar():
+    &quot;&quot;&quot;Display a correct numeric colorbar for a shaded plot.&quot;&quot;&quot;
+    y, x = np.mgrid[-4:2:200j, -4:2:200j]
+    z = 10 * np.cos(x**2 + y**2)
+
+    cmap = plt.cm.copper
+    ls = LightSource(315, 45)
+    rgb = ls.shade(z, cmap)
+
+    fig, ax = plt.subplots()
+    ax.imshow(rgb, interpolation=&#39;bilinear&#39;)
+
+    # Use a proxy artist for the colorbar...
+    im = ax.imshow(z, cmap=cmap)
+    im.remove()
+    fig.colorbar(im)
+
+    ax.set_title(&#39;Using a colorbar with a shaded plot&#39;, size=&#39;x-large&#39;)
+
+
+def avoid_outliers():
+    &quot;&quot;&quot;Use a custom norm to control the displayed z-range of a shaded plot.&quot;&quot;&quot;
+    y, x = np.mgrid[-4:2:200j, -4:2:200j]
+    z = 10 * np.cos(x**2 + y**2)
+
+    # Add some outliers...
+    z[100, 105] = 2000
+    z[120, 110] = -9000
+
+    ls = LightSource(315, 45)
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(8, 4.5))
+
+    rgb = ls.shade(z, plt.cm.copper)
+    ax1.imshow(rgb, interpolation=&#39;bilinear&#39;)
+    ax1.set_title(&#39;Full range of data&#39;)
+
+    rgb = ls.shade(z, plt.cm.copper, vmin=-10, vmax=10)
+    ax2.imshow(rgb, interpolation=&#39;bilinear&#39;)
+    ax2.set_title(&#39;Manually set range&#39;)
+
+    fig.suptitle(&#39;Avoiding Outliers in Shaded Plots&#39;, size=&#39;x-large&#39;)
+
+
+def shade_other_data():
+    &quot;&quot;&quot;Demonstrates displaying different variables through shade and color.&quot;&quot;&quot;
+    y, x = np.mgrid[-4:2:200j, -4:2:200j]
+    z1 = np.sin(x**2)  # Data to hillshade
+    z2 = np.cos(x**2 + y**2)  # Data to color
+
+    norm = Normalize(z2.min(), z2.max())
+    cmap = plt.cm.RdBu
+
+    ls = LightSource(315, 45)
+    rgb = ls.shade_rgb(cmap(norm(z2)), z1)
+
+    fig, ax = plt.subplots()
+    ax.imshow(rgb, interpolation=&#39;bilinear&#39;)
+    ax.set_title(&#39;Shade by one variable, color by another&#39;, size=&#39;x-large&#39;)
+
+display_colorbar()
+avoid_outliers()
+shade_other_data()
+plt.show()</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_8_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_8_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_8_2.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>&quot;&quot;&quot;
+Demonstrates the visual effect of varying blend mode and vertical exaggeration
+on &quot;hillshaded&quot; plots.
+
+Note that the &quot;overlay&quot; and &quot;soft&quot; blend modes work well for complex surfaces
+such as this example, while the default &quot;hsv&quot; blend mode works best for smooth
+surfaces such as many mathematical functions.
+
+In most cases, hillshading is used purely for visual purposes, and *dx*/*dy*
+can be safely ignored. In that case, you can tweak *vert_exag* (vertical
+exaggeration) by trial and error to give the desired visual effect. However,
+this example demonstrates how to use the *dx* and *dy* kwargs to ensure that
+the *vert_exag* parameter is the true vertical exaggeration.
+&quot;&quot;&quot;
+
+from matplotlib.cbook import get_sample_data
+from matplotlib.colors import LightSource
+
+dem = np.load(get_sample_data(&#39;jacksboro_fault_dem.npz&#39;))
+z = dem[&#39;elevation&#39;]
+
+#-- Optional dx and dy for accurate vertical exaggeration --------------------
+# If you need topographically accurate vertical exaggeration, or you don&#39;t want
+# to guess at what *vert_exag* should be, you&#39;ll need to specify the cellsize
+# of the grid (i.e. the *dx* and *dy* parameters).  Otherwise, any *vert_exag*
+# value you specify will be relative to the grid spacing of your input data
+# (in other words, *dx* and *dy* default to 1.0, and *vert_exag* is calculated
+# relative to those parameters).  Similarly, *dx* and *dy* are assumed to be in
+# the same units as your input z-values.  Therefore, we&#39;ll need to convert the
+# given dx and dy from decimal degrees to meters.
+dx, dy = dem[&#39;dx&#39;], dem[&#39;dy&#39;]
+dy = 111200 * dy
+dx = 111200 * dx * np.cos(np.radians(dem[&#39;ymin&#39;]))
+#-----------------------------------------------------------------------------
+
+# Shade from the northwest, with the sun 45 degrees from horizontal
+ls = LightSource(azdeg=315, altdeg=45)
+cmap = plt.cm.gist_earth
+
+fig, axes = plt.subplots(nrows=4, ncols=3, figsize=(8, 9))
+plt.setp(axes.flat, xticks=[], yticks=[])
+
+# Vary vertical exaggeration and blend mode and plot all combinations
+for col, ve in zip(axes.T, [0.1, 1, 10]):
+    # Show the hillshade intensity image in the first row
+    col[0].imshow(ls.hillshade(z, vert_exag=ve, dx=dx, dy=dy), cmap=&#39;gray&#39;)
+
+    # Place hillshaded plots with different blend modes in the rest of the rows
+    for ax, mode in zip(col[1:], [&#39;hsv&#39;, &#39;overlay&#39;, &#39;soft&#39;]):
+        rgb = ls.shade(z, cmap=cmap, blend_mode=mode,
+                       vert_exag=ve, dx=dx, dy=dy)
+        ax.imshow(rgb)
+
+# Label rows and columns
+for ax, ve in zip(axes[0], [0.1, 1, 10]):
+    ax.set_title(&#39;{0}&#39;.format(ve), size=18)
+for ax, mode in zip(axes[:, 0], [&#39;Hillshade&#39;, &#39;hsv&#39;, &#39;overlay&#39;, &#39;soft&#39;]):
+    ax.set_ylabel(mode, size=18)
+
+# Group labels...
+axes[0, 1].annotate(&#39;Vertical Exaggeration&#39;, (0.5, 1), xytext=(0, 30),
+                    textcoords=&#39;offset points&#39;, xycoords=&#39;axes fraction&#39;,
+                    ha=&#39;center&#39;, va=&#39;bottom&#39;, size=20)
+axes[2, 0].annotate(&#39;Blend Mode&#39;, (0, 0.5), xytext=(-30, 0),
+                    textcoords=&#39;offset points&#39;, xycoords=&#39;axes fraction&#39;,
+                    ha=&#39;right&#39;, va=&#39;center&#39;, size=20, rotation=90)
+fig.subplots_adjust(bottom=0.05, right=0.95)
+
+plt.show()</code></pre>
+<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:19: MatplotlibDeprecationWarning: In a future release, get_sample_data will automatically load numpy arrays.  Set np_load to True to get the array and suppress this warning.  Set asfileobj to False to get the path to the data file and suppress this warning.</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_9_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+<div id="cartopy" class="section level2">
+<h2>Cartopy</h2>
 <p>Is a mapping and imaging package originating from the Met. Office in the UK. The home page for the package is <a href="http://scitools.org.uk/cartopy/" class="uri">http://scitools.org.uk/cartopy/</a>. Like many python packages, the <a href="http://scitools.org.uk/cartopy/docs/latest/index.html">documentation</a> is patchy and the best way to learn is to try to do things and ask other people who have figured out this and that.</p>
 <p>We are going to work through a number of the examples and try to extend them to do the kinds of things you might find interesting and useful in the future. The examples are in the form of a <a href="http://scitools.org.uk/cartopy/docs/latest/gallery.html">gallery</a></p>
 <p>You might also want to look at the <a href="http://scitools.org.uk/cartopy/docs/latest/crs/projections.html">list of map projections</a> from time to time. Not all maps can be plotted in every projection (sometimes because of bugs and sometimes because they are not supposed to work for the data you have) but you can try them and see what happens.</p>
 <p>Cartopy is built on top of a lot of the matplotlib graphing tools. It works by introducing a series of projections associated with the axes of a graph. On top of that there is a big toolkit for reading in images, finding data from standard web feeds, and manipulating geographical objects. Many, many libraries are involved and sometimes things break. Luckily the installation that is built for this course is about as reliable as we can ever get. I’m just warning you, though, that it can be quite tough if you want to put this on your laptop from scratch.</p>
-<div id="lets-get-started" class="section level2">
-<h2>Let’s get started</h2>
 <p>We have a number of imports that we will need almost every time.</p>
 <p>If we are going to plot anything then we need to include <strong>matplotlib</strong>.</p>
 <pre class="python"><code>%pylab inline
@@ -473,7 +807,12 @@ import matplotlib.pyplot as plt
 
 import cartopy
 import cartopy.crs as ccrs</code></pre>
-<pre><code>Populating the interactive namespace from numpy and matplotlib</code></pre>
+<pre><code>Populating the interactive namespace from numpy and matplotlib
+
+
+c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\IPython\core\magics\pylab.py:160: UserWarning: pylab import has clobbered these variables: [&#39;axes&#39;]
+`%matplotlib` prevents importing * from pylab and numpy
+  &quot;\n`%matplotlib` prevents importing * from pylab and numpy&quot;</code></pre>
 <pre class="python"><code>import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 
@@ -481,14 +820,9 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
 </code></pre>
-<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x7fd036dc1be0&gt;
-
-
-
-/Users/darya/anaconda3/envs/python4pesa/lib/python3.8/site-packages/cartopy/io/__init__.py:260: DownloadWarning: Downloading: https://naciscdn.org/naturalearth/110m/physical/ne_110m_coastline.zip
-  warnings.warn(&#39;Downloading: {}&#39;.format(url), DownloadWarning)</code></pre>
+<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x1ee19d8d9c8&gt;</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_4_2.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_13_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>The simplest plot: global map using the default image built into the package and adding coastlines</p>
@@ -504,9 +838,9 @@ ax.coastlines()
 ax.stock_img()
 
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7fd0380a8af0&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1ee19c24808&gt;</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_6_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_15_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Try changing the projection - either look at the list in the link I gave you above or use the tab-completion feature of iPython to see what <code>ccrs</code> has available ( not everything will be a projection, but you can see what works and what breaks ).</p>
@@ -519,9 +853,9 @@ ax.set_extent([0, 40, 28, 48])
 ax.coastlines(resolution=&#39;50m&#39;)  
 ax.stock_img()
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7fd0202912b0&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1ee19c5c948&gt;</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_8_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_17_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>help(ax.stock_img)</code></pre>
@@ -547,9 +881,8 @@ Solution
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>
-<li>Read the docs to learn more</li>
-<li>More ways to wrangle data</li>
-<li>New ways to plot data</li>
+<li>Easy to Hard Matplotlib examples</li>
+<li>Mapping with Cartopy</li>
 </ul>
 </div>
 <pre class="python"><code></code></pre>
@@ -567,56 +900,13 @@ Solution
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

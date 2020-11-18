@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>03b. Deep Learning with Time Series data</title>
+<title>03b-DeepLearningTS.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -436,11 +461,26 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">03b. Deep Learning with Time Series data</h1>
 
 </div>
 
 
+<div id="deep-learning-with-time-series-data" class="section level1">
+<h1>Deep Learning with Time Series data</h1>
+<div id="questions" class="section level3 questions">
+<h3>Questions</h3>
+<ul>
+<li>“What is deep learning?”</li>
+<li>“What is a GPU and why do I care?”</li>
+</ul>
+</div>
+<div id="objectives" class="section level3 objectives">
+<h3>Objectives</h3>
+<ul>
+<li>Run a Tensorflow job</li>
+<li>Predict the weather</li>
+</ul>
+</div>
 <p>Python offers many ways to make use of the compute capability in your GPU. A very common application is deep learning using the tensorflow and keras packages. In this example we are going to look at forecasting a timeseries using recurrent neural netowrks based on the history of the time series itself.</p>
 <div id="you-can-run-through-the-steps-on-you-local-machine-using-the-jupyter-notebook-example" class="section level3">
 <h3>You can run through the steps on you local machine using the Jupyter notebook example</h3>
@@ -487,7 +527,7 @@ plt.xlabel(&quot;Day&quot;)
 plt.ylabel(&quot;Temperature (degrees Celsius)&quot;)</code></pre>
 <pre><code>Text(0, 0.5, &#39;Temperature (degrees Celsius)&#39;)</code></pre>
 <div class="figure">
-<img src="../fig/fig-03DL-temperature.png" alt="" />
+<img src="03b-DeepLearningTS_files/03b-DeepLearningTS_5_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code># split into train and test sets
@@ -551,16 +591,15 @@ endT=time.time()
 
 print(&quot;Time taken: &quot;, endT-startT)</code></pre>
 <pre><code>fitting...
-Train on 57969 samples
 Epoch 1/4
-57969/57969 [==============================] - 41s 699us/sample - loss: 0.0066
+1933/1933 [==============================] - 11s 6ms/step - loss: 0.0075
 Epoch 2/4
-57969/57969 [==============================] - 43s 741us/sample - loss: 0.0062
+1933/1933 [==============================] - 11s 6ms/step - loss: 0.0060
 Epoch 3/4
-57969/57969 [==============================] - 43s 745us/sample - loss: 0.0060
+1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
 Epoch 4/4
-57969/57969 [==============================] - 42s 731us/sample - loss: 0.0059
-Time taken:  169.15610480308533</code></pre>
+1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
+Time taken:  47.55837798118591</code></pre>
 <pre class="python"><code>#Save or load the model
 #model.save(&#39;kerasmodel.hdf5&#39;)
 #model = tf.keras.models.load_model(&#39;kerasmodel.hdf5&#39;)</code></pre>
@@ -580,8 +619,8 @@ print(&#39;Train Score: %.4f RMSE&#39; % (trainScore))
 testScore = math.sqrt(mean_squared_error(testYi[0], testPredicti[:,0]))
 print(&#39;Test Score: %.4f RMSE&#39; % (testScore))
 </code></pre>
-<pre><code>Train Score: 2.9142 RMSE
-Test Score: 2.9692 RMSE</code></pre>
+<pre><code>Train Score: 2.9182 RMSE
+Test Score: 2.9709 RMSE</code></pre>
 <pre class="python"><code>#PLOT the result
 
 #Create a dataset that is the same size as the testing/training set 
@@ -614,11 +653,12 @@ plt.show()</code></pre>
 <pre><code>(55000, 1) (3285, 1) (58316, 1)
 (57969, 1) (3285, 1) (58285, 1)</code></pre>
 <div class="figure">
-<img src="../fig/fig-03DL-prediction.png" alt="" />
+<img src="03b-DeepLearningTS_files/03b-DeepLearningTS_12_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Depending on the environment you are working in, you will have to use a different combo of python/cuda/tensorflow/keras versions and GPU hardware. Check compatability for <a href="https://docs.nvidia.com/deploy/cuda-compatibility/index.html">NVIDIA Drivers/CUDA</a>, <a href="https://www.tensorflow.org/install/source#tested_build_configurations">CUDA/Python/Tensorflow</a>.</p>
 <p>In Deep Learning, <em>training</em> the model can take a seriously long time, so we often only want to do this once and then tweak our model. In which case we can do that by saving out our data as as a <em>*.hdf5</em> file.</p>
+</div>
 </div>
 <div id="exercise" class="section level1">
 <h1>Exercise</h1>
@@ -636,56 +676,13 @@ plt.show()</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

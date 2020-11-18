@@ -1,18 +1,20 @@
----
-title: "03b. Deep Learning with Time Series data"
-teaching: 30
-exercises: 30
-questions:
+# Deep Learning with Time Series data
+
+
+<div class="questions">  
+### Questions
+
 - "What is deep learning?"
 - "What is a GPU and why do I care?"
-objectives:
-- "Set up your own Python environemnt"
-- "Run a tensorflow job"
-keypoints:
-- "Roll-your-own software stack"
-- "Getting the correct balance of versions for software stacks is imperative"
-- "Not all GPUs are compliant with all software"
----
+</div>
+
+<div class="objectives">  
+### Objectives
+
+- Run a Tensorflow job
+- Predict the weather
+</div>
+
 Python offers many ways to make use of the compute capability in your GPU. A very common application is deep learning using the tensorflow and keras packages. In this example we are going to look at forecasting a timeseries using recurrent neural netowrks based on the history of the time series itself.
 
 ### You can run through the steps on you local machine using the Jupyter notebook example
@@ -71,7 +73,6 @@ print(dataframe.describe())
 
 
 
-
 ```python
 #Look at some of the data set
 #This is the temperature throughout the year.
@@ -85,14 +86,14 @@ plt.ylabel("Temperature (degrees Celsius)")
 
 
 
-
     Text(0, 0.5, 'Temperature (degrees Celsius)')
 
 
 
 
-![png](../fig/fig-03DL-temperature.png)
-
+    
+![png](03b-DeepLearningTS_files/03b-DeepLearningTS_5_1.png)
+    
 
 
 
@@ -111,7 +112,6 @@ print("Test set is: ", test.shape)
 
     Traing set is:  (58000, 1)
     Test set is:  (3316, 1)
-
 
 
 
@@ -166,7 +166,6 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 
 
 
-
 ```python
 #Fit the model, this takes the longest time
 print("fitting...")
@@ -178,17 +177,15 @@ print("Time taken: ", endT-startT)
 ```
 
     fitting...
-    Train on 57969 samples
     Epoch 1/4
-    57969/57969 [==============================] - 41s 699us/sample - loss: 0.0066
+    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0075
     Epoch 2/4
-    57969/57969 [==============================] - 43s 741us/sample - loss: 0.0062
+    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0060
     Epoch 3/4
-    57969/57969 [==============================] - 43s 745us/sample - loss: 0.0060
+    1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
     Epoch 4/4
-    57969/57969 [==============================] - 42s 731us/sample - loss: 0.0059
-    Time taken:  169.15610480308533
-
+    1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
+    Time taken:  47.55837798118591
 
 
 
@@ -218,9 +215,8 @@ print('Test Score: %.4f RMSE' % (testScore))
 
 ```
 
-    Train Score: 2.9142 RMSE
-    Test Score: 2.9692 RMSE
-
+    Train Score: 2.9182 RMSE
+    Test Score: 2.9709 RMSE
 
 
 
@@ -260,9 +256,10 @@ plt.show()
     (57969, 1) (3285, 1) (58285, 1)
 
 
-![png](../fig/fig-03DL-prediction.png)
 
-
+    
+![png](03b-DeepLearningTS_files/03b-DeepLearningTS_12_1.png)
+    
 
 
 Depending on the environment you are working in, you will have to use a different combo of python/cuda/tensorflow/keras versions and GPU hardware. Check compatability for [NVIDIA Drivers/CUDA](https://docs.nvidia.com/deploy/cuda-compatibility/index.html), [CUDA/Python/Tensorflow](https://www.tensorflow.org/install/source#tested_build_configurations).
