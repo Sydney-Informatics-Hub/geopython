@@ -34,7 +34,7 @@ navbar:
       href: 04b-DaskDataframes.html
 output:
   html_document:
-    theme: journal
+    theme: simplex
     toc: true
     toc_float: true
     df_print: tibble
