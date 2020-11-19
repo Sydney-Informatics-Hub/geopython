@@ -50,7 +50,9 @@ theta_0 = 1.0
 
 #Create a regularly spaced vector or time values
 #1000 units between 0 and 1.
-time_values = np.linspace(0,1.0,1000)
+steps=20
+timelength=1.0
+time_values = np.linspace(0,timelength,steps)
 
 #Try several different values for the half-life, k
 for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
@@ -81,52 +83,42 @@ derivative at each time. There are a number of ways to do this.
 
 ### First order numerical approximation
 
-Assume that the variation in \\(\theta(t) \\) is linear, i.e.
-\\[
-    \theta(t') = \theta_n + \beta t'
-\\]
+Assume that the variation in $\theta(t)$ is linear, i.e.
+<div align="center">
+$\theta(t') = \theta_n + \beta t'$
+</div>
 
-where we use a local time coordinate \\(t' = t - n\Delta t\\), so that when we differentiate
+where we use a local time coordinate $t' = t - n\Delta t$, so that when we differentiate
 
-\\[
-        \frac{d \theta}{dt} = \beta
-\\]
+<div align="center">
+$\frac{d \theta}{dt} = \beta$
+</div>
 
 To determine the approximation for the derivative therefore
 becomes the solution to the following equation:
 
-\\[
-        \begin{split}
-            & \theta_{n+1} = \theta_n + \beta \Delta t \\ \\
-            & \Rightarrow	\beta = \frac{d \theta}{dt} = \frac{\theta_{n+1} - \theta_n}{\Delta t}
-        \end{split}
-\\]
+<div align="center">
+$\theta_{n+1} = \theta_n + \beta \Delta t$
+    
+$\Rightarrow	\beta = \frac{d \theta}{dt} = \frac{\theta_{n+1} - \theta_n}{\Delta t}$
+</div>
 
 This is a first order difference expression for the derivative which we
 substitute into the original differential equation for radioactive decay at
 the current timestep
 
-\\[
-        \frac{\theta_{n+1} - \theta_n}{\Delta t} = - k \theta_n
-\\]
+<div align="center">
+$\frac{\theta_{n+1} - \theta_n}{\Delta t} = - k \theta_n$
+</div>
 
 This rearranges to give us a time-marching algorithm:
 
-\\[
-        \theta_{n+1} = \theta_n (1-k \Delta t)
-\\]
-
-It is an indication of the fact that this problem is really not all that difficult
-that this difference equation can be written recursively
-to give:
-\\[
-        \theta_{n+1} = \theta_0 (1-k \Delta t)^n
-\\]
+<div align="center">
+$\theta_{n+1} = \theta_n (1-k \Delta t)$
+</div>
 
 In a moment we will compute some values for this expression to see how
-accurate it is. First we consider whether we can improve the accuracy of the
-approximation by doing a bit more work.
-
+accurate it is. 
 
 
 ```python
@@ -134,37 +126,37 @@ approximation by doing a bit more work.
 theta_0 = 1.0
 const_k = 10.0
 #How many timesteps to solve
-steps = 10
-delta_t = 1.0 / steps
+steps = 20
+timelength = 1.0
+delta_t = timelength / steps
+
+#Create a regularly spaced vector or time values
+time_values = np.linspace(0,timelength,steps)
 
 #Create an empty array to store the solutions
 theta_values = np.zeros(steps)
-time_values  = np.zeros(steps)
 
 #Set the starting values
 theta_values[0] = theta_0
-time_values[0] = 0.0
 
 #Step through the time values
 for i in range(1, steps):
     #Find the value for theta at this time step
     theta_values[i] = theta_values[i-1] * (1 - const_k * delta_t)
-    #Update the time step
-    time_values[i] = time_values[i-1] + delta_t
 
 #Compare with the exact solution
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
 
 #Plot and compare your results
-plt.plot(time_values, exact_theta_values, linewidth=5.0)
 plt.plot(time_values, theta_values, linewidth=3.0, color="red")
+plt.plot(time_values, exact_theta_values, 'b-')
 
 ```
 
 
 
 
-    [<matplotlib.lines.Line2D at 0x1fcd301d888>]
+    [<matplotlib.lines.Line2D at 0x2c6ed1273c8>]
 
 
 
@@ -174,80 +166,77 @@ plt.plot(time_values, theta_values, linewidth=3.0, color="red")
     
 
 
-### Higher order expansion
+### Second Order Runge-Kutta
 
-First we try fitting the local expansion for \\(\theta\\) through an
-additional point.	 
-This time we assume that the variation in \\(\theta(t)\\) is quadratic, i.e.
+The Runge-Kutta method can be a more accurate approach to higher order integration solutions. The idea is to estimate the 
+gradient \\(d \theta / d t\\) at the half way point between two timestep values.  This is done in two stages. Initially a 
+first order estimate, \\( \hat{\theta} \\) is made for the value of the function \\( \theta\\) at \\(t=t+\Delta t /2\\) in the future. This value is then subsituted into the differential equation to obtain the estimate for the gradient at this time. The revised gradient is then used to update the original \\(\theta(t)\\) by an entire timestep.
+	
+The first order step is
 $$
-    \theta(t') = \theta_{n-1} + \beta t' + \gamma {t'}^2
+		\begin{split}
+		\hat{\theta}(t+\Delta t /2) & = \theta(t) + \left.  \frac{d \theta}{d t} \right|_t \frac{\Delta t}{2} \\
+         &= \theta(t) \left[ 1-\frac{k\Delta t}{2} \right]
+		\end{split}
 $$
 
-The local time coordinate is $t' = t - (n-1)\Delta t$, and when we differentiate
+Substitute to estimate the gradient at the mid-point
+$$
+	\left. \frac{d \theta}{d t} \right|_{t+\Delta t /2} \approx -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]
+$$
 
-$$       
-    \frac{d \theta}{dt} = \beta + 2 \gamma t'
-$$  
+Use this value as the average gradient over the interval \\( t\rightarrow t+\Delta t\\) to update \\(\theta\\)
 
-To solve for \\(\beta\\) and \\(\gamma\\) we fit the curve through the sample points:
 $$
     \begin{split}
-            \theta_n &= \theta_{n-1} + \beta \Delta t + \gamma (\Delta t)^2 \\
-            \theta_{n+1} &= \theta_{n-1} + 2 \beta \Delta t + 4 \gamma (\Delta t)^2
-     \end{split}
+        \theta(t+\Delta t) & \approx \theta(t) + \delta t \left(  -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]  \right) \\
+            & \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)
+    \end{split}
 $$
 
-Which solve to give
+It's worth noting that the Taylor expansion of the solution should look like
+$$        
+    e^{-kt} = 1 - kt + \frac{k^2 t^2}{2!} - \frac{k^3 t^3}{3!} + \ldots
 $$
-     \begin{split}
-     \beta &= \left( 4 \theta_n - \theta_{n+1} - 3\theta_{n-1} \right) \frac{1}{2\Delta t} \\
-     \gamma &= \left( \theta_{n+1} + \theta_{n-1} -2 \theta_n \right) \frac{1}{2\Delta t^2} 
-     \end{split}
-$$
-
-We can subsitute this back into the equation above and then into the original differential equation and we obtain the following
-
-$$	 	
-     \left. \frac{d\theta}{dt} \right|_{t=n\Delta t} = \beta + 2\gamma \Delta t =
-     \frac{1}{2\Delta t} \left( \theta_{n+1} - \theta_{n-1} \right)  = -k \theta_n 
-$$
-
-The difference approximation to the derivative turns out to be the average of the expressions for the previous derivative and the new derivative. We have now included information about the current timestep and the previous timestep in our expression for the value of \\(\theta\\) at the forthcoming timestep:	
-
-$$
-     \theta_{n+1} = \theta_{n-1} -2k \theta_n \Delta t
-$$
+	
+The Runge Kutta method can be extended by repeating the estimates on smaller regions of the interval. The usual choice is fourth order RK. This is largely because, obviously, it's accurate to fourth order, but also because the number of operations to go higher than fourth order is disproportionately large. 
 
 <div class="challenge">
 
 ### Challenge
 
-- Can you implement the 2nd order Numerical Solution in Python?
+- Can you implement the Second Order Runge-Kutta Numerical Solution in Python?
 Start as before:
 
 ```python
-steps = 10
+#Set the known constant values
 theta_0 = 1.0
 const_k = 10.0
-delta_t = 1.0 / steps
+#How many timesteps to solve
+steps = 20
+timelength = 1.0
+delta_t = timelength / steps
 
+#Create a regularly spaced vector or time values
+time_values = np.linspace(0,timelength,steps)
+
+#Create an empty array to store the solutions
 theta_values = np.zeros(steps)
-time_values  = np.zeros(steps)
 
+#Set the starting values
 theta_values[0] = theta_0
-time_values[0] = 0.0
-    
-theta_values[1] = ???
-time_values[1] = ???
-    
-for i in range(1, steps):
-    theta_values[i] = ???
-    time_values[i] = ???
 
+#Step through the time values
+for i in range(1, steps):
+    #Find the value for theta at this time step
+    theta_values[????] = ????
+
+#Compare with the exact solution
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
-    
-plt.plot(time_values, exact_theta_values, linewidth=5.0)
+
+#Plot and compare your results
 plt.plot(time_values, theta_values, linewidth=3.0, color="red")
+plt.plot(time_values, exact_theta_values, 'b-')
 ```
 
 <details>
@@ -256,28 +245,25 @@ plt.plot(time_values, theta_values, linewidth=3.0, color="red")
 This is my solution
     
 ```python
-steps = 10
 theta_0 = 1.0
 const_k = 10.0
-delta_t = 1.0 / steps
+steps = 20
+timelength = 1.0
+delta_t = timelength / steps
+
+time_values = np.linspace(0,timelength,steps)
 
 theta_values = np.zeros(steps)
-time_values  = np.zeros(steps)
 
 theta_values[0] = theta_0
-time_values[0] = 0.0
 
-theta_values[1] = theta_values[0] * (1 - const_k * delta_t)
-time_values[1] = delta_t
-
-for i in range(2, steps):
-    theta_values[i] = theta_values[i-2] - 2.0 * theta_values[i-1] * const_k * delta_t
-    time_values[i] = time_values[i-1] + delta_t
+for i in range(1, steps):
+    theta_values[i] = theta_values[i-1] * (1 - const_k * delta_t + const_k**2 * delta_t**2 / 2.0)
 
 exact_theta_values = theta_0 * np.exp(-const_k * time_values)
-    
-plot(time_values, exact_theta_values, linewidth=5.0)
-plot(time_values, theta_values, linewidth=3.0, color="red")
+
+plt.plot(time_values, theta_values, linewidth=3.0, color="red")
+plt.plot(time_values, exact_theta_values, 'b-')
 ```
 
 </details>
@@ -300,7 +286,6 @@ This module provides general interpolation capability for data in 1, 2, and high
 
 
 ```python
-%matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
 ```
@@ -611,7 +596,7 @@ Choose one of the clusters to visualise, so subset the data into new vectors acc
 
 
 ```python
-centre=1
+centre=3
 
 latClust=lat[kmeans.labels_==centre]
 lonClust=lon[kmeans.labels_==centre]
@@ -625,13 +610,13 @@ Finally, plot the results!
 ```python
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.scatter(lon, lat, -depth, c=dvp)
+ax.scatter(lonClust, latClust, -depthClust, c=dvpClust)
 ```
 
 
 
 
-    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1fcd3c8c1c8>
+    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x2c6eedbf9c8>
 
 
 
