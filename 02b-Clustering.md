@@ -24,7 +24,7 @@ equation. In fact we choose something simple enough that we already
 know the answer.
 
 <div align="center">
-$ \frac{d\theta}{dt} = - k \theta $
+$\frac{d\theta}{dt} = - k \theta$
 </div>
 
 This is the equation which governs radioactive decay, in which case
@@ -33,7 +33,7 @@ is the activity that we can measure. $k$ is closely related to the half life.
 
 The solution to this equation is
 <div align="center">
-$ \theta(t) = \theta_0 e^{-kt} $
+$\theta(t) = \theta_0 e^{-kt}$
 </div>
 
 where $\theta_0$ is the amount of the radioactive material remaining.
@@ -42,8 +42,6 @@ case we interpret $\theta$ as the excess temperature (above room temperature).
 
 
 ```python
-%pylab inline
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,6 +49,7 @@ import matplotlib.pyplot as plt
 theta_0 = 1.0
 
 #Create a regularly spaced vector or time values
+#1000 units between 0 and 1.
 time_values = np.linspace(0,1.0,1000)
 
 #Try several different values for the half-life, k
@@ -59,14 +58,17 @@ for const_k in [1.0, 3.1, 10.0, 31, 100.0]:
     exact_theta_values = theta_0 * np.exp(-const_k * time_values)
     #Plot the results for different k values
     plt.plot(time_values, exact_theta_values)
+    
+#Add some plot flair    
+plt.legend(('1', '3.1', '10', '31', '1000'),title=r'$k$')
+plt.xlabel('time')
+plt.ylabel(r'$\theta$')
+plt.show()
 ```
-
-    Populating the interactive namespace from numpy and matplotlib
-
 
 
     
-![png](02b-Clustering_files/02b-Clustering_2_1.png)
+![png](02b-Clustering_files/02b-Clustering_2_0.png)
     
 
 
