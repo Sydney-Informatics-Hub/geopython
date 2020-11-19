@@ -487,10 +487,15 @@ div.tocify {
 <div id="numerical-models" class="section level2">
 <h2>Numerical models</h2>
 <p>We start with the numerical solution of a very simple differential equation. In fact we choose something simple enough that we already know the answer.</p>
-<p>\[  = - k  \]</p>
-<p>This is the equation which governs radioactive decay, in which case \(\) is the amount of the radioactive isotope remaining and \(d/ dt\) is the activity that we can measure. \(k \) is closely related to the half life.</p>
-<p>The solution to this equation is \[ (t) = _0 e^{-kt} \]</p>
-<p>where \(_0\) is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret \( \) as the excess temperature (above room temperature).</p>
+<div align="center">
+<p>$  = - k $</p>
+</div>
+<p>This is the equation which governs radioactive decay, in which case <span class="math inline">\(\theta\)</span> is the amount of the radioactive isotope remaining and <span class="math inline">\(d\theta / dt\)</span> is the activity that we can measure. <span class="math inline">\(k\)</span> is closely related to the half life.</p>
+The solution to this equation is
+<div align="center">
+<p>$ (t) = _0 e^{-kt} $</p>
+</div>
+<p>where <span class="math inline">\(\theta_0\)</span> is the amount of the radioactive material remaining. The same equation also describes the cooling of, say, a cup of coffee. In this case we interpret <span class="math inline">\(\theta\)</span> as the excess temperature (above room temperature).</p>
 <pre class="python"><code>%pylab inline
 
 import numpy as np

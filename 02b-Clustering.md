@@ -23,22 +23,22 @@ We start with the numerical solution of a very simple differential
 equation. In fact we choose something simple enough that we already 
 know the answer.
 
-\\[
-        \frac{d\theta}{dt} = - k \theta
-\\]
+<div align="center">
+$ \frac{d\theta}{dt} = - k \theta $
+</div>
 
 This is the equation which governs radioactive decay, in which case
-\\(\theta \\) is the amount of the radioactive isotope remaining and \\(d\theta /  dt\\)
-is the activity that we can measure. \\(k \\) is closely related to the half life.
+$\theta$ is the amount of the radioactive isotope remaining and $d\theta /  dt$
+is the activity that we can measure. $k$ is closely related to the half life.
 
 The solution to this equation is
-\\[
-        \theta(t) = \theta_0 e^{-kt}
-\\]
+<div align="center">
+$ \theta(t) = \theta_0 e^{-kt} $
+</div>
 
-where \\(\theta_0\\) is the amount of the radioactive material remaining.
+where $\theta_0$ is the amount of the radioactive material remaining.
 The same equation also describes the cooling of, say, a cup of coffee. In this
-case we interpret \\( \theta \\) as the excess temperature (above room temperature). 
+case we interpret $\theta$ as the excess temperature (above room temperature). 
 
 
 ```python
