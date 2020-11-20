@@ -59,9 +59,6 @@ Nshp    = len(shapes)
 print(Nshp) #print the Number of items in the shapefile
 ```
 
-    7635
-
-
 
 ```python
 fields #print the fields
@@ -1356,11 +1353,11 @@ lithCounts
     FILL     4020
     SDST     3209
             ...  
-    REGO        1
-    LMSD        1
+    SCOR        1
+    DIOR        1
     ARKS        1
-    SANN        1
-    DUST        1
+    CALU        1
+    HFLS        1
     Name: MajorLithCode, Length: 81, dtype: int64
 
 
@@ -1473,7 +1470,6 @@ plt.show()
 Go to [http://www.bom.gov.au/water/groundwater/explorer/map.shtml](http://www.bom.gov.au/water/groundwater/explorer/map.shtml) and pick another River Region. Download the dataset in "Shapefile" format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
 
 
-
 # Log ASCII Files 
 
 Python has some very specific packages/libraries. You can often create your own tools for doing niche tasks, but often you will find a variety of tools to make things simpler for you. We will show some simple tasks to perfrom on borehole data (in .las format) with the [lasio](https://lasio.readthedocs.io/en/latest/) library. 
@@ -1516,14 +1512,14 @@ read_files
 
 
 
-    ['../data/WELL/Balnaves.las',
-     '../data/WELL/Banyula.las',
-     '../data/WELL/Beachport1.las',
-     '../data/WELL/BeachportEast1.las',
-     '../data/WELL/BiscuitFlat1.las',
-     '../data/WELL/BoolLagoon1.las',
-     '../data/WELL/Bungaloo1.las',
-     '../data/WELL/Burrungule1.las']
+    ['../data/WELL\\Balnaves.las',
+     '../data/WELL\\Banyula.las',
+     '../data/WELL\\Beachport1.las',
+     '../data/WELL\\BeachportEast1.las',
+     '../data/WELL\\BiscuitFlat1.las',
+     '../data/WELL\\BoolLagoon1.las',
+     '../data/WELL\\Bungaloo1.las',
+     '../data/WELL\\Burrungule1.las']
 
 
 
@@ -1541,24 +1537,24 @@ print("There are ", len(well_names), "wells.")
 print(well_names)
 ```
 
-    FILE: ../data/WELL/Balnaves.las
-    SPLIT: ['..', 'data', 'WELL', 'Balnaves', '']
-    FILE: ../data/WELL/Banyula.las
-    SPLIT: ['..', 'data', 'WELL', 'Banyula', '']
-    FILE: ../data/WELL/Beachport1.las
-    SPLIT: ['..', 'data', 'WELL', 'Beachport1', '']
-    FILE: ../data/WELL/BeachportEast1.las
-    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', '']
-    FILE: ../data/WELL/BiscuitFlat1.las
-    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', '']
-    FILE: ../data/WELL/BoolLagoon1.las
-    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', '']
-    FILE: ../data/WELL/Bungaloo1.las
-    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', '']
-    FILE: ../data/WELL/Burrungule1.las
-    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', '']
+    FILE: ../data/WELL\Balnaves.las
+    SPLIT: ['..', 'data', 'WELL\\Balnaves', '']
+    FILE: ../data/WELL\Banyula.las
+    SPLIT: ['..', 'data', 'WELL\\Banyula', '']
+    FILE: ../data/WELL\Beachport1.las
+    SPLIT: ['..', 'data', 'WELL\\Beachport1', '']
+    FILE: ../data/WELL\BeachportEast1.las
+    SPLIT: ['..', 'data', 'WELL\\BeachportEast1', '']
+    FILE: ../data/WELL\BiscuitFlat1.las
+    SPLIT: ['..', 'data', 'WELL\\BiscuitFlat1', '']
+    FILE: ../data/WELL\BoolLagoon1.las
+    SPLIT: ['..', 'data', 'WELL\\BoolLagoon1', '']
+    FILE: ../data/WELL\Bungaloo1.las
+    SPLIT: ['..', 'data', 'WELL\\Bungaloo1', '']
+    FILE: ../data/WELL\Burrungule1.las
+    SPLIT: ['..', 'data', 'WELL\\Burrungule1', '']
     There are  8 wells.
-    ['Balnaves', 'Banyula', 'Beachport1', 'BeachportEast1', 'BiscuitFlat1', 'BoolLagoon1', 'Bungaloo1', 'Burrungule1']
+    ['', '', '', '', '', '', '', '']
 
 
 
@@ -1595,21 +1591,21 @@ for well in lases:
     print(well.keys())
 ```
 
-    Wellid: 0 Balnaves
+    Wellid: 0 
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 1 Banyula
+    Wellid: 1 
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 2 Beachport1
+    Wellid: 2 
     ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
-    Wellid: 3 BeachportEast1
+    Wellid: 3 
     ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 4 BiscuitFlat1
+    Wellid: 4 
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 5 BoolLagoon1
+    Wellid: 5 
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 6 Bungaloo1
+    Wellid: 6 
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 7 Burrungule1
+    Wellid: 7 
     ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
 
 
@@ -1628,7 +1624,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7fa6b7da6690>]
+    [<matplotlib.lines.Line2D at 0x16eb2579b08>]
 
 
 
@@ -1660,35 +1656,82 @@ print(lases[wellid].curves)
     SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            
 
 
+<div class="challenge">
+    
+### Challenge
+
+Run this bit of code. Then add additional mnemonic plots to the figure.
 
 ```python
-# Finally, make a cleaner plot
+def find_unc(data):
+    #Find the changes in a vector
+    import pandas as pd
+    #Convert to pandas
+    df=pd.DataFrame(data)
+    #Caluclate the rolling average and the percent change of the data
+    df_change = df.rolling(200).mean().pct_change(periods=200)
+    #Convert large percent changes to 1 or 0
+    dfbin = ((df_change < -0.5) | (df_change > 0.5)).astype(int)
+    return(dfbin)
 
-#Set the Mnemoic variable to plot
-var = 'RHOB' 
-#Print out what you are plotting
-print("Param:", var, "of well:", well_names[wellid])
+#Define a function to make the plot and set parameters
+def make_plot(i,var,colour):
+    data=lases[wellid][var]
+    dfbin=find_unc(data)
+    ax[i].plot(dfbin*np.nanmax(data), lases[wellid]['DEPTH'], color = 'black', linewidth = 0.5)
+    ax[i].plot(data, lases[wellid]['DEPTH'], color = colour, linewidth = 0.5)
+    ax[i].set_xlabel(var)
+    ax[i].xaxis.label.set_color(colour)
+    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.1), np.nanpercentile(lases[wellid][var],99.9))
+    ax[i].tick_params(axis='x', colors=colour)
+    ax[i].title.set_color(colour)
+    ax[i].set_ylim(top,bot)
+    ax[i].invert_yaxis()
+    ax[i].tick_params(left=False,
+                bottom=True,
+                labelleft=False,
+                labelbottom=True)
+    
+#Make the figure
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16,6))
 
-#Create the figure
-plt.figure(figsize=(5,10))
-#Plot the data on it
-plt.plot(lases[wellid][var], lases[wellid]['DEPTH'])
+#Add a plot of each mnemoic to your figure
+make_plot(0,"GR","green")
+make_plot(1,"RDEP","red")
 
-#And change some details on the plot
-plt.xlabel(var) 
-plt.ylabel("Depth (m)")
-plt.grid(True)
-plt.gca().invert_yaxis()
+#Quick way to get the list of keys
+#lases[wellid].keys()
+    
+#Fix the details on the figure
+plt.subplots_adjust(wspace=0.01)
+ax[0].set_ylabel("Depth (m)")
+ax[0].tick_params(left=True,
+            bottom=True,
+            labelleft=True,
+            labelbottom=True)
 ```
 
-    Param: RHOB of well: Banyula
-
-
-
     
-![png](01b-dataframes_files/01b-dataframes_56_1.png)
     
+<details>
+<summary>Solution</summary>
 
+...
+
+```python
+#Change the number of columns
+fig, ax = plt.subplots(nrows=1, ncols=8, figsize=(16,6))
+    
+#Add additional calls to the make plot
+make_plot(0,"CALI","green")
+make_plot(1,"DRHO","red")
+make_plot(2,"DT","blue")
+make_plot(3,"GR","purple")
+make_plot(4,"RDEP","cyan")
+make_plot(5,"RHOB","pink")
+make_plot(6,"RMED","brown")
+make_plot(7,"SP","orange")
+```
 
 # SEGY Seismic data processing
 
@@ -1709,6 +1752,7 @@ import numpy as np
 
 filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 
+#Data randomly chosen from here:
 #Title: 2006 James 3D Seismic Survey.
 #Author: White, A.
 #Prepared by: Terrex Seismic Pty Ltd; Pioneer Surveys Pty Ltd; WestenGeco
@@ -1722,8 +1766,12 @@ filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 #This will take about 1 minute. 
 #When the [*] changes to [52] and the circle in the top right is clear, it has completed
 stream = _read_segy(filename, headonly=True)
+print(np.shape(stream.traces))
 stream
 ```
+
+    (48832,)
+
 
 
 
@@ -1734,43 +1782,36 @@ stream
 
 
 ```python
+#Look at a single trace
 one_trace = stream.traces[10000]
+
+#Print out details single trace
+print(one_trace)
 
 plt.figure(figsize=(16,2))
 plt.plot(one_trace.data)
 plt.show()
 ```
 
-
-    
-![png](01b-dataframes_files/01b-dataframes_61_0.png)
-    
-
-
-
-```python
-data = np.stack(t.data for t in stream.traces[12320:12320+500])
-```
-
-    /home/nbutter/miniconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py:3337: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
-      if (await self.run_code(code, result,  async_=asy)):
-
-
-
-```python
-stream.traces[10000]
-```
-
-
-
-
     Trace sequence number within line: 10001
     1001 samples, dtype=float32, 250.00 Hz
 
 
 
+    
+![png](01b-dataframes_files/01b-dataframes_61_1.png)
+    
+
+
 
 ```python
+#Stack multiple traces into a single numpy array
+data = np.stack([t.data for t in stream.traces[12320:12320+500]])
+```
+
+
+```python
+#What does the stacked data look like
 data.shape
 ```
 
@@ -1783,59 +1824,53 @@ data.shape
 
 
 ```python
-np.shape(stream.traces)
+#Have a look at the data
+plt.imshow(data.T, cmap="Greys", aspect='auto')
 ```
 
 
 
 
-    (48832,)
+    <matplotlib.image.AxesImage at 0x16ebb509388>
 
+
+
+
+    
+![png](01b-dataframes_files/01b-dataframes_64_1.png)
+    
 
 
 
 ```python
+#Make a more imfortaive plot
+
+#Restrict the data to the 95th percentile
 vm = np.percentile(data, 95)
+
 print("The 95th percentile is {:.0f}; the max amplitude is {:.0f}".format(vm, data.max()))
-```
 
-    The 95th percentile is 4365; the max amplitude is 34148
-
-
-
-```python
-plt.imshow(data.T, cmap="Greys", vmin=-vm, vmax=vm, aspect='auto')
-```
-
-
-
-
-    <matplotlib.image.AxesImage at 0x7fa6b270a750>
-
-
-
-
-    
-![png](01b-dataframes_files/01b-dataframes_67_1.png)
-    
-
-
-
-```python
+#Make the plot
 plt.figure(figsize=(16,8))
 plt.imshow(data.T, cmap="RdBu", vmin=-vm, vmax=vm, aspect='auto')
 plt.colorbar()
 plt.show()
 ```
 
+    The 95th percentile is 4365; the max amplitude is 34148
+
+
 
     
-![png](01b-dataframes_files/01b-dataframes_68_0.png)
+![png](01b-dataframes_files/01b-dataframes_65_1.png)
     
 
 
 
 ```python
+#What else is in the data?
+
+#Print out the segy headers
 print(stream.textual_file_header.decode())
 ```
 
@@ -1844,19 +1879,20 @@ print(stream.textual_file_header.decode())
 
 
 ```python
-print(stream.traces[50].header)
+#And the header information for a particular trace
+print(stream.traces[1013].header)
 ```
 
-    trace_sequence_number_within_line: 51
-    trace_sequence_number_within_segy_file: 51
-    original_field_record_number: 2000
+    trace_sequence_number_within_line: 1014
+    trace_sequence_number_within_segy_file: 1014
+    original_field_record_number: 2004
     trace_number_within_the_original_field_record: 1
-    energy_source_point_number: 10055
-    ensemble_number: 10055
-    trace_number_within_the_ensemble: 51
+    energy_source_point_number: 10026
+    ensemble_number: 10026
+    trace_number_within_the_ensemble: 28
     trace_identification_code: 1
     number_of_vertically_summed_traces_yielding_this_trace: 1
-    number_of_horizontally_stacked_traces_yielding_this_trace: 24
+    number_of_horizontally_stacked_traces_yielding_this_trace: 13
     data_use: 1
     distance_from_center_of_the_source_point_to_the_center_of_the_receiver_group: 0
     receiver_group_elevation: 0
@@ -1868,10 +1904,10 @@ print(stream.traces[50].header)
     water_depth_at_group: 0
     scalar_to_be_applied_to_all_elevations_and_depths: 1
     scalar_to_be_applied_to_all_coordinates: 1
-    source_coordinate_x: 482680
-    source_coordinate_y: 7035256
-    group_coordinate_x: 482680
-    group_coordinate_y: 7035256
+    source_coordinate_x: 482760
+    source_coordinate_y: 7035836
+    group_coordinate_x: 482760
+    group_coordinate_y: 7035836
     coordinate_units: 1
     weathering_velocity: 0
     subweathering_velocity: 0
@@ -1922,17 +1958,17 @@ print(stream.traces[50].header)
     y_coordinate_of_ensemble_position_of_this_trace: 0
     for_3d_poststack_data_this_field_is_for_in_line_number: 0
     for_3d_poststack_data_this_field_is_for_cross_line_number: -4587520
-    shotpoint_number: 2000
+    shotpoint_number: 2004
     scalar_to_be_applied_to_the_shotpoint_number: 0
-    trace_value_measurement_unit: 10055
+    trace_value_measurement_unit: 10026
     transduction_constant_mantissa: 0
     transduction_constant_exponent: 0
     transduction_units: 0
     device_trace_identifier: 0
-    scalar_to_be_applied_to_times: 57
+    scalar_to_be_applied_to_times: 1052
     source_type_orientation: 0
     source_energy_direction_mantissa: 0
-    source_energy_direction_exponent: 584
+    source_energy_direction_exponent: 1607
     source_measurement_mantissa: 0
     source_measurement_exponent: 0
     source_measurement_unit: 0
@@ -1941,6 +1977,7 @@ print(stream.traces[50].header)
 
 
 ```python
+#You can automatically extract data you might need from the header
 #Get the sample interval from the header info
 dt = stream.traces[0].header.sample_interval_in_ms_for_this_trace / 1e6
 dt

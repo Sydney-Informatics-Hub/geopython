@@ -507,7 +507,6 @@ shapes  = shapeRead.shapes()
 fields  = shapeRead.fields
 Nshp    = len(shapes)</code></pre>
 <pre class="python"><code>print(Nshp) #print the Number of items in the shapefile</code></pre>
-<pre><code>7635</code></pre>
 <pre class="python"><code>fields #print the fields</code></pre>
 <pre><code>[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
  [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
@@ -2874,11 +2873,11 @@ SLAT     4071
 FILL     4020
 SDST     3209
         ...  
-REGO        1
-LMSD        1
+SCOR        1
+DIOR        1
 ARKS        1
-SANN        1
-DUST        1
+CALU        1
+HFLS        1
 Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
 <pre class="python"><code>#plot a bar chart of the lith codes
 lithCounts.plot.bar(rot=90,figsize=(15,5))</code></pre>
@@ -2978,14 +2977,14 @@ import re</code></pre>
 <pre class="python"><code>#Build a list of filenames to read
 read_files = glob.glob(&quot;../data/WELL/*.las&quot;)
 read_files</code></pre>
-<pre><code>[&#39;../data/WELL/Balnaves.las&#39;,
- &#39;../data/WELL/Banyula.las&#39;,
- &#39;../data/WELL/Beachport1.las&#39;,
- &#39;../data/WELL/BeachportEast1.las&#39;,
- &#39;../data/WELL/BiscuitFlat1.las&#39;,
- &#39;../data/WELL/BoolLagoon1.las&#39;,
- &#39;../data/WELL/Bungaloo1.las&#39;,
- &#39;../data/WELL/Burrungule1.las&#39;]</code></pre>
+<pre><code>[&#39;../data/WELL\\Balnaves.las&#39;,
+ &#39;../data/WELL\\Banyula.las&#39;,
+ &#39;../data/WELL\\Beachport1.las&#39;,
+ &#39;../data/WELL\\BeachportEast1.las&#39;,
+ &#39;../data/WELL\\BiscuitFlat1.las&#39;,
+ &#39;../data/WELL\\BoolLagoon1.las&#39;,
+ &#39;../data/WELL\\Bungaloo1.las&#39;,
+ &#39;../data/WELL\\Burrungule1.las&#39;]</code></pre>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
 for file in read_files:
@@ -2996,24 +2995,24 @@ for file in read_files:
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
-<pre><code>FILE: ../data/WELL/Balnaves.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;]
-FILE: ../data/WELL/Banyula.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;]
-FILE: ../data/WELL/Beachport1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;]
-FILE: ../data/WELL/BeachportEast1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;]
-FILE: ../data/WELL/BiscuitFlat1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;]
-FILE: ../data/WELL/BoolLagoon1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;]
-FILE: ../data/WELL/Bungaloo1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;]
-FILE: ../data/WELL/Burrungule1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;]
+<pre><code>FILE: ../data/WELL\Balnaves.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Balnaves&#39;, &#39;&#39;]
+FILE: ../data/WELL\Banyula.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Banyula&#39;, &#39;&#39;]
+FILE: ../data/WELL\Beachport1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Beachport1&#39;, &#39;&#39;]
+FILE: ../data/WELL\BeachportEast1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BeachportEast1&#39;, &#39;&#39;]
+FILE: ../data/WELL\BiscuitFlat1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BiscuitFlat1&#39;, &#39;&#39;]
+FILE: ../data/WELL\BoolLagoon1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BoolLagoon1&#39;, &#39;&#39;]
+FILE: ../data/WELL\Bungaloo1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Bungaloo1&#39;, &#39;&#39;]
+FILE: ../data/WELL\Burrungule1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Burrungule1&#39;, &#39;&#39;]
 There are  8 wells.
-[&#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Beachport1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;Burrungule1&#39;]</code></pre>
+[&#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</code></pre>
 <pre class="python"><code>#Read in the log files to lasio
 lases = []
 for files in read_files:
@@ -3032,27 +3031,27 @@ for well in lases:
     print(&quot;Wellid:&quot;, j, well_names[j])
     j+=1
     print(well.keys())</code></pre>
-<pre><code>Wellid: 0 Balnaves
+<pre><code>Wellid: 0 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 1 Banyula
+Wellid: 1 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 2 Beachport1
+Wellid: 2 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 3 BeachportEast1
+Wellid: 3 
 [&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 4 BiscuitFlat1
+Wellid: 4 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 5 BoolLagoon1
+Wellid: 5 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 6 Bungaloo1
+Wellid: 6 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 7 Burrungule1
+Wellid: 7 
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
 <pre class="python"><code>#Set a wellid you want to explore more
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fa6b7da6690&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x16eb2579b08&gt;]</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_53_1.png" alt="" />
 <p class="caption">png</p>
@@ -3072,27 +3071,74 @@ RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis
 RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
 RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
 SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            </code></pre>
-<pre class="python"><code># Finally, make a cleaner plot
+<div class="challenge">
 
-#Set the Mnemoic variable to plot
-var = &#39;RHOB&#39; 
-#Print out what you are plotting
-print(&quot;Param:&quot;, var, &quot;of well:&quot;, well_names[wellid])
+<div id="challenge" class="section level3">
+<h3>Challenge</h3>
+<p>Run this bit of code. Then add additional mnemonic plots to the figure.</p>
+<pre class="python"><code>def find_unc(data):
+    #Find the changes in a vector
+    import pandas as pd
+    #Convert to pandas
+    df=pd.DataFrame(data)
+    #Caluclate the rolling average and the percent change of the data
+    df_change = df.rolling(200).mean().pct_change(periods=200)
+    #Convert large percent changes to 1 or 0
+    dfbin = ((df_change &lt; -0.5) | (df_change &gt; 0.5)).astype(int)
+    return(dfbin)
 
-#Create the figure
-plt.figure(figsize=(5,10))
-#Plot the data on it
-plt.plot(lases[wellid][var], lases[wellid][&#39;DEPTH&#39;])
+#Define a function to make the plot and set parameters
+def make_plot(i,var,colour):
+    data=lases[wellid][var]
+    dfbin=find_unc(data)
+    ax[i].plot(dfbin*np.nanmax(data), lases[wellid][&#39;DEPTH&#39;], color = &#39;black&#39;, linewidth = 0.5)
+    ax[i].plot(data, lases[wellid][&#39;DEPTH&#39;], color = colour, linewidth = 0.5)
+    ax[i].set_xlabel(var)
+    ax[i].xaxis.label.set_color(colour)
+    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.1), np.nanpercentile(lases[wellid][var],99.9))
+    ax[i].tick_params(axis=&#39;x&#39;, colors=colour)
+    ax[i].title.set_color(colour)
+    ax[i].set_ylim(top,bot)
+    ax[i].invert_yaxis()
+    ax[i].tick_params(left=False,
+                bottom=True,
+                labelleft=False,
+                labelbottom=True)
+    
+#Make the figure
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16,6))
 
-#And change some details on the plot
-plt.xlabel(var) 
-plt.ylabel(&quot;Depth (m)&quot;)
-plt.grid(True)
-plt.gca().invert_yaxis()</code></pre>
-<pre><code>Param: RHOB of well: Banyula</code></pre>
-<div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_56_1.png" alt="" />
-<p class="caption">png</p>
+#Add a plot of each mnemoic to your figure
+make_plot(0,&quot;GR&quot;,&quot;green&quot;)
+make_plot(1,&quot;RDEP&quot;,&quot;red&quot;)
+
+#Quick way to get the list of keys
+#lases[wellid].keys()
+    
+#Fix the details on the figure
+plt.subplots_adjust(wspace=0.01)
+ax[0].set_ylabel(&quot;Depth (m)&quot;)
+ax[0].tick_params(left=True,
+            bottom=True,
+            labelleft=True,
+            labelbottom=True)</code></pre>
+<details>
+<summary>
+Solution
+</summary>
+<p>…</p>
+<pre class="python"><code>#Change the number of columns
+fig, ax = plt.subplots(nrows=1, ncols=8, figsize=(16,6))
+    
+#Add additional calls to the make plot
+make_plot(0,&quot;CALI&quot;,&quot;green&quot;)
+make_plot(1,&quot;DRHO&quot;,&quot;red&quot;)
+make_plot(2,&quot;DT&quot;,&quot;blue&quot;)
+make_plot(3,&quot;GR&quot;,&quot;purple&quot;)
+make_plot(4,&quot;RDEP&quot;,&quot;cyan&quot;)
+make_plot(5,&quot;RHOB&quot;,&quot;pink&quot;)
+make_plot(6,&quot;RMED&quot;,&quot;brown&quot;)
+make_plot(7,&quot;SP&quot;,&quot;orange&quot;)</code></pre>
 </div>
 </div>
 <div id="segy-seismic-data-processing" class="section level1">
@@ -3108,6 +3154,7 @@ import numpy as np
 
 filename=&quot;../data/james/james_1959_pstm_tvfk_gain.sgy&quot;
 
+#Data randomly chosen from here:
 #Title: 2006 James 3D Seismic Survey.
 #Author: White, A.
 #Prepared by: Terrex Seismic Pty Ltd; Pioneer Surveys Pty Ltd; WestenGeco
@@ -3117,57 +3164,76 @@ filename=&quot;../data/james/james_1959_pstm_tvfk_gain.sgy&quot;
 <pre class="python"><code>#This will take about 1 minute. 
 #When the [*] changes to [52] and the circle in the top right is clear, it has completed
 stream = _read_segy(filename, headonly=True)
+print(np.shape(stream.traces))
 stream</code></pre>
-<pre><code>48832 traces in the SEG Y structure.</code></pre>
-<pre class="python"><code>one_trace = stream.traces[10000]
+<pre><code>(48832,)
+
+
+
+
+
+48832 traces in the SEG Y structure.</code></pre>
+<pre class="python"><code>#Look at a single trace
+one_trace = stream.traces[10000]
+
+#Print out details single trace
+print(one_trace)
 
 plt.figure(figsize=(16,2))
 plt.plot(one_trace.data)
 plt.show()</code></pre>
-<div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_61_0.png" alt="" />
-<p class="caption">png</p>
-</div>
-<pre class="python"><code>data = np.stack(t.data for t in stream.traces[12320:12320+500])</code></pre>
-<pre><code>/home/nbutter/miniconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py:3337: FutureWarning: arrays to stack must be passed as a &quot;sequence&quot; type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
-  if (await self.run_code(code, result,  async_=asy)):</code></pre>
-<pre class="python"><code>stream.traces[10000]</code></pre>
 <pre><code>Trace sequence number within line: 10001
 1001 samples, dtype=float32, 250.00 Hz</code></pre>
-<pre class="python"><code>data.shape</code></pre>
-<pre><code>(500, 1001)</code></pre>
-<pre class="python"><code>np.shape(stream.traces)</code></pre>
-<pre><code>(48832,)</code></pre>
-<pre class="python"><code>vm = np.percentile(data, 95)
-print(&quot;The 95th percentile is {:.0f}; the max amplitude is {:.0f}&quot;.format(vm, data.max()))</code></pre>
-<pre><code>The 95th percentile is 4365; the max amplitude is 34148</code></pre>
-<pre class="python"><code>plt.imshow(data.T, cmap=&quot;Greys&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7fa6b270a750&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_67_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_61_1.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code>plt.figure(figsize=(16,8))
+<pre class="python"><code>#Stack multiple traces into a single numpy array
+data = np.stack([t.data for t in stream.traces[12320:12320+500]])</code></pre>
+<pre class="python"><code>#What does the stacked data look like
+data.shape</code></pre>
+<pre><code>(500, 1001)</code></pre>
+<pre class="python"><code>#Have a look at the data
+plt.imshow(data.T, cmap=&quot;Greys&quot;, aspect=&#39;auto&#39;)</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x16ebb509388&gt;</code></pre>
+<div class="figure">
+<img src="01b-dataframes_files/01b-dataframes_64_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>#Make a more imfortaive plot
+
+#Restrict the data to the 95th percentile
+vm = np.percentile(data, 95)
+
+print(&quot;The 95th percentile is {:.0f}; the max amplitude is {:.0f}&quot;.format(vm, data.max()))
+
+#Make the plot
+plt.figure(figsize=(16,8))
 plt.imshow(data.T, cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)
 plt.colorbar()
 plt.show()</code></pre>
+<pre><code>The 95th percentile is 4365; the max amplitude is 34148</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_68_0.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code>print(stream.textual_file_header.decode())</code></pre>
+<pre class="python"><code>#What else is in the data?
+
+#Print out the segy headers
+print(stream.textual_file_header.decode())</code></pre>
 <pre><code>C 1 CLIENT SANTOS                 COMPANY                       CREW NO         C 2 LINE    2000.00 AREA JAMES3D                                                C 3 REEL NO           DAY-START OF REEL     YEAR      OBSERVER                  C 4 INSTRUMENT  MFG            MODEL            SERIAL NO                       C 5 DATA TRACES/RECORD 24569  AUXILIARY TRACES/RECORD       0 CDP FOLD    40    C 6 SAMPLE INTERVAL  4.00   SAMPLES/TRACE  1001 BITS/IN      BYTES/SAMPLE  4    C 7 RECORDING FORMAT        FORMAT THIS REEL SEG-Y  MEASUREMENT SYSTEM METERS   C 8 SAMPLE CODE FLOATING PT                                                     C09 JAMES 3D                                                                    C10 WESTERNGECO                                                                 C11 MARCH 2007                                                                  C12 VERSION : James3D_pstm_tvfk_gain                                            C13 FILTERED TRIM PSTM STACK                                                    C14                                                                             C15 GEOMETRY APPLY-TAR-MINP-                                                    C16 NOISE REDUCTION - SWATT                                                     C17  SC DECON - SCAC                                                            C18 RESIDUAL_STATICS                                                            C19  TRIM_STATICS - INVERSE_TAR - SORT                                          C20 PSTM  - SORT  - GAIN                                                        C21 TRIM_STATICS - STACK                                                        C22 SPECW_10-70HZ -TVF_10-75HZ-TRACE_BALANCE                                    C23                                                                             C24                                                                             C25                                                                             C26                                                                             C27                                                                             C28                                                                             C29                                                                             C30                                                                             C31                                                                             C32                                                                             C33                                                                             C34                                                                             C35                                                                             C36                                                                             C37                                                                             C38                                                                             C39                                                                             C40 END EBCDIC                                                                  </code></pre>
-<pre class="python"><code>print(stream.traces[50].header)</code></pre>
-<pre><code>trace_sequence_number_within_line: 51
-trace_sequence_number_within_segy_file: 51
-original_field_record_number: 2000
+<pre class="python"><code>#And the header information for a particular trace
+print(stream.traces[1013].header)</code></pre>
+<pre><code>trace_sequence_number_within_line: 1014
+trace_sequence_number_within_segy_file: 1014
+original_field_record_number: 2004
 trace_number_within_the_original_field_record: 1
-energy_source_point_number: 10055
-ensemble_number: 10055
-trace_number_within_the_ensemble: 51
+energy_source_point_number: 10026
+ensemble_number: 10026
+trace_number_within_the_ensemble: 28
 trace_identification_code: 1
 number_of_vertically_summed_traces_yielding_this_trace: 1
-number_of_horizontally_stacked_traces_yielding_this_trace: 24
+number_of_horizontally_stacked_traces_yielding_this_trace: 13
 data_use: 1
 distance_from_center_of_the_source_point_to_the_center_of_the_receiver_group: 0
 receiver_group_elevation: 0
@@ -3179,10 +3245,10 @@ water_depth_at_source: 0
 water_depth_at_group: 0
 scalar_to_be_applied_to_all_elevations_and_depths: 1
 scalar_to_be_applied_to_all_coordinates: 1
-source_coordinate_x: 482680
-source_coordinate_y: 7035256
-group_coordinate_x: 482680
-group_coordinate_y: 7035256
+source_coordinate_x: 482760
+source_coordinate_y: 7035836
+group_coordinate_x: 482760
+group_coordinate_y: 7035836
 coordinate_units: 1
 weathering_velocity: 0
 subweathering_velocity: 0
@@ -3233,27 +3299,28 @@ x_coordinate_of_ensemble_position_of_this_trace: 0
 y_coordinate_of_ensemble_position_of_this_trace: 0
 for_3d_poststack_data_this_field_is_for_in_line_number: 0
 for_3d_poststack_data_this_field_is_for_cross_line_number: -4587520
-shotpoint_number: 2000
+shotpoint_number: 2004
 scalar_to_be_applied_to_the_shotpoint_number: 0
-trace_value_measurement_unit: 10055
+trace_value_measurement_unit: 10026
 transduction_constant_mantissa: 0
 transduction_constant_exponent: 0
 transduction_units: 0
 device_trace_identifier: 0
-scalar_to_be_applied_to_times: 57
+scalar_to_be_applied_to_times: 1052
 source_type_orientation: 0
 source_energy_direction_mantissa: 0
-source_energy_direction_exponent: 584
+source_energy_direction_exponent: 1607
 source_measurement_mantissa: 0
 source_measurement_exponent: 0
 source_measurement_unit: 0</code></pre>
-<pre class="python"><code>#Get the sample interval from the header info
+<pre class="python"><code>#You can automatically extract data you might need from the header
+#Get the sample interval from the header info
 dt = stream.traces[0].header.sample_interval_in_ms_for_this_trace / 1e6
 dt</code></pre>
 <pre><code>0.004</code></pre>
 <div class="challenge">
 
-<div id="challenge" class="section level3">
+<div id="challenge-1" class="section level3">
 <h3>Challenge</h3>
 <p>A single seismic section can be viewed with this snippet of code:</p>
 <pre class="python"><code>#Set number of xlines
