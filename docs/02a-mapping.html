@@ -489,8 +489,7 @@ div.tocify {
 <li><a href="http://matplotlib.org/gallery.html">Online gallery / cookbook</a></li>
 </ul>
 <p>Matplotlib fully embraces the python object-oriented model, but for some tasks the design of the object hierarchy is a little bit counter-intuitive. It’s best to find a common pattern for building plots and stick to it.</p>
-<pre class="python"><code>%matplotlib inline
-import matplotlib.pyplot as plt
+<pre class="python"><code>import matplotlib.pyplot as plt
 import numpy as np</code></pre>
 <pre class="python"><code>fig = plt.figure(figsize=(6, 4), facecolor=&quot;none&quot;)
 
@@ -801,18 +800,10 @@ plt.show()</code></pre>
 <p>Cartopy is built on top of a lot of the matplotlib graphing tools. It works by introducing a series of projections associated with the axes of a graph. On top of that there is a big toolkit for reading in images, finding data from standard web feeds, and manipulating geographical objects. Many, many libraries are involved and sometimes things break. Luckily the installation that is built for this course is about as reliable as we can ever get. I’m just warning you, though, that it can be quite tough if you want to put this on your laptop from scratch.</p>
 <p>We have a number of imports that we will need almost every time.</p>
 <p>If we are going to plot anything then we need to include <strong>matplotlib</strong>.</p>
-<pre class="python"><code>%pylab inline
-
-import matplotlib.pyplot as plt
+<pre class="python"><code>import matplotlib.pyplot as plt
 
 import cartopy
 import cartopy.crs as ccrs</code></pre>
-<pre><code>Populating the interactive namespace from numpy and matplotlib
-
-
-c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\IPython\core\magics\pylab.py:160: UserWarning: pylab import has clobbered these variables: [&#39;axes&#39;]
-`%matplotlib` prevents importing * from pylab and numpy
-  &quot;\n`%matplotlib` prevents importing * from pylab and numpy&quot;</code></pre>
 <pre class="python"><code>import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 
@@ -820,14 +811,14 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
 </code></pre>
-<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x1ee19d8d9c8&gt;</code></pre>
+<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x22b192635c8&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_13_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>The simplest plot: global map using the default image built into the package and adding coastlines</p>
 <pre class="python"><code>
-fig = plt.figure(figsize=(12, 12), facecolor=&quot;none&quot;)
+fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Mercator())
 
     # make the map global rather than have it zoom in to
@@ -838,7 +829,7 @@ ax.coastlines()
 ax.stock_img()
 
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x1ee19c24808&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x22b192ecb88&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_15_1.png" alt="" />
 <p class="caption">png</p>
@@ -846,14 +837,14 @@ ax.stock_img()
 <p>Try changing the projection - either look at the list in the link I gave you above or use the tab-completion feature of iPython to see what <code>ccrs</code> has available ( not everything will be a projection, but you can see what works and what breaks ).</p>
 <p>Here is how you can plot a region instead of the globe:</p>
 <pre class="python"><code>
-fig = plt.figure(figsize=(12, 12), facecolor=&quot;none&quot;)
+fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Robinson())    
 ax.set_extent([0, 40, 28, 48])
 
 ax.coastlines(resolution=&#39;50m&#39;)  
 ax.stock_img()
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x1ee19c5c948&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x22b19335948&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_17_1.png" alt="" />
 <p class="caption">png</p>
@@ -866,16 +857,21 @@ stock_img(name=&#39;ne_shaded&#39;) method of cartopy.mpl.geoaxes.GeoAxesSubplot
     
     Currently, the only (and default) option is a downsampled version of
     the Natural Earth shaded relief raster.</code></pre>
-<div id="challenge-todo" class="section level3 challenge">
-<h3>Challenge TODO</h3>
+<div id="challenge" class="section level3 challenge">
+<h3>Challenge</h3>
 <ul>
-<li>This session needs a map-making challenge!!!</li>
+<li>Make a plot of Australia.</li>
 </ul>
 <details>
 <summary>
 Solution
 </summary>
-<p>This is my solution</p>
+<pre class="python"><code>fig = plt.figure(figsize=(12, 12), facecolor=&quot;none&quot;)
+ax  = plt.axes(projection=ccrs.PlateCarree())    
+ax.set_extent([110, 155, -42, -10])
+
+ax.coastlines(resolution=&#39;50m&#39;)  
+ax.stock_img()</code></pre>
 </details>
 </div>
 <div id="key-points" class="section level3 keypoints">
@@ -885,7 +881,102 @@ Solution
 <li>Mapping with Cartopy</li>
 </ul>
 </div>
-<pre class="python"><code></code></pre>
+<pre class="python"><code>import scipy.io</code></pre>
+<pre class="python"><code>filename=&quot;../data/topodata.nc&quot;
+data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
+
+data.variables</code></pre>
+<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109548&gt;),
+             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109508&gt;),
+             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109788&gt;)])</code></pre>
+<pre class="python"><code>worldbath=data.variables[&#39;elev&#39;][:]
+lons=data.variables[&#39;X&#39;][:]
+lats=data.variables[&#39;Y&#39;][:]</code></pre>
+<pre class="python"><code>print(worldbath.shape)
+print(lons.shape)
+print(lats.shape)</code></pre>
+<pre><code>(2160, 4320)
+(4320,)
+(2160,)</code></pre>
+<pre class="python"><code>plt.pcolormesh(worldbath)</code></pre>
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x22b1ae5dd08&gt;</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_25_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>matplotlib lib has no native understaning of geocentric coordinate systems. Cartopy does. And matplotlib commands with “x” and “y” values of latitudes and longitudes make sense too!</p>
+<pre class="python"><code>fig = plt.figure(figsize=(6, 6))
+ax = plt.axes(projection=ccrs.Orthographic(-10, 45))
+ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
+plt.show()</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_27_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>This is fairly high resolution for what we are looking at, so we could downsample the grid to save some time. Also, not all grids are global, so we can subset the data to represent perhaps a small area we may have a grid/image over.</p>
+<pre class="python"><code>#Take a subset of the data by slicing the array with indexing
+subbath=worldbath[1200:1650:2,1300:1900:2]
+#Take the corresponding lat/lon values as the main data array
+sublons=lons[1300:1900:2]
+sublats=lats[1200:1650:2]</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(8, 8),dpi=300)
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+mapdat=ax.pcolormesh(sublons,sublats,subbath, 
+              transform=ccrs.PlateCarree(),cmap=plt.cm.gist_earth,vmax=1000,vmin=-6000)
+ax.coastlines(resolution=&#39;50m&#39;,color=&#39;red&#39;)
+
+ax.add_feature(cartopy.feature.OCEAN, zorder=0)
+ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor=&#39;blue&#39;)
+    
+#ax.gridlines(color=&#39;gray&#39;,draw_labels=True,x_inline=False, y_inline=False)
+gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+             linewidth=0.3, color=&#39;gray&#39;, alpha=0.5, linestyle=&#39;-&#39;,
+             x_inline=False, y_inline=False)
+
+gl.top_labels = False
+gl.bottom_labels = True
+gl.right_labels = False
+gl.left_labels = True
+gl.xlabel_style = {&#39;size&#39;: 8, &#39;color&#39;: &#39;gray&#39;}
+gl.ylabel_style = {&#39;size&#39;: 8, &#39;color&#39;: &#39;gray&#39;}
+
+#Make a Colorbar
+# cbar=plt.colorbar(mapdat, ax=ax, orientation=&quot;horizontal&quot;, pad=0.05, fraction=0.05, shrink=0.5,extend=&#39;both&#39;)
+# cbar.set_label(&#39;Height (m)&#39;)
+
+cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor=&#39;white&#39;)
+cbar = plt.colorbar(mapdat, cax = cbaxes,orientation=&quot;horizontal&quot;, ticks=[-5000,-2500,0,1000],
+                   extend=&#39;both&#39;)
+cbar.set_label(&#39;Height (m)&#39;, labelpad=10,fontsize=10)
+cbar.ax.xaxis.set_label_position(&#39;top&#39;)
+cbar.ax.label_style = {&#39;size&#39;: 12, &#39;color&#39;: &#39;black&#39;}
+cbar.outline.set_edgecolor(&#39;black&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="02a-mapping_files/02a-mapping_30_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div id="challenge-1" class="section level3 challenge">
+<h3>Challenge</h3>
+<ul>
+<li>Make an orthographic plot centred on Australia.</li>
+<li>Add some “blue” coastlines</li>
+<li>Mask out the land areas with:</li>
+</ul>
+<pre class="python"><code>ax.add_feature(cartopy.feature.LAND,zorder=1)</code></pre>
+<details>
+<summary>
+Solution
+</summary>
+<pre class="python"><code>fig = plt.figure(figsize=(6, 6), facecolor=&quot;none&quot;)
+ax = plt.axes(projection=ccrs.Orthographic(140, -30))
+ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
+ax.add_feature(cartopy.feature.LAND,zorder=1,edgecolor=&#39;blue&#39;)
+ax.coastlines(resolution=&#39;50m&#39;,color=&#39;blue&#39;)
+plt.show()</code></pre>
+</details>
+</div>
 </div>
 </div>
 

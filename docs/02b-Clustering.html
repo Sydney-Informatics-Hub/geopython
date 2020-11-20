@@ -502,8 +502,8 @@ import matplotlib.pyplot as plt
 #Set the amount of isotope remaining (i.e. 1=100%)
 theta_0 = 1.0
 
-#Create a regularly spaced vector or time values
-#1000 units between 0 and 1.
+#Create a regularly spaced vector of time values
+#20 units between 0 and 1.
 steps=20
 timelength=1.0
 time_values = np.linspace(0,timelength,steps)
@@ -557,7 +557,7 @@ steps = 20
 timelength = 1.0
 delta_t = timelength / steps
 
-#Create a regularly spaced vector or time values
+#Create a regularly spaced vector of time values
 time_values = np.linspace(0,timelength,steps)
 
 #Create an empty array to store the solutions
@@ -578,7 +578,7 @@ exact_theta_values = theta_0 * np.exp(-const_k * time_values)
 plt.plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)
 plt.plot(time_values, exact_theta_values, &#39;b-&#39;)
 </code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x2c6ed1273c8&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x1f928a62308&gt;]</code></pre>
 <div class="figure">
 <img src="02b-Clustering_files/02b-Clustering_4_1.png" alt="" />
 <p class="caption">png</p>
@@ -596,17 +596,14 @@ plt.plot(time_values, exact_theta_values, &#39;b-&#39;)
 <p>Substitute to estimate the gradient at the mid-point <span class="math display">\[
     \left. \frac{d \theta}{d t} \right|_{t+\Delta t /2} \approx -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]
 \]</span></p>
-<p>Use this value as the average gradient over the interval \( tt+t\) to update \(\)</p>
-<p><span class="math display">\[
-    \begin{split}
-        \theta(t+\Delta t) &amp; \approx \theta(t) + \delta t \left(  -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]  \right) \\
-            &amp; \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)
-    \end{split}
-\]</span></p>
-<p>It’s worth noting that the Taylor expansion of the solution should look like <span class="math display">\[        
-    e^{-kt} = 1 - kt + \frac{k^2 t^2}{2!} - \frac{k^3 t^3}{3!} + \ldots
-\]</span></p>
-<p>The Runge Kutta method can be extended by repeating the estimates on smaller regions of the interval. The usual choice is fourth order RK. This is largely because, obviously, it’s accurate to fourth order, but also because the number of operations to go higher than fourth order is disproportionately large.</p>
+<p>Use this value as the average gradient over the interval <span class="math inline">\(t\rightarrow t+\Delta t\)</span> to update \(\)</p>
+<div align="center">
+<p><span class="math inline">\(\theta(t+\Delta t) \approx \theta(t) + \delta t \left( -k \theta(t) \left[ 1-\frac{k\Delta t}{2} \right] \right)\)</span></p>
+</div>
+Which gives the Second Order Runge-Kutta estimation for updated <span class="math inline">\(\theta\)</span> values:
+<div align="center">
+<pre><code>       $\theta(t+\Delta t) \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)$</code></pre>
+</div>
 </div>
 <div id="challenge" class="section level3 challenge">
 <h3>Challenge</h3>
@@ -621,7 +618,7 @@ steps = 20
 timelength = 1.0
 delta_t = timelength / steps
 
-#Create a regularly spaced vector or time values
+#Create a regularly spaced vector of time values
 time_values = np.linspace(0,timelength,steps)
 
 #Create an empty array to store the solutions
@@ -669,7 +666,7 @@ plt.plot(time_values, exact_theta_values, &#39;b-&#39;)</code></pre>
 </div>
 </div>
 <div id="scipy.interpolate" class="section level2">
-<h2><code>scipy.interpolate</code></h2>
+<h2>scipy.interpolate</h2>
 <p>This module provides general interpolation capability for data in 1, 2, and higher dimensions. This list of features is from the documentation:</p>
 <ul>
 <li><p>A class representing an interpolant (interp1d) in 1-D, offering several interpolation methods.</p></li>
@@ -696,9 +693,8 @@ plt.show()</code></pre>
 <p class="caption">png</p>
 </div>
 </div>
-</div>
-<div id="nd-data" class="section level2">
-<h2>nD data</h2>
+<div id="nd-data" class="section level3">
+<h3>nD data</h3>
 <p>There are fewer approaches to n-dimensional data, the evaluation for arbitrary dimensions is always for points on an n dimensional grid.</p>
 <pre class="python"><code>from scipy.interpolate import griddata
 
@@ -774,8 +770,8 @@ plt.show()</code></pre>
 <p class="caption">png</p>
 </div>
 </div>
-<div id="splines" class="section level2">
-<h2>Splines</h2>
+<div id="splines" class="section level3">
+<h3>Splines</h3>
 <p>Which have the added benefit of giving smooth derivative information</p>
 <pre class="python"><code>from scipy.interpolate import splrep, splev</code></pre>
 <pre class="python"><code>x = np.arange(0, 2*np.pi+np.pi/4, 2*np.pi/8)
@@ -836,6 +832,7 @@ plt.show()</code></pre>
 <img src="02b-Clustering_files/02b-Clustering_27_0.png" alt="" />
 <p class="caption">png</p>
 </div>
+</div>
 <div id="see-also" class="section level3">
 <h3>See also</h3>
 <ul>
@@ -885,7 +882,7 @@ dvpClust=dvp[kmeans.labels_==centre]</code></pre>
 <pre class="python"><code>fig = plt.figure()
 ax = fig.add_subplot(111, projection=&#39;3d&#39;)
 ax.scatter(lonClust, latClust, -depthClust, c=dvpClust)</code></pre>
-<pre><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x2c6eedbf9c8&gt;</code></pre>
+<pre><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1f93d669648&gt;</code></pre>
 <div class="figure">
 <img src="02b-Clustering_files/02b-Clustering_40_1.png" alt="" />
 <p class="caption">png</p>

@@ -28,7 +28,6 @@ It's best to find a common pattern for building plots and stick to it.
 
 
 ```python
-%matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
 ```
@@ -410,21 +409,11 @@ If we are going to plot anything then we need to include **matplotlib**.
 
 
 ```python
-%pylab inline
-
 import matplotlib.pyplot as plt
 
 import cartopy
 import cartopy.crs as ccrs
 ```
-
-    Populating the interactive namespace from numpy and matplotlib
-
-
-    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\IPython\core\magics\pylab.py:160: UserWarning: pylab import has clobbered these variables: ['axes']
-    `%matplotlib` prevents importing * from pylab and numpy
-      "\n`%matplotlib` prevents importing * from pylab and numpy"
-
 
 
 ```python
@@ -440,7 +429,7 @@ ax.coastlines()
 
 
 
-    <cartopy.mpl.feature_artist.FeatureArtist at 0x1ee19d8d9c8>
+    <cartopy.mpl.feature_artist.FeatureArtist at 0x22b192635c8>
 
 
 
@@ -456,7 +445,7 @@ The simplest plot: global map using the default image built into the package and
 
 ```python
 
-fig = plt.figure(figsize=(12, 12), facecolor="none")
+fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Mercator())
 
     # make the map global rather than have it zoom in to
@@ -472,7 +461,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x1ee19c24808>
+    <matplotlib.image.AxesImage at 0x22b192ecb88>
 
 
 
@@ -490,7 +479,7 @@ Here is how you can plot a region instead of the globe:
 
 ```python
 
-fig = plt.figure(figsize=(12, 12), facecolor="none")
+fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Robinson())    
 ax.set_extent([0, 40, 28, 48])
 
@@ -502,7 +491,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x1ee19c5c948>
+    <matplotlib.image.AxesImage at 0x22b19335948>
 
 
 
@@ -529,14 +518,21 @@ help(ax.stock_img)
 
 <div class="challenge">
 
-### Challenge TODO
+### Challenge
 
-- This session needs a map-making challenge!!!
+- Make a plot of Australia.
 
 <details>
 <summary>Solution</summary>
 
-This is my solution
+```python
+fig = plt.figure(figsize=(12, 12), facecolor="none")
+ax  = plt.axes(projection=ccrs.PlateCarree())    
+ax.set_extent([110, 155, -42, -10])
+
+ax.coastlines(resolution='50m')  
+ax.stock_img()
+```
 
 </details>
 </div>
@@ -550,5 +546,158 @@ This is my solution
 
 
 ```python
-
+import scipy.io
 ```
+
+
+```python
+filename="../data/topodata.nc"
+data = scipy.io.netcdf.netcdf_file(filename,'r')
+
+data.variables
+```
+
+
+
+
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x22b1b109548>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x22b1b109508>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x22b1b109788>)])
+
+
+
+
+```python
+worldbath=data.variables['elev'][:]
+lons=data.variables['X'][:]
+lats=data.variables['Y'][:]
+```
+
+
+```python
+print(worldbath.shape)
+print(lons.shape)
+print(lats.shape)
+```
+
+    (2160, 4320)
+    (4320,)
+    (2160,)
+
+
+
+```python
+plt.pcolormesh(worldbath)
+```
+
+
+
+
+    <matplotlib.collections.QuadMesh at 0x22b1ae5dd08>
+
+
+
+
+    
+![png](02a-mapping_files/02a-mapping_25_1.png)
+    
+
+
+matplotlib lib has no native understaning of geocentric coordinate systems.
+Cartopy does. And matplotlib commands with "x" and "y" values of latitudes and longitudes make sense too!
+
+
+```python
+fig = plt.figure(figsize=(6, 6))
+ax = plt.axes(projection=ccrs.Orthographic(-10, 45))
+ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
+plt.show()
+```
+
+
+    
+![png](02a-mapping_files/02a-mapping_27_0.png)
+    
+
+
+This is fairly high resolution for what we are looking at, so we could downsample the grid to save some time.
+Also, not all grids are global, so we can subset the data to represent perhaps a small area we may have a grid/image over.
+
+
+```python
+#Take a subset of the data by slicing the array with indexing
+subbath=worldbath[1200:1650:2,1300:1900:2]
+#Take the corresponding lat/lon values as the main data array
+sublons=lons[1300:1900:2]
+sublats=lats[1200:1650:2]
+```
+
+
+```python
+fig = plt.figure(figsize=(8, 8),dpi=300)
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+mapdat=ax.pcolormesh(sublons,sublats,subbath, 
+              transform=ccrs.PlateCarree(),cmap=plt.cm.gist_earth,vmax=1000,vmin=-6000)
+ax.coastlines(resolution='50m',color='red')
+
+ax.add_feature(cartopy.feature.OCEAN, zorder=0)
+ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='blue')
+    
+#ax.gridlines(color='gray',draw_labels=True,x_inline=False, y_inline=False)
+gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+             linewidth=0.3, color='gray', alpha=0.5, linestyle='-',
+             x_inline=False, y_inline=False)
+
+gl.top_labels = False
+gl.bottom_labels = True
+gl.right_labels = False
+gl.left_labels = True
+gl.xlabel_style = {'size': 8, 'color': 'gray'}
+gl.ylabel_style = {'size': 8, 'color': 'gray'}
+
+#Make a Colorbar
+# cbar=plt.colorbar(mapdat, ax=ax, orientation="horizontal", pad=0.05, fraction=0.05, shrink=0.5,extend='both')
+# cbar.set_label('Height (m)')
+
+cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor='white')
+cbar = plt.colorbar(mapdat, cax = cbaxes,orientation="horizontal", ticks=[-5000,-2500,0,1000],
+                   extend='both')
+cbar.set_label('Height (m)', labelpad=10,fontsize=10)
+cbar.ax.xaxis.set_label_position('top')
+cbar.ax.label_style = {'size': 12, 'color': 'black'}
+cbar.outline.set_edgecolor('black')
+
+plt.show()
+```
+
+
+    
+![png](02a-mapping_files/02a-mapping_30_0.png)
+    
+
+
+<div class="challenge">
+
+### Challenge
+
+- Make an orthographic plot centred on Australia.
+- Add some "blue" coastlines
+- Mask out the land areas with:
+```python
+ax.add_feature(cartopy.feature.LAND,zorder=1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```python
+fig = plt.figure(figsize=(6, 6), facecolor="none")
+ax = plt.axes(projection=ccrs.Orthographic(140, -30))
+ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
+ax.add_feature(cartopy.feature.LAND,zorder=1,edgecolor='blue')
+ax.coastlines(resolution='50m',color='blue')
+plt.show()
+```
+
+</details>
+</div>

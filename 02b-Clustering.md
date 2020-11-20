@@ -48,8 +48,8 @@ import matplotlib.pyplot as plt
 #Set the amount of isotope remaining (i.e. 1=100%)
 theta_0 = 1.0
 
-#Create a regularly spaced vector or time values
-#1000 units between 0 and 1.
+#Create a regularly spaced vector of time values
+#20 units between 0 and 1.
 steps=20
 timelength=1.0
 time_values = np.linspace(0,timelength,steps)
@@ -130,7 +130,7 @@ steps = 20
 timelength = 1.0
 delta_t = timelength / steps
 
-#Create a regularly spaced vector or time values
+#Create a regularly spaced vector of time values
 time_values = np.linspace(0,timelength,steps)
 
 #Create an empty array to store the solutions
@@ -156,7 +156,7 @@ plt.plot(time_values, exact_theta_values, 'b-')
 
 
 
-    [<matplotlib.lines.Line2D at 0x2c6ed1273c8>]
+    [<matplotlib.lines.Line2D at 0x1f928a62308>]
 
 
 
@@ -185,21 +185,16 @@ $$
 	\left. \frac{d \theta}{d t} \right|_{t+\Delta t /2} \approx -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]
 $$
 
-Use this value as the average gradient over the interval \\( t\rightarrow t+\Delta t\\) to update \\(\theta\\)
+Use this value as the average gradient over the interval $t\rightarrow t+\Delta t$ to update \\(\theta\\)
 
-$$
-    \begin{split}
-        \theta(t+\Delta t) & \approx \theta(t) + \delta t \left(  -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]  \right) \\
-            & \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)
-    \end{split}
-$$
+<div align="center">
+$\theta(t+\Delta t) \approx \theta(t) + \delta t \left(  -k \theta(t)  \left[ 1-\frac{k\Delta t}{2} \right]  \right)$ 
+</div>
 
-It's worth noting that the Taylor expansion of the solution should look like
-$$        
-    e^{-kt} = 1 - kt + \frac{k^2 t^2}{2!} - \frac{k^3 t^3}{3!} + \ldots
-$$
-	
-The Runge Kutta method can be extended by repeating the estimates on smaller regions of the interval. The usual choice is fourth order RK. This is largely because, obviously, it's accurate to fourth order, but also because the number of operations to go higher than fourth order is disproportionately large. 
+Which gives the Second Order Runge-Kutta estimation for updated $\theta$ values:
+<div align="center">
+           $\theta(t+\Delta t) \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)$
+</div>
 
 <div class="challenge">
 
@@ -217,7 +212,7 @@ steps = 20
 timelength = 1.0
 delta_t = timelength / steps
 
-#Create a regularly spaced vector or time values
+#Create a regularly spaced vector of time values
 time_values = np.linspace(0,timelength,steps)
 
 #Create an empty array to store the solutions
@@ -271,7 +266,7 @@ plt.plot(time_values, exact_theta_values, 'b-')
 
 
 
-## `scipy.interpolate`
+## scipy.interpolate
 
 This module provides general interpolation capability for data in 1, 2, and higher dimensions. This list of features is from the documentation:
 
@@ -321,7 +316,7 @@ plt.show()
     
 
 
-## nD data
+### nD data
 
 There are fewer approaches to n-dimensional data, the evaluation for arbitrary dimensions is always for points on an n dimensional grid.
 
@@ -423,7 +418,7 @@ plt.show()
     
 
 
-## Splines 
+### Splines 
 
 Which have the added benefit of giving smooth derivative information
 
@@ -616,7 +611,7 @@ ax.scatter(lonClust, latClust, -depthClust, c=dvpClust)
 
 
 
-    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x2c6eedbf9c8>
+    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1f93d669648>
 
 
 
