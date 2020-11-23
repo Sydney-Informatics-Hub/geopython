@@ -429,7 +429,7 @@ ax.coastlines()
 
 
 
-    <cartopy.mpl.feature_artist.FeatureArtist at 0x1b91bf77508>
+    <cartopy.mpl.feature_artist.FeatureArtist at 0x1fb3e499708>
 
 
 
@@ -461,7 +461,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x1b91bf7e1c8>
+    <matplotlib.image.AxesImage at 0x1fb3e499bc8>
 
 
 
@@ -491,7 +491,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x1b91c036fc8>
+    <matplotlib.image.AxesImage at 0x1fb3e562f48>
 
 
 
@@ -520,15 +520,15 @@ help(ax.stock_img)
 
 ### Challenge
 
-- Make a plot of Australia.
+- Make a Mollweide plot of Australia.
 
 <details>
 <summary>Solution</summary>
 
 ```python
 fig = plt.figure(figsize=(12, 12), facecolor="none")
-ax  = plt.axes(projection=ccrs.PlateCarree())    
-ax.set_extent([110, 155, -42, -10])
+ax  = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+ax.set_extent([112, 153, -43, -10]) 
 
 ax.coastlines(resolution='50m')  
 ax.stock_img()
@@ -537,37 +537,37 @@ ax.stock_img()
 </details>
 </div>
 
-<div class="keypoints">
-### Key points
-
-- Easy to Hard Matplotlib examples
-- Mapping with Cartopy
-</div>
+### NetCDF data and more Cartopy
 
 
 ```python
+#We use the scipy netcdf reader
 import scipy.io
 ```
 
 
 ```python
+#Set the file name and read in the data
 filename="../data/topodata.nc"
 data = scipy.io.netcdf.netcdf_file(filename,'r')
 
+#Netcdf could be stored with multiple different formats
+#Print out these data
 data.variables
 ```
 
 
 
 
-    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x1b91de0ffc8>),
-                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x1b91de0ff88>),
-                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x1b91db7e208>)])
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x1fb3e532308>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x1fb4031d808>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x1fb4031da48>)])
 
 
 
 
 ```python
+#Set each layer as a variable
 worldbath=data.variables['elev'][:]
 lons=data.variables['X'][:]
 lats=data.variables['Y'][:]
@@ -587,13 +587,14 @@ print(lats.shape)
 
 
 ```python
+#A quick plot of the main dataset
 plt.pcolormesh(worldbath)
 ```
 
 
 
 
-    <matplotlib.collections.QuadMesh at 0x1b91b8a8808>
+    <matplotlib.collections.QuadMesh at 0x1fb4008b808>
 
 
 
@@ -610,6 +611,7 @@ matplotlib commands with "x" and "y" values of latitudes and longitudes make sen
 
 
 ```python
+#A more earthly plot of the data
 fig = plt.figure(figsize=(6, 6))
 ax = plt.axes(projection=ccrs.Orthographic(-10, 45))
 ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
@@ -646,11 +648,9 @@ ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
 mapdat=ax.pcolormesh(sublons,sublats,subbath, 
               transform=ccrs.PlateCarree(),cmap=plt.cm.gist_earth,vmax=1000,vmin=-6000)
 
-#Add coastlines, oceans, land, or restrict the image to an extent
-#ax.coastlines(resolution='50m',color='black')
+#Add background oceans, land
 #ax.add_feature(cartopy.feature.OCEAN, zorder=0)
-#ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='blue')
-#ax.set_extent([112, 153, -43, -10])    
+#ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='blue')  
 
 #Add Gridlines
 gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
@@ -667,7 +667,7 @@ gl.ylabel_style = {'size': 8, 'color': 'gray'}
 
 
 #Add a colorbar axes
-cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor='white')
+cbaxes = fig.add_axes([0.60, 0.22, 0.2, 0.015],frameon=True,facecolor='white')
 
 #Add the colorbar to the axes with the data
 cbar = plt.colorbar(mapdat, cax = cbaxes,orientation="horizontal",extend='both')
@@ -680,7 +680,7 @@ cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
 plt.show()
 ```
 
-    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:39: UserWarning: FixedFormatter should only be used together with FixedLocator
+    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
 
 
 
@@ -693,19 +693,58 @@ plt.show()
 
 ### Challenge
 
-- Make a new map!
-```python
-```
+- Re-make the last map, but with the full topo dataset.
+- Crop the image.
+- Add coastlines back in.
+- Pick a different color scale. 
+- Move the colorbar to the bottom left.
 
 <details>
 <summary>Solution</summary>
 
 ```python
-fig = plt.figure(figsize=(6, 6), facecolor="none")
-ax = plt.axes(projection=ccrs.Orthographic(140, -30))
-ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
-ax.add_feature(cartopy.feature.LAND,zorder=1,edgecolor='blue')
-ax.coastlines(resolution='50m',color='blue')
+#Still make the subsets, but at full res, otherwise plot takes long time
+subbath=worldbath[1200:1650,1300:1900]
+sublons=lons[1300:1900]
+sublats=lats[1200:1650]
+
+#Make the figure object
+fig = plt.figure(figsize=(8, 8),dpi=300)
+
+#Create the main plot axes
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+
+#Plot the data on the axes
+mapdat=ax.pcolormesh(sublons,sublats,subbath, 
+              transform=ccrs.PlateCarree(),cmap=plt.cm.terrain,vmax=1000,vmin=-6000)
+
+#Add coastlines, restrict the image to an extent
+ax.coastlines(resolution='50m',color='black')
+ax.set_extent([112, 153, -43, -10])    
+
+#Add Gridlines
+gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+             linewidth=0.1, color='gray', alpha=0.5, linestyle='-',
+             x_inline=False, y_inline=False)
+
+gl.top_labels = True
+gl.bottom_labels = False
+gl.right_labels = False
+gl.left_labels = True
+gl.xlabel_style = {'size': 8, 'color': 'gray'}
+gl.ylabel_style = {'size': 8, 'color': 'gray'}
+
+#Add a colorbar axes
+cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor='white')
+
+#Add the colorbar to the axes with the data
+cbar = plt.colorbar(mapdat, cax = cbaxes,orientation="horizontal",extend='both')
+
+#Fix additional options of the colorbar
+cbar.set_label('Height (m)', labelpad=-40,fontsize=8,color='white')
+cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
+
+#Show the plot!
 plt.show()
 ```
 
