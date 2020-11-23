@@ -507,6 +507,7 @@ shapes  = shapeRead.shapes()
 fields  = shapeRead.fields
 Nshp    = len(shapes)</code></pre>
 <pre class="python"><code>print(Nshp) #print the Number of items in the shapefile</code></pre>
+<pre><code>7635</code></pre>
 <pre class="python"><code>fields #print the fields</code></pre>
 <pre><code>[(&#39;DeletionFlag&#39;, &#39;C&#39;, 1, 0),
  [&#39;HydroID&#39;, &#39;N&#39;, 10, 0],
@@ -2873,11 +2874,11 @@ SLAT     4071
 FILL     4020
 SDST     3209
         ...  
-SCOR        1
-DIOR        1
-ARKS        1
-CALU        1
 HFLS        1
+REGO        1
+DUST        1
+SCOR        1
+ARKS        1
 Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
 <pre class="python"><code>#plot a bar chart of the lith codes
 lithCounts.plot.bar(rot=90,figsize=(15,5))</code></pre>
@@ -2985,35 +2986,46 @@ read_files</code></pre>
  &#39;../data/WELL\\BoolLagoon1.las&#39;,
  &#39;../data/WELL\\Bungaloo1.las&#39;,
  &#39;../data/WELL\\Burrungule1.las&#39;]</code></pre>
+<p><strong>Note:</strong> the possibility of Windows VS Unix character interpretations.</p>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
 for file in read_files:
     print(&quot;FILE:&quot;, file)
-    well=re.split(&#39;/|.las&#39;,file)
-    print(&quot;SPLIT:&quot;, well)
+    #Split the filepath at a &quot;/&quot; OR a &quot;.las&quot; OR a &quot;\&quot;
+    well=re.split(r&#39;/|\\|.las&#39;,file)
+    print(&quot;SPLIT:&quot;, well, &quot;\n&quot;)
     well_names.append(well[3])
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
 <pre><code>FILE: ../data/WELL\Balnaves.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Balnaves&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\Banyula.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Banyula&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\Beachport1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Beachport1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\BeachportEast1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BeachportEast1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\BiscuitFlat1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BiscuitFlat1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\BoolLagoon1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\BoolLagoon1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\Bungaloo1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Bungaloo1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
+
 FILE: ../data/WELL\Burrungule1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL\\Burrungule1&#39;, &#39;&#39;]
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
+
 There are  8 wells.
-[&#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;, &#39;&#39;]</code></pre>
-<pre class="python"><code>#Read in the log files to lasio
+[&#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Beachport1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;Burrungule1&#39;]</code></pre>
+<pre class="python"><code>#Now actually read in the log files to lasio
+#The last cell was just to automatically make a nicely formatted list of well names!
 lases = []
 for files in read_files:
     las = lasio.read(files)
@@ -3031,29 +3043,29 @@ for well in lases:
     print(&quot;Wellid:&quot;, j, well_names[j])
     j+=1
     print(well.keys())</code></pre>
-<pre><code>Wellid: 0 
+<pre><code>Wellid: 0 Balnaves
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 1 
+Wellid: 1 Banyula
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 2 
+Wellid: 2 Beachport1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 3 
+Wellid: 3 BeachportEast1
 [&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 4 
+Wellid: 4 BiscuitFlat1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 5 
+Wellid: 5 BoolLagoon1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 6 
+Wellid: 6 Bungaloo1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 7 
+Wellid: 7 Burrungule1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
 <pre class="python"><code>#Set a wellid you want to explore more
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x16eb2579b08&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x23f0c2b90c8&gt;]</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_53_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_54_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You have just plotted the density (DRHO) at each measured depth point. You can clean this up and present it better in the next few cells.</p>
@@ -3185,7 +3197,7 @@ plt.show()</code></pre>
 <pre><code>Trace sequence number within line: 10001
 1001 samples, dtype=float32, 250.00 Hz</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_61_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_62_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#Stack multiple traces into a single numpy array
@@ -3195,9 +3207,9 @@ data.shape</code></pre>
 <pre><code>(500, 1001)</code></pre>
 <pre class="python"><code>#Have a look at the data
 plt.imshow(data.T, cmap=&quot;Greys&quot;, aspect=&#39;auto&#39;)</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x16ebb509388&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x23f1117dd08&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_64_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#Make a more imfortaive plot
@@ -3214,7 +3226,7 @@ plt.colorbar()
 plt.show()</code></pre>
 <pre><code>The 95th percentile is 4365; the max amplitude is 34148</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_66_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#What else is in the data?

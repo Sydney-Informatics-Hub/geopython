@@ -59,6 +59,9 @@ Nshp    = len(shapes)
 print(Nshp) #print the Number of items in the shapefile
 ```
 
+    7635
+
+
 
 ```python
 fields #print the fields
@@ -1353,11 +1356,11 @@ lithCounts
     FILL     4020
     SDST     3209
             ...  
-    SCOR        1
-    DIOR        1
-    ARKS        1
-    CALU        1
     HFLS        1
+    REGO        1
+    DUST        1
+    SCOR        1
+    ARKS        1
     Name: MajorLithCode, Length: 81, dtype: int64
 
 
@@ -1523,14 +1526,17 @@ read_files
 
 
 
+**Note:** the possibility of Windows VS Unix character interpretations.
+
 
 ```python
 #Cut out just the name of the well from the filenames
 well_names = []
 for file in read_files:
     print("FILE:", file)
-    well=re.split('/|.las',file)
-    print("SPLIT:", well)
+    #Split the filepath at a "/" OR a ".las" OR a "\"
+    well=re.split(r'/|\\|.las',file)
+    print("SPLIT:", well, "\n")
     well_names.append(well[3])
 
 print("There are ", len(well_names), "wells.")
@@ -1538,28 +1544,37 @@ print(well_names)
 ```
 
     FILE: ../data/WELL\Balnaves.las
-    SPLIT: ['..', 'data', 'WELL\\Balnaves', '']
+    SPLIT: ['..', 'data', 'WELL', 'Balnaves', ''] 
+    
     FILE: ../data/WELL\Banyula.las
-    SPLIT: ['..', 'data', 'WELL\\Banyula', '']
+    SPLIT: ['..', 'data', 'WELL', 'Banyula', ''] 
+    
     FILE: ../data/WELL\Beachport1.las
-    SPLIT: ['..', 'data', 'WELL\\Beachport1', '']
+    SPLIT: ['..', 'data', 'WELL', 'Beachport1', ''] 
+    
     FILE: ../data/WELL\BeachportEast1.las
-    SPLIT: ['..', 'data', 'WELL\\BeachportEast1', '']
+    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
+    
     FILE: ../data/WELL\BiscuitFlat1.las
-    SPLIT: ['..', 'data', 'WELL\\BiscuitFlat1', '']
+    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
+    
     FILE: ../data/WELL\BoolLagoon1.las
-    SPLIT: ['..', 'data', 'WELL\\BoolLagoon1', '']
+    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', ''] 
+    
     FILE: ../data/WELL\Bungaloo1.las
-    SPLIT: ['..', 'data', 'WELL\\Bungaloo1', '']
+    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', ''] 
+    
     FILE: ../data/WELL\Burrungule1.las
-    SPLIT: ['..', 'data', 'WELL\\Burrungule1', '']
+    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', ''] 
+    
     There are  8 wells.
-    ['', '', '', '', '', '', '', '']
+    ['Balnaves', 'Banyula', 'Beachport1', 'BeachportEast1', 'BiscuitFlat1', 'BoolLagoon1', 'Bungaloo1', 'Burrungule1']
 
 
 
 ```python
-#Read in the log files to lasio
+#Now actually read in the log files to lasio
+#The last cell was just to automatically make a nicely formatted list of well names!
 lases = []
 for files in read_files:
     las = lasio.read(files)
@@ -1591,21 +1606,21 @@ for well in lases:
     print(well.keys())
 ```
 
-    Wellid: 0 
+    Wellid: 0 Balnaves
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 1 
+    Wellid: 1 Banyula
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 2 
+    Wellid: 2 Beachport1
     ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
-    Wellid: 3 
+    Wellid: 3 BeachportEast1
     ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 4 
+    Wellid: 4 BiscuitFlat1
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 5 
+    Wellid: 5 BoolLagoon1
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 6 
+    Wellid: 6 Bungaloo1
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 7 
+    Wellid: 7 Burrungule1
     ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
 
 
@@ -1624,13 +1639,13 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x16eb2579b08>]
+    [<matplotlib.lines.Line2D at 0x23f0c2b90c8>]
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_53_1.png)
+![png](01b-dataframes_files/01b-dataframes_54_1.png)
     
 
 
@@ -1799,7 +1814,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_61_1.png)
+![png](01b-dataframes_files/01b-dataframes_62_1.png)
     
 
 
@@ -1831,13 +1846,13 @@ plt.imshow(data.T, cmap="Greys", aspect='auto')
 
 
 
-    <matplotlib.image.AxesImage at 0x16ebb509388>
+    <matplotlib.image.AxesImage at 0x23f1117dd08>
 
 
 
 
     
-![png](01b-dataframes_files/01b-dataframes_64_1.png)
+![png](01b-dataframes_files/01b-dataframes_65_1.png)
     
 
 
@@ -1862,7 +1877,7 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_65_1.png)
+![png](01b-dataframes_files/01b-dataframes_66_1.png)
     
 
 

@@ -429,7 +429,7 @@ ax.coastlines()
 
 
 
-    <cartopy.mpl.feature_artist.FeatureArtist at 0x22b192635c8>
+    <cartopy.mpl.feature_artist.FeatureArtist at 0x1b91bf77508>
 
 
 
@@ -461,7 +461,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x22b192ecb88>
+    <matplotlib.image.AxesImage at 0x1b91bf7e1c8>
 
 
 
@@ -491,7 +491,7 @@ ax.stock_img()
 
 
 
-    <matplotlib.image.AxesImage at 0x22b19335948>
+    <matplotlib.image.AxesImage at 0x1b91c036fc8>
 
 
 
@@ -560,9 +560,9 @@ data.variables
 
 
 
-    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x22b1b109548>),
-                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x22b1b109508>),
-                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x22b1b109788>)])
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x1b91de0ffc8>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x1b91de0ff88>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x1b91db7e208>)])
 
 
 
@@ -593,7 +593,7 @@ plt.pcolormesh(worldbath)
 
 
 
-    <matplotlib.collections.QuadMesh at 0x22b1ae5dd08>
+    <matplotlib.collections.QuadMesh at 0x1b91b8a8808>
 
 
 
@@ -604,7 +604,9 @@ plt.pcolormesh(worldbath)
 
 
 matplotlib lib has no native understaning of geocentric coordinate systems.
-Cartopy does. And matplotlib commands with "x" and "y" values of latitudes and longitudes make sense too!
+Cartopy does. 
+
+matplotlib commands with "x" and "y" values of latitudes and longitudes make sense too!
 
 
 ```python
@@ -634,45 +636,56 @@ sublats=lats[1200:1650:2]
 
 
 ```python
+#Make the figure object
 fig = plt.figure(figsize=(8, 8),dpi=300)
+
+#Create the main plot axes
 ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+
+#Plot the data on the axes
 mapdat=ax.pcolormesh(sublons,sublats,subbath, 
               transform=ccrs.PlateCarree(),cmap=plt.cm.gist_earth,vmax=1000,vmin=-6000)
-ax.coastlines(resolution='50m',color='red')
 
-ax.add_feature(cartopy.feature.OCEAN, zorder=0)
-ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='blue')
-    
-#ax.gridlines(color='gray',draw_labels=True,x_inline=False, y_inline=False)
+#Add coastlines, oceans, land, or restrict the image to an extent
+#ax.coastlines(resolution='50m',color='black')
+#ax.add_feature(cartopy.feature.OCEAN, zorder=0)
+#ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor='blue')
+#ax.set_extent([112, 153, -43, -10])    
+
+#Add Gridlines
 gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
-             linewidth=0.3, color='gray', alpha=0.5, linestyle='-',
+             linewidth=0.1, color='gray', alpha=0.5, linestyle='-',
              x_inline=False, y_inline=False)
 
 gl.top_labels = False
 gl.bottom_labels = True
 gl.right_labels = False
 gl.left_labels = True
+
 gl.xlabel_style = {'size': 8, 'color': 'gray'}
 gl.ylabel_style = {'size': 8, 'color': 'gray'}
 
-#Make a Colorbar
-# cbar=plt.colorbar(mapdat, ax=ax, orientation="horizontal", pad=0.05, fraction=0.05, shrink=0.5,extend='both')
-# cbar.set_label('Height (m)')
 
+#Add a colorbar axes
 cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor='white')
-cbar = plt.colorbar(mapdat, cax = cbaxes,orientation="horizontal", ticks=[-5000,-2500,0,1000],
-                   extend='both')
-cbar.set_label('Height (m)', labelpad=10,fontsize=10)
-cbar.ax.xaxis.set_label_position('top')
-cbar.ax.label_style = {'size': 12, 'color': 'black'}
-cbar.outline.set_edgecolor('black')
 
+#Add the colorbar to the axes with the data
+cbar = plt.colorbar(mapdat, cax = cbaxes,orientation="horizontal",extend='both')
+
+#Fix additional options of the colorbar
+cbar.set_label('Height (m)', labelpad=-40,fontsize=8,color='white')
+cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
+
+#Show the plot!
 plt.show()
 ```
 
+    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:39: UserWarning: FixedFormatter should only be used together with FixedLocator
+
+
 
     
-![png](02a-mapping_files/02a-mapping_30_0.png)
+![png](02a-mapping_files/02a-mapping_30_1.png)
     
 
 
@@ -680,11 +693,8 @@ plt.show()
 
 ### Challenge
 
-- Make an orthographic plot centred on Australia.
-- Add some "blue" coastlines
-- Mask out the land areas with:
+- Make a new map!
 ```python
-ax.add_feature(cartopy.feature.LAND,zorder=1)
 ```
 
 <details>
@@ -701,3 +711,8 @@ plt.show()
 
 </details>
 </div>
+
+
+```python
+
+```

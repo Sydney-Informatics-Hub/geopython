@@ -811,7 +811,7 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
 </code></pre>
-<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x22b192635c8&gt;</code></pre>
+<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x1b91bf77508&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_13_1.png" alt="" />
 <p class="caption">png</p>
@@ -829,7 +829,7 @@ ax.coastlines()
 ax.stock_img()
 
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x22b192ecb88&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1b91bf7e1c8&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_15_1.png" alt="" />
 <p class="caption">png</p>
@@ -844,7 +844,7 @@ ax.set_extent([0, 40, 28, 48])
 ax.coastlines(resolution=&#39;50m&#39;)  
 ax.stock_img()
 </code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x22b19335948&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1b91c036fc8&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_17_1.png" alt="" />
 <p class="caption">png</p>
@@ -886,9 +886,9 @@ ax.stock_img()</code></pre>
 data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 data.variables</code></pre>
-<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109548&gt;),
-             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109508&gt;),
-             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x22b1b109788&gt;)])</code></pre>
+<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1b91de0ffc8&gt;),
+             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1b91de0ff88&gt;),
+             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1b91db7e208&gt;)])</code></pre>
 <pre class="python"><code>worldbath=data.variables[&#39;elev&#39;][:]
 lons=data.variables[&#39;X&#39;][:]
 lats=data.variables[&#39;Y&#39;][:]</code></pre>
@@ -899,12 +899,13 @@ print(lats.shape)</code></pre>
 (4320,)
 (2160,)</code></pre>
 <pre class="python"><code>plt.pcolormesh(worldbath)</code></pre>
-<pre><code>&lt;matplotlib.collections.QuadMesh at 0x22b1ae5dd08&gt;</code></pre>
+<pre><code>&lt;matplotlib.collections.QuadMesh at 0x1b91b8a8808&gt;</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_25_1.png" alt="" />
 <p class="caption">png</p>
 </div>
-<p>matplotlib lib has no native understaning of geocentric coordinate systems. Cartopy does. And matplotlib commands with “x” and “y” values of latitudes and longitudes make sense too!</p>
+<p>matplotlib lib has no native understaning of geocentric coordinate systems. Cartopy does.</p>
+<p>matplotlib commands with “x” and “y” values of latitudes and longitudes make sense too!</p>
 <pre class="python"><code>fig = plt.figure(figsize=(6, 6))
 ax = plt.axes(projection=ccrs.Orthographic(-10, 45))
 ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
@@ -919,52 +920,59 @@ subbath=worldbath[1200:1650:2,1300:1900:2]
 #Take the corresponding lat/lon values as the main data array
 sublons=lons[1300:1900:2]
 sublats=lats[1200:1650:2]</code></pre>
-<pre class="python"><code>fig = plt.figure(figsize=(8, 8),dpi=300)
+<pre class="python"><code>#Make the figure object
+fig = plt.figure(figsize=(8, 8),dpi=300)
+
+#Create the main plot axes
 ax = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
+
+#Plot the data on the axes
 mapdat=ax.pcolormesh(sublons,sublats,subbath, 
               transform=ccrs.PlateCarree(),cmap=plt.cm.gist_earth,vmax=1000,vmin=-6000)
-ax.coastlines(resolution=&#39;50m&#39;,color=&#39;red&#39;)
 
-ax.add_feature(cartopy.feature.OCEAN, zorder=0)
-ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor=&#39;blue&#39;)
-    
-#ax.gridlines(color=&#39;gray&#39;,draw_labels=True,x_inline=False, y_inline=False)
+#Add coastlines, oceans, land, or restrict the image to an extent
+#ax.coastlines(resolution=&#39;50m&#39;,color=&#39;black&#39;)
+#ax.add_feature(cartopy.feature.OCEAN, zorder=0)
+#ax.add_feature(cartopy.feature.LAND, zorder=0, edgecolor=&#39;blue&#39;)
+#ax.set_extent([112, 153, -43, -10])    
+
+#Add Gridlines
 gl=ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
-             linewidth=0.3, color=&#39;gray&#39;, alpha=0.5, linestyle=&#39;-&#39;,
+             linewidth=0.1, color=&#39;gray&#39;, alpha=0.5, linestyle=&#39;-&#39;,
              x_inline=False, y_inline=False)
 
 gl.top_labels = False
 gl.bottom_labels = True
 gl.right_labels = False
 gl.left_labels = True
+
 gl.xlabel_style = {&#39;size&#39;: 8, &#39;color&#39;: &#39;gray&#39;}
 gl.ylabel_style = {&#39;size&#39;: 8, &#39;color&#39;: &#39;gray&#39;}
 
-#Make a Colorbar
-# cbar=plt.colorbar(mapdat, ax=ax, orientation=&quot;horizontal&quot;, pad=0.05, fraction=0.05, shrink=0.5,extend=&#39;both&#39;)
-# cbar.set_label(&#39;Height (m)&#39;)
 
+#Add a colorbar axes
 cbaxes = fig.add_axes([0.20, 0.22, 0.2, 0.015],frameon=True,facecolor=&#39;white&#39;)
-cbar = plt.colorbar(mapdat, cax = cbaxes,orientation=&quot;horizontal&quot;, ticks=[-5000,-2500,0,1000],
-                   extend=&#39;both&#39;)
-cbar.set_label(&#39;Height (m)&#39;, labelpad=10,fontsize=10)
-cbar.ax.xaxis.set_label_position(&#39;top&#39;)
-cbar.ax.label_style = {&#39;size&#39;: 12, &#39;color&#39;: &#39;black&#39;}
-cbar.outline.set_edgecolor(&#39;black&#39;)
 
+#Add the colorbar to the axes with the data
+cbar = plt.colorbar(mapdat, cax = cbaxes,orientation=&quot;horizontal&quot;,extend=&#39;both&#39;)
+
+#Fix additional options of the colorbar
+cbar.set_label(&#39;Height (m)&#39;, labelpad=-40,fontsize=8,color=&#39;white&#39;)
+cbar.ax.set_xticklabels([-5000,-2500,0,1000],color=&#39;white&#39;,fontsize=8)
+
+#Show the plot!
 plt.show()</code></pre>
+<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:39: UserWarning: FixedFormatter should only be used together with FixedLocator</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_30_0.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_30_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div id="challenge-1" class="section level3 challenge">
 <h3>Challenge</h3>
 <ul>
-<li>Make an orthographic plot centred on Australia.</li>
-<li>Add some “blue” coastlines</li>
-<li>Mask out the land areas with:</li>
+<li>Make a new map!</li>
 </ul>
-<pre class="python"><code>ax.add_feature(cartopy.feature.LAND,zorder=1)</code></pre>
+<pre class="python"><code></code></pre>
 <details>
 <summary>
 Solution
@@ -977,6 +985,7 @@ ax.coastlines(resolution=&#39;50m&#39;,color=&#39;blue&#39;)
 plt.show()</code></pre>
 </details>
 </div>
+<pre class="python"><code></code></pre>
 </div>
 </div>
 
