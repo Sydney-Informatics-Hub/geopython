@@ -193,7 +193,7 @@ $\theta(t+\Delta t) \approx \theta(t) + \delta t \left(  -k \theta(t)  \left[ 1-
 
 Which gives the Second Order Runge-Kutta estimation for updated $\theta$ values:
 <div align="center">
-           $\theta(t+\Delta t) \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)$
+$\theta(t+\Delta t) \approx \theta(t) \left( 1 - k \Delta t + k^2 \frac{\Delta t^2}{2} \right)$
 </div>
 
 <div class="challenge">
