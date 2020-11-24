@@ -12,16 +12,17 @@ navbar:
       href: 00-intro.html
     - text: "Fundamentals"
       href: 01a-fundamentals.html
-    - text: "Useful Python packages for different data types"
-      href: 01b-dataframes.html
+
   - text: "Session 2"
     menu:
+    - text: "Useful Python packages for different data types"
+      href: 01b-dataframes.html
     - text: "Mapping with Cartopy"
       href: 02a-mapping.html
-    - text: "Numerical approaches"
-      href: 02b-Clustering.html
   - text: "Session 3"
     menu:
+    - text: "Numerical approaches"
+      href: 02b-Clustering.html
     - text: "Machine Learning"
       href: 03a-MachineLearning.html
     - text: "Deep Learning & Time Series"

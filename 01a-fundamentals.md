@@ -554,19 +554,19 @@ Print the second and third columns for row 20-30.
 
 
 ```python
-print(chemdata[19:29,1:3])
+print(chemdata[19:30,1:3])
 ```
 
-    [[-106.283   14.1  ]
-     [-106.05     4.   ]
-     [-106.083    4.   ]
-     [-105.667    4.   ]
-     [-121.042   12.   ]
-     [-121.116   12.   ]
-     [-121.023   12.   ]
-     [ -99.03     2.   ]
-     [ -99.66     2.   ]
-     [ -98.63     2.   ]]
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-55087601de28> in <module>
+    ----> 1 print(chemdata[19:30,1:3])
+    
+
+    NameError: name 'chemdata' is not defined
 
 
 </details>

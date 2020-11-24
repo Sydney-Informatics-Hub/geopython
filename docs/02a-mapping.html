@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>02a-mapping.utf8.md</title>
+<title>02a-mapping.utf8</title>
 
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -25,6 +26,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -87,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,6 +245,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -248,48 +258,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -303,6 +274,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -338,8 +315,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -399,9 +374,6 @@ div.tocify {
     <li>
       <a href="01a-fundamentals.html">Fundamentals</a>
     </li>
-    <li>
-      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -412,10 +384,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="02a-mapping.html">Mapping with Cartopy</a>
+      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
     </li>
     <li>
-      <a href="02b-Clustering.html">Numerical approaches</a>
+      <a href="02a-mapping.html">Mapping with Cartopy</a>
     </li>
   </ul>
 </li>
@@ -426,6 +398,9 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02b-Clustering.html">Numerical approaches</a>
+    </li>
     <li>
       <a href="03a-MachineLearning.html">Machine Learning</a>
     </li>
@@ -485,7 +460,7 @@ div.tocify {
 <h2>Introduction to matplotlib</h2>
 <p>A more general interface is available and a more structured approach to using <code>matplotlib</code> is helpful.</p>
 <ul>
-<li><a href="../../Documentation/Matplotlib-user-2.0.0.pdf">PDF documentation</a></li>
+<li><a href="https://matplotlib.org/3.1.3/Matplotlib.pdf">PDF documentation</a></li>
 <li><a href="http://matplotlib.org/gallery.html">Online gallery / cookbook</a></li>
 </ul>
 <p>Matplotlib fully embraces the python object-oriented model, but for some tasks the design of the object hierarchy is a little bit counter-intuitive. It’s best to find a common pattern for building plots and stick to it.</p>
@@ -527,42 +502,35 @@ plt.show()  # happens anyway !</code></pre>
 </div>
 <pre class="python"><code># Demo example
 
+# First, define some synthetic data
+
 x1 = np.linspace(0.0, 5.0)
 x2 = np.linspace(0.0, 2.0)
 
 y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
-y2 = np.cos(2 * np.pi * x2)
-
-plt.subplot(2, 1, 1)
+y2 = np.cos(2 * np.pi * x2)</code></pre>
+<pre class="python"><code># Option 1
+plt.subplot(211)
 plt.plot(x1, y1, &#39;o-&#39;)
 plt.title(&#39;A tale of 2 subplots&#39;)
 plt.ylabel(&#39;Damped oscillation&#39;)
 
-plt.subplot(2, 1, 2)
+plt.subplot(212)
 plt.plot(x2, y2, &#39;.-&#39;)
 plt.xlabel(&#39;time (s)&#39;)
 plt.ylabel(&#39;Undamped&#39;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_5_0.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_6_0.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code># My preference
-
-x1 = np.linspace(0.0, 5.0)
-x2 = np.linspace(0.0, 2.0)
-
-y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
-y2 = np.cos(2 * np.pi * x2)
-
-# Now set up the plot
+<pre class="python"><code># My preference - option 2
+# Set up the plot
 
 fig = plt.figure(figsize=(6,6), facecolor=&quot;none&quot;)
-
 ax  = plt.subplot(211)   # 2s1 array of plots, ax refers to the 1st of them
 ax2 = plt.subplot(212) 
-
 
 ax.plot(x1, y1, &#39;o-&#39;)
 ax.set_title(&#39;A tale of 2 subplots&#39;)
@@ -570,10 +538,10 @@ ax.set_ylabel(&#39;Damped oscillation&#39;)
 
 ax2.plot(x2, y2, &#39;.-&#39;)
 ax2.set_xlabel(&#39;time (s)&#39;)
-ax2.set_ylabel(&#39;Not Damped&#39;)</code></pre>
-<pre><code>Text(0, 0.5, &#39;Not Damped&#39;)</code></pre>
+ax2.set_ylabel(&#39;Not Damped&#39;)
+plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_6_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_7_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>&quot;&quot;&quot;
@@ -635,7 +603,7 @@ ax4.margins(0)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_7_0.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_8_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>
@@ -706,15 +674,15 @@ avoid_outliers()
 shade_other_data()
 plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_8_0.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_9_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_8_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_9_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_8_2.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_9_2.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>&quot;&quot;&quot;
@@ -735,7 +703,7 @@ the *vert_exag* parameter is the true vertical exaggeration.
 from matplotlib.cbook import get_sample_data
 from matplotlib.colors import LightSource
 
-dem = np.load(get_sample_data(&#39;jacksboro_fault_dem.npz&#39;))
+dem = np.load(get_sample_data(&#39;jacksboro_fault_dem.npz&#39;, asfileobj= False))
 z = dem[&#39;elevation&#39;]
 
 #-- Optional dx and dy for accurate vertical exaggeration --------------------
@@ -785,10 +753,13 @@ axes[2, 0].annotate(&#39;Blend Mode&#39;, (0, 0.5), xytext=(-30, 0),
                     ha=&#39;right&#39;, va=&#39;center&#39;, size=20, rotation=90)
 fig.subplots_adjust(bottom=0.05, right=0.95)
 
-plt.show()</code></pre>
-<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:19: MatplotlibDeprecationWarning: In a future release, get_sample_data will automatically load numpy arrays.  Set np_load to True to get the array and suppress this warning.  Set asfileobj to False to get the path to the data file and suppress this warning.</code></pre>
+plt.show()
+
+# note - if you get a sample data not found error here run
+#  conda install -c conda-forge mpl_sample_data 
+# after activating your geopy environment</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_9_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_10_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -800,9 +771,7 @@ plt.show()</code></pre>
 <p>Cartopy is built on top of a lot of the matplotlib graphing tools. It works by introducing a series of projections associated with the axes of a graph. On top of that there is a big toolkit for reading in images, finding data from standard web feeds, and manipulating geographical objects. Many, many libraries are involved and sometimes things break. Luckily the installation that is built for this course is about as reliable as we can ever get. I’m just warning you, though, that it can be quite tough if you want to put this on your laptop from scratch.</p>
 <p>We have a number of imports that we will need almost every time.</p>
 <p>If we are going to plot anything then we need to include <strong>matplotlib</strong>.</p>
-<pre class="python"><code>import matplotlib.pyplot as plt
-
-import cartopy
+<pre class="python"><code>import cartopy
 import cartopy.crs as ccrs</code></pre>
 <pre class="python"><code>import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -810,10 +779,9 @@ import matplotlib.pyplot as plt
 ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
-</code></pre>
-<pre><code>&lt;cartopy.mpl.feature_artist.FeatureArtist at 0x1fb3e499708&gt;</code></pre>
+plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_13_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_14_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>The simplest plot: global map using the default image built into the package and adding coastlines</p>
@@ -828,25 +796,22 @@ ax.set_global()
 ax.coastlines()  
 ax.stock_img()
 
-</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x1fb3e499bc8&gt;</code></pre>
+plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_15_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_16_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Try changing the projection - either look at the list in the link I gave you above or use the tab-completion feature of iPython to see what <code>ccrs</code> has available ( not everything will be a projection, but you can see what works and what breaks ).</p>
 <p>Here is how you can plot a region instead of the globe:</p>
-<pre class="python"><code>
-fig = plt.figure(figsize=(12, 12))
+<pre class="python"><code>fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Robinson())    
 ax.set_extent([0, 40, 28, 48])
 
 ax.coastlines(resolution=&#39;50m&#39;)  
 ax.stock_img()
-</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x1fb3e562f48&gt;</code></pre>
+plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_17_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_18_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>help(ax.stock_img)</code></pre>
@@ -871,7 +836,8 @@ ax  = plt.axes(projection=ccrs.Mollweide(central_longitude=130))
 ax.set_extent([112, 153, -43, -10]) 
 
 ax.coastlines(resolution=&#39;50m&#39;)  
-ax.stock_img()</code></pre>
+ax.stock_img()
+plt.show()</code></pre>
 </details>
 </div>
 <div id="netcdf-data-and-more-cartopy" class="section level3">
@@ -885,9 +851,9 @@ data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 #Netcdf could be stored with multiple different formats
 #Print out these data
 data.variables</code></pre>
-<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1fb3e532308&gt;),
-             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1fb4031d808&gt;),
-             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x1fb4031da48&gt;)])</code></pre>
+<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fad40e1a490&gt;),
+             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fad40d9afd0&gt;),
+             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x7fad40d9a640&gt;)])</code></pre>
 <pre class="python"><code>#Set each layer as a variable
 worldbath=data.variables[&#39;elev&#39;][:]
 lons=data.variables[&#39;X&#39;][:]
@@ -899,10 +865,10 @@ print(lats.shape)</code></pre>
 (4320,)
 (2160,)</code></pre>
 <pre class="python"><code>#A quick plot of the main dataset
-plt.pcolormesh(worldbath)</code></pre>
-<pre><code>&lt;matplotlib.collections.QuadMesh at 0x1fb4008b808&gt;</code></pre>
+plt.pcolormesh(worldbath)
+plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_25_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_26_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>matplotlib lib has no native understaning of geocentric coordinate systems. Cartopy does.</p>
@@ -913,7 +879,7 @@ ax = plt.axes(projection=ccrs.Orthographic(-10, 45))
 ax.pcolormesh(lons,lats,worldbath, transform=ccrs.PlateCarree())
 plt.show()</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_27_0.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_28_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This is fairly high resolution for what we are looking at, so we could downsample the grid to save some time. Also, not all grids are global, so we can subset the data to represent perhaps a small area we may have a grid/image over.</p>
@@ -962,9 +928,10 @@ cbar.ax.set_xticklabels([-5000,-2500,0,1000],color=&#39;white&#39;,fontsize=8)
 
 #Show the plot!
 plt.show()</code></pre>
-<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator</code></pre>
+<pre><code>&lt;ipython-input-23-3d2618499013&gt;:37: UserWarning: FixedFormatter should only be used together with FixedLocator
+  cbar.ax.set_xticklabels([-5000,-2500,0,1000],color=&#39;white&#39;,fontsize=8)</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_30_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_31_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -1041,13 +1008,56 @@ plt.show()</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

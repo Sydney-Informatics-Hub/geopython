@@ -17,12 +17,13 @@
 </div>
 
 
-Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at "pyshp" (for dealing with shapefiles), "pandas" (great for tables and time series), "lasio" (for las format well log data) and "obspy" (a highly featured seismic data processing suite) packages.
+Python can deal with basically any type of data you throw at it. The open source python community has developed many packages that make things easy. Today we will look at `pyshp` (for dealing with shapefiles), `pandas` (great for tables and time series), `lasio` (for las format well log data) and `obspy` (a highly featured seismic data processing suite) packages.
 
 Data for this exercised was downloaded from http://www.bom.gov.au/water/groundwater/explorer/map.shtml
 
 # Shapefiles
-Shapefiles are a very common file format for GIS data.
+
+Shapefiles are a very common file format for GIS data, the standard for which is developed and maintained by ESRI, the makers of the ArcGIS software. Shapefiles collect vectors of features, such as points, lines, polygons. The "file" is actually a misnomer - if you look at a single "shapefile" on your machine using a file explorer, you can see that it's actually made up of several files, three of which are mandatory, and others which may/may not be there. 
 
 
 
@@ -134,7 +135,7 @@ rec['TopElev']
 
 <div class="challenge">
 
-### Challenge. TODO
+### Challenge.
 
 - Look at the data above. It provides the coordinates of the wells as points. 
 - How many coordinates are provided for each well? Why do you think this is?
@@ -194,11 +195,6 @@ Pandas is one of the most useful packages (along with probably numpy and matplot
 
 
 ```python
-import pandas
-```
-
-
-```python
 #As before, read in the shapefile
 boreshape='../data/shp_torrens_river/NGIS_BoreLine.shp'
 
@@ -211,6 +207,7 @@ recs= shapeRead.records()
 
 
 ```python
+import pandas
 #Now convert the variables to a pandas dataframe
 df = pandas.DataFrame(columns=fields, data=recs)
 
@@ -958,7 +955,7 @@ log_data.index     # “the index” (aka “the labels”).
 
 
 ```python
-log_data.columns   # column names (which is “an index”)
+log_data.columns  # column names (which is “an index”)
 ```
 
 
@@ -1311,7 +1308,7 @@ log_data.FromDepth.describe()   # describe a single column
 
 
 ```python
-#calculate mean of 5th column ("FromDepth")
+#calculate mean of 6th column ("FromDepth")
 log_data.iloc[:,5].mean()      
 ```
 
@@ -1324,7 +1321,7 @@ log_data.iloc[:,5].mean()
 
 
 ```python
-#alternate method to calculate mean of FromDepth column (the 5th one)
+#alternate method to calculate mean of FromDepth column (the 6th one)
 log_data["FromDepth"].mean()    
 ```
 
@@ -1357,10 +1354,10 @@ lithCounts
     SDST     3209
             ...  
     HFLS        1
-    REGO        1
+    DIOR        1
     DUST        1
-    SCOR        1
-    ARKS        1
+    CALU        1
+    REGO        1
     Name: MajorLithCode, Length: 81, dtype: int64
 
 
@@ -1380,7 +1377,7 @@ lithCounts.plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_39_1.png)
+![png](01b-dataframes_files/01b-dataframes_38_1.png)
     
 
 
@@ -1399,7 +1396,7 @@ lithCounts[(lithCounts < 50)].plot.bar(rot=90,figsize=(15,5))
 
 
     
-![png](01b-dataframes_files/01b-dataframes_40_1.png)
+![png](01b-dataframes_files/01b-dataframes_39_1.png)
     
 
 
@@ -1410,14 +1407,15 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
  
 # example data
-mu = np.mean(log_data['Thickness'].values) # mean of distribution
-sigma = np.std(log_data['Thickness'].values) # standard deviation of distribution
-x = log_data['Thickness'].values
+x = log_data.Thickness.values
+mu = np.mean(x) # mean of distribution
+sigma = np.std(x) # standard deviation of distribution
+
 # the histogram of the data
-plt.hist(x, bins=[0,0.25,0.5,0.75,1.0,1.25,1.5,1.75,2,2.25,2.5,2.75,3.0], alpha=0.5)
+plt.hist(x, bins=np.arange(0,20,1), alpha=0.5)
 plt.xlabel('Thickness (m)')
 plt.ylabel('Count')
-mystring="Histogram with a mean of "+ str(mu)
+mystring="Histogram with a mean of "+ str(np.round(mu,2)) + " & SD " + str(np.round(sigma,2))
 plt.title(mystring)
  
 # Tweak spacing to prevent clipping of ylabel
@@ -1427,9 +1425,32 @@ plt.show()
 
 
     
-![png](01b-dataframes_files/01b-dataframes_41_0.png)
+![png](01b-dataframes_files/01b-dataframes_40_0.png)
     
 
+
+np.arange(0,20,1)<div class="challenge">
+
+### Challenge
+
+Plot a histogram of the thickness where the lithcode is MICA. 
+    
+Hint: to filter a pandas data frame by value use the following syntax:
+    
+`df[df['Variable'] == "value"]`
+
+<details>
+<summary>Solution</summary>
+
+```python
+y = log_data[log_data['MajorLithCode'] == "MICA"]['Thickness'].values
+
+plt.hist(y, bins=np.arange(0,20,1), alpha=0.5)
+plt.show()
+```
+
+</details>
+</div>
 
 
 ```python
@@ -1469,13 +1490,26 @@ plt.show()
 # plt.show()
 ```
 
-## Exercise
+
+
+<div class="challenge">
+
+### Extra credit challenge 
+
 Go to [http://www.bom.gov.au/water/groundwater/explorer/map.shtml](http://www.bom.gov.au/water/groundwater/explorer/map.shtml) and pick another River Region. Download the dataset in "Shapefile" format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region. 
 
 
+<details>
+<summary>Solution</summary>
+
+TODO Nate
+    
+</details>
+</div>
+
 # Log ASCII Files 
 
-Python has some very specific packages/libraries. You can often create your own tools for doing niche tasks, but often you will find a variety of tools to make things simpler for you. We will show some simple tasks to perfrom on borehole data (in .las format) with the [lasio](https://lasio.readthedocs.io/en/latest/) library. 
+Python has a wide range of packages/libraries to do specific tasks. You can often create your own tools for doing niche tasks, but often you will find that many already exist to make things simpler for you. We will explore libraries that work with borehole data (in .las format) with the [lasio](https://lasio.readthedocs.io/en/latest/) library. 
 
 This tutorial based off https://towardsdatascience.com/handling-big-volume-of-well-log-data-with-a-boosted-time-efficiency-with-python-dfe0319daf26
 
@@ -1515,14 +1549,14 @@ read_files
 
 
 
-    ['../data/WELL\\Balnaves.las',
-     '../data/WELL\\Banyula.las',
-     '../data/WELL\\Beachport1.las',
-     '../data/WELL\\BeachportEast1.las',
-     '../data/WELL\\BiscuitFlat1.las',
-     '../data/WELL\\BoolLagoon1.las',
-     '../data/WELL\\Bungaloo1.las',
-     '../data/WELL\\Burrungule1.las']
+    ['../data/WELL/BoolLagoon1.las',
+     '../data/WELL/Bungaloo1.las',
+     '../data/WELL/BeachportEast1.las',
+     '../data/WELL/BiscuitFlat1.las',
+     '../data/WELL/Balnaves.las',
+     '../data/WELL/Banyula.las',
+     '../data/WELL/Burrungule1.las',
+     '../data/WELL/Beachport1.las']
 
 
 
@@ -1543,32 +1577,32 @@ print("There are ", len(well_names), "wells.")
 print(well_names)
 ```
 
-    FILE: ../data/WELL\Balnaves.las
-    SPLIT: ['..', 'data', 'WELL', 'Balnaves', ''] 
-    
-    FILE: ../data/WELL\Banyula.las
-    SPLIT: ['..', 'data', 'WELL', 'Banyula', ''] 
-    
-    FILE: ../data/WELL\Beachport1.las
-    SPLIT: ['..', 'data', 'WELL', 'Beachport1', ''] 
-    
-    FILE: ../data/WELL\BeachportEast1.las
-    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
-    
-    FILE: ../data/WELL\BiscuitFlat1.las
-    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
-    
-    FILE: ../data/WELL\BoolLagoon1.las
+    FILE: ../data/WELL/BoolLagoon1.las
     SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', ''] 
     
-    FILE: ../data/WELL\Bungaloo1.las
+    FILE: ../data/WELL/Bungaloo1.las
     SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', ''] 
     
-    FILE: ../data/WELL\Burrungule1.las
+    FILE: ../data/WELL/BeachportEast1.las
+    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
+    
+    FILE: ../data/WELL/BiscuitFlat1.las
+    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
+    
+    FILE: ../data/WELL/Balnaves.las
+    SPLIT: ['..', 'data', 'WELL', 'Balnaves', ''] 
+    
+    FILE: ../data/WELL/Banyula.las
+    SPLIT: ['..', 'data', 'WELL', 'Banyula', ''] 
+    
+    FILE: ../data/WELL/Burrungule1.las
     SPLIT: ['..', 'data', 'WELL', 'Burrungule1', ''] 
     
+    FILE: ../data/WELL/Beachport1.las
+    SPLIT: ['..', 'data', 'WELL', 'Beachport1', ''] 
+    
     There are  8 wells.
-    ['Balnaves', 'Banyula', 'Beachport1', 'BeachportEast1', 'BiscuitFlat1', 'BoolLagoon1', 'Bungaloo1', 'Burrungule1']
+    ['BoolLagoon1', 'Bungaloo1', 'BeachportEast1', 'BiscuitFlat1', 'Balnaves', 'Banyula', 'Burrungule1', 'Beachport1']
 
 
 
@@ -1606,22 +1640,22 @@ for well in lases:
     print(well.keys())
 ```
 
-    Wellid: 0 Balnaves
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 1 Banyula
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 2 Beachport1
-    ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
-    Wellid: 3 BeachportEast1
-    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 4 BiscuitFlat1
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 5 BoolLagoon1
+    Wellid: 0 BoolLagoon1
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 6 Bungaloo1
+    Wellid: 1 Bungaloo1
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 7 Burrungule1
+    Wellid: 2 BeachportEast1
+    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
+    Wellid: 3 BiscuitFlat1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 4 Balnaves
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 5 Banyula
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
+    Wellid: 6 Burrungule1
     ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
+    Wellid: 7 Beachport1
+    ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
 
 
 
@@ -1639,7 +1673,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x23f0c2b90c8>]
+    [<matplotlib.lines.Line2D at 0x7f8673efff40>]
 
 
 
@@ -1657,18 +1691,21 @@ You have just plotted the density (DRHO) at each measured depth point. You can c
 print(lases[wellid].curves)
 ```
 
-    Mnemonic  Unit   Value  Description                                         
-    --------  ----   -----  -----------                                         
-    DEPTH     M             Depth                                               
-    CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
-    DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
-    DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
-    GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
-    NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
-    RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
-    RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
-    RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
-    SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            
+    Mnemonic  Unit   Value  Description                                                                                        
+    --------  ----   -----  -----------                                                                                        
+    DEPTH     M             Depth                                                                                              
+    CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
+    DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+    DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
+    DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
+    GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
+    NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
+    PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
+    RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+    RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+    RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+    RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
+    SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              
 
 
 <div class="challenge">
@@ -1846,7 +1883,7 @@ plt.imshow(data.T, cmap="Greys", aspect='auto')
 
 
 
-    <matplotlib.image.AxesImage at 0x23f1117dd08>
+    <matplotlib.image.AxesImage at 0x7f865805d460>
 
 
 
@@ -2025,7 +2062,7 @@ plt.imshow(data.T,cmap="RdBu", vmin=-vm, vmax=vm, aspect='auto')
 plt.show()
 ```
     
-Can you put this in a loop to show multplie sections at once?
+Can you put this in a loop to show multiple sections at once?
     
     
 <details>
@@ -2051,8 +2088,14 @@ while m < 10:
 <div class="keypoints">
 ### Key points
     
-- Obspy for segy seismic data
-- Lasio for well log data
-- Pyshp for Shapefiles
-- Pandas dataframes for tabular
+- Obspy can be used to work with segy seismic data
+- Lasio can be used to work with well log data
+- Pyshp can be used to work with Shapefiles
+- Pandas dataframes are the best format for working with tabular data of mixed numeric/character types
+- Numpy arrays are faster when working with purely numeric data
 </div>
+
+
+```python
+
+```

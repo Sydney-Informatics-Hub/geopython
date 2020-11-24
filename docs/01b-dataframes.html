@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>01b-dataframes.utf8.md</title>
+<title>01b-dataframes.utf8</title>
 
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -25,6 +26,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -87,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,6 +245,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -248,48 +258,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -303,6 +274,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -338,8 +315,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -399,9 +374,6 @@ div.tocify {
     <li>
       <a href="01a-fundamentals.html">Fundamentals</a>
     </li>
-    <li>
-      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -412,10 +384,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="02a-mapping.html">Mapping with Cartopy</a>
+      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
     </li>
     <li>
-      <a href="02b-Clustering.html">Numerical approaches</a>
+      <a href="02a-mapping.html">Mapping with Cartopy</a>
     </li>
   </ul>
 </li>
@@ -426,6 +398,9 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02b-Clustering.html">Numerical approaches</a>
+    </li>
     <li>
       <a href="03a-MachineLearning.html">Machine Learning</a>
     </li>
@@ -483,12 +458,12 @@ div.tocify {
 <li>Learn about pandas, pyshp, lasio, obspy.</li>
 </ul>
 </div>
-<p>Python can deal with basically any type of data you throw at it. The community have provided many packages that make things easy, today we will look at “pyshp” (for dealing with shapefiles), “pandas” (great for tables and time series), “lasio” (for las format well log data) and “obspy” (a highly featured seismic data processing suite) packages.</p>
+<p>Python can deal with basically any type of data you throw at it. The open source python community has developed many packages that make things easy. Today we will look at <code>pyshp</code> (for dealing with shapefiles), <code>pandas</code> (great for tables and time series), <code>lasio</code> (for las format well log data) and <code>obspy</code> (a highly featured seismic data processing suite) packages.</p>
 <p>Data for this exercised was downloaded from <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml" class="uri">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a></p>
 </div>
 <div id="shapefiles" class="section level1">
 <h1>Shapefiles</h1>
-<p>Shapefiles are a very common file format for GIS data.</p>
+<p>Shapefiles are a very common file format for GIS data, the standard for which is developed and maintained by ESRI, the makers of the ArcGIS software. Shapefiles collect vectors of features, such as points, lines, polygons. The “file” is actually a misnomer - if you look at a single “shapefile” on your machine using a file explorer, you can see that it’s actually made up of several files, three of which are mandatory, and others which may/may not be there.</p>
 <pre class="python"><code>#Load the required modules
 import shapefile
 
@@ -528,8 +503,8 @@ Nshp    = len(shapes)</code></pre>
 <pre class="python"><code>rec= shapeRead.record(0)
 rec[&#39;TopElev&#39;]</code></pre>
 <pre><code>6.74</code></pre>
-<div id="challenge.-todo" class="section level3 challenge">
-<h3>Challenge. TODO</h3>
+<div id="challenge." class="section level3 challenge">
+<h3>Challenge.</h3>
 <ul>
 <li>Look at the data above. It provides the coordinates of the wells as points.</li>
 <li>How many coordinates are provided for each well? Why do you think this is?</li>
@@ -579,7 +554,6 @@ recs[299][4]</code></pre>
 <div id="dataframes-and-table-manipulation" class="section level1">
 <h1>Dataframes and table manipulation</h1>
 <p>Pandas is one of the most useful packages (along with probably numpy and matplotlib). We will use it several times throughout the course for data handling and manipulation.</p>
-<pre class="python"><code>import pandas</code></pre>
 <pre class="python"><code>#As before, read in the shapefile
 boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
@@ -588,7 +562,8 @@ shapeRead = shapefile.Reader(boreshape)
 fields = [x[0] for x in shapeRead.fields][1:]
 shps = [s.points for s in shapeRead.shapes()]
 recs= shapeRead.records()</code></pre>
-<pre class="python"><code>#Now convert the variables to a pandas dataframe
+<pre class="python"><code>import pandas
+#Now convert the variables to a pandas dataframe
 df = pandas.DataFrame(columns=fields, data=recs)
 
 #See more details at the docs: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html</code></pre>
@@ -2220,7 +2195,7 @@ SAGeodata
 <pre class="python"><code>log_data.index     # “the index” (aka “the labels”). 
 #Pandas is great for using timeseries data, where the index can be the timestamps</code></pre>
 <pre><code>RangeIndex(start=0, stop=70173, step=1)</code></pre>
-<pre class="python"><code>log_data.columns   # column names (which is “an index”)</code></pre>
+<pre class="python"><code>log_data.columns  # column names (which is “an index”)</code></pre>
 <pre><code>Index([&#39;OBJECTID&#39;, &#39;BoreID&#39;, &#39;HydroCode&#39;, &#39;RefElev&#39;, &#39;RefElevDesc&#39;,
        &#39;FromDepth&#39;, &#39;ToDepth&#39;, &#39;TopElev&#39;, &#39;BottomElev&#39;, &#39;MajorLithCode&#39;,
        &#39;MinorLithCode&#39;, &#39;Description&#39;, &#39;Source&#39;, &#39;Thickness&#39;],
@@ -2858,10 +2833,10 @@ min          0.000000
 75%         25.800000
 max        610.300000
 Name: FromDepth, dtype: float64</code></pre>
-<pre class="python"><code>#calculate mean of 5th column (&quot;FromDepth&quot;)
+<pre class="python"><code>#calculate mean of 6th column (&quot;FromDepth&quot;)
 log_data.iloc[:,5].mean()      </code></pre>
 <pre><code>24.93802017870121</code></pre>
-<pre class="python"><code>#alternate method to calculate mean of FromDepth column (the 5th one)
+<pre class="python"><code>#alternate method to calculate mean of FromDepth column (the 6th one)
 log_data[&quot;FromDepth&quot;].mean()    </code></pre>
 <pre><code>24.93802017870121</code></pre>
 <pre class="python"><code>#Count how many Lith Codes there are
@@ -2875,23 +2850,23 @@ FILL     4020
 SDST     3209
         ...  
 HFLS        1
-REGO        1
+DIOR        1
 DUST        1
-SCOR        1
-ARKS        1
+CALU        1
+REGO        1
 Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
 <pre class="python"><code>#plot a bar chart of the lith codes
 lithCounts.plot.bar(rot=90,figsize=(15,5))</code></pre>
 <pre><code>&lt;AxesSubplot:&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_39_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_38_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#Plot a bar chart of the lith codes for the rarer lithologies
 lithCounts[(lithCounts &lt; 50)].plot.bar(rot=90,figsize=(15,5))</code></pre>
 <pre><code>&lt;AxesSubplot:&gt;</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_40_1.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_39_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>import numpy as np
@@ -2899,22 +2874,39 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
  
 # example data
-mu = np.mean(log_data[&#39;Thickness&#39;].values) # mean of distribution
-sigma = np.std(log_data[&#39;Thickness&#39;].values) # standard deviation of distribution
-x = log_data[&#39;Thickness&#39;].values
+x = log_data.Thickness.values
+mu = np.mean(x) # mean of distribution
+sigma = np.std(x) # standard deviation of distribution
+
 # the histogram of the data
-plt.hist(x, bins=[0,0.25,0.5,0.75,1.0,1.25,1.5,1.75,2,2.25,2.5,2.75,3.0], alpha=0.5)
+plt.hist(x, bins=np.arange(0,20,1), alpha=0.5)
 plt.xlabel(&#39;Thickness (m)&#39;)
 plt.ylabel(&#39;Count&#39;)
-mystring=&quot;Histogram with a mean of &quot;+ str(mu)
+mystring=&quot;Histogram with a mean of &quot;+ str(np.round(mu,2)) + &quot; &amp; SD &quot; + str(np.round(sigma,2))
 plt.title(mystring)
  
 # Tweak spacing to prevent clipping of ylabel
 #plt.subplots_adjust(left=0.15)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01b-dataframes_files/01b-dataframes_41_0.png" alt="" />
+<img src="01b-dataframes_files/01b-dataframes_40_0.png" alt="" />
 <p class="caption">png</p>
+</div>
+np.arange(0,20,1)
+<div id="challenge" class="section level3 challenge">
+<h3>Challenge</h3>
+<p>Plot a histogram of the thickness where the lithcode is MICA.</p>
+<p>Hint: to filter a pandas data frame by value use the following syntax:</p>
+<p><code>df[df['Variable'] == "value"]</code></p>
+<details>
+<summary>
+Solution
+</summary>
+<pre class="python"><code>y = log_data[log_data[&#39;MajorLithCode&#39;] == &quot;MICA&quot;][&#39;Thickness&#39;].values
+
+plt.hist(y, bins=np.arange(0,20,1), alpha=0.5)
+plt.show()</code></pre>
+</details>
 </div>
 <pre class="python"><code># import numpy as np
 # cmap = plt.get_cmap(&#39;viridis&#39;)
@@ -2950,14 +2942,20 @@ plt.show()</code></pre>
 # lats= [df.coords[i][0][1] for i in range(1,len(recs))] 
 # plt.plot(lons,lats,&quot;|&quot;)
 # plt.show()</code></pre>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
+<div id="extra-credit-challenge" class="section level3 challenge">
+<h3>Extra credit challenge</h3>
 <p>Go to <a href="http://www.bom.gov.au/water/groundwater/explorer/map.shtml">http://www.bom.gov.au/water/groundwater/explorer/map.shtml</a> and pick another River Region. Download the dataset in “Shapefile” format (this will download the csv also). Once you have the data, follow the same routines as above and see what you can find out about the river region.</p>
+<details>
+<summary>
+Solution
+</summary>
+<p>TODO Nate</p>
+</details>
 </div>
 </div>
 <div id="log-ascii-files" class="section level1">
 <h1>Log ASCII Files</h1>
-<p>Python has some very specific packages/libraries. You can often create your own tools for doing niche tasks, but often you will find a variety of tools to make things simpler for you. We will show some simple tasks to perfrom on borehole data (in .las format) with the <a href="https://lasio.readthedocs.io/en/latest/">lasio</a> library.</p>
+<p>Python has a wide range of packages/libraries to do specific tasks. You can often create your own tools for doing niche tasks, but often you will find that many already exist to make things simpler for you. We will explore libraries that work with borehole data (in .las format) with the <a href="https://lasio.readthedocs.io/en/latest/">lasio</a> library.</p>
 <p>This tutorial based off <a href="https://towardsdatascience.com/handling-big-volume-of-well-log-data-with-a-boosted-time-efficiency-with-python-dfe0319daf26" class="uri">https://towardsdatascience.com/handling-big-volume-of-well-log-data-with-a-boosted-time-efficiency-with-python-dfe0319daf26</a></p>
 <p>Original Data from: <a href="https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/image/DDD/PEDP013LOGS.zip" class="uri">https://sarigbasis.pir.sa.gov.au/WebtopEw/ws/samref/sarig1/image/DDD/PEDP013LOGS.zip</a></p>
 <p>Title: Cooper Basin selected well logs in LAS format.<br />
@@ -2978,14 +2976,14 @@ import re</code></pre>
 <pre class="python"><code>#Build a list of filenames to read
 read_files = glob.glob(&quot;../data/WELL/*.las&quot;)
 read_files</code></pre>
-<pre><code>[&#39;../data/WELL\\Balnaves.las&#39;,
- &#39;../data/WELL\\Banyula.las&#39;,
- &#39;../data/WELL\\Beachport1.las&#39;,
- &#39;../data/WELL\\BeachportEast1.las&#39;,
- &#39;../data/WELL\\BiscuitFlat1.las&#39;,
- &#39;../data/WELL\\BoolLagoon1.las&#39;,
- &#39;../data/WELL\\Bungaloo1.las&#39;,
- &#39;../data/WELL\\Burrungule1.las&#39;]</code></pre>
+<pre><code>[&#39;../data/WELL/BoolLagoon1.las&#39;,
+ &#39;../data/WELL/Bungaloo1.las&#39;,
+ &#39;../data/WELL/BeachportEast1.las&#39;,
+ &#39;../data/WELL/BiscuitFlat1.las&#39;,
+ &#39;../data/WELL/Balnaves.las&#39;,
+ &#39;../data/WELL/Banyula.las&#39;,
+ &#39;../data/WELL/Burrungule1.las&#39;,
+ &#39;../data/WELL/Beachport1.las&#39;]</code></pre>
 <p><strong>Note:</strong> the possibility of Windows VS Unix character interpretations.</p>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
@@ -2998,32 +2996,32 @@ for file in read_files:
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
-<pre><code>FILE: ../data/WELL\Balnaves.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL\Banyula.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL\Beachport1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL\BeachportEast1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL\BiscuitFlat1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL\BoolLagoon1.las
+<pre><code>FILE: ../data/WELL/BoolLagoon1.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Bungaloo1.las
+FILE: ../data/WELL/Bungaloo1.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Burrungule1.las
+FILE: ../data/WELL/BeachportEast1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL/BiscuitFlat1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL/Balnaves.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL/Banyula.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL/Burrungule1.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
 
+FILE: ../data/WELL/Beachport1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
+
 There are  8 wells.
-[&#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Beachport1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;Burrungule1&#39;]</code></pre>
+[&#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Burrungule1&#39;, &#39;Beachport1&#39;]</code></pre>
 <pre class="python"><code>#Now actually read in the log files to lasio
 #The last cell was just to automatically make a nicely formatted list of well names!
 lases = []
@@ -3043,27 +3041,27 @@ for well in lases:
     print(&quot;Wellid:&quot;, j, well_names[j])
     j+=1
     print(well.keys())</code></pre>
-<pre><code>Wellid: 0 Balnaves
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 1 Banyula
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 2 Beachport1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 3 BeachportEast1
-[&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 4 BiscuitFlat1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 5 BoolLagoon1
+<pre><code>Wellid: 0 BoolLagoon1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 6 Bungaloo1
+Wellid: 1 Bungaloo1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 7 Burrungule1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
+Wellid: 2 BeachportEast1
+[&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 3 BiscuitFlat1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 4 Balnaves
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 5 Banyula
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 6 Burrungule1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 7 Beachport1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
 <pre class="python"><code>#Set a wellid you want to explore more
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x23f0c2b90c8&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f8673efff40&gt;]</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_54_1.png" alt="" />
 <p class="caption">png</p>
@@ -3071,21 +3069,24 @@ plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></p
 <p>You have just plotted the density (DRHO) at each measured depth point. You can clean this up and present it better in the next few cells.</p>
 <pre class="python"><code>#Get some more info out of the well data
 print(lases[wellid].curves)</code></pre>
-<pre><code>Mnemonic  Unit   Value  Description                                         
---------  ----   -----  -----------                                         
-DEPTH     M             Depth                                               
-CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
-DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
-DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
-GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
-NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
-RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
-RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
-RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
-SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            </code></pre>
+<pre><code>Mnemonic  Unit   Value  Description                                                                                        
+--------  ----   -----  -----------                                                                                        
+DEPTH     M             Depth                                                                                              
+CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
+DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
+DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
+GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
+NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
+PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
+RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
+RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
+RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
+SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              </code></pre>
 <div class="challenge">
 
-<div id="challenge" class="section level3">
+<div id="challenge-1" class="section level3">
 <h3>Challenge</h3>
 <p>Run this bit of code. Then add additional mnemonic plots to the figure.</p>
 <pre class="python"><code>def find_unc(data):
@@ -3207,7 +3208,7 @@ data.shape</code></pre>
 <pre><code>(500, 1001)</code></pre>
 <pre class="python"><code>#Have a look at the data
 plt.imshow(data.T, cmap=&quot;Greys&quot;, aspect=&#39;auto&#39;)</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x23f1117dd08&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7f865805d460&gt;</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
 <p class="caption">png</p>
@@ -3332,7 +3333,7 @@ dt</code></pre>
 <pre><code>0.004</code></pre>
 <div class="challenge">
 
-<div id="challenge-1" class="section level3">
+<div id="challenge-2" class="section level3">
 <h3>Challenge</h3>
 <p>A single seismic section can be viewed with this snippet of code:</p>
 <pre class="python"><code>#Set number of xlines
@@ -3346,7 +3347,7 @@ vm = np.percentile(data, 95)
 plt.figure(figsize=(14,4))
 plt.imshow(data.T,cmap=&quot;RdBu&quot;, vmin=-vm, vmax=vm, aspect=&#39;auto&#39;)
 plt.show()</code></pre>
-<p>Can you put this in a loop to show multplie sections at once?</p>
+<p>Can you put this in a loop to show multiple sections at once?</p>
 <details>
 <summary>
 Solution
@@ -3369,12 +3370,14 @@ while m &lt; 10:
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>
-<li>Obspy for segy seismic data</li>
-<li>Lasio for well log data</li>
-<li>Pyshp for Shapefiles</li>
-<li>Pandas dataframes for tabular</li>
+<li>Obspy can be used to work with segy seismic data</li>
+<li>Lasio can be used to work with well log data</li>
+<li>Pyshp can be used to work with Shapefiles</li>
+<li>Pandas dataframes are the best format for working with tabular data of mixed numeric/character types</li>
+<li>Numpy arrays are faster when working with purely numeric data</li>
 </ul>
 </div>
+<pre class="python"><code></code></pre>
 </div>
 
 
@@ -3388,13 +3391,56 @@ while m &lt; 10:
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

@@ -20,7 +20,7 @@
 ## Introduction to matplotlib
 A more general interface is available and a more structured approach to using `matplotlib` is helpful.
 
-   - [PDF documentation](../../Documentation/Matplotlib-user-2.0.0.pdf)
+   - [PDF documentation](https://matplotlib.org/3.1.3/Matplotlib.pdf)
    - [Online gallery / cookbook](http://matplotlib.org/gallery.html)
    
 Matplotlib fully embraces the python object-oriented model, but for some tasks the design of the object hierarchy is a little bit counter-intuitive. 
@@ -82,18 +82,24 @@ plt.show()  # happens anyway !
 ```python
 # Demo example
 
+# First, define some synthetic data
+
 x1 = np.linspace(0.0, 5.0)
 x2 = np.linspace(0.0, 2.0)
 
 y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
 y2 = np.cos(2 * np.pi * x2)
+```
 
-plt.subplot(2, 1, 1)
+
+```python
+# Option 1
+plt.subplot(211)
 plt.plot(x1, y1, 'o-')
 plt.title('A tale of 2 subplots')
 plt.ylabel('Damped oscillation')
 
-plt.subplot(2, 1, 2)
+plt.subplot(212)
 plt.plot(x2, y2, '.-')
 plt.xlabel('time (s)')
 plt.ylabel('Undamped')
@@ -103,27 +109,18 @@ plt.show()
 
 
     
-![png](02a-mapping_files/02a-mapping_5_0.png)
+![png](02a-mapping_files/02a-mapping_6_0.png)
     
 
 
 
 ```python
-# My preference
-
-x1 = np.linspace(0.0, 5.0)
-x2 = np.linspace(0.0, 2.0)
-
-y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
-y2 = np.cos(2 * np.pi * x2)
-
-# Now set up the plot
+# My preference - option 2
+# Set up the plot
 
 fig = plt.figure(figsize=(6,6), facecolor="none")
-
 ax  = plt.subplot(211)   # 2s1 array of plots, ax refers to the 1st of them
 ax2 = plt.subplot(212) 
-
 
 ax.plot(x1, y1, 'o-')
 ax.set_title('A tale of 2 subplots')
@@ -132,18 +129,12 @@ ax.set_ylabel('Damped oscillation')
 ax2.plot(x2, y2, '.-')
 ax2.set_xlabel('time (s)')
 ax2.set_ylabel('Not Damped')
+plt.show()
 ```
 
 
-
-
-    Text(0, 0.5, 'Not Damped')
-
-
-
-
     
-![png](02a-mapping_files/02a-mapping_6_1.png)
+![png](02a-mapping_files/02a-mapping_7_0.png)
     
 
 
@@ -211,7 +202,7 @@ plt.show()
 
 
     
-![png](02a-mapping_files/02a-mapping_7_0.png)
+![png](02a-mapping_files/02a-mapping_8_0.png)
     
 
 
@@ -288,19 +279,19 @@ plt.show()
 
 
     
-![png](02a-mapping_files/02a-mapping_8_0.png)
+![png](02a-mapping_files/02a-mapping_9_0.png)
     
 
 
 
     
-![png](02a-mapping_files/02a-mapping_8_1.png)
+![png](02a-mapping_files/02a-mapping_9_1.png)
     
 
 
 
     
-![png](02a-mapping_files/02a-mapping_8_2.png)
+![png](02a-mapping_files/02a-mapping_9_2.png)
     
 
 
@@ -324,7 +315,7 @@ the *vert_exag* parameter is the true vertical exaggeration.
 from matplotlib.cbook import get_sample_data
 from matplotlib.colors import LightSource
 
-dem = np.load(get_sample_data('jacksboro_fault_dem.npz'))
+dem = np.load(get_sample_data('jacksboro_fault_dem.npz', asfileobj= False))
 z = dem['elevation']
 
 #-- Optional dx and dy for accurate vertical exaggeration --------------------
@@ -375,14 +366,15 @@ axes[2, 0].annotate('Blend Mode', (0, 0.5), xytext=(-30, 0),
 fig.subplots_adjust(bottom=0.05, right=0.95)
 
 plt.show()
+
+# note - if you get a sample data not found error here run
+#  conda install -c conda-forge mpl_sample_data 
+# after activating your geopy environment
 ```
-
-    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:19: MatplotlibDeprecationWarning: In a future release, get_sample_data will automatically load numpy arrays.  Set np_load to True to get the array and suppress this warning.  Set asfileobj to False to get the path to the data file and suppress this warning.
-
 
 
     
-![png](02a-mapping_files/02a-mapping_9_1.png)
+![png](02a-mapping_files/02a-mapping_10_0.png)
     
 
 
@@ -409,8 +401,6 @@ If we are going to plot anything then we need to include **matplotlib**.
 
 
 ```python
-import matplotlib.pyplot as plt
-
 import cartopy
 import cartopy.crs as ccrs
 ```
@@ -423,19 +413,12 @@ import matplotlib.pyplot as plt
 ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
-
+plt.show()
 ```
 
 
-
-
-    <cartopy.mpl.feature_artist.FeatureArtist at 0x1fb3e499708>
-
-
-
-
     
-![png](02a-mapping_files/02a-mapping_13_1.png)
+![png](02a-mapping_files/02a-mapping_14_0.png)
     
 
 
@@ -455,19 +438,12 @@ ax.set_global()
 ax.coastlines()  
 ax.stock_img()
 
-
+plt.show()
 ```
 
 
-
-
-    <matplotlib.image.AxesImage at 0x1fb3e499bc8>
-
-
-
-
     
-![png](02a-mapping_files/02a-mapping_15_1.png)
+![png](02a-mapping_files/02a-mapping_16_0.png)
     
 
 
@@ -478,26 +454,18 @@ Here is how you can plot a region instead of the globe:
 
 
 ```python
-
 fig = plt.figure(figsize=(12, 12))
 ax  = plt.axes(projection=ccrs.Robinson())    
 ax.set_extent([0, 40, 28, 48])
 
 ax.coastlines(resolution='50m')  
 ax.stock_img()
-
+plt.show()
 ```
 
 
-
-
-    <matplotlib.image.AxesImage at 0x1fb3e562f48>
-
-
-
-
     
-![png](02a-mapping_files/02a-mapping_17_1.png)
+![png](02a-mapping_files/02a-mapping_18_0.png)
     
 
 
@@ -532,6 +500,7 @@ ax.set_extent([112, 153, -43, -10])
 
 ax.coastlines(resolution='50m')  
 ax.stock_img()
+plt.show()
 ```
 
 </details>
@@ -559,9 +528,9 @@ data.variables
 
 
 
-    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x1fb3e532308>),
-                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x1fb4031d808>),
-                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x1fb4031da48>)])
+    OrderedDict([('X', <scipy.io.netcdf.netcdf_variable at 0x7fad40e1a490>),
+                 ('Y', <scipy.io.netcdf.netcdf_variable at 0x7fad40d9afd0>),
+                 ('elev', <scipy.io.netcdf.netcdf_variable at 0x7fad40d9a640>)])
 
 
 
@@ -589,18 +558,12 @@ print(lats.shape)
 ```python
 #A quick plot of the main dataset
 plt.pcolormesh(worldbath)
+plt.show()
 ```
 
 
-
-
-    <matplotlib.collections.QuadMesh at 0x1fb4008b808>
-
-
-
-
     
-![png](02a-mapping_files/02a-mapping_25_1.png)
+![png](02a-mapping_files/02a-mapping_26_0.png)
     
 
 
@@ -620,7 +583,7 @@ plt.show()
 
 
     
-![png](02a-mapping_files/02a-mapping_27_0.png)
+![png](02a-mapping_files/02a-mapping_28_0.png)
     
 
 
@@ -680,12 +643,13 @@ cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
 plt.show()
 ```
 
-    c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\ipykernel_launcher.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
+    <ipython-input-23-3d2618499013>:37: UserWarning: FixedFormatter should only be used together with FixedLocator
+      cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
 
 
 
     
-![png](02a-mapping_files/02a-mapping_30_1.png)
+![png](02a-mapping_files/02a-mapping_31_1.png)
     
 
 
