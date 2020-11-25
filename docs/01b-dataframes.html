@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>01b-dataframes.utf8</title>
+<title>01b-dataframes.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -2976,14 +3001,14 @@ import re</code></pre>
 <pre class="python"><code>#Build a list of filenames to read
 read_files = glob.glob(&quot;../data/WELL/*.las&quot;)
 read_files</code></pre>
-<pre><code>[&#39;../data/WELL/BoolLagoon1.las&#39;,
- &#39;../data/WELL/Bungaloo1.las&#39;,
- &#39;../data/WELL/BeachportEast1.las&#39;,
- &#39;../data/WELL/BiscuitFlat1.las&#39;,
- &#39;../data/WELL/Balnaves.las&#39;,
- &#39;../data/WELL/Banyula.las&#39;,
- &#39;../data/WELL/Burrungule1.las&#39;,
- &#39;../data/WELL/Beachport1.las&#39;]</code></pre>
+<pre><code>[&#39;../data/WELL\\Balnaves.las&#39;,
+ &#39;../data/WELL\\Banyula.las&#39;,
+ &#39;../data/WELL\\Beachport1.las&#39;,
+ &#39;../data/WELL\\BeachportEast1.las&#39;,
+ &#39;../data/WELL\\BiscuitFlat1.las&#39;,
+ &#39;../data/WELL\\BoolLagoon1.las&#39;,
+ &#39;../data/WELL\\Bungaloo1.las&#39;,
+ &#39;../data/WELL\\Burrungule1.las&#39;]</code></pre>
 <p><strong>Note:</strong> the possibility of Windows VS Unix character interpretations.</p>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
@@ -2992,36 +3017,36 @@ for file in read_files:
     #Split the filepath at a &quot;/&quot; OR a &quot;.las&quot; OR a &quot;\&quot;
     well=re.split(r&#39;/|\\|.las&#39;,file)
     print(&quot;SPLIT:&quot;, well, &quot;\n&quot;)
-    well_names.append(well[3])
+    well_names.append(well[-2])
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
-<pre><code>FILE: ../data/WELL/BoolLagoon1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL/Bungaloo1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL/BeachportEast1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL/BiscuitFlat1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL/Balnaves.las
+<pre><code>FILE: ../data/WELL\Balnaves.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL/Banyula.las
+FILE: ../data/WELL\Banyula.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL/Burrungule1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
-
-FILE: ../data/WELL/Beachport1.las
+FILE: ../data/WELL\Beachport1.las
 SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
 
+FILE: ../data/WELL\BeachportEast1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL\BiscuitFlat1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL\BoolLagoon1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL\Bungaloo1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
+
+FILE: ../data/WELL\Burrungule1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
+
 There are  8 wells.
-[&#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Burrungule1&#39;, &#39;Beachport1&#39;]</code></pre>
+[&#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Beachport1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;Burrungule1&#39;]</code></pre>
 <pre class="python"><code>#Now actually read in the log files to lasio
 #The last cell was just to automatically make a nicely formatted list of well names!
 lases = []
@@ -3041,27 +3066,27 @@ for well in lases:
     print(&quot;Wellid:&quot;, j, well_names[j])
     j+=1
     print(well.keys())</code></pre>
-<pre><code>Wellid: 0 BoolLagoon1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 1 Bungaloo1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 2 BeachportEast1
-[&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 3 BiscuitFlat1
+<pre><code>Wellid: 0 Balnaves
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 4 Balnaves
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 5 Banyula
+Wellid: 1 Banyula
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 6 Burrungule1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 7 Beachport1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
+Wellid: 2 Beachport1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 3 BeachportEast1
+[&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 4 BiscuitFlat1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 5 BoolLagoon1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 6 Bungaloo1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
+Wellid: 7 Burrungule1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
 <pre class="python"><code>#Set a wellid you want to explore more
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f8673efff40&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x232520c7908&gt;]</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_54_1.png" alt="" />
 <p class="caption">png</p>
@@ -3069,46 +3094,59 @@ plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></p
 <p>You have just plotted the density (DRHO) at each measured depth point. You can clean this up and present it better in the next few cells.</p>
 <pre class="python"><code>#Get some more info out of the well data
 print(lases[wellid].curves)</code></pre>
-<pre><code>Mnemonic  Unit   Value  Description                                                                                        
---------  ----   -----  -----------                                                                                        
-DEPTH     M             Depth                                                                                              
-CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
-DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
-DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
-GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
-NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
-PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
-RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
-SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              </code></pre>
+<pre><code>Mnemonic  Unit   Value  Description                                         
+--------  ----   -----  -----------                                         
+DEPTH     M             Depth                                               
+CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
+DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
+DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
+GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
+NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
+RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
+RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
+RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
+SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            </code></pre>
 <div class="challenge">
 
 <div id="challenge-1" class="section level3">
 <h3>Challenge</h3>
 <p>Run this bit of code. Then add additional mnemonic plots to the figure.</p>
-<pre class="python"><code>def find_unc(data):
-    #Find the changes in a vector
-    import pandas as pd
-    #Convert to pandas
+<pre class="python"><code>#Import additional packages we will need
+import numpy as np
+import pandas as pd
+
+#Convert a data array to a pandas dataframe
+#and find significant spikes in the data
+#Return the spikes as a binary 1 or 0 array
+def find_unc(data):
+    #Convert data to pandas
     df=pd.DataFrame(data)
-    #Caluclate the rolling average and the percent change of the data
-    df_change = df.rolling(200).mean().pct_change(periods=200)
+    #Caluclate the rolling average 
+    #(200 is somewhat arbitray value to take the rolling average over)
+    df_mean = df.rolling(200).mean()
+    #Calculate the percent change (i.e any points of change) of the data
+    df_change = df_mean.pct_change(periods=200)
     #Convert large percent changes to 1 or 0
+    #0.5 (50%) is a somewhat arbitray number 
+    #to set as the amount of change in the data
     dfbin = ((df_change &lt; -0.5) | (df_change &gt; 0.5)).astype(int)
+    #Return the binaray array
     return(dfbin)
 
 #Define a function to make the plot and set parameters
 def make_plot(i,var,colour):
+    #Set the data to a variable
     data=lases[wellid][var]
+    #Find the spikes in the data
     dfbin=find_unc(data)
+    #Now perform the plotting
+    top=min(lases[wellid][&#39;DEPTH&#39;])
+    bot=max(lases[wellid][&#39;DEPTH&#39;])
     ax[i].plot(dfbin*np.nanmax(data), lases[wellid][&#39;DEPTH&#39;], color = &#39;black&#39;, linewidth = 0.5)
     ax[i].plot(data, lases[wellid][&#39;DEPTH&#39;], color = colour, linewidth = 0.5)
     ax[i].set_xlabel(var)
     ax[i].xaxis.label.set_color(colour)
-    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.1), np.nanpercentile(lases[wellid][var],99.9))
+    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.5), np.nanpercentile(lases[wellid][var],99.5))
     ax[i].tick_params(axis=&#39;x&#39;, colors=colour)
     ax[i].title.set_color(colour)
     ax[i].set_ylim(top,bot)
@@ -3117,7 +3155,7 @@ def make_plot(i,var,colour):
                 bottom=True,
                 labelleft=False,
                 labelbottom=True)
-    
+
 #Make the figure
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16,6))
 
@@ -3127,7 +3165,7 @@ make_plot(1,&quot;RDEP&quot;,&quot;red&quot;)
 
 #Quick way to get the list of keys
 #lases[wellid].keys()
-    
+
 #Fix the details on the figure
 plt.subplots_adjust(wspace=0.01)
 ax[0].set_ylabel(&quot;Depth (m)&quot;)
@@ -3139,7 +3177,7 @@ ax[0].tick_params(left=True,
 <summary>
 Solution
 </summary>
-<p>…</p>
+<p>To solve the challenge you can change the <code>ncols</code> varibale and then add new calls to the <code>make_plot</code> function.</p>
 <pre class="python"><code>#Change the number of columns
 fig, ax = plt.subplots(nrows=1, ncols=8, figsize=(16,6))
     
@@ -3152,6 +3190,38 @@ make_plot(4,&quot;RDEP&quot;,&quot;cyan&quot;)
 make_plot(5,&quot;RHOB&quot;,&quot;pink&quot;)
 make_plot(6,&quot;RMED&quot;,&quot;brown&quot;)
 make_plot(7,&quot;SP&quot;,&quot;orange&quot;)</code></pre>
+<p>To learn more about the smoothing steps make a diagnostic plots at each step.</p>
+<pre class="python"><code>#Set an example dataset, i.e.
+#wellid 1 and var is &quot;GR&quot;
+data=lases[1][&quot;GR&quot;]
+
+#Convert data to pandas
+df=pd.DataFrame(data)
+
+plt.plot(df)
+plt.title(&quot;Raw data&quot;)
+plt.show()
+
+#Caluclate the rolling average 
+df_mean = df.rolling(200).mean()
+
+plt.plot(df_mean)
+plt.title(&quot;Smoothed data&quot;)
+plt.show()
+
+#Calculate the percent change (i.e any points of change) of the data
+df_change = df_mean.pct_change(periods=200)
+
+plt.plot(df_change)
+plt.title(&quot;Percentage changes along the smoothed data&quot;)
+plt.show()
+
+#Convert large percent changes to 1 or 0
+dfbin = ((df_change &lt; -0.2) | (df_change &gt; 0.2)).astype(int)
+
+plt.plot(dfbin)
+plt.title(&quot;&#39;Binarised&#39; version of large percentage changes&quot;)
+plt.show()</code></pre>
 </div>
 </div>
 <div id="segy-seismic-data-processing" class="section level1">
@@ -3391,56 +3461,13 @@ while m &lt; 10:
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

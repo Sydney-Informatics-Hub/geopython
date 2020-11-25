@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>01a-fundamentals.utf8</title>
+<title>01a-fundamentals.utf8.md</title>
 
-<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -26,15 +25,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -97,6 +87,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -245,7 +236,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -258,9 +248,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -274,12 +303,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -315,6 +338,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -816,16 +841,14 @@ print(chemdata[[2,5,6],0:2])</code></pre>
 <summary>
 Solution
 </summary>
-<pre class="python"><code>print(chemdata[19:30,1:3])</code></pre>
-<pre><code>---------------------------------------------------------------------------
+<pre class="python"><code>#The indexing counts from [start:end]
+#where &quot;start&quot; is included and &quot;end&quot; is excluded!
+#Assuming we want row 30, then you need to
+#include index 29 (i.e. set the end index to 30!)
+#Same with columns, we want column 2 (index 1) and
+#column 3 (index 2) so make our slice 1:3
 
-NameError                                 Traceback (most recent call last)
-
-&lt;ipython-input-1-55087601de28&gt; in &lt;module&gt;
-----&gt; 1 print(chemdata[19:30,1:3])
-
-
-NameError: name &#39;chemdata&#39; is not defined</code></pre>
+print(chemdata[19:30,1:3])</code></pre>
 </details>
 </div>
 <div id="plotting-data" class="section level3">
@@ -838,7 +861,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_45_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_44_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This does not look right… It is a messy dataset! This is not uncommon. Maybe the Lats/Lons are stored as Norhtings/Eastings for some samples? Maybe they are missing a decimal place?</p>
@@ -855,11 +878,11 @@ plt.ylabel(&#39;Longitude&#39;)
 plt.xlabel(&#39;Number&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_47_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_46_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_47_1.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_46_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This kind of casual data interrogation is a really handy way to exploring your data. There are definitely some outliers with latitudes and longitudes. There are quite a few ways clean the data, but let’s simply restrict our data range to -180:180 and -90:90.</p>
@@ -899,7 +922,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_55_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_54_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Now make a more informative plot:</p>
@@ -920,7 +943,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_57_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_56_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#You could come up with a more intelligent way to reject your outliers, e.g.
@@ -944,7 +967,7 @@ removed: 20407</code></pre>
 <pre class="python"><code>plt.plot(copper[copper&gt;1],&#39;k.&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_60_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_59_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -987,7 +1010,7 @@ cbar.set_label(&#39;Age (Ma)&#39;)
 plt.title(&#39;Age of Copper Deposits in the EarthChem.org database&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_62_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_61_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You can explore the different color maps at <a href="https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html">https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html</a>.</p>
@@ -1056,56 +1079,13 @@ plt.show()</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

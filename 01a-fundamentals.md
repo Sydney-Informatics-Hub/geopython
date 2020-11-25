@@ -551,23 +551,16 @@ Print the second and third columns for row 20-30.
 
 <details>
 <summary>Solution</summary>
-
-
 ```python
+#The indexing counts from [start:end]
+#where "start" is included and "end" is excluded!
+#Assuming we want row 30, then you need to
+#include index 29 (i.e. set the end index to 30!)
+#Same with columns, we want column 2 (index 1) and
+#column 3 (index 2) so make our slice 1:3
+
 print(chemdata[19:30,1:3])
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-55087601de28> in <module>
-    ----> 1 print(chemdata[19:30,1:3])
-    
-
-    NameError: name 'chemdata' is not defined
-
 
 </details>
 </div>
@@ -587,7 +580,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_45_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_44_0.png)
     
 
 
@@ -615,13 +608,13 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_47_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_46_0.png)
     
 
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_47_1.png)
+![png](01a-fundamentals_files/01a-fundamentals_46_1.png)
     
 
 
@@ -708,7 +701,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_55_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_54_0.png)
     
 
 
@@ -737,7 +730,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_57_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_56_0.png)
     
 
 
@@ -774,7 +767,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_60_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_59_0.png)
     
 
 
@@ -822,7 +815,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_62_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_61_0.png)
     
 
 

@@ -1549,14 +1549,14 @@ read_files
 
 
 
-    ['../data/WELL/BoolLagoon1.las',
-     '../data/WELL/Bungaloo1.las',
-     '../data/WELL/BeachportEast1.las',
-     '../data/WELL/BiscuitFlat1.las',
-     '../data/WELL/Balnaves.las',
-     '../data/WELL/Banyula.las',
-     '../data/WELL/Burrungule1.las',
-     '../data/WELL/Beachport1.las']
+    ['../data/WELL\\Balnaves.las',
+     '../data/WELL\\Banyula.las',
+     '../data/WELL\\Beachport1.las',
+     '../data/WELL\\BeachportEast1.las',
+     '../data/WELL\\BiscuitFlat1.las',
+     '../data/WELL\\BoolLagoon1.las',
+     '../data/WELL\\Bungaloo1.las',
+     '../data/WELL\\Burrungule1.las']
 
 
 
@@ -1571,38 +1571,38 @@ for file in read_files:
     #Split the filepath at a "/" OR a ".las" OR a "\"
     well=re.split(r'/|\\|.las',file)
     print("SPLIT:", well, "\n")
-    well_names.append(well[3])
+    well_names.append(well[-2])
 
 print("There are ", len(well_names), "wells.")
 print(well_names)
 ```
 
-    FILE: ../data/WELL/BoolLagoon1.las
-    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', ''] 
-    
-    FILE: ../data/WELL/Bungaloo1.las
-    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', ''] 
-    
-    FILE: ../data/WELL/BeachportEast1.las
-    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
-    
-    FILE: ../data/WELL/BiscuitFlat1.las
-    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
-    
-    FILE: ../data/WELL/Balnaves.las
+    FILE: ../data/WELL\Balnaves.las
     SPLIT: ['..', 'data', 'WELL', 'Balnaves', ''] 
     
-    FILE: ../data/WELL/Banyula.las
+    FILE: ../data/WELL\Banyula.las
     SPLIT: ['..', 'data', 'WELL', 'Banyula', ''] 
     
-    FILE: ../data/WELL/Burrungule1.las
-    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', ''] 
-    
-    FILE: ../data/WELL/Beachport1.las
+    FILE: ../data/WELL\Beachport1.las
     SPLIT: ['..', 'data', 'WELL', 'Beachport1', ''] 
     
+    FILE: ../data/WELL\BeachportEast1.las
+    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
+    
+    FILE: ../data/WELL\BiscuitFlat1.las
+    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
+    
+    FILE: ../data/WELL\BoolLagoon1.las
+    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', ''] 
+    
+    FILE: ../data/WELL\Bungaloo1.las
+    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', ''] 
+    
+    FILE: ../data/WELL\Burrungule1.las
+    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', ''] 
+    
     There are  8 wells.
-    ['BoolLagoon1', 'Bungaloo1', 'BeachportEast1', 'BiscuitFlat1', 'Balnaves', 'Banyula', 'Burrungule1', 'Beachport1']
+    ['Balnaves', 'Banyula', 'Beachport1', 'BeachportEast1', 'BiscuitFlat1', 'BoolLagoon1', 'Bungaloo1', 'Burrungule1']
 
 
 
@@ -1640,22 +1640,22 @@ for well in lases:
     print(well.keys())
 ```
 
-    Wellid: 0 BoolLagoon1
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 1 Bungaloo1
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 2 BeachportEast1
-    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 3 BiscuitFlat1
+    Wellid: 0 Balnaves
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 4 Balnaves
-    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
-    Wellid: 5 Banyula
+    Wellid: 1 Banyula
     ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'RDEP', 'RHOB', 'RMED', 'SP']
-    Wellid: 6 Burrungule1
-    ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
-    Wellid: 7 Beachport1
+    Wellid: 2 Beachport1
     ['DEPTH', 'CALI', 'MINV', 'MNOR', 'RDEP', 'RMED', 'SP']
+    Wellid: 3 BeachportEast1
+    ['DEPTH', 'GR', 'RDEP', 'RMED', 'SP']
+    Wellid: 4 BiscuitFlat1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'MINV', 'MNOR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 5 BoolLagoon1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'SP']
+    Wellid: 6 Bungaloo1
+    ['DEPTH', 'CALI', 'DRHO', 'DT', 'DTS', 'GR', 'NPHI', 'PEF', 'RDEP', 'RHOB', 'RMED', 'RMIC', 'SP']
+    Wellid: 7 Burrungule1
+    ['DEPTH', 'CALI', 'DT', 'GR', 'RDEP', 'RMED', 'SP']
 
 
 
@@ -1673,7 +1673,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f8673efff40>]
+    [<matplotlib.lines.Line2D at 0x232520c7908>]
 
 
 
@@ -1691,21 +1691,18 @@ You have just plotted the density (DRHO) at each measured depth point. You can c
 print(lases[wellid].curves)
 ```
 
-    Mnemonic  Unit   Value  Description                                                                                        
-    --------  ----   -----  -----------                                                                                        
-    DEPTH     M             Depth                                                                                              
-    CALI      in            Caliper     CAL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis          
-    DRHO      g/cm3         DenCorr     ZCOR Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-    DT        us/ft         Sonic       DT24 DT24.I Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis  
-    DTS       us/ft         ShearSonic  DTS , bungaloo_1_mll_rtex_r2.dlis                                                      
-    GR        gAPI          GammaRay    GR Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis           
-    NPHI      dec           Neutron     CNC Edited, bungaloo_1_neutron_r2.dlis                                                 
-    PEF       b/e           PEFactor    PE Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                           
-    RDEP      ohmm          DeepRes     MLR4C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-    RHOB      g/cm3         Density     ZDNC Edited, bungaloo_1_mll_rtex_xyzdl_r6.dlis                                         
-    RMED      ohmm          MedRes      MLR2C Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis        
-    RMIC      ohmm          MicroRes    RMLL Spliced, Edited, bungaloo_1_mll_rtex_r1.dlis, bungaloo_1_mll_rtex_r2.dlis         
-    SP        mV            SponPot     SPWDH Edited, bungaloo_1_mll_rtex_r2.dlis                                              
+    Mnemonic  Unit   Value  Description                                         
+    --------  ----   -----  -----------                                         
+    DEPTH     M             Depth                                               
+    CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
+    DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
+    DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
+    GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
+    NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
+    RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
+    RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
+    RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
+    SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            
 
 
 <div class="challenge">
@@ -1715,26 +1712,42 @@ print(lases[wellid].curves)
 Run this bit of code. Then add additional mnemonic plots to the figure.
 
 ```python
+#Import additional packages we will need
+import numpy as np
+import pandas as pd
+
+#Convert a data array to a pandas dataframe
+#and find significant spikes in the data
+#Return the spikes as a binary 1 or 0 array
 def find_unc(data):
-    #Find the changes in a vector
-    import pandas as pd
-    #Convert to pandas
+    #Convert data to pandas
     df=pd.DataFrame(data)
-    #Caluclate the rolling average and the percent change of the data
-    df_change = df.rolling(200).mean().pct_change(periods=200)
+    #Caluclate the rolling average 
+    #(200 is somewhat arbitray value to take the rolling average over)
+    df_mean = df.rolling(200).mean()
+    #Calculate the percent change (i.e any points of change) of the data
+    df_change = df_mean.pct_change(periods=200)
     #Convert large percent changes to 1 or 0
+    #0.5 (50%) is a somewhat arbitray number 
+    #to set as the amount of change in the data
     dfbin = ((df_change < -0.5) | (df_change > 0.5)).astype(int)
+    #Return the binaray array
     return(dfbin)
 
 #Define a function to make the plot and set parameters
 def make_plot(i,var,colour):
+    #Set the data to a variable
     data=lases[wellid][var]
+    #Find the spikes in the data
     dfbin=find_unc(data)
+    #Now perform the plotting
+    top=min(lases[wellid]['DEPTH'])
+    bot=max(lases[wellid]['DEPTH'])
     ax[i].plot(dfbin*np.nanmax(data), lases[wellid]['DEPTH'], color = 'black', linewidth = 0.5)
     ax[i].plot(data, lases[wellid]['DEPTH'], color = colour, linewidth = 0.5)
     ax[i].set_xlabel(var)
     ax[i].xaxis.label.set_color(colour)
-    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.1), np.nanpercentile(lases[wellid][var],99.9))
+    ax[i].set_xlim(np.nanpercentile(lases[wellid][var],0.5), np.nanpercentile(lases[wellid][var],99.5))
     ax[i].tick_params(axis='x', colors=colour)
     ax[i].title.set_color(colour)
     ax[i].set_ylim(top,bot)
@@ -1743,7 +1756,7 @@ def make_plot(i,var,colour):
                 bottom=True,
                 labelleft=False,
                 labelbottom=True)
-    
+
 #Make the figure
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16,6))
 
@@ -1753,7 +1766,7 @@ make_plot(1,"RDEP","red")
 
 #Quick way to get the list of keys
 #lases[wellid].keys()
-    
+
 #Fix the details on the figure
 plt.subplots_adjust(wspace=0.01)
 ax[0].set_ylabel("Depth (m)")
@@ -1768,7 +1781,7 @@ ax[0].tick_params(left=True,
 <details>
 <summary>Solution</summary>
 
-...
+To solve the challenge you can change the ```ncols``` varibale and then add new calls to the ```make_plot``` function.
 
 ```python
 #Change the number of columns
@@ -1783,6 +1796,43 @@ make_plot(4,"RDEP","cyan")
 make_plot(5,"RHOB","pink")
 make_plot(6,"RMED","brown")
 make_plot(7,"SP","orange")
+```
+    
+    
+To learn more about the smoothing steps make a diagnostic plots at each step.
+    
+```python  
+#Set an example dataset, i.e.
+#wellid 1 and var is "GR"
+data=lases[1]["GR"]
+
+#Convert data to pandas
+df=pd.DataFrame(data)
+
+plt.plot(df)
+plt.title("Raw data")
+plt.show()
+
+#Caluclate the rolling average 
+df_mean = df.rolling(200).mean()
+
+plt.plot(df_mean)
+plt.title("Smoothed data")
+plt.show()
+
+#Calculate the percent change (i.e any points of change) of the data
+df_change = df_mean.pct_change(periods=200)
+
+plt.plot(df_change)
+plt.title("Percentage changes along the smoothed data")
+plt.show()
+
+#Convert large percent changes to 1 or 0
+dfbin = ((df_change < -0.2) | (df_change > 0.2)).astype(int)
+
+plt.plot(dfbin)
+plt.title("'Binarised' version of large percentage changes")
+plt.show()
 ```
 
 # SEGY Seismic data processing
