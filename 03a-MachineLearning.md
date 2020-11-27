@@ -20,7 +20,7 @@ We have a dataset (from Butterworth et al. 2016) with a collection of tectonomag
 
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
-![SegmentLocal](../fig/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](/fig/MullerConvergenceSmall.gif "segment")
 
 ## Start by importing most of the modules we need
 By convention module loads go at the top of your workflows.
