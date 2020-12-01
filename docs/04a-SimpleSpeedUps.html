@@ -11,7 +11,7 @@
 
 
 
-<title>04a. Efficient Python methods</title>
+<title>04a-SimpleSpeedUps.utf8.md</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -461,14 +461,31 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">04a. Efficient Python methods</h1>
 
 </div>
 
 
+<div id="efficient-python-methods" class="section level1">
+<h1>Efficient Python methods</h1>
+<div id="questions" class="section level3 questions">
+<h3>Questions</h3>
+<ul>
+<li>“Which method for acceleration should I choose?”</li>
+<li>“How do I utilise traditional python approaches to multi cpu and nodes”</li>
+</ul>
+</div>
+<div id="objectives" class="section level3 objectives">
+<h3>Objectives</h3>
+<ul>
+<li>“Learn simples methods to profile your code”</li>
+<li>“See how numpy and pandas use Vectorising to improve performance for some data”</li>
+<li>“Use MPI to communicate between workers”</li>
+<li>“Discover python multiprocessing and mpi execution”</li>
+</ul>
+</div>
 <p>In this session we will show you a few of the basic tools that we can use in Python to make our code go faster. There is no perfect method for optimising code. Efficiency gains depend on what your end goal is, what libraries are available, what method or approach you want to take when writing algorithms, what your data is like, what hardware you have. Hopefully these notes will allow you to think about your problems from different perspectives to give you the best opportunity to make your development and execution as efficient as possible.</p>
-<div id="acceleration-parallelisation-vectorising-threading-make-python-go-fast" class="section level1">
-<h1>Acceleration, Parallelisation, Vectorising, Threading, make-Python-go-fast</h1>
+<div id="acceleration-parallelisation-vectorising-threading-make-python-go-fast" class="section level2">
+<h2>Acceleration, Parallelisation, Vectorising, Threading, make-Python-go-fast</h2>
 <p>We will cover a few of the ways that you can potentially speed up Python. As we will learn there are multitudes of methods to make Python code more efficient, and also different implementations of libraries, tools, techniques that can all be utilised depending on how your code and/or data is organised. This is a rich and evolving ecosystem and there is no one perfect way to implement efficiencies.</p>
 <p>Some key words that might come up:</p>
 <ul>
@@ -479,12 +496,12 @@ div.tocify {
 <li>Python decorators and functional programming.</li>
 </ul>
 <p><br></p>
-<div id="what-does-parallel-mean" class="section level2">
-<h2>What does <em>parallel</em> mean?</h2>
+<div id="what-does-parallel-mean" class="section level3">
+<h3>What does <em>parallel</em> mean?</h3>
 <p>Separate workers or processes acting in an independent or semi-dependent manner. Independent processes ship data, program files and libraries to an isolated ecosystem where computation is performed. In this case communication between workers can be achieved. Contrastingly there are also shared memory set ups where multiple computational resources are pooled together to work on the same data.</p>
 <p>Generally speaking, parallel workflows fit different categories of data handling which can make you think about how to write your code and what approaches to take.</p>
-<div id="embarrassingly-parallel" class="section level3">
-<h3>Embarrassingly parallel:</h3>
+<div id="embarrassingly-parallel" class="section level4">
+<h4>Embarrassingly parallel:</h4>
 <p>Requires no communication between processors. Utilise shared memory spaces. For example:</p>
 <ul>
 <li>Running same algorithm for a range of input parameters.</li>
@@ -492,8 +509,8 @@ div.tocify {
 <li>Open MP implementations.</li>
 </ul>
 </div>
-<div id="coarsefine-grained-parallel" class="section level3">
-<h3>Coarse/Fine-grained parallel:</h3>
+<div id="coarsefine-grained-parallel" class="section level4">
+<h4>Coarse/Fine-grained parallel:</h4>
 <p>Requires occasional or frequent communication between processors. Uses a small number of processes on large data. Fine grain uses a large number of small processes with very little communication. But can improves computationally bound problems. For example:</p>
 <ul>
 <li>Some examples are</li>
@@ -503,19 +520,42 @@ div.tocify {
 <li>MPI implementations.</li>
 </ul>
 <p>Traditional implementations of parallelism are done on a low level. However, open source software has <strong><em>evolved</em></strong> dramatically over the last few years allowing more <strong><em>high level implementations and concise ‘pythonic’ syntax</em></strong> that wraps around low level tools.</p>
-<p><br> # Profiling your code</p>
+<p><br></p>
+</div>
+</div>
+</div>
+<div id="profiling-your-code" class="section level2">
+<h2>Profiling your code</h2>
 <p>Before you get stuck into making things fast, it is important to find out what is exactly slow in your code. Is it a particular function running slow? Or are you calling a really fast function a million times? You can save yourself a lot development time by profiling your code to give you an idea for where efficiencies can be found. Try out Jupyter’s <code>%%timeit</code> magic function.</p>
 <pre class="python"><code>%%timeit
 import time
 time.sleep(1)</code></pre>
-<pre><code>1 loop, best of 3: 1 s per loop</code></pre>
-<p>A neat little feature to check how fast some of your cells are running. Now let’s profile a simple Python script and then think about how we could make it faster. Put this code in a script: ~~~ #A test function to see how you can profile code for speedups</p>
-<p>import time</p>
-<p>def waithere(): print(“waiting for 1 second”) time.sleep(1)</p>
-<p>def add2(a=0,b=0): print(“adding”, a, “and”, b) return(a+b)</p>
-<p>def main(): print(“Hello, try timing some parts of this code!”) waithere()<br />
-add2(4,7) add2(3,1)</p>
-<p>if <strong>name</strong>==‘<strong>main</strong>’: main() ~~~ {: .output}</p>
+<pre><code>1.01 s ± 2.63 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<p>A neat little feature to check how fast some of your cells are running. Now let’s profile a simple Python script and then think about how we could make it faster. Put this code in a script (save it as <code>faster.py</code>):</p>
+<pre class="python"><code>#A test function to see how you can profile code for speedups
+
+import time
+
+def waithere():
+    print(&quot;waiting for 1 second&quot;)
+    time.sleep(1)
+
+def add2(a=0,b=0):
+    print(&quot;adding&quot;, a, &quot;and&quot;, b)
+    return(a+b)
+
+def main():
+    print(&quot;Hello, try timing some parts of this code!&quot;)
+    waithere()  
+    add2(4,7)
+    add2(3,1)
+    
+if __name__==&#39;__main__&#39;:
+    main()</code></pre>
+<pre><code>Hello, try timing some parts of this code!
+waiting for 1 second
+adding 4 and 7
+adding 3 and 1</code></pre>
 <p>There are several ways to debug and profile Python, a very elegant and built in one is <a href="https://docs.python.org/3/library/profile.html">cProfile</a> It analyses your code as it executes. Run it with <code>python -m cProfile faster.py</code> and see the output of the script and the profiling:</p>
 <pre><code>Hello, try timing some parts of this code!
 waiting for 1 second
@@ -538,15 +578,17 @@ ncalls  tottime  percall  cumtime  percall filename:lineno(function)
 <p>You can now interrogate your code and see where you should devote your time to improving it.</p>
 <p>Special note on style: Developing python software in a <strong><em>modular</em></strong> manner assists with debugging and time profiling. This is a bit different to the sequential notebooks we have been creating. But re-writing certain snippets in self-contained functions can be a fun task.</p>
 </div>
-</div>
 <div id="exercise" class="section level2">
 <h2>Exercise</h2>
 <p>Revisit some of the codes we have run previously. You can do this from a Jupyter Notebook by clicking <code>File &gt; Downlad as &gt; Python (.py)</code>. You may need to comment-out some sections, espiecially where figures are displayed, to get them to run. Run it using <strong>cProfile</strong> and look at the results. Can you identify where improvements could be made?</p>
-<p><br> # Loops and vectorising code with numpy and pandas</p>
+<p><br></p>
+</div>
+<div id="loops-and-vectorising-code-with-numpy-and-pandas" class="section level2">
+<h2>Loops and vectorising code with numpy and pandas</h2>
 <p>Your problem might be solved by using the fast way certain packages handle certain datatypes.</p>
 <p>Generally speaking, pandas and numpy libraries should be libraries you frequently use. They offer advantages in high performance computing including: 1. Efficient datastructures that under the hood are implemented in fast C code rather than python. 2. Promoting explicit use of datatype declarations - making memory management of data and functions working on this data, faster. 3. Elegant syntax promoting consice behaviour. 4. Data structures come with common built in functions that are designed to be used in a vectorised way.</p>
-<p>Lets explore this last point on vectorisation with an example. Take this nested for loop <a href="https://sydney-informatics-hub.github.io/training.artemis.python/files/vector.py">example</a>:</p>
-<pre><code>#import packages
+<p>Lets explore this last point on vectorisation with an example. Take this nested for loop example:</p>
+<pre class="python"><code>#import packages
 import numpy as np
 import pandas as pd
 import time 
@@ -562,72 +604,260 @@ Wells = pd.DataFrame(np.random.randint(0,100,size=(50, 1)), columns=list(&#39;A&
 #Create an emtpy dataframe to fill with the resulting matches
 totalSlow=pd.DataFrame(columns=Samples.columns)
 totalFast=pd.DataFrame(columns=Samples.columns)</code></pre>
-<p>{: .python}</p>
-<p>Now compare the nested for-loop method: ~~~ tic=time.time() for index,samp in Samples.iterrows(): for index2,well in Wells.iterrows(): if well[‘A’]==samp[‘A’]: totalSlow=totalSlow.append(samp,ignore_index=True)</p>
-<p>totalSlow=totalSlow.drop_duplicates() toc=time.time() print(“Nested-loop Runtime:”,toc-tic, “seconds”) ~~~ {: .python}</p>
-<p>Or the vectorised method: ~~~ tic=time.time() totalFast=Samples[Samples[‘A’].isin(Wells.A.tolist())] totalFast=totalSlow.drop_duplicates() toc=time.time() print(“Vectorized Runtime:”,toc-tic, “seconds”) ~~~ {: .python}</p>
+<pre class="python"><code>#Now compare the nested for-loop method:
+
+tic=time.time()
+for index,samp in Samples.iterrows():
+    for index2,well in Wells.iterrows():
+        if well[&#39;A&#39;]==samp[&#39;A&#39;]:
+            totalSlow=totalSlow.append(samp,ignore_index=True)
+            
+totalSlow=totalSlow.drop_duplicates()
+toc=time.time()
+print(&quot;Nested-loop Runtime:&quot;,toc-tic, &quot;seconds&quot;)
+</code></pre>
+<pre><code>Nested-loop Runtime: 0.4779984951019287 seconds</code></pre>
+<pre class="python"><code>#Or the vectorised method:
+
+tic=time.time()
+totalFast=Samples[Samples[&#39;A&#39;].isin(Wells.A.tolist())]
+totalFast=totalSlow.drop_duplicates()
+toc=time.time()
+print(&quot;Vectorized Runtime:&quot;,toc-tic, &quot;seconds&quot;)
+</code></pre>
+<pre><code>Vectorized Runtime: 0.0019991397857666016 seconds</code></pre>
 <p>Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.</p>
-<p><br></p>
 </div>
-</div>
-<div id="python-multiprocessing" class="section level1">
-<h1>Python Multiprocessing</h1>
+<div id="python-multiprocessing" class="section level2">
+<h2>Python Multiprocessing</h2>
 <p>From within Python you may need a flexible way to manage computational resources. This is traditionally done with the <strong><em>multiprocessing</em></strong> library.</p>
 <p>With multiprocessing, Python creates new processes. A process here can be thought of as almost a completely different program, though technically they are usually defined as a collection of resources where the resources include memory, file handles and things like that.</p>
 <p>One way to think about it is that each <strong><em>process runs in its own Python interpreter</em></strong>, and multiprocessing farms out parts of your program to run on each process.</p>
-<div id="some-terminology---processes-threads-and-shared-memory" class="section level2">
-<h2>Some terminology - Processes, threads and shared memory</h2>
+<div id="some-terminology---processes-threads-and-shared-memory" class="section level3">
+<h3>Some terminology - Processes, threads and shared memory</h3>
 <p>A <strong><em>process</em></strong> is a collection of resources including program files and memory, that operates as an independent entity. Since each process has a seperate memory space, it can operate independently from other processes. It cannot easily access shared data in other processes.</p>
 <p>A <strong><em>thread</em></strong> is the unit of execution within a process. A process can have anywhere from just one thread to many threads. Threads are considered lightweight because they use far less resources than processes. Threads also share the same memory space so are not independent.</p>
-<figure>
-<img src="{{ page.root }}/fig/process_v_thread.png" style="margin:6px;width:300px"/>
-</figure>
-<p><br></p>
-<figure>
-<img src="{{ page.root }}/fig/process_threads_comparison.png" style="margin:6px;width:400px"/>
-</figure>
-<p><br></p>
+<div class="figure">
+<img src="fig/process_v_thread.png" title="segment" alt="" />
+<p class="caption">SegmentLocal</p>
+</div>
+<div class="figure">
+<img src="fig/process_threads_comparison.png" title="segment" alt="" />
+<p class="caption">SegmentLocal</p>
+</div>
 <p>Back to python, the multiprocessing library was designed to break down the <strong>Global Interpreter Lock (GIL)</strong> that limits one thread to control the Python interpreter.</p>
 <p>In Python, the things that are occurring simultaneously are called by different names (thread, task, process). While they all fall under the definition of concurrency (multiple things happening anaologous to different trains of thought), only multiprocessing actually runs these trains of thought at literally the same time. We will only cover multiprocessing here which assists in CPU bound operations - but keep in mind other methods exist (threading), whose implementation tends to be more low level.</p>
+</div>
 </div>
 <div id="simple-multiprocessing-example" class="section level2">
 <h2>Simple multiprocessing example</h2>
 <p>Some basic concepts in the multiprocessing library are: 1. the <code>Pool(processes)</code> object creates a pool of processes. <code>processes</code> is the number of worker processes to use (i.e Python interpreters). If <code>processes</code> is <code>None</code> then the number returned by <code>os.cpu_count()</code> is used. 2. The <code>map(function,list)</code> attribute of this object uses the pool to map a defined function to a list/iterator object</p>
 <p>To implement multiprocessing in its basic form. You can complete this exercise in a notebook or a script.</p>
-<p>Import the libraries we will need ~~~ import shapefile import numpy as np import matplotlib.pyplot as plt import multiprocessing import time ~~~ {: .python}</p>
-<p>Check how many cpus are availble on your computer ~~~ multiprocessing.cpu_count() ~~~ {: .python}</p>
-<p>Read in the shapefile that we will use ~~~ sf = shapefile.Reader(“../data/platepolygons/topology_platepolygons_0.00Ma.shp”) recs = sf.records() shapes = sf.shapes() fields = sf.fields Nshp = len(shapes) ~~~ {: .python}</p>
-<p>Get some details about the shapefile. Plot one of the polygons. Let us find the areas of each of the polygons in the shapefile. ~~~ print(recs[10])</p>
-<p>polygonShape=shapes[10].points poly=np.array(polygonShape) polygons=np.arange(Nshp)</p>
-<p>plt.plot(poly[:,0], poly[:,1], c=‘k’,zorder=1) ~~~ {: .python}</p>
-<figure>
-<img src="{{ page.root }}/fig/fig-04MP-polygon.png" style="margin:6px;width:300px"/>
-</figure>
-<p><br></p>
-<p>Implement a function to calcualte the area of a polygon. ~~~ # Area of Polygon using Shoelace formula # <a href="http://en.wikipedia.org/wiki/Shoelace_formula" class="uri">http://en.wikipedia.org/wiki/Shoelace_formula</a> def PolygonArea(nshp): start_time = time.time() polygonShape=shapes[nshp].points corners=np.array(polygonShape) n = len(corners) # of corners</p>
-<pre><code>#Area calculation using Shoelace forula
-area = 0.0
-for i in range(n):
-    j = (i + 1) % n
-    area += corners[i][0] * corners[j][1]
-    area -= corners[j][0] * corners[i][1]
-area = abs(area) / 2.0
+<pre class="python"><code>#Import the libraries we will need
+import shapefile
+import numpy as np
+import matplotlib.pyplot as plt 
+import multiprocessing
+import time
 
-endtime=time.time() - start_time
-print(&quot;Process {} Finished in {:0.4f}s. \n&quot;.format(nshp,endtime))
-return(area)</code></pre>
-<pre><code>{: .python}
+#Check how many cpus are availble on your computer
+multiprocessing.cpu_count()
 
-Run the function for each polygon/plate in the shapefile:</code></pre>
-<p>start_time = time.time() Areas1=[] for i in polygons: Areas1.append(PolygonArea(i)) print(“Final Runtime”, time.time() - start_time) ~~~ {: .python}</p>
-<p>Run it again, but this time, use the multiprocessing capabilities ~~~ start_time = time.time() with multiprocessing.Pool() as pool: Areas2 = pool.map(PolygonArea,polygons) print(“Final Runtime”, time.time() - start_time) ~~~ {: .python}</p>
-<p>Is there any speed up? What could explain the timings.</p>
+#Read in the shapefile that we will use
+sf = shapefile.Reader(&quot;../data/platepolygons/topology_platepolygons_0.00Ma.shp&quot;)
+recs    = sf.records()
+shapes  = sf.shapes()
+fields  = sf.fields
+Nshp    = len(shapes)
+polygons=np.arange(Nshp)</code></pre>
+<pre class="python"><code>#Get some details about the shapefile. Plot one of the polygons.
+#Let us find the areas of each of the polygons in the shapefile.
+print(recs[10])
+
+polygonShape=shapes[10].points
+poly=np.array(polygonShape)</code></pre>
+<pre><code>Record #10: [0, 0.0, &#39;Global_EarthByte_230-0Ma_GK07_AREPS_PlateBoundaries.gpml&#39;, &#39;Global_EarthByte_230-0Ma_GK07_AREPS.rot&#39;, 911, &#39;&#39;, &#39;gpml:TopologicalClosedPlateBoundary&#39;, 0.9, 0.0, &#39;Nazca Plate&#39;, &#39;&#39;, &#39;GPlates-ef2e06a7-4086-4062-9df6-1fa3133f50b8&#39;, 0, &#39;&#39;, 0, 0, 0.0]
+
+
+
+
+
+[&lt;matplotlib.lines.Line2D at 0x1d93685dcc8&gt;]</code></pre>
+<div class="figure">
+<img src="04a-SimpleSpeedUps_files/04a-SimpleSpeedUps_13_2.png" alt="" />
+<p class="caption">png</p>
 </div>
-<div id="exercise-1" class="section level2">
-<h2>Exercise</h2>
-<p>The <em>pyshp/shapefile</em> library contains the function <code>signed_area</code> which can calculate the area of a polygon. Replace the calculation of <strong><em>area</em></strong> using the <em>shoelace</em> formula in the <code>PolygonArea</code> function with the <code>signed_area</code> method: ~~~ area=shapefile.signed_area(corners) ~~~ {: .python}</p>
-<p>How does change the timings of your speed tests?</p>
+<pre class="python"><code>#Implement a function to calcualte the area of a polygon.
+# Area of Polygon using Shoelace formula
+# http://en.wikipedia.org/wiki/Shoelace_formula
+def PolygonArea(nshp):
+    start_time = time.time()
+    polygonShape=shapes[nshp].points
+    corners=np.array(polygonShape)
+    n = len(corners) # of corners
+    
+    #Area calculation using Shoelace forula
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += corners[i][0] * corners[j][1]
+        area -= corners[j][0] * corners[i][1]
+    area = abs(area) / 2.0
+    
+    endtime=time.time() - start_time
+    print(&quot;Process {} Finished in {:0.4f}s. \n&quot;.format(nshp,endtime))
+    return(area)</code></pre>
+<pre class="python"><code>#Run the function for each polygon/plate in the shapefile:
+start_time = time.time()
+Areas1=[]
+for i in polygons:
+    Areas1.append(PolygonArea(i))
+
+print(&quot;Final Runtime&quot;, time.time() - start_time)</code></pre>
+<pre><code>Process 0 Finished in 0.0010s. 
+
+Process 1 Finished in 0.0020s. 
+
+Process 2 Finished in 0.0000s. 
+
+Process 3 Finished in 0.0010s. 
+
+Process 4 Finished in 0.0000s. 
+
+Process 5 Finished in 0.0000s. 
+
+Process 6 Finished in 0.0020s. 
+
+Process 7 Finished in 0.0010s. 
+
+Process 8 Finished in 0.0000s. 
+
+Process 9 Finished in 0.0000s. 
+
+Process 10 Finished in 0.0010s. 
+
+Process 11 Finished in 0.0000s. 
+
+Process 12 Finished in 0.0010s. 
+
+Process 13 Finished in 0.0010s. 
+
+Process 14 Finished in 0.0000s. 
+
+Process 15 Finished in 0.0010s. 
+
+Process 16 Finished in 0.0000s. 
+
+Process 17 Finished in 0.0000s. 
+
+Process 18 Finished in 0.0000s. 
+
+Process 19 Finished in 0.0000s. 
+
+Process 20 Finished in 0.0000s. 
+
+Process 21 Finished in 0.0000s. 
+
+Process 22 Finished in 0.0000s. 
+
+Process 23 Finished in 0.0010s. 
+
+Process 24 Finished in 0.0000s. 
+
+Process 25 Finished in 0.0000s. 
+
+Process 26 Finished in 0.0000s. 
+
+Process 27 Finished in 0.0000s. 
+
+Process 28 Finished in 0.0000s. 
+
+Process 29 Finished in 0.0010s. 
+
+Process 30 Finished in 0.0000s. 
+
+Process 31 Finished in 0.0000s. 
+
+Process 32 Finished in 0.0000s. 
+
+Process 33 Finished in 0.0000s. 
+
+Process 34 Finished in 0.0000s. 
+
+Process 35 Finished in 0.0030s. 
+
+Process 36 Finished in 0.0010s. 
+
+Process 37 Finished in 0.0010s. 
+
+Process 38 Finished in 0.0000s. 
+
+Process 39 Finished in 0.0000s. 
+
+Process 40 Finished in 0.0010s. 
+
+Process 41 Finished in 0.0000s. 
+
+Process 42 Finished in 0.0000s. 
+
+Process 43 Finished in 0.0000s. 
+
+Process 44 Finished in 0.0010s. 
+
+Process 45 Finished in 0.0000s. 
+
+Final Runtime 0.022002220153808594</code></pre>
+<pre class="python"><code>#Run it again, but this time, use the multiprocessing capabilities
+start_time = time.time()
+with multiprocessing.Pool() as pool:
+    Areas2 = pool.map(PolygonArea,polygons)
+
+print(&quot;Final Runtime&quot;, time.time() - start_time)</code></pre>
+<pre class="python"><code>#Run it immediately again. How does the timing compare?
+start_time = time.time()
+with multiprocessing.Pool() as pool:
+    Areas2 = pool.map(PolygonArea,polygons)
+
+print(&quot;Final Runtime&quot;, time.time() - start_time)</code></pre>
+<p>Is there any speed up? What could explain the timings.</p>
+<div id="challenge." class="section level3 challenge">
+<h3>Challenge.</h3>
+<ul>
+<li>The <em>pyshp/shapefile</em> library contains the function <code>signed_area</code> which can calculate the area of a polygon. Replace the calculation of <strong><em>area</em></strong> using the <em>shoelace</em> formula in the <code>PolygonArea</code> function with the <code>signed_area</code> method:</li>
+</ul>
+<pre class="python"><code>area=shapefile.signed_area(corners)</code></pre>
+<ul>
+<li>How does this change the timings of your speed tests?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<pre class="python"><code>def PolygonArea(nshp):
+    start_time = time.time()
+    
+    area=shapefile.signed_area(corners)
+    
+    endtime=time.time() - start_time
+    print(&quot;Process {} Finished in {:0.4f}s. \n&quot;.format(nshp,endtime))
+    return(area)</code></pre>
+<pre class="python"><code>#Test the serial version
+start_time = time.time()
+Areas1=[]
+for i in polygons:
+    Areas1.append(PolygonArea(i))
+
+print(&quot;Final serial time&quot;, time.time() - start_time)
+    
+#Test the multiprocessing parallel version
+start_time = time.time()
+with multiprocessing.Pool() as pool:
+    Areas2 = pool.map(PolygonArea,polygons)
+
+print(&quot;Final multiprocessing time&quot;, time.time() - start_time)</code></pre>
 <p>There is generally a sweet spot in how many processes you create to optimise the run time. A large number of python processes is generally not advisable, as it involves a large fixed cost in setting up many python interpreters and its supporting infrastructure. Play around with different numbers of processes in the pool(processes) statement to see how the runtime varies. Also, well developed libraries often have nicely optimised algorithms, you may not have to reinvent the wheel (Haha at this Python pun).</p>
+</details>
+</div>
 </div>
 <div id="useful-links" class="section level2">
 <h2>Useful links</h2>
@@ -636,12 +866,11 @@ Run the function for each polygon/plate in the shapefile:</code></pre>
 <p><a href="https://www.backblaze.com/blog/whats-the-diff-programs-processes-and-threads/">https://www.backblaze.com/blog/whats-the-diff-programs-processes-and-threads/</a></p>
 <p><a href="https://pawseysc.github.io/training.html">https://pawseysc.github.io/training.html</a></p>
 </div>
-</div>
-<div id="mpi-message-passing-interface" class="section level1">
-<h1>MPI: Message Passing Interface</h1>
+<div id="mpi-message-passing-interface" class="section level2">
+<h2>MPI: Message Passing Interface</h2>
 <p>MPI is a standardized and portable message-passing system designed to function on a wide variety of parallel computers. The standard defines the syntax and semantics of a core of library routines useful to a wide range of users writing portable message-passing programs in C, C++, and Fortran. There are several well-tested and efficient implementations of MPI, many of which are open-source or in the public domain.</p>
-<p>MPI for Python, found in <a href="https://mpi4py.readthedocs.io/en/stable/index.html">mpi4py</a>, provides bindings of the MPI standard for the Python programming language, allowing any Python program to exploit multiple processors. <a href="https://sydney-informatics-hub.github.io/training.artemis.python/files/mpi.py">This simple code</a> demonstrates the collection of resources and how code is run on different processes:</p>
-<pre><code>#Run with:
+<p>MPI for Python, found in <a href="https://mpi4py.readthedocs.io/en/stable/index.html">mpi4py</a>, provides bindings of the MPI standard for the Python programming language, allowing any Python program to exploit multiple processors. This simple code demonstrates the collection of resources and how code is run on different processes:</p>
+<pre class="python"><code>#Run with:
 #mpiexec -np 4 python mpi.py
 
 from mpi4py import MPI
@@ -651,7 +880,15 @@ size = comm.Get_size()
 rank = comm.Get_rank()
 
 print(&quot;I am rank %d in group of %d processes.&quot; % (rank, size))</code></pre>
-<p>{: .python}</p>
+<div id="keypoints" class="section level3 keypoints">
+<h3>keypoints</h3>
+<ul>
+<li>“Understand there are different ways to accelerate”</li>
+<li>“The best method depends on your algorithms, code and data”</li>
+<li>“load multiprocessing library to execute a function in a parallel manner”</li>
+</ul>
+</div>
+</div>
 </div>
 
 
