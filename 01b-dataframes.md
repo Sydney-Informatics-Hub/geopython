@@ -1845,7 +1845,7 @@ import numpy as np
 
 #Adapted from https://agilescientific.com/blog/2016/9/21/x-lines-of-python-read-and-write-seg-y
 #See the notebooks here for more good examples
-#https://hub-binder.mybinder.ovh/user/agile-geoscience-xlines-n1mojurk
+#https://github.com/agile-geoscience/xlines
 ```
 
 
@@ -1945,7 +1945,7 @@ plt.imshow(data.T, cmap="Greys", aspect='auto')
 
 
 ```python
-#Make a more imfortaive plot
+#Make a more infortaive plot
 
 #Restrict the data to the 95th percentile
 vm = np.percentile(data, 95)
