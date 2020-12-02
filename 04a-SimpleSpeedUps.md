@@ -267,6 +267,8 @@ print(recs[10])
 
 polygonShape=shapes[10].points
 poly=np.array(polygonShape)
+
+plt.plot(poly[:,0],poly[:,1])
 ```
 
     Record #10: [0, 0.0, 'Global_EarthByte_230-0Ma_GK07_AREPS_PlateBoundaries.gpml', 'Global_EarthByte_230-0Ma_GK07_AREPS.rot', 911, '', 'gpml:TopologicalClosedPlateBoundary', 0.9, 0.0, 'Nazca Plate', '', 'GPlates-ef2e06a7-4086-4062-9df6-1fa3133f50b8', 0, '', 0, 0, 0.0]
@@ -275,7 +277,7 @@ poly=np.array(polygonShape)
 
 
 
-    [<matplotlib.lines.Line2D at 0x1d93685dcc8>]
+    [<matplotlib.lines.Line2D at 0x2b29bc7ed08>]
 
 
 
@@ -303,9 +305,10 @@ def PolygonArea(nshp):
         area += corners[i][0] * corners[j][1]
         area -= corners[j][0] * corners[i][1]
     area = abs(area) / 2.0
+    time.sleep(0.2)
     
     endtime=time.time() - start_time
-    print("Process {} Finished in {:0.4f}s. \n".format(nshp,endtime))
+    print("Process {} Finished in {:0.4f}s.".format(nshp,endtime))
     return(area)
 ```
 
@@ -320,122 +323,123 @@ for i in polygons:
 print("Final Runtime", time.time() - start_time)
 ```
 
-    Process 0 Finished in 0.0010s. 
-    
-    Process 1 Finished in 0.0020s. 
-    
-    Process 2 Finished in 0.0000s. 
-    
-    Process 3 Finished in 0.0010s. 
-    
-    Process 4 Finished in 0.0000s. 
-    
-    Process 5 Finished in 0.0000s. 
-    
-    Process 6 Finished in 0.0020s. 
-    
-    Process 7 Finished in 0.0010s. 
-    
-    Process 8 Finished in 0.0000s. 
-    
-    Process 9 Finished in 0.0000s. 
-    
-    Process 10 Finished in 0.0010s. 
-    
-    Process 11 Finished in 0.0000s. 
-    
-    Process 12 Finished in 0.0010s. 
-    
-    Process 13 Finished in 0.0010s. 
-    
-    Process 14 Finished in 0.0000s. 
-    
-    Process 15 Finished in 0.0010s. 
-    
-    Process 16 Finished in 0.0000s. 
-    
-    Process 17 Finished in 0.0000s. 
-    
-    Process 18 Finished in 0.0000s. 
-    
-    Process 19 Finished in 0.0000s. 
-    
-    Process 20 Finished in 0.0000s. 
-    
-    Process 21 Finished in 0.0000s. 
-    
-    Process 22 Finished in 0.0000s. 
-    
-    Process 23 Finished in 0.0010s. 
-    
-    Process 24 Finished in 0.0000s. 
-    
-    Process 25 Finished in 0.0000s. 
-    
-    Process 26 Finished in 0.0000s. 
-    
-    Process 27 Finished in 0.0000s. 
-    
-    Process 28 Finished in 0.0000s. 
-    
-    Process 29 Finished in 0.0010s. 
-    
-    Process 30 Finished in 0.0000s. 
-    
-    Process 31 Finished in 0.0000s. 
-    
-    Process 32 Finished in 0.0000s. 
-    
-    Process 33 Finished in 0.0000s. 
-    
-    Process 34 Finished in 0.0000s. 
-    
-    Process 35 Finished in 0.0030s. 
-    
-    Process 36 Finished in 0.0010s. 
-    
-    Process 37 Finished in 0.0010s. 
-    
-    Process 38 Finished in 0.0000s. 
-    
-    Process 39 Finished in 0.0000s. 
-    
-    Process 40 Finished in 0.0010s. 
-    
-    Process 41 Finished in 0.0000s. 
-    
-    Process 42 Finished in 0.0000s. 
-    
-    Process 43 Finished in 0.0000s. 
-    
-    Process 44 Finished in 0.0010s. 
-    
-    Process 45 Finished in 0.0000s. 
-    
-    Final Runtime 0.022002220153808594
+    Process 0 Finished in 0.2019s.
+    Process 1 Finished in 0.2133s.
+    Process 2 Finished in 0.2097s.
+    Process 3 Finished in 0.2137s.
+    Process 4 Finished in 0.2162s.
+    Process 5 Finished in 0.2106s.
+    Process 6 Finished in 0.2134s.
+    Process 7 Finished in 0.2145s.
+    Process 8 Finished in 0.2117s.
+    Process 9 Finished in 0.2123s.
+    Process 10 Finished in 0.2124s.
+    Process 11 Finished in 0.2139s.
+    Process 12 Finished in 0.2111s.
+    Process 13 Finished in 0.2107s.
+    Process 14 Finished in 0.2138s.
+    Process 15 Finished in 0.2114s.
+    Process 16 Finished in 0.2107s.
+    Process 17 Finished in 0.2134s.
+    Process 18 Finished in 0.2119s.
+    Process 19 Finished in 0.2114s.
+    Process 20 Finished in 0.2129s.
+    Process 21 Finished in 0.2143s.
+    Process 22 Finished in 0.2148s.
+    Process 23 Finished in 0.2125s.
+    Process 24 Finished in 0.2122s.
+    Process 25 Finished in 0.2105s.
+    Process 26 Finished in 0.2138s.
+    Process 27 Finished in 0.2164s.
+    Process 28 Finished in 0.2122s.
+    Process 29 Finished in 0.2112s.
+    Process 30 Finished in 0.2109s.
+    Process 31 Finished in 0.2132s.
+    Process 32 Finished in 0.2136s.
+    Process 33 Finished in 0.2133s.
+    Process 34 Finished in 0.2112s.
+    Process 35 Finished in 0.2135s.
+    Process 36 Finished in 0.2132s.
+    Process 37 Finished in 0.2141s.
+    Process 38 Finished in 0.2104s.
+    Process 39 Finished in 0.2117s.
+    Process 40 Finished in 0.2124s.
+    Process 41 Finished in 0.2125s.
+    Process 42 Finished in 0.2128s.
+    Process 43 Finished in 0.2100s.
+    Process 44 Finished in 0.2148s.
+    Process 45 Finished in 0.2138s.
+    Final Runtime 9.796719074249268
 
+
+Now we will have to run the multiprocessing version outside of our jupyter environment.
+Put the following into a script or download the [full version here](./data/area.py).
 
 
 ```python
 #Run it again, but this time, use the multiprocessing capabilities
+def make_global(shapes):
+    global gshapes
+    gshapes = shapes
+    
 start_time = time.time()
-with multiprocessing.Pool() as pool:
+with multiprocessing.Pool(initializer=make_global, initargs=(shapes,)) as pool:
     Areas2 = pool.map(PolygonArea,polygons)
 
 print("Final Runtime", time.time() - start_time)
 ```
 
+~~~
+Process 0 Finished in 0.2148s.
+Process 1 Finished in 0.2199s.
+Process 30 Finished in 0.2136s.
+Process 31 Finished in 0.2135s.
+Process 4 Finished in 0.2138s.
+Process 5 Finished in 0.2047s.
+Process 24 Finished in 0.2137s.
+Process 25 Finished in 0.2138s.
+Process 34 Finished in 0.2116s.
+Process 35 Finished in 0.2124s.
+Process 6 Finished in 0.2138s.
+Process 7 Finished in 0.2047s.
+Process 16 Finished in 0.2137s.
+Process 17 Finished in 0.2138s.
+Process 38 Finished in 0.2106s.
+Process 39 Finished in 0.2124s.
+Process 8 Finished in 0.2138s.
+Process 9 Finished in 0.2047s.
+Process 26 Finished in 0.2137s.
+Process 27 Finished in 0.2138s.
+Process 42 Finished in 0.2106s.
+Process 43 Finished in 0.2124s.
+Process 12 Finished in 0.2138s.
+Process 13 Finished in 0.2047s.
+Process 20 Finished in 0.2137s.
+Process 21 Finished in 0.2138s.
+Process 32 Finished in 0.2116s.
+Process 33 Finished in 0.2124s.
+Process 14 Finished in 0.2138s.
+Process 15 Finished in 0.2037s.
+Process 22 Finished in 0.2137s.
+Process 23 Finished in 0.2138s.
+Process 40 Finished in 0.2106s.
+Process 41 Finished in 0.2124s.
+Process 2 Finished in 0.2138s.
+Process 3 Finished in 0.2047s.
+Process 28 Finished in 0.2137s.
+Process 29 Finished in 0.2138s.
+Process 44 Finished in 0.2096s.
+Process 45 Finished in 0.2124s.
+Process 10 Finished in 0.2138s.
+Process 11 Finished in 0.2047s.
+Process 18 Finished in 0.2137s.
+Process 19 Finished in 0.2138s.
+Process 36 Finished in 0.2116s.
+Process 37 Finished in 0.2124s.
+Final Runtime 5.4170615673065186
+~~~
 
-```python
-#Run it immediately again. How does the timing compare?
-start_time = time.time()
-with multiprocessing.Pool() as pool:
-    Areas2 = pool.map(PolygonArea,polygons)
-
-print("Final Runtime", time.time() - start_time)
-```
-
-Is there any speed up? What could explain the timings.
+Is there any speed up? Why are the processes not in order? Is there any overhead?
 
 <div class="challenge">
 

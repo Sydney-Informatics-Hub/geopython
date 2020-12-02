@@ -1945,7 +1945,7 @@ plt.imshow(data.T, cmap="Greys", aspect='auto')
 
 
 ```python
-#Make a more infortaive plot
+#Make a more informative plot
 
 #Restrict the data to the 95th percentile
 vm = np.percentile(data, 95)
