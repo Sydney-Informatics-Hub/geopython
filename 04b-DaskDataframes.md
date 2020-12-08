@@ -1,24 +1,23 @@
----
-title: "04b. Dask and Dask Dataframes"
-teaching: 25
-exercises: 5
-questions:
+# Working with Big Data using Dask
+
+<div class="questions">  
+### Questions
+
 - "Use a modern python library and elegant syntax for performance benefits"
 - "How do I deal with large irregular data and show me some real world examples of Dask"
-objectives:
+</div>
+
+<div class="objectives">  
+### Objectives
+
 - "Intro to Dask concepts and High level datastructures"
 - "Use dask dataframes"
 - "Use dask delayed functions"
 - "Deal with semi-structured and unstructured data in memory efficient and parallel manner"
 - "Show me examples of using Dask on Large Datasets"
-keypoints:
-- "Dask builds on numpy and pandas APIs but operates in a parallel manner"
-- "Computations are by default lazy and must be triggered - this reduces unneccessary computation time"
-- "Dask Bag uses map filter and group by operations on python objects or semi/unstrucutred data"
-- "dask.multiprocessing is under the hood"
-- "Xarray for holding scientific data"
----
-# DASK
+</div>
+
+## DASK
 Dask is a flexible library for parallel computing in Python.
 
 Dask is composed of two parts:
@@ -35,7 +34,7 @@ Dask emphasizes the following virtues:
 * Responsive: Designed with interactive computing in mind, it provides rapid feedback and diagnostics to aid humans
 
 <figure>
-  <img src="{{ page.root }}/fig/dask_pic1.png" style="margin:10px;width:600px"/>
+  <img src="./fig/dask_pic1.png" style="margin:10px;width:600px"/>
   <figcaption> Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.dask.org/en/latest/</a></figcaption>
 </figure><br>
 
@@ -45,7 +44,7 @@ On a low level, dask dynamic task schedulers to scale up or down processes, and 
 A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.
 
 <figure>
-  <img src="{{ page.root }}/fig/dask_pic2.png" style="margin:6px;width:400px"/>
+  <img src="./fig/dask_pic2.png" style="margin:6px;width:400px"/>
   <figcaption> Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/">https://docs.dask.org/en/latest/dataframe.html/</a></figcaption>
 </figure><br>
 
@@ -60,327 +59,864 @@ your data fits comfortable in RAM - Use pandas only!
 If you need a proper database.
 You need functions not implemented by dask dataframes - see Dask Delayed.
 
-# Dask Dataframes
+## Dask Dataframes
 
-We will generate some data using one of the python files makedata.py by importing it in ipython. 
-~~~
-import makedata
-data = makedata.data()
-data
-~~~
-{: .python}
+We will load in some data to explore.
 
-The data is preloaded into a dask dataframe. Notice the output to data shows the dataframe metadata.  
+
+```python
+#Import dask dataframe modules
+import dask.dataframe as dd
+
+#NOTE: to run this example (with diagrams) you will need to "pip install graphviz" and donwload graphviz
+#https://graphviz.org/download/
+import os
+os.environ["PATH"] += os.pathsep + 'C:/APPS/Graphviz/bin'
+```
+
+
+```python
+# Setup a parlalle LocalCluster that makes use of all the cores and RAM we have on a single machine
+from dask.distributed import Client, LocalCluster
+cluster = LocalCluster()
+# explicitly connect to the cluster we just created
+client = Client(cluster)
+client
+```
+
+
+
+
+<table style="border: 2px solid white;">
+<tr>
+<td style="vertical-align: top; border: 0px solid white">
+<h3 style="text-align: left;">Client</h3>
+<ul style="text-align: left; list-style: none; margin: 0; padding: 0;">
+  <li><b>Scheduler: </b>tcp://127.0.0.1:54234</li>
+  <li><b>Dashboard: </b><a href='http://127.0.0.1:8787/status' target='_blank'>http://127.0.0.1:8787/status</a></li>
+</ul>
+</td>
+<td style="vertical-align: top; border: 0px solid white">
+<h3 style="text-align: left;">Cluster</h3>
+<ul style="text-align: left; list-style:none; margin: 0; padding: 0;">
+  <li><b>Workers: </b>4</li>
+  <li><b>Cores: </b>8</li>
+  <li><b>Memory: </b>34.21 GB</li>
+</ul>
+</td>
+</tr>
+</table>
+
+
+
+
+```python
+# Although this is small csv file, we'll reuse our same example from before!
+# Load csv results from server into a Pandas DataFrame
+df = dd.read_csv("../data/ml_data_points.csv")
+```
+
+
+```python
+# We only see the metadata, the actual data are only computed when requested.
+df
+```
+
+
+
+
+<div><strong>Dask DataFrame Structure:</strong></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>0 Present day longitude (degrees)</th>
+      <th>1 Present day latitude (degrees)</th>
+      <th>2 Reconstructed longitude (degrees)</th>
+      <th>3 Reconstructed latitude (degrees)</th>
+      <th>4 Age (Ma)</th>
+      <th>5 Time before mineralisation (Myr)</th>
+      <th>6 Seafloor age (Myr)</th>
+      <th>7 Segment length (km)</th>
+      <th>8 Slab length (km)</th>
+      <th>9 Distance to trench edge (km)</th>
+      <th>10 Subducting plate normal velocity (km/Myr)</th>
+      <th>11 Subducting plate parallel velocity (km/Myr)</th>
+      <th>12 Overriding plate normal velocity (km/Myr)</th>
+      <th>13 Overriding plate parallel velocity (km/Myr)</th>
+      <th>14 Convergence normal rate (km/Myr)</th>
+      <th>15 Convergence parallel rate (km/Myr)</th>
+      <th>16 Subduction polarity (degrees)</th>
+      <th>17 Subduction obliquity (degrees)</th>
+      <th>18 Distance along margin (km)</th>
+      <th>19 Subduction obliquity signed (radians)</th>
+      <th>20 Ore Deposits Binary Flag (1 or 0)</th>
+    </tr>
+    <tr>
+      <th>npartitions=1</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>int64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+      <td>float64</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>Dask Name: read-csv, 1 tasks</div>
+
+
 
 The concept of splitting the dask dataframe into pandas sub dataframes can be seen by the ***nopartitians=10*** output. This is the number of partitians the dataframe is split into and in this case was automatically calibrated, but can be specified. There is a trade off between splitting data too much that improves memory management, and the number of extra tasks it generates. For instance, if you have a 1000 GB of data and are using 10 MB chunks, then you have 100,000 partitions. Every operation on such a collection will generate at least 100,000 tasks. But more on this later. For now lets become familiar with some basic Dataframe operations.
 
 Let's inspect the data in its types, and also take the first 5 rows. 
 
 By default, dataframe operations are ***lazy*** meaning no computation takes place until specified. The ***.compute()*** triggers such a computation - and we will see later on that it converts a dask dataframe into a pandas dataframe. ***head(rows)*** also triggers a computation - but is really helpful in exploring the underlying data.
-~~~
-data.dtypes
-data.head(5)
-~~~
-{: .python}
 
-You should see the below output
-~~~
-In [6]: data.head(5)
-Out[6]:
-   age     occupation          telephone  ...       street-address          city  income
-0   54  Acupuncturist     (528) 747-6949  ...  1242 Gough Crescent  Laguna Beach  116640
-1   38   Shelf Filler       111.247.5833  ...       10 Brook Court     Paragould   57760
-2   29    Tax Manager       035-458-1895  ...  278 Homestead Trace    Scottsdale   33640
-3   19      Publisher  +1-(018)-082-3905  ...     310 Ada Sideline    East Ridge   14440
-4   25      Stationer     1-004-960-0770  ...        711 Card Mall     Grayslake   2500
-~~~
-{: .output}
 
-Let's perform some familiar operations for those who use pandas.
+```python
+df.head(5)
+```
 
-filter operation - filter people who are older than 60 and assign to another dask array called data2
 
-~~~
-data2 = data[data.age > 60]
-~~~
-{: .python}
 
-Apply a function to a column
-~~~
-data.income.apply(lambda x: x * 1000).head(5)
-~~~
-{: .python}
 
-Assign values to a new column
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-~~~
-data = data.assign(dummy = 1)
-~~~
-{: .python}
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-group by operation - calculate the average incomes by occupation. Notice the compute() trigger that performs the operations.
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>0 Present day longitude (degrees)</th>
+      <th>1 Present day latitude (degrees)</th>
+      <th>2 Reconstructed longitude (degrees)</th>
+      <th>3 Reconstructed latitude (degrees)</th>
+      <th>4 Age (Ma)</th>
+      <th>5 Time before mineralisation (Myr)</th>
+      <th>6 Seafloor age (Myr)</th>
+      <th>7 Segment length (km)</th>
+      <th>8 Slab length (km)</th>
+      <th>...</th>
+      <th>11 Subducting plate parallel velocity (km/Myr)</th>
+      <th>12 Overriding plate normal velocity (km/Myr)</th>
+      <th>13 Overriding plate parallel velocity (km/Myr)</th>
+      <th>14 Convergence normal rate (km/Myr)</th>
+      <th>15 Convergence parallel rate (km/Myr)</th>
+      <th>16 Subduction polarity (degrees)</th>
+      <th>17 Subduction obliquity (degrees)</th>
+      <th>18 Distance along margin (km)</th>
+      <th>19 Subduction obliquity signed (radians)</th>
+      <th>20 Ore Deposits Binary Flag (1 or 0)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>-66.28</td>
+      <td>-27.37</td>
+      <td>-65.264812</td>
+      <td>-28.103781</td>
+      <td>6.0</td>
+      <td>0.0</td>
+      <td>48.189707</td>
+      <td>56.08069</td>
+      <td>2436.30907</td>
+      <td>...</td>
+      <td>40.63020</td>
+      <td>-17.43987</td>
+      <td>12.20271</td>
+      <td>102.31471</td>
+      <td>28.82518</td>
+      <td>5.67505</td>
+      <td>15.73415</td>
+      <td>2269.19769</td>
+      <td>0.274613</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>-69.75</td>
+      <td>-30.50</td>
+      <td>-67.696759</td>
+      <td>-31.970639</td>
+      <td>12.0</td>
+      <td>0.0</td>
+      <td>52.321162</td>
+      <td>56.09672</td>
+      <td>2490.68735</td>
+      <td>...</td>
+      <td>39.60199</td>
+      <td>-22.80622</td>
+      <td>13.40127</td>
+      <td>115.35820</td>
+      <td>27.39401</td>
+      <td>5.78937</td>
+      <td>13.35854</td>
+      <td>1823.34107</td>
+      <td>0.233151</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>-66.65</td>
+      <td>-27.27</td>
+      <td>-65.128689</td>
+      <td>-28.374772</td>
+      <td>9.0</td>
+      <td>0.0</td>
+      <td>53.506085</td>
+      <td>55.77705</td>
+      <td>2823.54951</td>
+      <td>...</td>
+      <td>45.32425</td>
+      <td>-18.08485</td>
+      <td>11.27500</td>
+      <td>100.24282</td>
+      <td>34.62444</td>
+      <td>8.97218</td>
+      <td>19.05520</td>
+      <td>2269.19769</td>
+      <td>0.332576</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>-66.61</td>
+      <td>-27.33</td>
+      <td>-65.257928</td>
+      <td>-28.311094</td>
+      <td>8.0</td>
+      <td>0.0</td>
+      <td>51.317135</td>
+      <td>55.90088</td>
+      <td>2656.71724</td>
+      <td>...</td>
+      <td>43.13319</td>
+      <td>-17.78538</td>
+      <td>11.72618</td>
+      <td>101.21965</td>
+      <td>31.92962</td>
+      <td>7.42992</td>
+      <td>17.50782</td>
+      <td>2269.19769</td>
+      <td>0.305569</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>-66.55</td>
+      <td>-27.40</td>
+      <td>-65.366917</td>
+      <td>-28.257580</td>
+      <td>7.0</td>
+      <td>0.0</td>
+      <td>49.340097</td>
+      <td>56.09011</td>
+      <td>2547.29585</td>
+      <td>...</td>
+      <td>40.57322</td>
+      <td>-17.43622</td>
+      <td>12.23778</td>
+      <td>102.25748</td>
+      <td>28.80235</td>
+      <td>5.65657</td>
+      <td>15.73067</td>
+      <td>2269.19769</td>
+      <td>0.274552</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 22 columns</p>
+</div>
 
-~~~
-data.groupby('occupation').income.mean().compute()
-~~~
-{: .python}
 
-A memory efficient style is to create pipelines of operations and trigger a final compute at the end. 
-~~~
-datapipe = data[data.age < 20]
-datapipe = datapipe.groupby('income').mean()
-datapipe.head(4)
-~~~
-{: .python}
 
-~~~
-        age
-income
-10240   16.0
-11560   17.0
-12960   18.0
-14440   19.0
-~~~
-{: .output}
 
-Chaining syntax can also be used to do the same thing, but keep readability in your code in mind.
-~~~
-pandasdata = (data[data.age < 20].groupby('income').mean()).compute()
-~~~
-{: .python}
+```python
+df.columns
+```
 
-sort operation - get the occupations with the largest people working in them
-~~~
-data.occupation.value_counts().nlargest(5).compute()
-~~~
-{: .python}
 
-write the output of a filter result to csv
-~~~
-data[data.city == 'Madison Heights'].compute().to_csv('Madison.csv')
-~~~
-{: .python}
 
-# Dask Delayed with custom made operations
 
-What if you need to run your own function, or a function outside of the pandas subset that dask dataframes make available? Dask delayed is your friend. It uses ***python decorator syntax*** to convert a function into a lazy executable. The functions can then be applied to build data pipeline operations in a similar manner to what we have just encountered.
+    Index(['Unnamed: 0', '0 Present day longitude (degrees)',
+           '1 Present day latitude (degrees)',
+           '2 Reconstructed longitude (degrees)',
+           '3 Reconstructed latitude (degrees)', '4 Age (Ma)',
+           '5 Time before mineralisation (Myr)', '6 Seafloor age (Myr)',
+           '7 Segment length (km)', '8 Slab length (km)',
+           '9 Distance to trench edge (km)',
+           '10 Subducting plate normal velocity (km/Myr)',
+           '11 Subducting plate parallel velocity (km/Myr)',
+           '12 Overriding plate normal velocity (km/Myr)',
+           '13 Overriding plate parallel velocity (km/Myr)',
+           '14 Convergence normal rate (km/Myr)',
+           '15 Convergence parallel rate (km/Myr)',
+           '16 Subduction polarity (degrees)', '17 Subduction obliquity (degrees)',
+           '18 Distance along margin (km)',
+           '19 Subduction obliquity signed (radians)',
+           '20 Ore Deposits Binary Flag (1 or 0)'],
+          dtype='object')
 
-Let's explore a larger example of using dask dataframes and dask delayed functions.
 
-In the ```/files``` directory, use your preferred editor to view the ```complex_system.py``` file. This script uses dask delayed functions that are applied to a sequence of data using pythonic ***list comprehension syntax*** . The code simulates financial defaults in a very theoretical way, and outputs the summation of these predicted defaults. 
 
-~~~
-Delayed('add-c62bfd969d75abe76f3d8dcf2a9ef99c')
-407.5
-~~~
-{: .output}
 
-<br>
+```python
+#You can run typical pandas operations (generally faster! - but only noticeable on large data)
+#group by operation - calculate the convergence rate by age. 
+#Notice the compute() trigger that performs the operations.
+#df.groupby('4 Age (Ma)')['14 Convergence normal rate (km/Myr)'].mean()
+df.groupby('4 Age (Ma)')['14 Convergence normal rate (km/Myr)'].mean().compute()
+```
 
-## Exercise 2:
-Given what you know of dask delayed function, please alter the file called ```computepi_pawsey.py```, which calculated estimates of pi without using extra parallel libraries, and alter the code with a dask delayed wrapper to make it lazy and fast 
 
-<br>
 
-## Exercise 1:
-The above script is a great example of dask delayed functions that are applied to lists, made in an elegant pythonic syntax. Let's try using these delayed default functions on our data of income and occupations. 
 
-Make your own lazy function using the decorator syntax, and perform the computation you have described on a column of the data previously used in the makedata.data() helper file. For bonus points perform an aggregation on this column.
+    4 Age (Ma)
+    1.0      66.594390
+    3.0      86.227770
+    4.0      76.746980
+    5.0      86.430612
+    6.0      96.153738
+               ...    
+    175.0    30.189475
+    176.0    26.693450
+    177.0    15.504740
+    178.0    58.860860
+    179.0    65.671240
+    Name: 14 Convergence normal rate (km/Myr), Length: 126, dtype: float64
 
-<br>
 
-# Dask Bag
-Dask Bag implements operations like map, filter, groupby and aggregations on collections of Python objects. It does this in parallel and in small memory using Python iterators.
 
-Dask Bags are often used to do simple preprocessing on log files, JSON records, or other user defined Python objects
+# We can break up the table into 4 partions to map out to each core:
+df = df.repartition(npartitions=4)
+df
 
-Execution on bags provide two ***benefits***:
-1. ***Parallel:*** data is split up, allowing multiple cores or machines to execute in parallel
-2. ***Iterating:*** data processes lazily, allowing smooth execution of ***larger-than-memory data***, even on a single machine within a single partition
 
-By default, dask.bag uses dask.multiprocessing for computation. As a benefit, Dask bypasses the GIL and uses multiple cores on pure Python objects. As a drawback, Dask Bag doesn’t perform well on computations that include a great deal of inter-worker communication.
+```python
+# Let's say we want to know the minimum last eruption year for all volcanoes
+last_eruption_year_min = df['4 Age (Ma)'].mean()
+last_eruption_year_min
+```
 
-Because the multiprocessing scheduler requires moving functions between multiple processes, we encourage that Dask Bag users also install the cloudpickle library to enable the transfer of more complex functions
 
-What are the ***drawbacks*** ?
 
-* Bag operations tend to be slower than array/DataFrame computations in the same way that standard Python containers tend to be slower than NumPy arrays and Pandas DataFrames
-* Bags are immutable and so you can not change individual elements
-* By default, bag relies on the multiprocessing scheduler, which has known limitations - the main ones being: 
-  	a, The multiprocessing scheduler must serialize data between workers and the central process, which can be expensive
-	b, The multiprocessing scheduler must serialize functions between workers, which can fail. The Dask site recommends using cloudpickle to enable the transfer of more complex functions.
 
-We will investigate data located on the web that logs all juypter notebook instances run on the net. Two files are 
-1. Log files of every entry specific to a certain day
-2. An index of daily log files
+    dd.Scalar<series-..., dtype=float64>
 
-Before we start, some python packages are needed. Types these commands directly into ipython
-~~~
-import dask.bag as db
-import json
-import os
-import re
+
+
+
+```python
+# Instead of getting the actual value we see dd.Scalar, which represents a recipe for actually calculating this value
+last_eruption_year_min.visualize(format='svg')
+```
+
+
+
+
+    
+![svg](04b-DaskDataframes_files/04b-DaskDataframes_13_0.svg)
+    
+
+
+
+
+```python
+# To get the value call the 'compute method'
+# NOTE: this was slower than using pandas directly,,, for small data you often don't need to use parallel computing!
+last_eruption_year_min.compute()
+```
+
+
+
+
+    66.19601328903654
+
+
+
+
+```python
+import numpy as np
+shape = (1000, 4000)
+ones_np = np.ones(shape)
+ones_np
+```
+
+
+
+
+    array([[1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           ...,
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.]])
+
+
+
+
+```python
+print('%.1f MB' % (ones_np.nbytes / 1e6))
+```
+
+    32.0 MB
+
+
+
+```python
+import dask.array as da
+ones = da.ones(shape)
+ones
+```
+
+
+
+
+<table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 32.00 MB </td> <td> 32.00 MB </td></tr>
+    <tr><th> Shape </th><td> (1000, 4000) </td> <td> (1000, 4000) </td></tr>
+    <tr><th> Count </th><td> 1 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="92" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="42" x2="120" y2="42" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="42" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="42" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,42.89879552186203 0.0,42.89879552186203" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text>
+  <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text>
+</svg>
+</td>
+</tr>
+</table>
+
+
+
+
+```python
+chunk_shape = (1000, 1000)
+ones = da.ones(shape, chunks=chunk_shape)
+ones
+```
+
+
+
+
+<table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 32.00 MB </td> <td> 8.00 MB </td></tr>
+    <tr><th> Shape </th><td> (1000, 4000) </td> <td> (1000, 1000) </td></tr>
+    <tr><th> Count </th><td> 4 Tasks </td><td> 4 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="92" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="42" x2="120" y2="42" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="42" style="stroke-width:2" />
+  <line x1="30" y1="0" x2="30" y2="42" />
+  <line x1="60" y1="0" x2="60" y2="42" />
+  <line x1="90" y1="0" x2="90" y2="42" />
+  <line x1="120" y1="0" x2="120" y2="42" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,42.89879552186203 0.0,42.89879552186203" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text>
+  <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text>
+</svg>
+</td>
+</tr>
+</table>
+
+
+
+
+```python
+ones.compute()
+```
+
+
+
+
+    array([[1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           ...,
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.]])
+
+
+
+
+```python
+ones.visualize(format='svg')
+```
+
+
+
+
+    
+![svg](04b-DaskDataframes_files/04b-DaskDataframes_20_0.svg)
+    
+
+
+
+
+```python
+sum_of_ones = ones.sum()
+sum_of_ones.visualize(format='svg')
+```
+
+
+
+
+    
+![svg](04b-DaskDataframes_files/04b-DaskDataframes_21_0.svg)
+    
+
+
+
+
+```python
+fancy_calculation = (ones * ones[::-1, ::-1]).mean()
+fancy_calculation.visualize(format='svg')
+```
+
+
+
+
+    
+![svg](04b-DaskDataframes_files/04b-DaskDataframes_22_0.svg)
+    
+
+
+
+
+```python
+bigshape = (200000, 4000)
+big_ones = da.ones(bigshape, chunks=chunk_shape)
+big_ones
+```
+
+
+
+
+<table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 6.40 GB </td> <td> 8.00 MB </td></tr>
+    <tr><th> Shape </th><td> (200000, 4000) </td> <td> (1000, 1000) </td></tr>
+    <tr><th> Count </th><td> 800 Tasks </td><td> 800 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="79" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="29" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="6" x2="29" y2="6" />
+  <line x1="0" y1="12" x2="29" y2="12" />
+  <line x1="0" y1="18" x2="29" y2="18" />
+  <line x1="0" y1="25" x2="29" y2="25" />
+  <line x1="0" y1="31" x2="29" y2="31" />
+  <line x1="0" y1="37" x2="29" y2="37" />
+  <line x1="0" y1="43" x2="29" y2="43" />
+  <line x1="0" y1="50" x2="29" y2="50" />
+  <line x1="0" y1="56" x2="29" y2="56" />
+  <line x1="0" y1="63" x2="29" y2="63" />
+  <line x1="0" y1="69" x2="29" y2="69" />
+  <line x1="0" y1="75" x2="29" y2="75" />
+  <line x1="0" y1="81" x2="29" y2="81" />
+  <line x1="0" y1="88" x2="29" y2="88" />
+  <line x1="0" y1="94" x2="29" y2="94" />
+  <line x1="0" y1="100" x2="29" y2="100" />
+  <line x1="0" y1="106" x2="29" y2="106" />
+  <line x1="0" y1="113" x2="29" y2="113" />
+  <line x1="0" y1="120" x2="29" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="7" y1="0" x2="7" y2="120" />
+  <line x1="14" y1="0" x2="14" y2="120" />
+  <line x1="21" y1="0" x2="21" y2="120" />
+  <line x1="29" y1="0" x2="29" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 29.030629010473877,0.0 29.030629010473877,120.0 0.0,120.0" style="fill:#8B4903A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="14.515315" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text>
+  <text x="49.030629" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,49.030629,60.000000)">200000</text>
+</svg>
+</td>
+</tr>
+</table>
+
+
+
+
+```python
+print('%.1f MB' % (big_ones.nbytes / 1e6))
+```
+
+    6400.0 MB
+
+
+
+```python
+big_calc = (big_ones * big_ones[::-1, ::-1]).mean()
+
+result = big_calc.compute()
+result
+```
+
+
+
+
+    1.0
+
+
+
+
+```python
 import time
-~~~
-{: .bash}
 
-Investigate underlying data by reading text file that houses daily data into a bag. First few rows are displayed
-~~~
-db.read_text('https://archive.analytics.mybinder.org/events-2018-11-03.jsonl').take(3)
-~~~
-{: .bash}
+def inc(x):
+    time.sleep(0.1)
+    return x + 1
 
-The output should give you a task for the underlying data in the daily log files. Essential this is a text file in json format.
-~~~
-('{"timestamp": "2018-11-03T00:00:00+00:00", "schema": "binderhub.jupyter.org/launch", "version": 1, "provider": "GitHub", "spe                c": "Qiskit/qiskit-tutorial/master", "status": "success"}\n',
- '{"timestamp": "2018-11-03T00:00:00+00:00", "schema": "binderhub.jupyter.org/launch", "version": 1, "provider": "GitHub", "spe                c": "ipython/ipython-in-depth/master", "status": "success"}\n',
- '{"timestamp": "2018-11-03T00:00:00+00:00", "schema": "binderhub.jupyter.org/launch", "version": 1, "provider": "GitHub", "spe                c": "QISKit/qiskit-tutorial/master", "status": "success"}\n')
+def dec(x):
+    time.sleep(0.1)
+    return x - 1
 
-~~~
-{: .output}
-
-Index file loaded as a bag. No data transfer or computation kicked off - just organising mapping the file to a json structure
-~~~
-index = db.read_text('https://archive.analytics.mybinder.org/index.jsonl').map(json.loads)
-index
-index.take(2)
-~~~
-{: .bash}
-
-These files aren't big at all - a sign is the number of partitians of 1. Dask would automatically split the data up for large data. 
-~~~
-In [5]: index = db.read_text('https://archive.analytics.mybinder.org/index.jsonl').map(json.loads)
-In [6]: index
-Out[6]: dask.bag<loads, npartitions=1>
-In [7]: index.take(2)
-Out[7]:
-({'name': 'events-2018-11-03.jsonl', 'date': '2018-11-03', 'count': '7057'},
- {'name': 'events-2018-11-04.jsonl', 'date': '2018-11-04', 'count': '7489'})
-~~~
-{: .output}
-
-We can perform some operations on these two files. Please note the Dask Bag API (in the provided links section) for the signatures of available functions and their requirements.
-
-Read the index file as a dask bag and perform a mapping of the data to the function json.loads(). This function loads strings into a json object - given it adheres to the json structure.
-
-~~~
-index = db.read_text('https://archive.analytics.mybinder.org/index.jsonl').map(json.loads)
-print(index)
-~~~
-{: .bash}
-
-# PANGEO EXAMPLE
-Pangeo is a community promoting open, reproducible, and scalable science.
-
-In practice it is not realy a python package, but a collection of packages, supported datasets, tutorials and documentation used to promote scalable science. Its motivation was driven by data becoming increasingly large, the fragmentation of software making reproducability difficult, and a growing technology gap between industry and traditional science.
-
-As such the Pangeo community supports using dask on HPC. We will run through an example of using our new found knowledge of dask on large dataset computation and visualisation.Specifically this pangeo example is a good illustration of dealing with an IO bound task.
-
-The example we will submit is an altered version of Pangeos meteorology use case found here:
-https://pangeo.io/use_cases/meteorology/newmann_ensemble_meteorology.html
-
-## Xarray
-
-Rather than using a dask dataframe, data is loaded from multiple netcdf files in the data folder relative to where the script resides. 
-Xarray is an opensource python package that uses dask in its inner workings. Its design to make working with multi-dimensional data easier by introducing labels in the form of dimensions, coordinates and attributes on top of raw NumPy-like arrays, which allows for a more intuitive, more concise, and less error-prone developer experience.
-
-It is particulary suited for working with netcdf files and is tightly integrated with dask parallel computing. 
-
-Let's investigate a small portion of the data before looking at the complete script. Open an ipython terminal inside the data folder
-
-And have a look at the data
-~~~
-import xarray as xr
-data = xr.open_dataset('conus_daily_eighth_2008_ens_mean.nc4')
-data
-~~~
-{: .python}
-
-You should see the following metadata that holds 3 dimenstional information (latitude, longditude and time) on temperature and precipitation measurements.
-~~~
-
-In [41]: data = xr.open_dataset('conus_daily_eighth_2008_ens_mean.nc4')
-
-In [42]: data
-Out[42]:
-<xarray.Dataset>
-Dimensions:    (lat: 224, lon: 464, time: 366)
-Coordinates:
-  * time       (time) datetime64[ns] 2008-01-01 2008-01-02 ... 2008-12-31
-  * lat        (lat) float64 25.12 25.25 25.38 25.5 ... 52.62 52.75 52.88 53.0
-  * lon        (lon) float64 -124.9 -124.8 -124.6 -124.5 ... -67.25 -67.12 -67.0
-Data variables:
-    elevation  (lat, lon) float64 ...
-    pcp        (time, lat, lon) float32 ...
-    t_mean     (time, lat, lon) float32 ...
-    t_range    (time, lat, lon) float32 ...
-Attributes:
-    history:      Wed Oct 24 13:59:29 2018: ncks -4 -L 1 conus_daily_eighth_2...
-    NCO:          netCDF Operators version 4.7.4 (http://nco.sf.net)
-    institution:  National Center fo Atmospheric Research (NCAR), Boulder, CO...
-    title:        CONUS daily 12-km gridded ensemble precipitation and temper...
-~~~
-{: .output}
-
-Find out how large is the file.
-~~~
-print('memory gb',format(data.nbytes / 1e9))
-~~~
-{: .python}
-
-What is the average elevation over lat and long dimensions.
-~~~
-data.elevation.mean()
-~~~
-{: .python}
-
-~~~
-In [50]: data.elevation.mean()
-Out[50]:
-<xarray.DataArray 'elevation' ()>
-array(709.99515723)
-~~~
-{: .output}
-
-What is the average elevation for each longitude
-~~~
-data.elevation.mean(dim='lat')
-~~~
-{: .python}
-
-Exit from your ipython session. Now we will now run a script to the scheduler that loads multiple files, performs calculations on the xarray data and plots the results.
-
-Steps to do:
-1. In the files directory, open the python script we will run called pangeo.py.
-~~~
-cd /project/Training/myname/files
-nano pangeo.py
-~~~
-
-2. Alter the instance of the Client() object by redirecting the path in the local_directory argument to your /project/Training/myname folder. The Client object sets up a local cluster that uses all availble resources. In this case it is created on one compute node. The optional local_directory specifies a storage area that allows dask to copy temporary data on if RAM is insufficient to work on large datasets - i.e. its a path where dask can spill over some data to still perform data calculations. 
-
-3. Notice the xarray open_mfdaset function loads multiple files that match a naming pattern. Chunking size is specific to the axis ***time***, one chunck for each year. 
-
-4. Submit the ```pangeo.pbs``` file to the scheduler.
-~~~
-qsub pangeo.pbs
-~~~
-
-Png files should be created based on calculation in the code that measure the variance in temperatures (max minus min observations). As seen before, these calculations are triggered by a ***.compute()*** call. Two images are created, with one demostrating how we can persist the xarray dataset in memory for quick retrievals via the ***.persist()*** call. 
-
-Lets see the image. If you have X11 forwarding enabled you can view it directly from artemis. Alternatively, use scp to copy it locally and view.
-~~~
-module load imagemagick
-display variance_temp.png &
-~~~
-
-<figure>
-  <img src="{{ page.root }}/fig/USA_Temp.png" style="margin:10px;width:600px"/>
-  <figcaption> Dask Temperature visualisation </figcaption>
-</figure><br>
+def add(x, y):
+    time.sleep(0.2)
+    return x + y
+```
 
 
-# Helpful Links:
+```python
+%%time
+x = inc(1)
+y = dec(2)
+z = add(x, y)
+z
+```
+
+    Wall time: 431 ms
+
+
+
+
+
+    3
+
+
+
+
+```python
+import dask
+inc = dask.delayed(inc)
+dec = dask.delayed(dec)
+add = dask.delayed(add)
+```
+
+
+```python
+%%time
+x = inc(1)
+y = dec(2)
+z = add(x, y)
+z
+```
+
+    Wall time: 1.03 ms
+
+
+
+
+
+    Delayed('add-4336c3e8-9b9a-47b3-8c33-5da47dd0128c')
+
+
+
+
+```python
+z.visualize(format='svg', rankdir='LR')
+```
+
+
+
+
+    
+![svg](04b-DaskDataframes_files/04b-DaskDataframes_30_0.svg)
+    
+
+
+
+
+```python
+%%time
+z.compute()
+```
+
+    Wall time: 363 ms
+
+
+
+
+
+    3
+
+
+
+## Helpful Links:
 
 Dask bag fundamentals
 [https://docs.dask.org/en/latest/bag.html](https://docs.dask.org/en/latest/bag.html)
@@ -409,3 +945,13 @@ API list for Dask Dataframes
 What are decorators
 [https://realpython.com/primer-on-python-decorators/](https://realpython.com/primer-on-python-decorators/)
 
+
+<div class="keypoints">  
+### Key Points
+
+- "Dask builds on numpy and pandas APIs but operates in a parallel manner"
+- "Computations are by default lazy and must be triggered - this reduces unneccessary computation time"
+- "Dask Bag uses map filter and group by operations on python objects or semi/unstrucutred data"
+- "dask.multiprocessing is under the hood"
+- "Xarray is another option for holding netcdf data"
+</div>

@@ -15,12 +15,10 @@
 - Predict the weather
 </div>
 
-Python offers many ways to make use of the compute capability in your GPU. A very common application is deep learning using the tensorflow and keras packages. In this example we are going to look at forecasting a timeseries using recurrent neural netowrks based on the history of the time series itself.
-
-### You can run through the steps on you local machine using the Jupyter notebook example
+Python offers many ways to make use of the compute capability in your GPU. A very common application is deep learning using the tensorflow and keras (or pytorch) packages. In this example we are going to look at forecasting a timeseries using recurrent neural netowrks based on the history of the time series itself.
 
 We are looking at temperature data in Sydney for the last 150 years with daily measurements (Based on an example from 
-https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/). We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. But feel free to adjust the numbers as you like. Using a GPU trained deep-learning framework to predict time series data. Specifically we are using a Long Short-Term Memory (LSTM) deep learning network
+https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/). We want to predict what the future is going to look like. Note: the default values in the notebook restrict the length of dataset used in the analysis purely for time constraints. But feel free to adjust the numbers as you like. Using a GPU-enabled version of tensorflow will greatly reduce the time training. This deep-learning framework to predict time series data is known Long Short-Term Memory (LSTM) deep learning network.
 
 The data is from the Australian Bureau of Meteorology (BOM) representing the [daily maximum temperatures for the last 150 years from the Sydney Observatory](http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_nccObsCode=122&p_display_type=dailyDataFile&p_startYear=&p_c=&p_stn_num=066062)
 
@@ -178,14 +176,14 @@ print("Time taken: ", endT-startT)
 
     fitting...
     Epoch 1/4
-    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0075
+    1933/1933 [==============================] - 37s 19ms/step - loss: 0.0086
     Epoch 2/4
-    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0060
+    1933/1933 [==============================] - 36s 19ms/step - loss: 0.0064
     Epoch 3/4
-    1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
+    1933/1933 [==============================] - 36s 19ms/step - loss: 0.0062
     Epoch 4/4
-    1933/1933 [==============================] - 12s 6ms/step - loss: 0.0059
-    Time taken:  47.55837798118591
+    1933/1933 [==============================] - 37s 19ms/step - loss: 0.0060
+    Time taken:  148.00688791275024
 
 
 
@@ -215,8 +213,8 @@ print('Test Score: %.4f RMSE' % (testScore))
 
 ```
 
-    Train Score: 2.9182 RMSE
-    Test Score: 2.9709 RMSE
+    Train Score: 2.9821 RMSE
+    Test Score: 3.0455 RMSE
 
 
 
@@ -234,7 +232,6 @@ testScale= transformer.transform(testvec)
 
 print(trainPredict.shape,testPredict.shape,testvec.shape)
 
-train=datasetScaled[50000:58000,:]
 train=datasetScaled[0:58000,:]
 #Use from 50000 to 58316 as testing set, 
 #that means we will test on 8000 days we know the answer for, 
@@ -266,9 +263,14 @@ Depending on the environment you are working in, you will have to use a differen
 
 In Deep Learning, *training* the model can take a seriously long time, so we often only want to do this once and then tweak our model. In which case we can do that by saving out our data as as a *\*.hdf5* file. 
 
-# Exercise
+## Exercise
 Pick another site at [http://www.bom.gov.au/climate/data/](http://www.bom.gov.au/climate/data/) and re-run the analysis. 
 
 
 
 
+
+
+```python
+
+```

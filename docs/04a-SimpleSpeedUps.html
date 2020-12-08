@@ -594,8 +594,8 @@ import pandas as pd
 import time 
 
 #Create some fake data to work with
-Samples = pd.DataFrame(np.random.randint(0,100,size=(100, 4)), columns=list(&#39;ABCD&#39;))
-Wells = pd.DataFrame(np.random.randint(0,100,size=(50, 1)), columns=list(&#39;A&#39;))
+Samples = pd.DataFrame(np.random.randint(0,100,size=(1000, 4)), columns=list([&#39;Alpha&#39;,&#39;Beta&#39;,&#39;Gamma&#39;,&#39;Delta&#39;]))
+Wells = pd.DataFrame(np.random.randint(0,100,size=(50, 1)), columns=list([&#39;Alpha&#39;]))
 
 #This could perhaps be the id of a well and the list of samples found in the well. 
 #You want to match up the samples with some other list, 
@@ -609,23 +609,23 @@ totalFast=pd.DataFrame(columns=Samples.columns)</code></pre>
 tic=time.time()
 for index,samp in Samples.iterrows():
     for index2,well in Wells.iterrows():
-        if well[&#39;A&#39;]==samp[&#39;A&#39;]:
+        if well[&#39;Alpha&#39;]==samp[&#39;Alpha&#39;]:
             totalSlow=totalSlow.append(samp,ignore_index=True)
             
 totalSlow=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Nested-loop Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Nested-loop Runtime: 0.4779984951019287 seconds</code></pre>
+<pre><code>Nested-loop Runtime: 4.68686056137085 seconds</code></pre>
 <pre class="python"><code>#Or the vectorised method:
 
 tic=time.time()
-totalFast=Samples[Samples[&#39;A&#39;].isin(Wells.A.tolist())]
+totalFast=Samples[Samples[&#39;Alpha&#39;].isin(Wells.Alpha.tolist())]
 totalFast=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Vectorized Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Vectorized Runtime: 0.0019991397857666016 seconds</code></pre>
+<pre><code>Vectorized Runtime: 0.00400090217590332 seconds</code></pre>
 <p>Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.</p>
 </div>
 <div id="python-multiprocessing" class="section level2">
@@ -764,8 +764,9 @@ Process 43 Finished in 0.2100s.
 Process 44 Finished in 0.2148s.
 Process 45 Finished in 0.2138s.
 Final Runtime 9.796719074249268</code></pre>
-<p>Now we will have to run the multiprocessing version outside of our jupyter environment. Put the following into a script or download the <a href="./data/area.py">full version here</a>.</p>
-<pre class="python"><code>#Run it again, but this time, use the multiprocessing capabilities
+<p>Now we will have to run the multiprocessing version <strong>outside of our jupyter environment</strong>. Put the following into a script or download the <a href="https://cloudstor.aarnet.edu.au/plus/s/Q7DpigC2bibIgHT/download">full version here</a>.</p>
+<pre class="python"><code>#Put this snippet in a code block outside of Jupyter, but this time, use the multiprocessing capabilities
+#Because of how the multiprocessing works, it does not behave nicely in Jupyter all the time
 def make_global(shapes):
     global gshapes
     gshapes = shapes
@@ -830,7 +831,7 @@ Final Runtime 5.4170615673065186</code></pre>
 </ul>
 <pre class="python"><code>area=shapefile.signed_area(corners)</code></pre>
 <ul>
-<li>How does this change the timings of your speed tests?</li>
+<li>How does this change the timings of your speed tests? Hint, it might not be by much.</li>
 </ul>
 <details>
 <summary>
@@ -847,17 +848,18 @@ Solution
 <pre class="python"><code>#Test the serial version
 start_time = time.time()
 Areas1=[]
+
 for i in polygons:
     Areas1.append(PolygonArea(i))
+print(&quot;Final Runtime&quot;, time.time() - start_time)
 
-print(&quot;Final serial time&quot;, time.time() - start_time)
-    
-#Test the multiprocessing parallel version
+#Test the multiprocessing version
 start_time = time.time()
-with multiprocessing.Pool() as pool:
+with multiprocessing.Pool(initializer=make_global, initargs=(shapes,)) as pool:
     Areas2 = pool.map(PolygonArea,polygons)
 
-print(&quot;Final multiprocessing time&quot;, time.time() - start_time)</code></pre>
+print(&quot;Final Runtime&quot;, time.time() - start_time)
+</code></pre>
 <p>There is generally a sweet spot in how many processes you create to optimise the run time. A large number of python processes is generally not advisable, as it involves a large fixed cost in setting up many python interpreters and its supporting infrastructure. Play around with different numbers of processes in the pool(processes) statement to see how the runtime varies. Also, well developed libraries often have nicely optimised algorithms, you may not have to reinvent the wheel (Haha at this Python pun).</p>
 </details>
 </div>

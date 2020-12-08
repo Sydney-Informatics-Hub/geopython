@@ -159,8 +159,8 @@ import pandas as pd
 import time 
 
 #Create some fake data to work with
-Samples = pd.DataFrame(np.random.randint(0,100,size=(100, 4)), columns=list('ABCD'))
-Wells = pd.DataFrame(np.random.randint(0,100,size=(50, 1)), columns=list('A'))
+Samples = pd.DataFrame(np.random.randint(0,100,size=(1000, 4)), columns=list(['Alpha','Beta','Gamma','Delta']))
+Wells = pd.DataFrame(np.random.randint(0,100,size=(50, 1)), columns=list(['Alpha']))
 
 #This could perhaps be the id of a well and the list of samples found in the well. 
 #You want to match up the samples with some other list, 
@@ -178,7 +178,7 @@ totalFast=pd.DataFrame(columns=Samples.columns)
 tic=time.time()
 for index,samp in Samples.iterrows():
     for index2,well in Wells.iterrows():
-        if well['A']==samp['A']:
+        if well['Alpha']==samp['Alpha']:
             totalSlow=totalSlow.append(samp,ignore_index=True)
             
 totalSlow=totalSlow.drop_duplicates()
@@ -187,7 +187,7 @@ print("Nested-loop Runtime:",toc-tic, "seconds")
 
 ```
 
-    Nested-loop Runtime: 0.4779984951019287 seconds
+    Nested-loop Runtime: 4.68686056137085 seconds
 
 
 
@@ -195,14 +195,14 @@ print("Nested-loop Runtime:",toc-tic, "seconds")
 #Or the vectorised method:
 
 tic=time.time()
-totalFast=Samples[Samples['A'].isin(Wells.A.tolist())]
+totalFast=Samples[Samples['Alpha'].isin(Wells.Alpha.tolist())]
 totalFast=totalSlow.drop_duplicates()
 toc=time.time()
 print("Vectorized Runtime:",toc-tic, "seconds")
 
 ```
 
-    Vectorized Runtime: 0.0019991397857666016 seconds
+    Vectorized Runtime: 0.00400090217590332 seconds
 
 
 Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.
@@ -372,12 +372,13 @@ print("Final Runtime", time.time() - start_time)
     Final Runtime 9.796719074249268
 
 
-Now we will have to run the multiprocessing version outside of our jupyter environment.
-Put the following into a script or download the [full version here](./data/area.py).
+Now we will have to run the multiprocessing version **outside of our jupyter environment**.
+Put the following into a script or download the [full version here](https://cloudstor.aarnet.edu.au/plus/s/Q7DpigC2bibIgHT/download).
 
 
 ```python
-#Run it again, but this time, use the multiprocessing capabilities
+#Put this snippet in a code block outside of Jupyter, but this time, use the multiprocessing capabilities
+#Because of how the multiprocessing works, it does not behave nicely in Jupyter all the time
 def make_global(shapes):
     global gshapes
     gshapes = shapes
@@ -451,7 +452,7 @@ Is there any speed up? Why are the processes not in order? Is there any overhead
 area=shapefile.signed_area(corners)
 ```
 
-- How does this change the timings of your speed tests?
+- How does this change the timings of your speed tests? Hint, it might not be by much.
     
 <details>
 <summary>Solution</summary>
@@ -472,17 +473,18 @@ def PolygonArea(nshp):
 #Test the serial version
 start_time = time.time()
 Areas1=[]
+
 for i in polygons:
     Areas1.append(PolygonArea(i))
+print("Final Runtime", time.time() - start_time)
 
-print("Final serial time", time.time() - start_time)
-    
-#Test the multiprocessing parallel version
+#Test the multiprocessing version
 start_time = time.time()
-with multiprocessing.Pool() as pool:
+with multiprocessing.Pool(initializer=make_global, initargs=(shapes,)) as pool:
     Areas2 = pool.map(PolygonArea,polygons)
 
-print("Final multiprocessing time", time.time() - start_time)
+print("Final Runtime", time.time() - start_time)
+
 ```
     
 There is generally a sweet spot in how many processes you create to optimise the run time. A large number of python processes is generally not advisable, as it involves a large fixed cost in setting up many python interpreters and its supporting infrastructure. Play around with different numbers of processes in the pool(processes) statement to see how the runtime varies. Also, well developed libraries often have nicely optimised algorithms, you may not have to reinvent the wheel (Haha at this Python pun).
