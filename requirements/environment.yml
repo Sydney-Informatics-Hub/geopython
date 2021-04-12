@@ -17,5 +17,6 @@ dependencies:
     - lasio==0.28
     - tensorflow==2.3
     - dask[complete]
-    - jupyter==1.0
+    - notebook==6.2.0
     - jupyterlab==2.2.9
+    - cython
