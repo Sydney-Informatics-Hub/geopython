@@ -9,3 +9,6 @@ _site
 .Rhistory
 .RData
 data/*
+
+# Code editors
+*.sublime-*
