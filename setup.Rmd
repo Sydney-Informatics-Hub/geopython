@@ -28,12 +28,13 @@ Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications F
 
 Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.
 
-* Download the [python environment file from here](requirements/environment.yml) (this is a small text file with instructions inside it). You may have to "Right Click > Save link as..." to download it.
+* [Download the python environment file from here](requirements/environment.yml) (this is a small text file). You may have to "Right Click > Save link as..." to download it.
 * Launch an Anaconda Prompt (miniconda3).
 
+<br>
 ![](fig/setup01.png)
 
-* Assuming you have downloaded the file to your Downloads folder. Type in the below command at the prompt. This should take about 10 minutes to download ~1GB of data and complete:
+* Assuming you have downloaded the *environment.yml* file to your Downloads folder. Type in the below command at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:
 
 ```python
 conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml
@@ -41,9 +42,15 @@ conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml
 
 ![](fig/setup02.png)
 
+<br>
+
+Upon successful completion the command prompt should look like this:
+
 ![](fig/setup03.png)
 
-After the installation completes, activate the new environment with the following command.
+<br>
+
+After the installation completes, activate the new environment with the following command:
 ```python
 conda activate geopy
 ```
@@ -53,7 +60,7 @@ At anytime in the future you can install additional packages or create separate 
 Also, setup your workspace where we will be creating files and generating data, you can do this in your prompt (or just in Windows Explorer/OSX Finder). For me I will be working in top-level folder on my Desktop called ```geopython``` and a subdirectory called ```notebooks```.
 
 ```sh
-cd C:\Users\Administrator\Desktop\
+cd C:\Users\nbutter\Desktop\
 mkdir geopython
 cd geopython
 mkdir notebooks
@@ -73,7 +80,7 @@ Now you have built your environment with all the packages we need, you can launc
 * Launch the Jupyter/Python Notebook server.
 
 ```sh
-cd C:\Users\Administrator\Desktop\geopython
+cd C:\Users\nbutter\Desktop\geopython
 conda activate geopy
 jupyter notebook
 ```
@@ -117,19 +124,20 @@ Your file tree should look like something like this
 
 If the above options do not work for you, [Google Colab](https://colab.research.google.com/) can be used for an on-demand Python notebook. You will require a Google Account for this.
 
-The data is also availble on Google Drive here:
+The data is also available on Google Drive here:
 https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing
 
-And an example colab notebook (linking to that data) is here:
+And an example Colab notebook (linking to that data) is here:
 https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing
 
+<br>
 ## Docker
 
 If you are familiar with Docker you may use our Docker image with something like:
 ```
 sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c "jupyter notebook --allow-root --ip=0.0.0.0 --no-browser"
 ```
-This will launch the Python notebok server in the ```/notebooks``` folder. Access the notebook by entering the genereated link in a web-browser, e.g.
+This will launch the Python notebook server in the ```/notebooks``` folder. Access the notebook by entering the generated link in a web-browser, e.g.
 ```
 http://127.0.0.1:8888/?token=9b16287ab91dc69d6b265e6c9c31a49586a35291bb20d0ab
 ```

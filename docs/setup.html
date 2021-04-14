@@ -384,21 +384,24 @@ $(document).ready(function () {
 <h1>2. Setup your Python environment (install required packages and libraries)</h1>
 <p>Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.</p>
 <ul>
-<li>Download the <a href="requirements/environment.yml">python environment file from here</a> (this is a small text file with instructions inside it). You may have to “Right Click &gt; Save link as…” to download it.</li>
+<li><a href="requirements/environment.yml">Download the python environment file from here</a> (this is a small text file). You may have to “Right Click &gt; Save link as…” to download it.</li>
 <li>Launch an Anaconda Prompt (miniconda3).</li>
 </ul>
-<p><img src="fig/setup01.png" /></p>
+<p><br> <img src="fig/setup01.png" /></p>
 <ul>
-<li>Assuming you have downloaded the file to your Downloads folder. Type in the below command at the prompt. This should take about 10 minutes to download ~1GB of data and complete:</li>
+<li>Assuming you have downloaded the <em>environment.yml</em> file to your Downloads folder. Type in the below command at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:</li>
 </ul>
 <pre class="python"><code>conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml</code></pre>
 <p><img src="fig/setup02.png" /></p>
+<p><br></p>
+<p>Upon successful completion the command prompt should look like this:</p>
 <p><img src="fig/setup03.png" /></p>
-<p>After the installation completes, activate the new environment with the following command.</p>
+<p><br></p>
+<p>After the installation completes, activate the new environment with the following command:</p>
 <pre class="python"><code>conda activate geopy</code></pre>
 <p>At anytime in the future you can install additional packages or create separate environments. We will discuss this more in the course. This particular environment should have the correct balance of versions with any dependencies accounted for.</p>
 <p>Also, setup your workspace where we will be creating files and generating data, you can do this in your prompt (or just in Windows Explorer/OSX Finder). For me I will be working in top-level folder on my Desktop called <code>geopython</code> and a subdirectory called <code>notebooks</code>.</p>
-<pre class="sh"><code>cd C:\Users\Administrator\Desktop\
+<pre class="sh"><code>cd C:\Users\nbutter\Desktop\
 mkdir geopython
 cd geopython
 mkdir notebooks</code></pre>
@@ -413,7 +416,7 @@ mkdir notebooks</code></pre>
 <li>Activate the <code>geopy</code> environment.</li>
 <li>Launch the Jupyter/Python Notebook server.</li>
 </ul>
-<pre class="sh"><code>cd C:\Users\Administrator\Desktop\geopython
+<pre class="sh"><code>cd C:\Users\nbutter\Desktop\geopython
 conda activate geopy
 jupyter notebook</code></pre>
 <p><img src="fig/jupyter.png" /></p>
@@ -441,14 +444,12 @@ jupyter notebook</code></pre>
 <div id="google-colab" class="section level2">
 <h2>Google Colab</h2>
 <p>If the above options do not work for you, <a href="https://colab.research.google.com/">Google Colab</a> can be used for an on-demand Python notebook. You will require a Google Account for this.</p>
-<p>The data is also availble on Google Drive here: <a href="https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing" class="uri">https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing</a></p>
-<p>And an example colab notebook (linking to that data) is here: <a href="https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing" class="uri">https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing</a></p>
-</div>
-<div id="docker" class="section level2">
-<h2>Docker</h2>
+<p>The data is also available on Google Drive here: <a href="https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing" class="uri">https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing</a></p>
+<p>And an example Colab notebook (linking to that data) is here: <a href="https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing" class="uri">https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing</a></p>
+<p><br> ## Docker</p>
 <p>If you are familiar with Docker you may use our Docker image with something like:</p>
 <pre><code>sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c &quot;jupyter notebook --allow-root --ip=0.0.0.0 --no-browser&quot;</code></pre>
-<p>This will launch the Python notebok server in the <code>/notebooks</code> folder. Access the notebook by entering the genereated link in a web-browser, e.g.</p>
+<p>This will launch the Python notebook server in the <code>/notebooks</code> folder. Access the notebook by entering the generated link in a web-browser, e.g.</p>
 <pre><code>http://127.0.0.1:8888/?token=9b16287ab91dc69d6b265e6c9c31a49586a35291bb20d0ab</code></pre>
 </div>
 </div>

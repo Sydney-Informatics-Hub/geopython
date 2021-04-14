@@ -496,15 +496,15 @@ print(&quot;The age of the sample is&quot;, timeStart, &quot; Million years&quot
 <pre><code>The age of the sample is 145  Million years</code></pre>
 <pre class="python"><code>#Make a new variable called &#39;endtime&#39; and add a constant to our &#39;timeStart&#39; variable
 endtime=timeStart+56</code></pre>
-<p>Nothing print(endtime)printed out above? Good. Jupyter Notebooks won’t always do that so let’s tell Python to print it.</p>
+<p>Nothing printed out above? Good. Jupyter Notebooks won’t always do that so let’s tell Python to print it.</p>
 <pre class="python"><code>print(endtime)</code></pre>
 <pre><code>201</code></pre>
 <pre class="python"><code>#Make a new &#39;string&#39; variable
 geological_age=&#39;Jurassic&#39;
 
 #Print out some useful information that includes our different variables
-print(&quot;My sample is &quot;, endtime, &quot; Million years old from the&quot;, geological_age, &quot; age.&quot;)</code></pre>
-<pre><code>My sample is  201  Million years old from the Jurassic  age.</code></pre>
+print(&quot;My sample is &quot;, endtime, &quot; Million years old, from the&quot;, geological_age, &quot; age.&quot;)</code></pre>
+<pre><code>My sample is  201  Million years old, from the Jurassic  age.</code></pre>
 <pre class="python"><code>#Make a Python List object, similar to an array.
 times=[1,4.5,5+3.2,geological_age,&quot;Another string&quot;,True]
 
@@ -658,7 +658,7 @@ import numpy
 import matplotlib.pyplot as plt </code></pre>
 <pre class="python"><code>#Set the variable name for the file we are loading in. 
 #It is in the &#39;data&#39; directory, and the file is called EarthChemCU.txt. 
-#We are currently working in /examples.
+#We are currently working in /notebooks.
 filename = &#39;../data/EarthChemCU.txt&#39;
 
 #Now read in the data
@@ -765,35 +765,23 @@ loadtxt(fname, dtype=&lt;class &#39;float&#39;&gt;, comments=&#39;#&#39;, delimi
     Examples
     --------
     &gt;&gt;&gt; from io import StringIO   # StringIO behaves like a file object
-    &gt;&gt;&gt; c = StringIO(&quot;0 1\n2 3&quot;)
+    &gt;&gt;&gt; c = StringIO(u&quot;0 1\n2 3&quot;)
     &gt;&gt;&gt; np.loadtxt(c)
     array([[0., 1.],
            [2., 3.]])
     
-    &gt;&gt;&gt; d = StringIO(&quot;M 21 72\nF 35 58&quot;)
+    &gt;&gt;&gt; d = StringIO(u&quot;M 21 72\nF 35 58&quot;)
     &gt;&gt;&gt; np.loadtxt(d, dtype={&#39;names&#39;: (&#39;gender&#39;, &#39;age&#39;, &#39;weight&#39;),
     ...                      &#39;formats&#39;: (&#39;S1&#39;, &#39;i4&#39;, &#39;f4&#39;)})
     array([(b&#39;M&#39;, 21, 72.), (b&#39;F&#39;, 35, 58.)],
           dtype=[(&#39;gender&#39;, &#39;S1&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f4&#39;)])
     
-    &gt;&gt;&gt; c = StringIO(&quot;1,0,2\n3,0,4&quot;)
+    &gt;&gt;&gt; c = StringIO(u&quot;1,0,2\n3,0,4&quot;)
     &gt;&gt;&gt; x, y = np.loadtxt(c, delimiter=&#39;,&#39;, usecols=(0, 2), unpack=True)
     &gt;&gt;&gt; x
     array([1., 3.])
     &gt;&gt;&gt; y
-    array([2., 4.])
-    
-    This example shows how `converters` can be used to convert a field
-    with a trailing minus sign into a negative number.
-    
-    &gt;&gt;&gt; s = StringIO(&#39;10.01 31.25-\n19.22 64.31\n17.57- 63.94&#39;)
-    &gt;&gt;&gt; def conv(fld):
-    ...     return -float(fld[:-1]) if fld.endswith(b&#39;-&#39;) else float(fld)
-    ...
-    &gt;&gt;&gt; np.loadtxt(s, converters={0: conv, 1: conv})
-    array([[ 10.01, -31.25],
-           [ 19.22,  64.31],
-           [-17.57,  63.94]])</code></pre>
+    array([2., 4.])</code></pre>
 <p>Or really, <a href="http://letmegooglethat.com/?q=numpy+loadtxt">search</a> the function! Online documentation and discussion boards are filled with great content.</p>
 </div>
 <div id="exploring-your-data" class="section level3">
@@ -1065,7 +1053,6 @@ plt.show()</code></pre>
 <li>Indexing</li>
 </ul>
 </div>
-<pre class="python"><code></code></pre>
 </div>
 
 

@@ -59,7 +59,7 @@ print("The age of the sample is", timeStart, " Million years")
 endtime=timeStart+56
 ```
 
-Nothing print(endtime)printed out above? Good. Jupyter Notebooks won't always do that so let's tell Python to print it.
+Nothing printed out above? Good. Jupyter Notebooks won't always do that so let's tell Python to print it.
 
 
 ```python
@@ -75,10 +75,10 @@ print(endtime)
 geological_age='Jurassic'
 
 #Print out some useful information that includes our different variables
-print("My sample is ", endtime, " Million years old from the", geological_age, " age.")
+print("My sample is ", endtime, " Million years old, from the", geological_age, " age.")
 ```
 
-    My sample is  201  Million years old from the Jurassic  age.
+    My sample is  201  Million years old, from the Jurassic  age.
 
 
 
@@ -318,7 +318,7 @@ import matplotlib.pyplot as plt
 ```python
 #Set the variable name for the file we are loading in. 
 #It is in the 'data' directory, and the file is called EarthChemCU.txt. 
-#We are currently working in /examples.
+#We are currently working in /notebooks.
 filename = '../data/EarthChemCU.txt'
 
 #Now read in the data
@@ -431,35 +431,23 @@ help(numpy.loadtxt)
         Examples
         --------
         >>> from io import StringIO   # StringIO behaves like a file object
-        >>> c = StringIO("0 1\n2 3")
+        >>> c = StringIO(u"0 1\n2 3")
         >>> np.loadtxt(c)
         array([[0., 1.],
                [2., 3.]])
         
-        >>> d = StringIO("M 21 72\nF 35 58")
+        >>> d = StringIO(u"M 21 72\nF 35 58")
         >>> np.loadtxt(d, dtype={'names': ('gender', 'age', 'weight'),
         ...                      'formats': ('S1', 'i4', 'f4')})
         array([(b'M', 21, 72.), (b'F', 35, 58.)],
               dtype=[('gender', 'S1'), ('age', '<i4'), ('weight', '<f4')])
         
-        >>> c = StringIO("1,0,2\n3,0,4")
+        >>> c = StringIO(u"1,0,2\n3,0,4")
         >>> x, y = np.loadtxt(c, delimiter=',', usecols=(0, 2), unpack=True)
         >>> x
         array([1., 3.])
         >>> y
         array([2., 4.])
-        
-        This example shows how `converters` can be used to convert a field
-        with a trailing minus sign into a negative number.
-        
-        >>> s = StringIO('10.01 31.25-\n19.22 64.31\n17.57- 63.94')
-        >>> def conv(fld):
-        ...     return -float(fld[:-1]) if fld.endswith(b'-') else float(fld)
-        ...
-        >>> np.loadtxt(s, converters={0: conv, 1: conv})
-        array([[ 10.01, -31.25],
-               [ 19.22,  64.31],
-               [-17.57,  63.94]])
     
 
 
@@ -880,8 +868,3 @@ plt.show()
 
 </div>
 
-
-
-```python
-
-```
