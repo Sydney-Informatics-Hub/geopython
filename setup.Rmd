@@ -22,6 +22,7 @@ Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications F
 
 ![](fig/setup00.png)
 
+<br>
 
 # 2. Setup your Python environment (install required packages and libraries)
 
@@ -29,8 +30,6 @@ Next we need to set up an environment with all the additional packages and libra
 
 * Download the [python environment file from here](requirements/environment.yml) (this is a small text file with instructions inside it). You may have to "Right Click > Save link as..." to download it.
 * Launch an Anaconda Prompt (miniconda3).
-
-https://raw.githubusercontent.com/Sydney-Informatics-Hub/geopython/main/requirements/environment.yml?token=ABL2U2WIAKMNCJE2RNZMHGDAP6F7C)
 
 ![](fig/setup01.png)
 
@@ -62,6 +61,7 @@ mkdir notebooks
 
 ![](fig/setup-python.png)
 
+<br>
 
 ## Launching the Jupyter/Python Notebook
 
@@ -85,6 +85,8 @@ This will launch the Notebook server (and may automatically launch a web-browser
 ![](fig/jupyter_browser.png)
 
 
+<br>
+
 # 3. Download the data
 
 Download the data (280 MB inflated to 500 MB) for all the exercises from here:
@@ -107,6 +109,7 @@ Your file tree should look like something like this
 ```
 
 
+<br>
 
 # Other Options
 
