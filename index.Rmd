@@ -30,7 +30,7 @@ We also aim to cultivate a **data community**, organising monthly [Hacky Hours](
 # Trainers
 * Nathaniel (Nate) Butterworth (PhD Computational Geophysics), nathaniel.butterworth@sydney.edu.au
 * Darya Vanichkina (PhD Bioinformatics, FHEA) 
-* Jianzhou Zhou (PhD Environmental Engineering)
+* Jianzhou Zhao (PhD Environmental Engineering)
 * Kristian Maras (MSc Quant Fin)
 
 # Course pre-requisites and setup requirements
