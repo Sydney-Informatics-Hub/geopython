@@ -377,42 +377,35 @@ $(document).ready(function () {
 <li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh">Linux Download</a></p></li>
 </ul>
 <p>Follow the prompts (the default recommendations in the installer are generally fine.) Once installed, launch an “Anaconda Prompt” from the Start Menu / Applications Folder to begin your Python adventure.</p>
+<p><img src="fig/setup00.png" /></p>
 </div>
 <div id="setup-your-python-environment-install-required-packages-and-libraries" class="section level1">
 <h1>2. Setup your Python environment (install required packages and libraries)</h1>
 <p>Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.</p>
 <ul>
-<li>Launch an Anaconda Prompt (or equivalent).</li>
-<li>Type in each of these commands sequentially. Each should take a minute or so to complete:</li>
+<li>Download the <a href="requirements/environment.yml">python environment file from here</a> (this is a small text file with instructions inside it). You may have to “Right Click &gt; Save link as…” to download it.</li>
+<li>Launch an Anaconda Prompt (miniconda3).</li>
 </ul>
-<pre class="python"><code>conda create -n geopy python=3.7
-
-conda activate geopy
-
-conda install pip
-
-pip install numpy==1.18 pandas==1.0.1 matplotlib==3.3.2 pyshp==2.1.2 lasio==0.28 obspy==1.2.2 scipy==1.4.1 scikit-learn==0.23 
-
-conda install -c conda-forge cartopy=0.18
-
-pip install tensorflow==2.3 
-
-python -m pip install &quot;dask[complete]&quot;
-
-pip install jupyter==1.0 </code></pre>
+<p><a href="https://raw.githubusercontent.com/Sydney-Informatics-Hub/geopython/main/requirements/environment.yml?token=ABL2U2WIAKMNCJE2RNZMHGDAP6F7C" class="uri">https://raw.githubusercontent.com/Sydney-Informatics-Hub/geopython/main/requirements/environment.yml?token=ABL2U2WIAKMNCJE2RNZMHGDAP6F7C</a>)</p>
+<p><img src="fig/setup01.png" /></p>
+<ul>
+<li>Assuming you have downloaded the file to your Downloads folder. Type in the below command at the prompt. This should take about 10 minutes to download ~1GB of data and complete:</li>
+</ul>
+<pre class="python"><code>conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml</code></pre>
+<p><img src="fig/setup02.png" /></p>
+<p><img src="fig/setup03.png" /></p>
+<p>After the installation completes, activate the new environment with the following command.</p>
+<pre class="python"><code>conda activate geopy</code></pre>
 <p>At anytime in the future you can install additional packages or create separate environments. We will discuss this more in the course. This particular environment should have the correct balance of versions with any dependencies accounted for.</p>
 <p>Also, setup your workspace where we will be creating files and generating data, you can do this in your prompt (or just in Windows Explorer/OSX Finder). For me I will be working in top-level folder on my Desktop called <code>geopython</code> and a subdirectory called <code>notebooks</code>.</p>
 <pre class="sh"><code>cd C:\Users\Administrator\Desktop\
 mkdir geopython
 cd geopython
 mkdir notebooks</code></pre>
-<p>Now you can type:</p>
-<pre class="sh"><code>python</code></pre>
-<p>to run a Python interpreter (type <code>exit()</code> to quit back to the terminal/prompt). We will be mostly using <em>Jupyter Notebooks</em> to interface with Python, so see the next section on how to launch a Notebook.</p>
 <p><img src="fig/setup-python.png" /></p>
 <div id="launching-the-jupyterpython-notebook" class="section level2">
 <h2>Launching the Jupyter/Python Notebook</h2>
-<p>Now you have built your environment with all the packages we need, you can launch it. As you just saw, typing Python into the terminal/command prompt runs the Python interpreter. But we will be working mostly with Python Notebooks. Each time you restart your work you will have to follow these steps:</p>
+<p>Now you have built your environment with all the packages we need, you can launch it. We will be working mostly with Python Notebooks to run Python (as opposed to running an interpreter on the command line/prompt). Each time you restart your work you will have to follow these steps:</p>
 <ul>
 <li>Launch an Anaconda Prompt (or equivalent).</li>
 <li>Change directories to your workspace.</li>
