@@ -7,7 +7,7 @@ output:
 ---
 
 
-This course is aimed at researchers, students, and industry professionals who want to learn about the capabilities of Python and get experience using it applied to real-world problems. This course we will introduce you to foundations of Python programming. We will utilise common geoscience data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets. 
+This course is aimed at researchers, students, and industry professionals who want to learn about the capabilities of Python and get experience using it applied to real-world problems. This course will introduce you to foundations of Python programming. We will utilise common geoscience data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets. 
 
 The course is presented by the <a href="https://www.sydney.edu.au/research/facilities/sydney-informatics-hub.html">Sydney Informatics Hub</a> on behalf of the <a href="https://pesa.com.au/events/pesa-qld-online-course-introduction-to-python-for-geoscience/">Petroleum Exploration Society of Australia</a>.
 
@@ -28,24 +28,24 @@ The Sydney Informatics Hub (SIH) is a _[Core Research Facility](https://sydney.e
 We also aim to cultivate a **data community**, organising monthly [Hacky Hours](https://sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/hacky-hour.html), outside training events (eg NVIDIA, Pawsey Center), and data/coding-related events. Look out for everything happening on our [calendar](https://www.sydney.edu.au/research/facilities/sydney-informatics-hub/workshops-and-training/training-calendar.html) or contact us (at sih.info@sydney.edu.au) to get some digital collaboration going.
 
 # Trainers
-* Nathaniel (Nate) Butterworth (PhD Computational Tectonics), nathaniel.butterworth@sydney.edu.au
-* Ben Mather (PhD Computational Geophysics)
+* Nathaniel (Nate) Butterworth (PhD Computational Geophysics), nathaniel.butterworth@sydney.edu.au
 * Darya Vanichkina (PhD Bioinformatics, FHEA) 
+* Jianzhou Zhou (PhD Environmental Engineering)
 * Kristian Maras (MSc Quant Fin)
 
 # Course pre-requisites and setup requirements
 
-No previous programming experience is required, but **Session 1 is a pre-requisite for the other sessions**. Training will be delivered online, so you will need access to a modern computer with a stable internet connection and around 5GB of storage space downloaded prior to the course. Participants are encouraged to setup a Python environment on their local computer (instructions to be provided), but participation using Google Colab will also be supported (Google account required).
+No previous programming experience is required, but **Session 1 is a pre-requisite for the other sessions**. Training will be delivered online, so you will need access to a modern computer with a stable internet connection and around 5GB of storage space downloaded prior to the course. Participants are encouraged to setup a Python environment on their local computer (as per the [Setup Instructions](https://sydney-informatics-hub.github.io/geopython/setup.html) provided), but participation using other platforms/environments can be supported where necessary.
 
 # Venue, online via Zoom
 Participants will be provided with a Zoom link. Trainers will be broadcasting from Sydney.
 
 # Zoom etiquette and how we interact
-Everything will be done via zoom. Sessions will be recorded for attendees only, and it is set up to only record the host shared screen and host audio. We will try and get these uploaded to this site as soon as possible. 
+Everything will be done via Zoom. Sessions will be recorded for attendees only, and it is set up to only record the host shared screen and host audio. We will try and get these uploaded to this site as soon as possible. 
 
-Please interrupt whenever you want! Ideally, have your camera on and interact as much as possible. And there will be someone monitoring the chat-window with any questions you would like to post there.  Four hours is a long Zoom session so we have got plenty of scheduled breaks, a mixed up the content to be delivered as demos, other sections are independent exercises, but most of it will be pretty-hands on with everyone writing their own code. 
+Please interrupt whenever you want! Ideally, have your camera on and interact as much as possible. There will be someone monitoring the chat-window with any questions you would like to post there.  Four hours is a long Zoom session so we have plenty of scheduled breaks combined with a mix of content to be delivered as demos, plus sections as independent exercises, but most of the course will be pretty-hands on with everyone writing their own code. 
 
-We will use Zoom break-out rooms if needed with Darya, Ben, Kris, and Nate.
+We will use Zoom break-out rooms if needed with the Trainers.
 
 
 # Code of Conduct
@@ -77,19 +77,19 @@ Our full CoC, with incident reporting guidelines, is available at [https://pages
 
 # Date & Time (in AEST-Brisbane time):	
 
-We will be working through the following episodes over our 4 sessions together.
+We will be working through the following general content over our 4 sessions together.
 
 **Session 01 Python fundamentals**
-Wed Nov 18, 12:30 pm - 4:30 pm (AEST)
+Wed April 21, 12:30 pm - 4:30 pm (AEST)
 
 **Session 02 Specialist python libraries and data analysis for geoscience**
-Wed Nov 25, 12:30 pm - 4:30 pm (AEST)
+Wed April 28, 12:30 pm - 4:30 pm (AEST)
 
 **Session 03 Pattern recognition and prediction in geoscience**
-Wed Dec 2, 12:30 pm - 4:30 pm (AEST)
+Wed May 5, 12:30 pm - 4:30 pm (AEST)
 
 **Session 04 Large data and long running workflow strategies**
-Wed Dec 9, 12:30 pm - 4:30 pm (AEST)
+Wed May 12, 12:30 pm - 4:30 pm (AEST)
 
 <br>
 
