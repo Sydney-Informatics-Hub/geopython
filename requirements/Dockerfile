@@ -23,7 +23,9 @@ RUN \
 COPY --chown="${NB_UID}:${NB_GID}" "*.txt" "/tmp/"
 RUN \
   pip install -r "/tmp/pip_req.txt" && \
-  python -m ipykernel install --name 'geopy' --display-name "Python (geopy)" --sys-prefix && pip install Cartopy==0.18.0
+  python -m ipykernel install --name 'geopython' --display-name \
+  "Python (GeoPython)" --sys-prefix && pip install shapely \
+  cartopy==0.18.0 --no-binary shapely --no-binary cartopy
 
 # Make the default shell bash (vs "sh") for a better Jupyter terminal UX
 ENV SHELL=/bin/bash

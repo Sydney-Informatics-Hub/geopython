@@ -49,7 +49,7 @@ Steps:
     $ : docker build . -t ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:latest
     ```
 
-2. Create a repository on ECR if not existent (we are using the same name of the image):
+2. Create a repository on ECR if not existent (we are using the same name of the image - [detailed instructions](https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html)):
     ```bash
     $ : aws --profile usyd_training ecr create-repository \
         --repository-name ${IMAGE_NAME} \
@@ -63,3 +63,9 @@ Steps:
     ```
 
 4. Attach the image to SageMaker studio via portal as described [online](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-byoi-attach.html?icmpid=docs_sagemaker_console_studio).
+
+### Test image locally to check everything works
+
+```bash
+$ : docker run -it --rm -p 127.0.0.1:8888:8888 ${ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${IMAGE_NAME}:latest jupyter lab --no-browser --ip=0.0.0.0
+```
