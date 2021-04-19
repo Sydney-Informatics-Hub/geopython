@@ -31,3 +31,9 @@ RUN \
 ENV SHELL=/bin/bash
 
 USER $NB_UID
+
+WORKDIR "/home/${NB_USER}"
+
+# download the data
+RUN wget -q "https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0/download" \
+  -O "temp.zip" && unzip -qq "temp.zip" && rm -rf "temp.zip"
