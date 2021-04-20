@@ -654,6 +654,12 @@ chemdata=numpy.loadtxt(filename, delimiter=&#39;,&#39;)
 #chemdata &lt;- the name of a variable we are making that will hold the table of data
 #filename &lt;- this is the name of the variable we declared above
 #delimiter &lt;- this is a csv file</code></pre>
+<div id="alternative-instructions-if-you-are-using-google-colab" class="section level4">
+<h4>Alternative instructions if you are using Google Colab</h4>
+<p>If you are using Google Colab, the data will not be stored on your system - but you can load it in from a url. Replace the above cell with the following commands:</p>
+<pre class="python"><code>import urllib.request
+chemdata=numpy.loadtxt(urllib.request.urlopen(&quot;https://cloudstor.aarnet.edu.au/plus/s/EaZN6DNLvpXfV1o/download&quot;), delimiter=&#39;,&#39;)</code></pre>
+</div>
 <div id="want-more-details-about-a-commandfunction-we-use" class="section level3">
 <h3>Want more details about a command/function we use?</h3>
 <pre class="python"><code>#Try this help command
@@ -836,7 +842,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_44_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_45_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This does not look right… It is a messy dataset! This is not uncommon. Maybe the Lats/Lons are stored as Norhtings/Eastings for some samples? Maybe they are missing a decimal place?</p>
@@ -853,11 +859,11 @@ plt.ylabel(&#39;Longitude&#39;)
 plt.xlabel(&#39;Number&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_46_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_47_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_46_1.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_47_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>This kind of casual data interrogation is a really handy way to exploring your data. There are definitely some outliers with latitudes and longitudes. There are quite a few ways clean the data, but let’s simply restrict our data range to -180:180 and -90:90.</p>
@@ -897,7 +903,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_54_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_55_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>Now make a more informative plot:</p>
@@ -918,7 +924,7 @@ plt.ylabel(&#39;Latitude&#39;)
 plt.xlabel(&#39;Longitude&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_56_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_57_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#You could come up with a more intelligent way to reject your outliers, e.g.
@@ -942,7 +948,7 @@ removed: 20407</code></pre>
 <pre class="python"><code>plt.plot(copper[copper&gt;1],&#39;k.&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_59_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_60_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -985,7 +991,7 @@ cbar.set_label(&#39;Age (Ma)&#39;)
 plt.title(&#39;Age of Copper Deposits in the EarthChem.org database&#39;)
 plt.show()</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_61_0.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_62_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You can explore the different color maps at <a href="https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html">https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html</a>.</p>

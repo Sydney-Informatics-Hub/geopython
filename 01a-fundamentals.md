@@ -329,6 +329,13 @@ chemdata=numpy.loadtxt(filename, delimiter=',')
 #delimiter <- this is a csv file
 ```
 
+#### Alternative instructions if you are using Google Colab
+If you are using Google Colab, the data will not be stored on your system - but you can load it in from a url. Replace the above cell with the following commands:
+```python
+import urllib.request
+chemdata=numpy.loadtxt(urllib.request.urlopen("https://cloudstor.aarnet.edu.au/plus/s/EaZN6DNLvpXfV1o/download"), delimiter=',')
+```
+
 ### Want more details about a command/function we use?
 
 
@@ -568,7 +575,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_44_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_45_0.png)
     
 
 
@@ -596,13 +603,13 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_46_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_47_0.png)
     
 
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_46_1.png)
+![png](01a-fundamentals_files/01a-fundamentals_47_1.png)
     
 
 
@@ -689,7 +696,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_54_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_55_0.png)
     
 
 
@@ -718,7 +725,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_56_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_57_0.png)
     
 
 
@@ -755,7 +762,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_59_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_60_0.png)
     
 
 
@@ -803,7 +810,7 @@ plt.show()
 
 
     
-![png](01a-fundamentals_files/01a-fundamentals_61_0.png)
+![png](01a-fundamentals_files/01a-fundamentals_62_0.png)
     
 
 
