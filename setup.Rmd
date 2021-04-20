@@ -34,13 +34,18 @@ Next we need to set up an environment with all the additional packages and libra
 <br>
 ![](fig/setup01.png)
 
-* Assuming you have downloaded the *environment.yml* file to your Downloads folder. Type in the below command at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:
+* Assuming you have downloaded the *environment.yml* file to your Downloads folder. Type in the below command on a Windows machine at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:
 
-```python
+```sh
 conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml
 ```
 
 ![](fig/setup02.png)
+
+If you are working on a Mac or Linux machine, the following will work:
+```sh
+conda env create -f ~/Downloads/environment.yml
+```
 
 <br>
 
