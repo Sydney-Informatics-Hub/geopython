@@ -5,7 +5,11 @@ navbar:
   title: "Home"
   left:
   - text: Setup
-    href: setup.html
+    menu: 
+    - text: "Setup"
+      href: setup.html
+    - text: "AWS Backup instructions"
+      href: AWSinstuctionsStudents.html
   - text: "Session 1"
     menu:
     - text: "Introduction"

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>SIH Python for Geoscientists</title>
+<title>AWSinstuctionsStudents.utf8</title>
 
+<script src="site_libs/header-attrs-2.5.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -25,6 +26,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -87,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -236,6 +245,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -248,48 +258,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -303,6 +274,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -338,8 +315,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -383,8 +358,20 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="setup.html">Setup</a>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Setup
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="setup.html">Setup</a>
+    </li>
+    <li>
+      <a href="AWSinstuctionsStudents.html">AWS Backup instructions</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -461,27 +448,94 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">SIH Python for Geoscientists</h1>
 
 </div>
 
 
-<div id="readme" class="section level1">
-<h1>Readme</h1>
-<p>All of the jupyter notebooks are in the <code>_ipynb</code> notebook.</p>
-<p>Python for geosciences SIH materials</p>
-<p>Rendered at: <a href="https://sydney-informatics-hub.github.io/geopython/" class="uri">https://sydney-informatics-hub.github.io/geopython/</a></p>
-<ul>
-<li>All notebooks go into <code>_ipynb</code> folder</li>
-<li>Run the below command to render them into markdown files in the right place</li>
-</ul>
-<pre><code>bash _generate_site_from_ipynb.sh
-#Generally add whatever files you have created
-git add docs/*_files/*
-git add *_files/*
-git commit -am &quot;your comments&quot;
-git push</code></pre>
-<p>You can browse the result locally by exploring the html files created (note: sometimes figures display locally but not on web and the other way around too.)</p>
+<div id="getting-onto-our-backup-platform---aws-sagemaker" class="section level2">
+<h2>Getting onto our backup platform - AWS Sagemaker</h2>
+<p>If you’re reading this page it means we can’t quite debug your software installation at the moment. Please:</p>
+<ol style="list-style-type: decimal">
+<li>Don’t panic</li>
+<li>Plan to hang around a few minutes after class, if possible, or shoot us an email to let us know when we can Zoom-base with you for ~20 minutes before the next session to fix the install</li>
+<li>Follow the instructions below to get onto our backup platform and continue from where you left off</li>
+</ol>
+<hr />
+<div id="step-1" class="section level3">
+<h3>Step 1</h3>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="https://d-9a672a2057.awsapps.com/start">this</a> URL.</li>
+<li>Sign in using the credentials you created, i.e. your username and password.</li>
+</ol>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420120455258.png" alt="" />
+<p class="caption">image-20210420120455258</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li><p>After logging in, you should see something like this. Click on the Amazon SageMaker Studio button. This may take a few minutes to load.</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420120757020.png" alt="" />
+<p class="caption">image-20210420120757020</p>
+</div></li>
+<li><p>Eventually, you will see an interface that looks like this:</p></li>
+</ol>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420120951891.png" alt="" />
+<p class="caption">image-20210420120951891</p>
+</div>
+<p>In order to proceed with the workshop, you’ll need to do two things: (1) get the data /once during the course of all of our training/, and (2) launch the correct version of python.</p>
+</div>
+</div>
+<div id="getting-the-data" class="section level2">
+<h2>Getting the data</h2>
+<p>First, we’ll need to get the data.</p>
+<ol style="list-style-type: decimal">
+<li>Click the system terminal box</li>
+</ol>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/launchterminal.png" alt="" />
+<p class="caption">launchterminal.png</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Copy the following commands into the command prompt that appears.</li>
+</ol>
+<pre class="sh"><code># this will install wget
+sudo yum install wget</code></pre>
+<p>Type “y” when the command prompt hangs and asks you the question: “Is this ok? [y/d/N]”</p>
+<p><img src="fig/AWSinstuctionsStudents/image-20210420122026701.png" alt="image-20210420122026701" style="zoom:150%;" /></p>
+<p>The above should happen.</p>
+<p>Then copy</p>
+<pre class="sh"><code>sudo yum install unzip</code></pre>
+<p>To install the unzip command, and (again after saying “y” to the prompt) the following should happen:</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420122316617.png" alt="" />
+<p class="caption">image-20210420122316617</p>
+</div>
+<p>Finally, type the following command to get our data:</p>
+<pre class="sh"><code>wget -q &quot;https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0/download&quot; -O &quot;data.zip&quot; &amp;&amp; unzip -qq &quot;data.zip&quot; &amp;&amp; rm -rf &quot;data.zip&quot;</code></pre>
+<p>This should result in a folder with your data becoming visible in the panel on the left:</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420123648002.png" alt="" />
+<p class="caption">image-20210420123648002</p>
+</div>
+</div>
+<div id="launching-the-correct-python-environment" class="section level2">
+<h2>Launching the correct python environment</h2>
+<p>Next, you need to launch the correct python environment that has all of the packages we’ll need. To do this, close the terminal tab, and you’ll automatically see the central dashboard we did before. Click on <code>Select a SageMaker Image</code> and choose <code>geopython v1</code> as shown in the image below:</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420123823736.png" alt="" />
+<p class="caption">image-20210420123823736</p>
+</div>
+<p>Then click on the GNotebook button to launch a new jupyter notebook instance</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420123905147.png" alt="" />
+<p class="caption">image-20210420123905147</p>
+</div>
+<p>You may need to wait a few seconds, after which the kernel will be working and you should be able to continue with the workshop. Note that you may need to import libraries again if we have already done so in class.</p>
+<div class="figure">
+<img src="fig/AWSinstuctionsStudents/image-20210420124004533.png" alt="" />
+<p class="caption">image-20210420124004533</p>
+</div>
 </div>
 
 
@@ -495,13 +549,56 @@ git push</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

@@ -12,3 +12,4 @@ data/*
 
 # Code editors
 *.sublime-*
+*.pdf

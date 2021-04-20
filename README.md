@@ -22,3 +22,10 @@ git push
 ```
 You can browse the result locally by exploring the html files created (note: sometimes figures display locally but not on web and the other way around too.)
 
+***
+
+When you want to convert the notebooks to pdf for the students, use the following command:
+
+```sh
+jupyter nbconvert --execute --to pdf notebook.ipynb
+```
