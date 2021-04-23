@@ -5,7 +5,10 @@
 The first steps are adapted from TLJH instuctions [here](https://tljh.jupyter.org/en/latest/install/amazon.html)
 
 1. Select a **Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-** instance (the one maintained by Canonical as per the TLJH screenshots in the documentation)
+
 2. Choose a **t3.small** node type for testing - it's the smallest that supports TLJH. Note that this does not have a free tier, but running it for a few hours costs approximately $0.10 in my experience.
+
+   For "production" PESA try `m5a.8xlarge` in US-Ohio (this gives 32 vCPU and 128 Gb RAM).
 
 In theory, you are meant to be able to use a custom command to install TLJH in one go, and paste it into the user script box. Unfortunately, none of the flags have worked for me, and the installation script itself sometimes works and sometimes doesn't - so I recommend doing this over the ssh after the instance has been created.
 
