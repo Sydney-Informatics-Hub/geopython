@@ -2135,6 +2135,581 @@ while m < 10:
     m=m+1
 ```
 
+# Roll-your-own data reader
+## Western seismic VELF format
+
+Sometimes there are no good libraries or data-readers availble for your specific use-case. Very common if you get some specialty instrument with some unique data format. Often the documentation is a good place to start for figuring out how to interpret the data, and more-often-than not, the *header* of the data can give you all the information you need. Download [this VELF file](data/S3D_Vrms_StkVels_VELF.txt), containing some 3D seismic data. I could not find any *good* python libraries to handle this dataset, so we can just try out a few things to get the data into a format that is useful for us.
+
+
+```python
+#Imports for plotting
+import matplotlib.pyplot as plt
+from matplotlib import cm
+```
+
+
+```python
+#Open the file for reading
+f = open("../data/S3D_Vrms_StkVels_VELF.txt",'r')
+
+#Read in all the lines in the file and save them to a variable
+mylist = f.readlines()
+
+#Close the file
+f.close()
+print("Done reading file.")
+```
+
+    Done reading file.
+
+
+
+```python
+#Print out the first 20 lines
+print(mylist[0:20])
+```
+
+    ['Client: XXX \n', 'Project: YYY\n', 'Contractor: ZZZ\n', 'Date:\n', '\n', 'Velocity type: RMS Velocity in Time\n', '\n', '\n', 'Datum: GDA94, UTM Zone: UTM53, Central Meridian :  \n', 'Statics: Two way time corrected to mean sea level: No\n', '         Gun and Cable statics applied: No\n', '         Tidal statics applied: No\n', '\n', '3D Grid details:\n', 'inline    crossline      X            Y\n', '\n', '1000        5000      599413.78   7382223.37\n', '1000        5309      595633.30   7375486.63\n', '1448        5000      609180.96   7376742.28\n', '1448        5309      605400.48   7370005.55\n']
+
+
+
+```python
+#Set up some empty lists to store each bit of data in
+inline=[]
+crossline=[]
+X=[]
+Y=[]
+
+LINE=[]
+VELF=[]
+SPNT=[]
+
+xline3d=[]
+binx=[]
+biny=[]
+inline3d=[]
+
+t=[]
+vt=[]
+
+#Loop through all the lines in the file
+for i,line in enumerate(mylist):
+    
+    #First split the line up (by default, split by whitespace)
+    splitline=line.split()
+    
+    #If we encounter certain lines, save some data
+    if i in [16,17,18,19]:  
+        #Print out the lines (check we are doing the right thing)
+        print(splitline)
+        
+        inline.append(int(splitline[0]))
+        crossline.append(int(splitline[1]))
+        X.append(float(splitline[2]))
+        Y.append(float(splitline[3]))
+      
+
+    #This is where the actual data starts
+    #Now depending on the key word at the start of each line
+    #save the data to each particular list/array
+    if i>49:
+        
+        if splitline[0]=='VELF':
+            t.append([int(x) for x in splitline[1::2]])
+            vt.append([int(x) for x in splitline[2::2]])
+    
+        if splitline[0]=='LINE':
+            LINE.append(int(splitline[1]))
+            
+        if splitline[0]=='SPNT':
+            xline3d.append(int(splitline[1]))
+            binx.append(float(splitline[2]))
+            biny.append(float(splitline[3]))
+            inline3d.append(int(splitline[4]))
+        
+```
+
+    ['1000', '5000', '599413.78', '7382223.37']
+    ['1000', '5309', '595633.30', '7375486.63']
+    ['1448', '5000', '609180.96', '7376742.28']
+    ['1448', '5309', '605400.48', '7370005.55']
+
+
+
+```python
+#Plot the target area
+plt.scatter(binx,biny,c=xline3d)
+plt.colorbar()
+plt.show()
+
+#Plot it in 3d just becasue we can
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+ax.scatter(binx,biny,inline3d,c=xline3d)
+ax.view_init(30, 70)
+plt.show()
+```
+
+
+    
+![png](01b-dataframes_files/01b-dataframes_76_0.png)
+    
+
+
+
+    
+![png](01b-dataframes_files/01b-dataframes_76_1.png)
+    
+
+
+
+```python
+#Let's do it again. But "better". 
+#Make long vectors of every datapoint.
+#Put all the data into a pandas dataframe.
+import pandas as pd
+```
+
+
+```python
+#Read the data in again, this time with some thought about what we actually want to do
+velf=[]
+
+for i,line in enumerate(mylist):
+    splitline=line.split()
+
+    if i>49:
+        if splitline[0]=='LINE':
+            LINE = int(splitline[1])
+            
+        if splitline[0]=='SPNT':
+            xline3d=int(splitline[1])
+            binx=float(splitline[2])
+            biny=float(splitline[3])
+            inline3d=int(splitline[4])
+            
+        if splitline[0]=='VELF':
+            
+            for j,val in enumerate(splitline[1:]):
+                #print(j,val)
+                #Counting from the 0th index of splitline[1:end]
+                if j%2==0:
+                    t=int(val)
+                else:
+                    vt=int(val)
+                    velf.append([LINE,xline3d,binx,biny,inline3d,t,vt]) 
+
+```
+
+
+```python
+#Convert the python "list" type to Pandas dataframe
+df=pd.DataFrame(velf)
+#Set the names of the columns
+df.columns=['LINE','xline3d','binx','biny','inline3d','t','vt']
+```
+
+
+```python
+df
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LINE</th>
+      <th>xline3d</th>
+      <th>binx</th>
+      <th>biny</th>
+      <th>inline3d</th>
+      <th>t</th>
+      <th>vt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1000</td>
+      <td>5080</td>
+      <td>598435.0</td>
+      <td>7380479.0</td>
+      <td>1000</td>
+      <td>0</td>
+      <td>3200</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1000</td>
+      <td>5080</td>
+      <td>598435.0</td>
+      <td>7380479.0</td>
+      <td>1000</td>
+      <td>295</td>
+      <td>3300</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1000</td>
+      <td>5080</td>
+      <td>598435.0</td>
+      <td>7380479.0</td>
+      <td>1000</td>
+      <td>598</td>
+      <td>4137</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1000</td>
+      <td>5080</td>
+      <td>598435.0</td>
+      <td>7380479.0</td>
+      <td>1000</td>
+      <td>738</td>
+      <td>4537</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1000</td>
+      <td>5080</td>
+      <td>598435.0</td>
+      <td>7380479.0</td>
+      <td>1000</td>
+      <td>1152</td>
+      <td>4500</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3082</th>
+      <td>1440</td>
+      <td>5280</td>
+      <td>605580.0</td>
+      <td>7370735.0</td>
+      <td>1440</td>
+      <td>2216</td>
+      <td>5259</td>
+    </tr>
+    <tr>
+      <th>3083</th>
+      <td>1440</td>
+      <td>5280</td>
+      <td>605580.0</td>
+      <td>7370735.0</td>
+      <td>1440</td>
+      <td>2861</td>
+      <td>5791</td>
+    </tr>
+    <tr>
+      <th>3084</th>
+      <td>1440</td>
+      <td>5280</td>
+      <td>605580.0</td>
+      <td>7370735.0</td>
+      <td>1440</td>
+      <td>3526</td>
+      <td>6294</td>
+    </tr>
+    <tr>
+      <th>3085</th>
+      <td>1440</td>
+      <td>5280</td>
+      <td>605580.0</td>
+      <td>7370735.0</td>
+      <td>1440</td>
+      <td>4697</td>
+      <td>7077</td>
+    </tr>
+    <tr>
+      <th>3086</th>
+      <td>1440</td>
+      <td>5280</td>
+      <td>605580.0</td>
+      <td>7370735.0</td>
+      <td>1440</td>
+      <td>5988</td>
+      <td>7748</td>
+    </tr>
+  </tbody>
+</table>
+<p>3087 rows × 7 columns</p>
+</div>
+
+
+
+
+```python
+#Now, make some plots...
+#One way to do this, is to
+#make a 'group' for each unique seismic line
+groups=df.groupby(['LINE','xline3d','inline3d'])
+```
+
+
+```python
+#Make plots by certain groupings
+
+#Add a value to spread out the data nicely
+i=0
+for name,grp in groups:
+    
+    if name[2]==1280:
+        print(name)
+        plt.plot(grp.vt+i,-grp.t)
+        i+=500
+```
+
+    (1280, 5040, 1280)
+    (1280, 5060, 1280)
+    (1280, 5080, 1280)
+    (1280, 5100, 1280)
+    (1280, 5120, 1280)
+    (1280, 5140, 1280)
+    (1280, 5160, 1280)
+    (1280, 5180, 1280)
+    (1280, 5200, 1280)
+    (1280, 5220, 1280)
+    (1280, 5240, 1280)
+    (1280, 5260, 1280)
+    (1280, 5280, 1280)
+
+
+
+    
+![png](01b-dataframes_files/01b-dataframes_82_1.png)
+    
+
+
+
+```python
+from scipy.interpolate import interp1d
+import numpy as np
+```
+
+
+```python
+#Normal plots
+%matplotlib inline
+
+#Fancy intereactive plots
+#%matplotlib notebook
+```
+
+
+```python
+fig = plt.figure(figsize=(10,10))
+ax = fig.add_subplot(projection='3d')
+for name,grp in groups:
+
+    ##Plot all the data
+    ax.plot(grp.binx+grp.vt,grp.biny,grp.t,'b-')
+    
+    ##Plot all the data with colors
+#     colors=cm.seismic(grp.vt/grp.vt.max())
+#     ax.scatter(grp.binx+grp.vt,grp.biny,grp.t,c=grp.vt/grp.vt.max(),cmap=cm.seismic)
+    
+    #Interpolate the data and plot with colors
+#     x = grp.t
+#     y = grp.vt
+#     f = interp1d(x, y, kind='linear')
+
+#     num=50
+#     xnew = np.linspace(0,max(x),num)
+#     ynew = f(xnew)
+#     binx = np.linspace(min(grp.binx),max(grp.binx),num)
+#     biny = np.linspace(min(grp.biny),max(grp.biny),num)
+#     colours = cm.seismic(ynew/grp.vt.max())
+
+#     ax.scatter(binx+xnew,biny,xnew,c=colours)
+    
+plt.show()
+```
+
+
+    
+![png](01b-dataframes_files/01b-dataframes_85_0.png)
+    
+
+
+# API (application programming interface) calls 
+
+For example: https://github.com/geological-survey-of-queensland/open-data-api
+
+This is a general API, and can be interfaced with many types of software. Python can do it too!
+You can write an entire application around APIs provided by developers.
+
+
+```python
+import requests
+import json
+
+# set the API 'endpoint'
+api = 'https://geoscience.data.qld.gov.au/api/action/'
+
+# construct our query using the rules set out in the documentation
+query = api + 'package_search?q=quamby'
+
+# make the get request and store it in the response object
+response = requests.get(query)
+
+# view the payload as JSON
+json_response = response.json()
+
+```
+
+
+```python
+#What kind of data does the server return us?
+type(json_response)
+#json_response
+```
+
+
+
+
+    dict
+
+
+
+
+```python
+#Dig into the returned data and just pull out certain items we want
+jr=json_response['result']['results'][1]['GeoJSONextent']
+```
+
+
+```python
+#Clean up the returned values
+mysplit=jr.split(':')[-1].split('}')[0]
+```
+
+
+```python
+#And convert them into something more reasonable.
+import ast
+xy=ast.literal_eval(mysplit)[0]
+```
+
+
+```python
+#Now you have the data you need in a useful format you can do whatever you like!
+xy
+```
+
+
+
+
+    [[140.217847053169, -20.0651426032713],
+     [140.217846866281, -20.0818094534046],
+     [140.217846679393, -20.098476305538],
+     [140.217846494505, -20.1151431576712],
+     [140.217846308617, -20.1318100088045],
+     [140.20117986795, -20.1318102200127],
+     [140.201179682062, -20.1484770721459],
+     [140.184513241396, -20.1484772833552],
+     [140.18451305651, -20.1651441374885],
+     [140.184512871624, -20.1818109906216],
+     [140.184512686738, -20.1984778437548],
+     [140.184512502851, -20.2151446978879],
+     [140.184512318964, -20.2318115510211],
+     [140.201178757624, -20.2318113368118],
+     [140.201178572735, -20.2484781899449],
+     [140.201178390847, -20.265145043078],
+     [140.201178208958, -20.2818118962111],
+     [140.201178028069, -20.2984787493441],
+     [140.184511590415, -20.2984789665533],
+     [140.184511408527, -20.3151458196863],
+     [140.184511227638, -20.3318126738193],
+     [140.18451104575, -20.3484795289523],
+     [140.184510864861, -20.3651463820852],
+     [140.184510683973, -20.3818132362181],
+     [140.184510502084, -20.398480089351],
+     [140.184510219194, -20.4151469904839],
+     [140.184509936305, -20.4318138906168],
+     [140.201176401949, -20.4318136554078],
+     [140.217842867592, -20.4318134202],
+     [140.234509334236, -20.4318131849934],
+     [140.25117579888, -20.4318129497879],
+     [140.267842265524, -20.4318127145836],
+     [140.284508731169, -20.4318124793805],
+     [140.301175196813, -20.4318122431786],
+     [140.317841659457, -20.4318120809779],
+     [140.317841839357, -20.4151452358448],
+     [140.317842020257, -20.3984783917118],
+     [140.317842205157, -20.3818115465788],
+     [140.317842390056, -20.3651447014456],
+     [140.317842576955, -20.3484778563125],
+     [140.317842761854, -20.3318110101794],
+     [140.317842946753, -20.3151441640463],
+     [140.317843132652, -20.2984773189131],
+     [140.31784331755, -20.2818104737799],
+     [140.317843502448, -20.2651436286467],
+     [140.30117702579, -20.2651437498476],
+     [140.284510586133, -20.2651439660497],
+     [140.284510403237, -20.2818108161829],
+     [140.284510219342, -20.2984776663161],
+     [140.284510036446, -20.3151445164492],
+     [140.28450985255, -20.3318113665823],
+     [140.267843414897, -20.3318115837855],
+     [140.267843232003, -20.3484784349186],
+     [140.251176794352, -20.348478653123],
+     [140.251176612458, -20.365145505256],
+     [140.251176429564, -20.381812356389],
+     [140.234509992916, -20.3818125765945],
+     [140.234509810023, -20.3984794277275],
+     [140.217843374376, -20.3984796479342],
+     [140.217843556268, -20.3818127958012],
+     [140.21784373916, -20.3651459436682],
+     [140.217843920051, -20.3484790915352],
+     [140.217844101942, -20.3318122384023],
+     [140.217844284833, -20.3151453852692],
+     [140.234510722486, -20.3151451680625],
+     [140.234510904378, -20.2984783169294],
+     [140.234511087269, -20.2818114637963],
+     [140.234511270161, -20.2651446126632],
+     [140.234511451052, -20.24847776053],
+     [140.234511637943, -20.2318109083969],
+     [140.234511822834, -20.2151440572637],
+     [140.234512008724, -20.1984772051305],
+     [140.234512194615, -20.1818103539973],
+     [140.234512379505, -20.1651435028641],
+     [140.25117882117, -20.1651432906583],
+     [140.251179007062, -20.148476440525],
+     [140.251179192953, -20.1318095883917],
+     [140.251179378844, -20.1151427382584],
+     [140.251179564734, -20.098475887125],
+     [140.251179752625, -20.0818090379917],
+     [140.251179940515, -20.0651421878583],
+     [140.234513496842, -20.0651423950642],
+     [140.217847053169, -20.0651426032713]]
+
+
+
 <div class="keypoints">
 ### Key points
     
@@ -2143,6 +2718,8 @@ while m < 10:
 - Pyshp can be used to work with Shapefiles
 - Pandas dataframes are the best format for working with tabular data of mixed numeric/character types
 - Numpy arrays are faster when working with purely numeric data
+- Make your own "data-reader" with native Python
+- API calls can be made to build your own workflows and applications with Python
 </div>
 
 
