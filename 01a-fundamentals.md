@@ -708,15 +708,15 @@ Now make a more informative plot:
 #Set reasonable variable names
 lats=cudata4[:,0]
 longs=cudata4[:,1]
-age=cudata4[:,3]
-copper=cudata4[:,2]
+age=cudata4[:,2]
+copper=cudata4[:,3]
 
 #lats_rich=lats[copper>2]
 
 fig = plt.figure(figsize=(6,4),dpi=150)
 
-#Restrict the colour range between 0 and 1000
-plt.scatter(longs,lats,s=age/1000,c=copper,vmin=0, vmax=1000,cmap=plt.cm.copper)
+#Restrict the colour range between 0 and 100 (ppm?)
+plt.scatter(longs,lats,s=age/1000,c=copper,vmin=0, vmax=100,cmap=plt.cm.copper)
 plt.title('Copper Deposits from EarthChem.org')
 plt.ylabel('Latitude')
 plt.xlabel('Longitude')
@@ -747,9 +747,9 @@ filtered_age=reject_outliers(copper)
 
 ```
 
-    mean is: 557.0799352891255
-    std is: 961.7746954437551
-    removed: 20407
+    mean is: 408.55060226439844
+    std is: 6032.1541529827555
+    removed: 1163
 
 
 Just plotting the Cu content implies that better filtering could be applied (a homework exercise perhaps). Remember this is a pretty messy dataset, some Cu is reported as ppm, ppb, or %! 
@@ -776,7 +776,7 @@ import cartopy.crs as ccrs
 #Make new variables from our array (so it is easier to see what we are doing)
 lats=cudata4[:,0]
 longs=cudata4[:,1]
-age=cudata4[:,3]
+age=cudata4[:,2]
 
 #######
 ## Make the figure
@@ -795,7 +795,7 @@ ax.stock_img()
 ax.gridlines()
 
 #Make a scatter plot of the data coloured by age. 
-#Restrict the colour range between 0 and 100
+#Restrict the colour range between 0 and 100 (Ma)
 #And also set the scatter plot as a variable 'mapscat' so we can reference it later
 mapscat=ax.scatter(longs,lats,marker=".",s=0.5,c=age,vmin=0,vmax=100,transform=ccrs.PlateCarree(),zorder=4,cmap=plt.cm.hsv)
 
