@@ -29,8 +29,7 @@ We also aim to cultivate a **data community**, organising monthly [Hacky Hours](
 
 # Trainers
 * Nathaniel (Nate) Butterworth (PhD Computational Geophysics), nathaniel.butterworth@sydney.edu.au
-* Darya Vanichkina (PhD Bioinformatics, FHEA) 
-* Jianzhou Zhao (PhD Environmental Engineering)
+* Darya Vanichkina (PhD Bioinformatics, FHEA)
 * Kristian Maras (MSc Quant Fin)
 
 # Course pre-requisites and setup requirements
@@ -80,16 +79,16 @@ Our full CoC, with incident reporting guidelines, is available at [https://pages
 We will be working through the following general content over our 4 sessions together.
 
 **Session 01 Python fundamentals**
-Wed April 21, 12:30 pm - 4:30 pm (AEST)
+Tues Aug 9, 12:30 pm - 4:30 pm (AEST)
 
 **Session 02 Specialist python libraries and data analysis for geoscience**
-Wed April 28, 12:30 pm - 4:30 pm (AEST)
+Tues Aug 16, 12:30 pm - 4:30 pm (AEST)
 
 **Session 03 Pattern recognition and prediction in geoscience**
-Wed May 5, 12:30 pm - 4:30 pm (AEST)
+Tues Aug 23, 12:30 pm - 4:30 pm (AEST)
 
 **Session 04 Large data and long running workflow strategies**
-Wed May 12, 12:30 pm - 4:30 pm (AEST)
+Tues Aug 30, 12:30 pm - 4:30 pm (AEST)
 
 <br>
 
