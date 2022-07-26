@@ -1,15 +1,17 @@
-name: "Sydney Informatics Hub Python for Geosciences"
+name: "Sydney Informatics Hub Python for Geoscience"
 output_dir: "docs"
-exclude: ["*ipynb", "data"]
+exclude: ["*ipynb"]
 navbar:  
   title: "Home"
   left:
+  
   - text: Setup
     menu: 
     - text: "Setup"
       href: setup.html
-    - text: "AWS Backup instructions"
+    - text: "Jupyter Cloud Backup Instructions"
       href: AWSinstuctionsStudents.html
+      
   - text: "Session 1"
     menu:
     - text: "Introduction"
@@ -21,22 +23,26 @@ navbar:
     menu:
     - text: "Useful Python packages for different data types"
       href: 01b-dataframes.html
-    - text: "Mapping with Cartopy"
-      href: 02a-mapping.html
+      
   - text: "Session 3"
     menu:
-    - text: "Machine Learning"
-      href: 03a-MachineLearning.html
-    - text: "Deep Learning & Time Series"
-      href: 03b-DeepLearningTS.html
-    - text: "Numerical approaches"
+    - text: "Numerical Approaches"
       href: 02b-Clustering.html
+    - text: "Machine Learning Workflow"
+      href: 03-ML_workflow.html
+
   - text: "Session 4"
     menu:
-    - text: "Simple Speed Ups"
+    - text: "Efficient Python Methods"
       href: 04a-SimpleSpeedUps.html
-    - text: "Dask data frames"
+    - text: "Bonus: Matplotlib and Mapping with Cartopy"
+      href: 02a-mapping.html
+    - text: "Bonus: Deep Learning & Time Series"
+      href: 03b-DeepLearningTS.html
+    - text: "Bonus: Dask data frames"
       href: 04b-DaskDataframes.html
+
+      
 output:
   html_document:
     theme: simplex

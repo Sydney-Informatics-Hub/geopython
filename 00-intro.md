@@ -1,5 +1,5 @@
 ---
-title: "Python for Geoscientists"
+title: "Python for Geoscience"
 ---
 
 <div class="questions">  
@@ -14,7 +14,6 @@ title: "Python for Geoscientists"
 </div>
 
 
-
 This course we will introduce you to foundations of Python programming. We will utilise common geosicence data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets. 
 
 The course is presented by the Sydney Informatics Hub on behalf of the Petroleum Exploration Society of Australia.
@@ -22,7 +21,7 @@ The course is presented by the Sydney Informatics Hub on behalf of the Petroleum
 
 # What is Python?
 
-The Python programming language was written in the 1980's. It is an interpreted and high-level language, this makes it easy to use for rapid development with lots of flexibility. Version 2.0 was released in 2000. Version 3.0 was released in 2008 (the current version is 3.9.0). 
+The Python programming language was written in the 1980's. It is an interpreted and high-level language, this makes it easy to use for rapid development with lots of flexibility. Version 2.0 was released in 2000. Version 3.0 was released in 2008 (the current version is 3.10.0). 
 
 I use it everyday to:
 
@@ -56,7 +55,7 @@ As you go deeper into Python, you will see more advanced syntax:
 '''
 A Python program which greets the Earth!
 Nathaniel Butterworth
-PESA/SIH Python course
+SIH Python course
 
 usage: python helloworld_advanced.py
 '''

@@ -1,11 +1,11 @@
 ---
-title: "SIH Python for Geoscientists"
+title: "SIH Python for Geoscience"
 ---
 # Readme
 
 All of the jupyter notebooks are in the `_ipynb` notebook.
 
-Python for geosciences SIH materials
+Python for Geoscience SIH materials
 
 Rendered at: https://sydney-informatics-hub.github.io/geopython/
 
