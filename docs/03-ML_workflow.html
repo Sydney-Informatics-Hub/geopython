@@ -1,0 +1,3500 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>03-ML_workflow.utf8.md</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="lesson.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Setup
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="setup.html">Setup</a>
+    </li>
+    <li>
+      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00-intro.html">Introduction</a>
+    </li>
+    <li>
+      <a href="01a-fundamentals.html">Fundamentals</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01b-dataframes.html">Useful Python packages for different data types</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="02b-Clustering.html">Numerical Approaches</a>
+    </li>
+    <li>
+      <a href="03-ML_workflow.html">Machine Learning Workflow</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Session 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="04a-SimpleSpeedUps.html">Efficient Python Methods</a>
+    </li>
+    <li>
+      <a href="02a-mapping.html">Bonus: Matplotlib and Mapping with Cartopy</a>
+    </li>
+    <li>
+      <a href="03b-DeepLearningTS.html">Bonus: Deep Learning &amp; Time Series</a>
+    </li>
+    <li>
+      <a href="04b-DaskDataframes.html">Bonus: Dask data frames</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="building-machine-learning-datasets-from-scratch" class="section level1">
+<h1>Building Machine Learning Datasets From Scratch</h1>
+<p>All machine learning problems begin with a dataset, and before we can perform any kind of inference on that dataset we must create/wrangle/build it. This is often the most time-consuming and hard part of a successful machine learning workflow. There is no set procedure here, as all data is different, although there are a few simple methods we can take to make a useful dataset.</p>
+<p>We will be using data from a submitted Manuscript (Butterworth and Barnett-Moore 2020) which was a finalist in the <a href="https://unearthed.solutions/u/competitions/exploresa">Unearthed, ExploreSA: Gawler Challenge</a>. You can visit the <a href="https://github.com/natbutter/gawler-exploration">original repo here</a>.</p>
+<p><br></p>
+</div>
+<div id="goal-create-a-table-of-data-containing-targets-and-predictor-variables" class="section level1">
+<h1>Goal: Create a table of data containing “targets” and “predictor variables”</h1>
+<p>The targets in an ML context can be a simple binary 1 or 0, or could be some category (classification), or the value of a particular parameter (regression problems). It is the “feature” of a dataset that we want to learn something about!</p>
+<p>The “predictor/feature variables” are the qualities/parameters that may have some causal relationship with the the target.</p>
+<div id="step-1---what-is-our-target-variable" class="section level2">
+<h2>Step 1 - What is our target variable?</h2>
+<p>Are we classifying something?</p>
+<div id="deposit-locations---mine-and-mineral-occurances" class="section level3">
+<h3>Deposit locations - mine and mineral occurances</h3>
+<p>The most important dataset for this workflow is the currently known locations of mineral occurences. Using the data we already know about these known-deposits we will build a model to predict where future occurences will be.</p>
+<pre class="python"><code># For working with shapefiles (packaged is called pyshp)
+import shapefile
+# For working with dataframes
+import pandas as pd</code></pre>
+<pre class="python"><code># Set the filename
+mineshape=&quot;data/MinesMinerals/mines_and_mineral_occurrences_all.shp&quot;
+
+# Set shapefile attributes and assign
+sf = shapefile.Reader(mineshape)
+fields = [x[0] for x in sf.fields][1:]
+records = sf.records()
+shps = [s.points for s in sf.shapes()]
+
+# Write into a dataframe for easy use
+df = pd.DataFrame(columns=fields, data=records)</code></pre>
+<p>View the metadata of the <a href="https://catalog.sarig.sa.gov.au/geonetwork/srv/eng/catalog.search#/metadata/a0e4b62c-ec88-44b8-a530-b4e744a6b414">South Australian all mines and mineral deposits</a> to get a better understanding for what features we could use as a target.</p>
+<pre class="python"><code>#See what the dataframe looks like
+print(df.columns)
+
+#For clean printing to html drop columns that contains annoying / and \ chars.
+#And set max columns
+pd.options.display.max_columns = 8
+df.drop(columns=[&#39;REFERENCE&#39;,&#39;O_MAP_SYMB&#39;])</code></pre>
+<pre><code>Index([&#39;MINDEP_NO&#39;, &#39;DEP_NAME&#39;, &#39;REFERENCE&#39;, &#39;COMM_CODE&#39;, &#39;COMMODS&#39;,
+       &#39;COMMOD_MAJ&#39;, &#39;COMM_SPECS&#39;, &#39;GCHEM_ASSC&#39;, &#39;DISC_YEAR&#39;, &#39;CLASS_CODE&#39;,
+       &#39;OPER_TYPE&#39;, &#39;MAP_SYMB&#39;, &#39;STATUS_VAL&#39;, &#39;SIZE_VAL&#39;, &#39;GEOL_PROV&#39;,
+       &#39;DB_RES_RVE&#39;, &#39;DB_PROD&#39;, &#39;DB_DOC_IMG&#39;, &#39;DB_EXV_IMG&#39;, &#39;DB_DEP_IMG&#39;,
+       &#39;DB_DEP_FLE&#39;, &#39;COX_CLASS&#39;, &#39;REG_O_CTRL&#39;, &#39;LOC_O_CTRL&#39;, &#39;LOC_O_COM&#39;,
+       &#39;O_LITH_CDE&#39;, &#39;O_LITH01&#39;, &#39;O_STRAT_NM&#39;, &#39;H_LITH_CDE&#39;, &#39;H_LITH02&#39;,
+       &#39;H_STRAT_NM&#39;, &#39;H_MAP_SYMB&#39;, &#39;EASTING&#39;, &#39;NORTHING&#39;, &#39;ZONE&#39;, &#39;LONGITUDE&#39;,
+       &#39;LATITUDE&#39;, &#39;SVY_METHOD&#39;, &#39;HORZ_ACC&#39;, &#39;SRCE_MAP&#39;, &#39;SRCE_CNTRE&#39;,
+       &#39;COMMENTS&#39;, &#39;O_MAP_SYMB&#39;],
+      dtype=&#39;object&#39;)</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+MINDEP_NO
+</th>
+<th>
+DEP_NAME
+</th>
+<th>
+COMM_CODE
+</th>
+<th>
+COMMODS
+</th>
+<th>
+…
+</th>
+<th>
+HORZ_ACC
+</th>
+<th>
+SRCE_MAP
+</th>
+<th>
+SRCE_CNTRE
+</th>
+<th>
+COMMENTS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+5219
+</td>
+<td>
+MOUNT DAVIES NO.2A
+</td>
+<td>
+Ni
+</td>
+<td>
+Nickel
+</td>
+<td>
+…
+</td>
+<td>
+2000.0
+</td>
+<td>
+500k meis
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+52
+</td>
+<td>
+ONE STONE
+</td>
+<td>
+Ni
+</td>
+<td>
+Nickel
+</td>
+<td>
+…
+</td>
+<td>
+500.0
+</td>
+<td>
+71-385
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+8314
+</td>
+<td>
+HINCKLEY RANGE
+</td>
+<td>
+Fe
+</td>
+<td>
+Iron
+</td>
+<td>
+…
+</td>
+<td>
+500.0
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+69
+</td>
+<td>
+KALKA
+</td>
+<td>
+V, ILM
+</td>
+<td>
+Vanadium, Ilmenite
+</td>
+<td>
+…
+</td>
+<td>
+100.0
+</td>
+<td>
+1 MILE
+</td>
+<td>
+mgt polygon on digital map
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+65
+</td>
+<td>
+ECHIDNA
+</td>
+<td>
+Ni
+</td>
+<td>
+Nickel
+</td>
+<td>
+…
+</td>
+<td>
+20.0
+</td>
+<td>
+50K GEOL
+</td>
+<td>
+DH ECHIDNA PROSPECT
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+8672
+</th>
+<td>
+6937
+</td>
+<td>
+YARINGA
+</td>
+<td>
+QTZE
+</td>
+<td>
+Quartzite
+</td>
+<td>
+…
+</td>
+<td>
+200.0
+</td>
+<td>
+50k moc
+</td>
+<td>
+fenced yard
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+8673
+</th>
+<td>
+4729
+</td>
+<td>
+WELCHS
+</td>
+<td>
+SCHT
+</td>
+<td>
+Schist
+</td>
+<td>
+…
+</td>
+<td>
+20.0
+</td>
+<td>
+50k topo
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+8674
+</th>
+<td>
+4718
+</td>
+<td>
+ARCADIAN
+</td>
+<td>
+CLAY
+</td>
+<td>
+Clay
+</td>
+<td>
+…
+</td>
+<td>
+5.0
+</td>
+<td>
+Plan 1951-0327
+</td>
+<td>
+Pit
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+8675
+</th>
+<td>
+1436
+</td>
+<td>
+MCDONALD
+</td>
+<td>
+Au
+</td>
+<td>
+Gold
+</td>
+<td>
+…
+</td>
+<td>
+200.0
+</td>
+<td>
+50k moc
+</td>
+<td>
+qz float
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<th>
+8676
+</th>
+<td>
+8934
+</td>
+<td>
+FAIRFIELD FARM
+</td>
+<td>
+SAND
+</td>
+<td>
+Sand
+</td>
+<td>
+…
+</td>
+<td>
+20.0
+</td>
+<td>
+</td>
+<td>
+pit
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+8677 rows × 41 columns
+</p>
+</div>
+<pre class="python"><code>#We are building a model to target South Australia, so load in a map of it.
+gawlshape=&quot;data/SA/SA_STATE_POLYGON_shp&quot;
+shapeRead = shapefile.Reader(gawlshape)
+shapes  = shapeRead.shapes()
+
+#Save the boundary xy pairs in arrays we will use throughout the workflow
+xval = [x[0] for x in shapes[1].points]
+yval = [x[1] for x in shapes[1].points]</code></pre>
+<pre class="python"><code># Subset the data, for a single Mineral target
+commname=&#39;Mn&#39;
+
+#Pull out all the occurences of the commodity and go from there
+comm=df[df[&#39;COMM_CODE&#39;].str.contains(commname)]
+comm=comm.reset_index(drop=True)
+print(&quot;Shape of &quot;+ commname, comm.shape)
+
+# Can make further subsets of the data here if needed
+#commsig=comm[comm.SIZE_VAL!=&quot;Low Significance&quot;]
+#comm=comm[comm.SIZE_VAL!=&quot;Low Significance&quot;]
+#comm=comm[comm.COX_CLASS == &quot;Olympic Dam Cu-U-Au&quot;]
+#comm=comm[(comm.lon&lt;max(xval)) &amp; (comm.lon&gt;min(xval)) &amp; (comm.lat&gt;min(yval)) &amp; (comm.lat&lt;max(yval))]
+</code></pre>
+<pre><code>Shape of Mn (115, 43)</code></pre>
+<pre class="python"><code># For plotting
+import matplotlib.pyplot as plt</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+ax.plot(df.LONGITUDE,df.LATITUDE,&#39;b.&#39;,label=&quot;All Mineral Deposits&quot;)
+ax.plot(comm.LONGITUDE,comm.LATITUDE,&#39;yx&#39;,label=commname+&quot; Deposits&quot;)
+
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+#ax.plot(comm.LONGITUDE, comm.LATITUDE, marker=&#39;o&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_8_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+</div>
+<div id="step-2---wrangle-the-geophysical-and-geological-datasets-variable-features" class="section level2">
+<h2>Step 2 - Wrangle the geophysical and geological datasets (variable features)</h2>
+<p>Each geophysical dataset could offer instight into various commodities. Here we load in the pre-processed datasets and prepare them for further manipulations, data-mining, and machine learning. All of the full datasets are availble from <a href="https://map.sarig.sa.gov.au/" class="uri">https://map.sarig.sa.gov.au/</a>. For this exercise we have simplified the datasets (reduced complexity and resolution). Grab full datasets from <a href="https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA">https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA</a></p>
+<div id="resistivity-xyz-data" class="section level3">
+<h3>Resistivity xyz data</h3>
+<pre class="python"><code>#Read in the data
+data_res=pd.read_csv(&quot;data/AusLAMP_MT_Gawler_25.xyzr&quot;,
+                     sep=&#39;,&#39;,header=0,names=[&#39;lat&#39;,&#39;lon&#39;,&#39;depth&#39;,&#39;resistivity&#39;])
+data_res</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+lat
+</th>
+<th>
+lon
+</th>
+<th>
+depth
+</th>
+<th>
+resistivity
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+-27.363931
+</td>
+<td>
+128.680796
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0007
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+-27.659362
+</td>
+<td>
+128.662322
+</td>
+<td>
+-25.0
+</td>
+<td>
+1.9979
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+-27.886602
+</td>
+<td>
+128.647965
+</td>
+<td>
+-25.0
+</td>
+<td>
+1.9948
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+-28.061394
+</td>
+<td>
+128.636833
+</td>
+<td>
+-25.0
+</td>
+<td>
+1.9918
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+-28.195844
+</td>
+<td>
+128.628217
+</td>
+<td>
+-25.0
+</td>
+<td>
+1.9885
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+11003
+</th>
+<td>
+-35.127716
+</td>
+<td>
+142.399588
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0079
+</td>
+</tr>
+<tr>
+<th>
+11004
+</th>
+<td>
+-35.230939
+</td>
+<td>
+142.408396
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0084
+</td>
+</tr>
+<tr>
+<th>
+11005
+</th>
+<td>
+-35.365124
+</td>
+<td>
+142.419903
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0085
+</td>
+</tr>
+<tr>
+<th>
+11006
+</th>
+<td>
+-35.539556
+</td>
+<td>
+142.434958
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0076
+</td>
+</tr>
+<tr>
+<th>
+11007
+</th>
+<td>
+-35.766303
+</td>
+<td>
+142.454694
+</td>
+<td>
+-25.0
+</td>
+<td>
+2.0049
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+11008 rows × 4 columns
+</p>
+</div>
+<p>This data is Lat-Lon spatial location and the value of the feature at that location.</p>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+im=ax.scatter(data_res.lon,data_res.lat,s=4,c=data_res.resistivity,cmap=&quot;jet&quot;)
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+ax.plot(comm.LONGITUDE, comm.LATITUDE, marker=&#39;x&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+cbaxes = fig.add_axes([0.40, 0.18, 0.2, 0.015])
+cbar = plt.colorbar(im, cax = cbaxes,orientation=&quot;horizontal&quot;,extend=&#39;both&#39;)
+cbar.set_label(&#39;Resistivity $\Omega$.m&#39;, labelpad=10)
+cbar.ax.xaxis.set_label_position(&#39;top&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_13_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+<div id="faults-and-dykes-vector-polylines" class="section level3">
+<h3>Faults and dykes vector polylines</h3>
+<pre class="python"><code># For dealing with arrays 
+import numpy as np</code></pre>
+<pre class="python"><code>#Get fault data neo
+faultshape=&quot;data/Faults/Faults.shp&quot;
+shapeRead = shapefile.Reader(faultshape)
+shapes  = shapeRead.shapes()
+Nshp    = len(shapes)
+
+faultsNeo=[]
+for i in range(0,Nshp):
+    for j in shapes[i].points:
+        faultsNeo.append([j[0],j[1]])
+faultsNeo=np.array(faultsNeo)
+faultsNeo</code></pre>
+<pre><code>array([[133.46269605, -27.41825034],
+       [133.46770683, -27.42062991],
+       [133.4723624 , -27.42259841],
+       ...,
+       [138.44613353, -35.36560605],
+       [138.44160669, -35.36672662],
+       [138.43805501, -35.36793484]])</code></pre>
+<p>This data is just a Lat-Lon location. Think how we can use this in a model.</p>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+plt.plot(faultsNeo[:,0],faultsNeo[:,1],&#39;.&#39;,markersize=0.1,label=&quot;Neoproterozoic-Faults&quot;)
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+ax.plot(comm.LONGITUDE, comm.LATITUDE, marker=&#39;x&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_18_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+<div id="netcdf-formatted-raster-grids---geophysics" class="section level3">
+<h3>Netcdf formatted raster grids - geophysics</h3>
+<pre class="python"><code># For timing events
+import time
+# For making grids and reading netcdf data
+import scipy
+import scipy.io</code></pre>
+<pre class="python"><code>#Define a function to read the netcdf files
+def readnc(filename):
+    tic=time.time()
+    rasterfile=filename
+    data = scipy.io.netcdf_file(rasterfile,&#39;r&#39;,mmap=False)
+    xdata=data.variables[&#39;lon&#39;][:]
+    ydata=data.variables[&#39;lat&#39;][:]
+    zdata=np.array(data.variables[&#39;Band1&#39;][:])
+    data.close()
+    
+    toc=time.time()
+    print(&quot;Loaded&quot;, rasterfile, &quot;in&quot;, f&#39;{toc-tic:.2f}s&#39;)
+    print(&quot;Spacing x&quot;, f&#39;{xdata[2]-xdata[1]:.2f}&#39;, 
+          &quot;y&quot;, f&#39;{ydata[2]-ydata[1]:.2f}&#39;, 
+          &quot;Shape:&quot;, np.shape(zdata), &quot;Min x:&quot;, np.min(xdata), &quot;Max x:&quot;, np.max(xdata),
+          &quot;Min y:&quot;, np.min(ydata), f&#39;Max y {np.max(ydata):.2f}&#39;)
+
+    return(xdata,ydata,zdata,np.min(xdata),np.min(ydata),xdata[2]-xdata[1],ydata[2]-ydata[1])</code></pre>
+<pre class="python"><code># Digital Elevation Model
+x1,y1,z1,originx1,originy1,pixelx1,pixely1 = readnc(&quot;data/sa-dem.nc&quot;)
+# Total Magnetic Intensity
+x2,y2,z2,originx2,originy2,pixelx2,pixely2 = readnc(&quot;data/sa-mag-tmi.nc&quot;)
+# Gravity
+x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc(&quot;data/sa-grav.nc&quot;)</code></pre>
+<pre><code>Loaded data/sa-dem.nc in 0.01s
+Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
+Loaded data/sa-mag-tmi.nc in 0.00s
+Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
+Loaded data/sa-grav.nc in 0.01s
+Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+im=plt.pcolormesh(x1,y1,z1,cmap=&#39;Greys&#39;,shading=&#39;auto&#39;)
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+ax.plot(comm.LONGITUDE, comm.LATITUDE, marker=&#39;x&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+cbaxes = fig.add_axes([0.40, 0.18, 0.2, 0.015])
+cbar = plt.colorbar(im, cax = cbaxes,orientation=&quot;horizontal&quot;,extend=&#39;both&#39;)
+cbar.set_label(&#39;DEM (m)&#39;, labelpad=10)
+cbar.ax.xaxis.set_label_position(&#39;top&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_23_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>These data are raster grids. Essentially Lat-Lon-Value like the XYZ data, but represented in a different format.</p>
+</div>
+<div id="categorical-geology-in-vector-polygons" class="section level3">
+<h3>Categorical Geology in vector polygons</h3>
+<pre class="python"><code>#Archean basement geology
+geolshape=shapefile.Reader(&quot;data/Archaean_Early_Mesoprterzoic_polygons_shp/geology_archaean.shp&quot;)
+
+recsArch   = geolshape.records()
+shapesArch  = geolshape.shapes()</code></pre>
+<pre class="python"><code># Print the field names in the shapefile
+for i,field in enumerate(geolshape.fields):
+    print(i-1,field[0]) </code></pre>
+<pre><code>-1 DeletionFlag
+0 MAJORSTRAT
+1 SG_DESCRIP
+2 MAPUNIT
+3 SG_PROVINC
+4 DOMAIN
+5 AGE
+6 SEQUSET
+7 PRIMARYAGE
+8 OROGENYAGE
+9 INHERITAGE
+10 STRATNO
+11 STRATNAME
+12 STRATDESC
+13 GISCODE
+14 SUBDIVNAME
+15 SUBDIVSYMB
+16 PROVINCE
+17 MAXAGE
+18 MAXMOD
+19 MAXMETH
+20 MINAGE
+21 MINMOD
+22 MINMETH
+23 GLCODE</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+
+#index of the geology unit #4 #10 #12
+geoindex = 4
+#Gather all the unique Major Geology unit numbers
+labs=[]
+for i in recsArch:
+    labs.append(i[geoindex])
+
+geols = list(set(labs))
+
+# Create a unique color for each geological unit label
+color = plt.cm.tab20(np.linspace(0, 1, len(geols)))
+cdict={}
+for i, geol in enumerate(geols):
+    cdict.update({geol:color[i]})
+    
+#Plot each of the geology polygons
+legend1=[]
+for i in range(len(shapesArch)):
+    boundary = shapesArch[i].points
+    xs = [x for x, y in shapesArch[i].points]
+    ys = [y for x, y in shapesArch[i].points]
+    c = cdict[recsArch[i][geoindex]]
+    l1 = ax.fill(xs,ys,c=c,label=recsArch[i][geoindex])
+    legend1.append(l1)
+      
+#Plot the extra stuff
+l2 = ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+l3 = ax.plot(comm.LONGITUDE, comm.LATITUDE, 
+        marker=&#39;s&#39;, markeredgecolor=&#39;k&#39;, linestyle=&#39;&#39;,markersize=4, color=&#39;y&#39;,
+        label=commname+&quot; Deposits&quot;)
+
+#Todo: Split the legends
+#ax.legend([l2,l3],[&#39;SA&#39;,commname+&quot; Deposits&quot;],loc=3)
+
+#Legend without duplicate values
+handles, labels = ax.get_legend_handles_labels()
+unique = [(h, l) for i, (h, l) in enumerate(zip(handles, labels)) if l not in labels[:i]]
+ax.legend(*zip(*unique), bbox_to_anchor = (1.02, 1.01), ncol=3)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+#plt.legend(loc=3) #bbox_to_anchor = (1.05, 0.6))
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_28_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p><strong>Take a moment to appreciate the various methods you have used just to load the data!</strong></p>
+<p>Now we need to think about what we actually want to achieve? What is our goal here? This will determine what kind of data analysis/manipulation we need to make here. Consider the flow diagram for <a href="https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">choosing the right machine learning method</a>.</p>
+</div>
+</div>
+<div id="step-3---assign-geophys-values-to-target-locations" class="section level2">
+<h2>Step 3 - Assign geophys values to target locations</h2>
+<p>We need to assign the values of each of these geophyiscal datasets (predictor variables) to the target class (i.e. mineral deposit locations). The assumption being that the occurnece of some mineral deposit (e.g. Cu) is a function of x1, x2, x3, x4, x5, x6. Where the Resitivity is x1, the distance to a Neoprotezoic fault is x2, the value of DEM, magnetic TMI, and Gravity is x3, x4, and x5, and the geologica basement unit is x6.</p>
+<pre class="python"><code># Make a Target DataFrame of the points we want to interrogate the features for
+td1 = comm[[&#39;LONGITUDE&#39;, &#39;LATITUDE&#39;]].copy()</code></pre>
+<div id="resistivity" class="section level3">
+<h3>Resistivity</h3>
+<pre class="python"><code># For making KD Trees
+import scipy.spatial</code></pre>
+<pre class="python"><code># Define a function which &quot;coregisters&quot; a point from a bunch of other points.
+def coregPoint(tree,point,region,retval=&#39;index&#39;):
+    &#39;&#39;&#39;
+    Finds the nearest neighbour to a point from a bunch of other points
+    tree - a scipy CKTree to search for the point over
+    point - array([longitude,latitude])
+    region - integer, same units as data
+    &#39;&#39;&#39;
+    dists, indexes = tree.query(point,k=1,distance_upper_bound=region) 
+
+    if retval==&#39;index&#39;:
+        return (indexes)
+    elif retval==&#39;dists&#39;:
+        return(dists)
+    </code></pre>
+<pre class="python"><code># Find the values of the resetivity grid for each lat/lon deposit location.
+
+# Make a search-tree of the point-pairs for fast lookup of nearest matches
+treeres = scipy.spatial.cKDTree(np.c_[data_res.lon,data_res.lat])
+
+# Perform the search for each point
+indexes = td1.apply(
+    lambda x: coregPoint(treeres,np.array([x.LONGITUDE, x.LATITUDE]),1,retval=&#39;index&#39;), axis=1)</code></pre>
+<pre class="python"><code>td1[&#39;res&#39;] = data_res.loc[indexes].resistivity.values
+td1</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+LONGITUDE
+</th>
+<th>
+LATITUDE
+</th>
+<th>
+res
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+139.179436
+</td>
+<td>
+-29.877637
+</td>
+<td>
+2.2135
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+138.808767
+</td>
+<td>
+-30.086296
+</td>
+<td>
+2.3643
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+138.752281
+</td>
+<td>
+-30.445684
+</td>
+<td>
+2.1141
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+138.530506
+</td>
+<td>
+-30.533225
+</td>
+<td>
+2.2234
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+138.887019
+</td>
+<td>
+-30.565479
+</td>
+<td>
+2.1982
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+110
+</th>
+<td>
+136.059715
+</td>
+<td>
+-34.327929
+</td>
+<td>
+3.4926
+</td>
+</tr>
+<tr>
+<th>
+111
+</th>
+<td>
+138.016821
+</td>
+<td>
+-35.733084
+</td>
+<td>
+2.0868
+</td>
+</tr>
+<tr>
+<th>
+112
+</th>
+<td>
+139.250036
+</td>
+<td>
+-34.250155
+</td>
+<td>
+1.9811
+</td>
+</tr>
+<tr>
+<th>
+113
+</th>
+<td>
+135.905480
+</td>
+<td>
+-34.425866
+</td>
+<td>
+2.7108
+</td>
+</tr>
+<tr>
+<th>
+114
+</th>
+<td>
+135.835578
+</td>
+<td>
+-34.509779
+</td>
+<td>
+3.1224
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+115 rows × 3 columns
+</p>
+</div>
+</div>
+<div id="faults" class="section level3">
+<h3>Faults</h3>
+<pre class="python"><code>#Same for the fault data 
+# but this time we get the &quot;distance to the point&quot;, rather than the value at that point.
+treefaults = scipy.spatial.cKDTree(faultsNeo)
+
+dists = td1.apply(
+    lambda x: coregPoint(treefaults,np.array([x.LONGITUDE, x.LATITUDE]),100,retval=&#39;dists&#39;), axis=1)</code></pre>
+<pre class="python"><code>td1[&#39;faults&#39;] = dists
+td1</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+LONGITUDE
+</th>
+<th>
+LATITUDE
+</th>
+<th>
+res
+</th>
+<th>
+faults
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+139.179436
+</td>
+<td>
+-29.877637
+</td>
+<td>
+2.2135
+</td>
+<td>
+0.010691
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+138.808767
+</td>
+<td>
+-30.086296
+</td>
+<td>
+2.3643
+</td>
+<td>
+0.103741
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+138.752281
+</td>
+<td>
+-30.445684
+</td>
+<td>
+2.1141
+</td>
+<td>
+0.006659
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+138.530506
+</td>
+<td>
+-30.533225
+</td>
+<td>
+2.2234
+</td>
+<td>
+0.013925
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+138.887019
+</td>
+<td>
+-30.565479
+</td>
+<td>
+2.1982
+</td>
+<td>
+0.007356
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+110
+</th>
+<td>
+136.059715
+</td>
+<td>
+-34.327929
+</td>
+<td>
+3.4926
+</td>
+<td>
+0.526835
+</td>
+</tr>
+<tr>
+<th>
+111
+</th>
+<td>
+138.016821
+</td>
+<td>
+-35.733084
+</td>
+<td>
+2.0868
+</td>
+<td>
+0.002451
+</td>
+</tr>
+<tr>
+<th>
+112
+</th>
+<td>
+139.250036
+</td>
+<td>
+-34.250155
+</td>
+<td>
+1.9811
+</td>
+<td>
+0.027837
+</td>
+</tr>
+<tr>
+<th>
+113
+</th>
+<td>
+135.905480
+</td>
+<td>
+-34.425866
+</td>
+<td>
+2.7108
+</td>
+<td>
+0.670323
+</td>
+</tr>
+<tr>
+<th>
+114
+</th>
+<td>
+135.835578
+</td>
+<td>
+-34.509779
+</td>
+<td>
+3.1224
+</td>
+<td>
+0.776152
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+115 rows × 4 columns
+</p>
+</div>
+</div>
+<div id="geophysics" class="section level3">
+<h3>Geophysics</h3>
+<pre class="python"><code># Define a function which &quot;coregisters&quot; a point within a raster.
+def get_coords_at_point(originx,originy,pixelx,pixely,lon,lat):
+    &#39;&#39;&#39;
+    Given a point in some coordinate reference (e.g. lat/lon)
+    Find the closest point to that in an array (e.g. a raster)
+    and return the index location of that point in the raster.
+    INPUTS
+        &quot;output from &quot;gdal_data.GetGeoTransform()&quot;
+    originx: first point in first axis
+    originy: first point in second axis
+    pixelx: difference between x points
+    pixely: difference between y points
+    
+    lon: x/row-coordinate of interest
+    lat: y/column-coordinate of interest
+    
+    RETURNS
+    col: x index value from the raster
+    row: y index value from the raster
+    &#39;&#39;&#39;
+    row = int((lon - originx)/pixelx)
+    col = int((lat - originy)/pixely)
+
+    return (col, row)
+
+
+# Pass entire array of latlon and raster info to us in get_coords_at_point
+def rastersearch(latlon,raster,originx,originy,pixelx,pixely):
+    zlist=[]
+    for lon,lat in zip(latlon.LONGITUDE,latlon.LATITUDE):
+        try:
+            zlist.append(raster[get_coords_at_point(originx,originy,pixelx,pixely,lon,lat)])
+        except:
+            zlist.append(np.nan)
+            
+    return(zlist)</code></pre>
+<pre class="python"><code>td1[&#39;dem&#39;] = rastersearch(td1,z1,originx1,originy1,pixelx1,pixely1)
+td1[&#39;mag&#39;] = rastersearch(td1,z2,originx2,originy2,pixelx2,pixely2)
+td1[&#39;grav&#39;] = rastersearch(td1,z3,originx3,originy3,pixelx3,pixely3)</code></pre>
+<pre class="python"><code>td1</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+LONGITUDE
+</th>
+<th>
+LATITUDE
+</th>
+<th>
+res
+</th>
+<th>
+faults
+</th>
+<th>
+dem
+</th>
+<th>
+mag
+</th>
+<th>
+grav
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+139.179436
+</td>
+<td>
+-29.877637
+</td>
+<td>
+2.2135
+</td>
+<td>
+0.010691
+</td>
+<td>
+187.297424
+</td>
+<td>
+-118.074890
+</td>
+<td>
+1.852599
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+138.808767
+</td>
+<td>
+-30.086296
+</td>
+<td>
+2.3643
+</td>
+<td>
+0.103741
+</td>
+<td>
+179.499237
+</td>
+<td>
+-209.410507
+</td>
+<td>
+-12.722121
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+138.752281
+</td>
+<td>
+-30.445684
+</td>
+<td>
+2.1141
+</td>
+<td>
+0.006659
+</td>
+<td>
+398.336823
+</td>
+<td>
+-159.566422
+</td>
+<td>
+-6.249788
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+138.530506
+</td>
+<td>
+-30.533225
+</td>
+<td>
+2.2234
+</td>
+<td>
+0.013925
+</td>
+<td>
+335.983429
+</td>
+<td>
+-131.176437
+</td>
+<td>
+-11.665316
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+138.887019
+</td>
+<td>
+-30.565479
+</td>
+<td>
+2.1982
+</td>
+<td>
+0.007356
+</td>
+<td>
+554.278198
+</td>
+<td>
+-192.363297
+</td>
+<td>
+-1.025702
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+110
+</th>
+<td>
+136.059715
+</td>
+<td>
+-34.327929
+</td>
+<td>
+3.4926
+</td>
+<td>
+0.526835
+</td>
+<td>
+45.866119
+</td>
+<td>
+-244.067841
+</td>
+<td>
+11.410070
+</td>
+</tr>
+<tr>
+<th>
+111
+</th>
+<td>
+138.016821
+</td>
+<td>
+-35.733084
+</td>
+<td>
+2.0868
+</td>
+<td>
+0.002451
+</td>
+<td>
+145.452789
+</td>
+<td>
+-203.566940
+</td>
+<td>
+18.458364
+</td>
+</tr>
+<tr>
+<th>
+112
+</th>
+<td>
+139.250036
+</td>
+<td>
+-34.250155
+</td>
+<td>
+1.9811
+</td>
+<td>
+0.027837
+</td>
+<td>
+276.489319
+</td>
+<td>
+-172.889587
+</td>
+<td>
+-1.714886
+</td>
+</tr>
+<tr>
+<th>
+113
+</th>
+<td>
+135.905480
+</td>
+<td>
+-34.425866
+</td>
+<td>
+2.7108
+</td>
+<td>
+0.670323
+</td>
+<td>
+162.431747
+</td>
+<td>
+569.713684
+</td>
+<td>
+15.066316
+</td>
+</tr>
+<tr>
+<th>
+114
+</th>
+<td>
+135.835578
+</td>
+<td>
+-34.509779
+</td>
+<td>
+3.1224
+</td>
+<td>
+0.776152
+</td>
+<td>
+89.274399
+</td>
+<td>
+64.385925
+</td>
+<td>
+24.267015
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+115 rows × 7 columns
+</p>
+</div>
+<pre class="python"><code># Check we got it right.
+# Plot a grid, and our interrogated points
+
+fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+im=plt.pcolormesh(x3,y3,z3,cmap=&#39;jet&#39;,shading=&#39;auto&#39;,vmin=min(td1.grav),vmax=max(td1.grav))
+#ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+#ax.plot(comm.LONGITUDE, comm.LATITUDE, marker=&#39;o&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+ax.scatter(td1.LONGITUDE, td1.LATITUDE, s=20, c=td1.grav,
+           label=commname+&quot; Gravity&quot;,cmap=&#39;jet&#39;,vmin=min(td1.grav),vmax=max(td1.grav),edgecolors=&#39;white&#39;)
+
+plt.xlim(138,140)
+plt.ylim(-32,-30)
+plt.legend(loc=3)
+
+cbaxes = fig.add_axes([0.40, 0.18, 0.2, 0.015])
+cbar = plt.colorbar(im, cax = cbaxes,orientation=&quot;horizontal&quot;,extend=&#39;both&#39;)
+cbar.set_label(&#39;Gravity (gal)&#39;, labelpad=10)
+cbar.ax.xaxis.set_label_position(&#39;top&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_43_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+<div id="geology" class="section level3">
+<h3>Geology</h3>
+<pre class="python"><code># For dealing with shapefile components
+from shapely.geometry import Point
+from shapely.geometry import shape
+
+#Define a function to find what polygon a point lives inside (speed imporivements can be made here)
+def shapeExplore(lon,lat,shapes,recs,record):
+    #&#39;record&#39; is the column index you want returned
+    for i in range(len(shapes)):
+        boundary = shapes[i]
+        if Point((lon,lat)).within(shape(boundary)):
+            return(recs[i][record])
+    #if you have been through the loop with no result
+    return(&#39;-9999&#39;)</code></pre>
+<pre class="python"><code>%%time
+geoindex = 4
+td1[&#39;geol&#39;]=td1.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
+<pre><code>CPU times: user 9.63 s, sys: 11.8 ms, total: 9.64 s
+Wall time: 9.65 s</code></pre>
+<pre class="python"><code>td1</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+LONGITUDE
+</th>
+<th>
+LATITUDE
+</th>
+<th>
+res
+</th>
+<th>
+faults
+</th>
+<th>
+dem
+</th>
+<th>
+mag
+</th>
+<th>
+grav
+</th>
+<th>
+geol
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+139.179436
+</td>
+<td>
+-29.877637
+</td>
+<td>
+2.2135
+</td>
+<td>
+0.010691
+</td>
+<td>
+187.297424
+</td>
+<td>
+-118.074890
+</td>
+<td>
+1.852599
+</td>
+<td>
+Crustal element Muloorina
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+138.808767
+</td>
+<td>
+-30.086296
+</td>
+<td>
+2.3643
+</td>
+<td>
+0.103741
+</td>
+<td>
+179.499237
+</td>
+<td>
+-209.410507
+</td>
+<td>
+-12.722121
+</td>
+<td>
+Crustal element Adelaide
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+138.752281
+</td>
+<td>
+-30.445684
+</td>
+<td>
+2.1141
+</td>
+<td>
+0.006659
+</td>
+<td>
+398.336823
+</td>
+<td>
+-159.566422
+</td>
+<td>
+-6.249788
+</td>
+<td>
+Crustal element Adelaide
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+138.530506
+</td>
+<td>
+-30.533225
+</td>
+<td>
+2.2234
+</td>
+<td>
+0.013925
+</td>
+<td>
+335.983429
+</td>
+<td>
+-131.176437
+</td>
+<td>
+-11.665316
+</td>
+<td>
+Crustal element Adelaide
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+138.887019
+</td>
+<td>
+-30.565479
+</td>
+<td>
+2.1982
+</td>
+<td>
+0.007356
+</td>
+<td>
+554.278198
+</td>
+<td>
+-192.363297
+</td>
+<td>
+-1.025702
+</td>
+<td>
+Crustal element Adelaide
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+110
+</th>
+<td>
+136.059715
+</td>
+<td>
+-34.327929
+</td>
+<td>
+3.4926
+</td>
+<td>
+0.526835
+</td>
+<td>
+45.866119
+</td>
+<td>
+-244.067841
+</td>
+<td>
+11.410070
+</td>
+<td>
+Cleve, Spencer, Olympic Domains
+</td>
+</tr>
+<tr>
+<th>
+111
+</th>
+<td>
+138.016821
+</td>
+<td>
+-35.733084
+</td>
+<td>
+2.0868
+</td>
+<td>
+0.002451
+</td>
+<td>
+145.452789
+</td>
+<td>
+-203.566940
+</td>
+<td>
+18.458364
+</td>
+<td>
+Crustal element Kanmantoo SW
+</td>
+</tr>
+<tr>
+<th>
+112
+</th>
+<td>
+139.250036
+</td>
+<td>
+-34.250155
+</td>
+<td>
+1.9811
+</td>
+<td>
+0.027837
+</td>
+<td>
+276.489319
+</td>
+<td>
+-172.889587
+</td>
+<td>
+-1.714886
+</td>
+<td>
+Crustal element Kanmantoo Main
+</td>
+</tr>
+<tr>
+<th>
+113
+</th>
+<td>
+135.905480
+</td>
+<td>
+-34.425866
+</td>
+<td>
+2.7108
+</td>
+<td>
+0.670323
+</td>
+<td>
+162.431747
+</td>
+<td>
+569.713684
+</td>
+<td>
+15.066316
+</td>
+<td>
+Cleve Domain
+</td>
+</tr>
+<tr>
+<th>
+114
+</th>
+<td>
+135.835578
+</td>
+<td>
+-34.509779
+</td>
+<td>
+3.1224
+</td>
+<td>
+0.776152
+</td>
+<td>
+89.274399
+</td>
+<td>
+64.385925
+</td>
+<td>
+24.267015
+</td>
+<td>
+Cleve Domain
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+115 rows × 8 columns
+</p>
+</div>
+<p><strong>Congrats, you now have an ML dataset ready to go!</strong></p>
+<p>Almost… but what is the target? Let’s make a binary classifier.</p>
+</div>
+</div>
+<div id="step-4---generate-a-non-deposit-dataset" class="section level2">
+<h2>Step 4 - Generate a “non-deposit” dataset</h2>
+<p>We have a set of locations where a certain mineral deposit occurs along with the values of various geophysical parameters at those locations. To identify what values of the geophysics are associated with a mineral deposit then we need a representation of the “background noise” of those parameters, i.e. what the values are when there is no mineral deposit.</p>
+<p>This step is important. There are numerous ways to generate our non-deposit set, each with different benefits and trade-offs. The randomisation of points throughout <em>some</em> domain appears to be robust. But you must think, is this domain a reasonable estimation of “background” geophysics/geology? Why are you picking these locations as non-deposits? Will they be over/under-representing actual deposits? Will they be over/under-representing actual non-deposits?</p>
+<pre class="python"><code>#Now make a set of &quot;non-deposits&quot; using a random location within our exploration area
+lats_rand=np.random.uniform(low=min(df.LATITUDE), high=max(df.LATITUDE), size=len(comm.LATITUDE))
+lons_rand=np.random.uniform(low=min(df.LONGITUDE), high=max(df.LONGITUDE), size=len(comm.LONGITUDE))
+
+print(&quot;Produced&quot;, len(lats_rand),len(lons_rand), &quot;latitude-longitude pairs for non-deposits.&quot;)</code></pre>
+<pre><code>Produced 115 115 latitude-longitude pairs for non-deposits.</code></pre>
+<pre class="python"><code># Where are these randomised &quot;non deposits&quot;
+fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+
+ax.plot(lons_rand, lats_rand, 
+        marker=&#39;.&#39;, linestyle=&#39;&#39;,markersize=1, color=&#39;b&#39;,label=&quot;Random Samples&quot;)
+
+ax.plot(td1.LONGITUDE, td1.LATITUDE, 
+        marker=&#39;x&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_50_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<p>We must do the same coregistration/interrogation of the different data layers for our randomised “non-deposit” data.</p>
+<pre class="python"><code>%%time
+
+td2 = pd.DataFrame({&#39;LONGITUDE&#39;: lons_rand, &#39;LATITUDE&#39;: lats_rand})
+                   
+# Res
+indexes = td2.apply(
+    lambda x: coregPoint(treeres,np.array([x.LONGITUDE, x.LATITUDE]),10,retval=&#39;index&#39;), axis=1)
+    
+td2[&#39;res&#39;] = data_res.loc[indexes].resistivity.values
+
+# Faults
+td2[&#39;faults&#39;] = td2.apply(
+    lambda x: coregPoint(treefaults,np.array([x.LONGITUDE, x.LATITUDE]),100,retval=&#39;dists&#39;), axis=1)
+
+# Geophys
+td2[&#39;dem&#39;] = rastersearch(td2,z1,originx1,originy1,pixelx1,pixely1)
+td2[&#39;mag&#39;] = rastersearch(td2,z2,originx2,originy2,pixelx2,pixely2)
+td2[&#39;grav&#39;] = rastersearch(td2,z3,originx3,originy3,pixelx3,pixely3)
+
+#Geology
+td2[&#39;geol&#39;]=td2.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
+<pre><code>CPU times: user 22.7 s, sys: 23.8 ms, total: 22.8 s
+Wall time: 22.8 s</code></pre>
+<pre class="python"><code>#Add flag indicating classification label
+td1[&#39;deposit&#39;]=1
+td2[&#39;deposit&#39;]=0</code></pre>
+<pre class="python"><code>fv = pd.concat([td1,td2],axis=0,ignore_index=True)
+fv</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+LONGITUDE
+</th>
+<th>
+LATITUDE
+</th>
+<th>
+res
+</th>
+<th>
+faults
+</th>
+<th>
+…
+</th>
+<th>
+mag
+</th>
+<th>
+grav
+</th>
+<th>
+geol
+</th>
+<th>
+deposit
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+139.179436
+</td>
+<td>
+-29.877637
+</td>
+<td>
+2.2135
+</td>
+<td>
+0.010691
+</td>
+<td>
+…
+</td>
+<td>
+-118.074890
+</td>
+<td>
+1.852599
+</td>
+<td>
+Crustal element Muloorina
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+138.808767
+</td>
+<td>
+-30.086296
+</td>
+<td>
+2.3643
+</td>
+<td>
+0.103741
+</td>
+<td>
+…
+</td>
+<td>
+-209.410507
+</td>
+<td>
+-12.722121
+</td>
+<td>
+Crustal element Adelaide
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+138.752281
+</td>
+<td>
+-30.445684
+</td>
+<td>
+2.1141
+</td>
+<td>
+0.006659
+</td>
+<td>
+…
+</td>
+<td>
+-159.566422
+</td>
+<td>
+-6.249788
+</td>
+<td>
+Crustal element Adelaide
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+138.530506
+</td>
+<td>
+-30.533225
+</td>
+<td>
+2.2234
+</td>
+<td>
+0.013925
+</td>
+<td>
+…
+</td>
+<td>
+-131.176437
+</td>
+<td>
+-11.665316
+</td>
+<td>
+Crustal element Adelaide
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+138.887019
+</td>
+<td>
+-30.565479
+</td>
+<td>
+2.1982
+</td>
+<td>
+0.007356
+</td>
+<td>
+…
+</td>
+<td>
+-192.363297
+</td>
+<td>
+-1.025702
+</td>
+<td>
+Crustal element Adelaide
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+225
+</th>
+<td>
+141.316422
+</td>
+<td>
+-28.535431
+</td>
+<td>
+1.9873
+</td>
+<td>
+0.318785
+</td>
+<td>
+…
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+-9999
+</td>
+<td>
+0
+</td>
+</tr>
+<tr>
+<th>
+226
+</th>
+<td>
+135.352957
+</td>
+<td>
+-37.255236
+</td>
+<td>
+-0.5148
+</td>
+<td>
+1.402739
+</td>
+<td>
+…
+</td>
+<td>
+0.000000
+</td>
+<td>
+0.000000
+</td>
+<td>
+-9999
+</td>
+<td>
+0
+</td>
+</tr>
+<tr>
+<th>
+227
+</th>
+<td>
+140.865975
+</td>
+<td>
+-34.989399
+</td>
+<td>
+2.0438
+</td>
+<td>
+0.945575
+</td>
+<td>
+…
+</td>
+<td>
+-63.256947
+</td>
+<td>
+-20.687813
+</td>
+<td>
+Crustal element Glenelg
+</td>
+<td>
+0
+</td>
+</tr>
+<tr>
+<th>
+228
+</th>
+<td>
+130.191418
+</td>
+<td>
+-32.579327
+</td>
+<td>
+-0.7268
+</td>
+<td>
+0.992523
+</td>
+<td>
+…
+</td>
+<td>
+0.000000
+</td>
+<td>
+0.000000
+</td>
+<td>
+?Fowler Domain
+</td>
+<td>
+0
+</td>
+</tr>
+<tr>
+<th>
+229
+</th>
+<td>
+137.454301
+</td>
+<td>
+-31.160760
+</td>
+<td>
+1.9846
+</td>
+<td>
+0.585865
+</td>
+<td>
+…
+</td>
+<td>
+21.408169
+</td>
+<td>
+-20.863804
+</td>
+<td>
+Cleve, Spencer, Olympic Domains
+</td>
+<td>
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+230 rows × 9 columns
+</p>
+</div>
+<pre class="python"><code># Save all our hard work to a csv file for more hacking to come!
+fv.to_csv(&#39;data/fv.csv&#39;,index=False)</code></pre>
+</div>
+</div>
+<div id="exploratory-data-analysis" class="section level1">
+<h1>Exploratory Data Analysis</h1>
+<p>This is often the point you recieve the data in (if you are using any well-formed datasets). But in reality 90% of the time is doing weird data wrangling steps like what we have done. Then 9% is spent exploring your dataset and understanding it more, dealing with missing data, observing correlations. This is often an iterative process. Let’s do some simple visualisations.</p>
+<p>Note: the last 1% of time is actually applying the ML algorithms!</p>
+<pre class="python"><code>#Get information about index type and column types, non-null values and memory usage.
+fv.info()</code></pre>
+<pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 230 entries, 0 to 229
+Data columns (total 9 columns):
+ #   Column     Non-Null Count  Dtype  
+---  ------     --------------  -----  
+ 0   LONGITUDE  230 non-null    float64
+ 1   LATITUDE   230 non-null    float64
+ 2   res        230 non-null    float64
+ 3   faults     230 non-null    float64
+ 4   dem        225 non-null    float64
+ 5   mag        225 non-null    float64
+ 6   grav       225 non-null    float64
+ 7   geol       230 non-null    object 
+ 8   deposit    230 non-null    int64  
+dtypes: float64(7), int64(1), object(1)
+memory usage: 16.3+ KB</code></pre>
+<pre class="python"><code># For nice easy data vis plots
+import seaborn as sns</code></pre>
+<pre class="python"><code>missingNo = fv.isnull().sum(axis = 0).sort_values(ascending = False)
+missingNo = missingNo[missingNo.values  &gt; 0]
+missingNo
+
+sns.barplot(missingNo.values, missingNo.index);</code></pre>
+<pre><code>/home/ubuntu/miniconda3/lib/python3.9/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_59_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>import upsetplot</code></pre>
+<pre class="python"><code>missing_cols = missingNo.index[:5].tolist()
+missing_counts = (fv.loc[:, missing_cols]
+                  .isnull()
+                  .groupby(missing_cols)
+                  .size())
+
+upsetplot.plot(missing_counts);</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_61_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code># Plot historgrams and scatter plots for each combination of features.
+sns.pairplot(fv,hue=&#39;deposit&#39;,palette=&quot;Set1&quot;,diag_kind=&quot;auto&quot;)</code></pre>
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7f325381e190&gt;</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_62_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>#Plot a heatmap for how correlated each of the features are
+corr = fv.corr() 
+
+sns.heatmap(corr,
+            cmap=plt.cm.BrBG, 
+            vmin=-0.5, vmax=0.5, 
+            square=True,
+            xticklabels=True, yticklabels=True,
+            );</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_63_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>for i in [&#39;res&#39;, &#39;faults&#39;, &#39;dem&#39;, &#39;mag&#39;, &#39;grav&#39;]:
+    ax = sns.boxplot(x=&#39;deposit&#39;,y=i, data=fv)
+    plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_64_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_64_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_64_2.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_64_3.png" alt="" />
+<p class="caption">png</p>
+</div>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_64_4.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+<div id="machine-learning" class="section level1">
+<h1>Machine Learning</h1>
+<p>We now have a clean dataset, we know a bit about, let’s try and measure some inferences.</p>
+<div id="ml-classification" class="section level3">
+<h3>ML Classification</h3>
+<p>This is where the ML classifier is defined. We can substitue our favourite ML technique here, and tune model variables as desired. As always the <a href="https://scikit-learn.org/stable/user_guide.html">scikit-learn documentation</a> is a great starting point to learn how these algorithms work.</p>
+<pre class="python"><code>from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+
+from sklearn.neural_network import MLPClassifier</code></pre>
+<pre class="python"><code>#Create the &#39;feature vector&#39; and a &#39;target classification vector&#39;
+features=fv.dropna().iloc[:,2:-1]
+targets=fv.dropna().deposit
+
+features.columns</code></pre>
+<pre><code>Index([&#39;res&#39;, &#39;faults&#39;, &#39;dem&#39;, &#39;mag&#39;, &#39;grav&#39;, &#39;geol&#39;], dtype=&#39;object&#39;)</code></pre>
+<pre class="python"><code>numfts = [&#39;res&#39;, &#39;faults&#39;, &#39;dem&#39;, &#39;mag&#39;, &#39;grav&#39;]
+catfts = [&#39;geol&#39;]</code></pre>
+<pre class="python"><code>for i in features.geol:
+    if not isinstance(i, str):
+        print(i)</code></pre>
+<pre class="python"><code>#Create the ML classifier with numerical and categorical data
+#Scale, and replace missing values
+numeric_transformer = Pipeline(steps=[
+    (&#39;imputer&#39;,SimpleImputer(missing_values=-9999., strategy=&#39;median&#39;)),
+    (&#39;scaler&#39;, StandardScaler())])
+
+#Encode categorical data and fill missing values with default 0
+categorical_transformer = Pipeline(steps=[
+    (&#39;imputer&#39;, SimpleImputer(strategy=&#39;constant&#39;)),
+    (&#39;onehot&#39;, OneHotEncoder(handle_unknown=&#39;ignore&#39;))])
+
+#Combine numerical and categorical data
+preprocessor = ColumnTransformer(transformers=[
+        (&#39;num&#39;, numeric_transformer, numfts),
+        (&#39;cat&#39;, categorical_transformer, catfts)])
+
+# Append classifier to preprocessing pipeline.
+# Now we have a full prediction pipeline.
+rf = Pipeline(steps=[(&#39;preprocessor&#39;, preprocessor),
+                (&#39;classifier&#39;, RandomForestClassifier(random_state=1))])
+                #(&#39;classifier&#39;, MLPClassifier(solver=&#39;adam&#39;, alpha=0.001, max_iter=10000))])
+</code></pre>
+<pre class="python"><code>print(&#39;Tranining the Clasifier...&#39;)
+rf.fit(features,targets)
+
+print(&quot;Done RF. Now scoring...&quot;)
+scores = cross_val_score(rf, features,targets, cv=5)
+
+print(&quot;RF 5-fold cross validation Scores:&quot;, scores)
+print(&quot;SCORE Mean: %.2f&quot; % np.mean(scores), &quot;STD: %.2f&quot; % np.std(scores), &quot;\n&quot;)
+
+plt.plot(targets.values,&#39;b-&#39;,label=&#39;Target (expected)&#39;)
+plt.plot(rf.predict(features),&#39;rx&#39;,label=&#39;Prediction&#39;)
+plt.xlabel(&quot;Feature set&quot;)
+plt.ylabel(&quot;Target/Prediction&quot;)
+plt.legend(loc=7)</code></pre>
+<pre><code>Tranining the Clasifier...
+Done RF. Now scoring...
+RF 5-fold cross validation Scores: [0.93333333 0.97777778 0.91111111 0.88888889 0.73333333]
+SCORE Mean: 0.89 STD: 0.08 
+
+
+
+
+
+
+&lt;matplotlib.legend.Legend at 0x7f3251577a60&gt;</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_72_2.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code>print(&quot;Features:&quot;,np.shape(features),&quot;Targets:&quot;,np.shape(targets))
+rf.fit(features,targets)
+scores = cross_val_score(rf, features,targets, cv=5)
+print(&quot;RF CV-Scores: &quot;,scores)
+print(&quot;CV-SCORE Mean: %.2f&quot; % np.mean(scores), &quot;STD: %.2f&quot; % np.std(scores))
+#print(&quot;OOB score:&quot;,rf.steps[-1][1].oob_score_)
+
+print(&quot;Targets (expected result):&quot;)
+print(targets.values)
+print(&quot;Prediction (actual result):&quot;)
+print(rf.predict(features))</code></pre>
+<pre><code>Features: (225, 6) Targets: (225,)
+RF CV-Scores:  [0.93333333 0.97777778 0.91111111 0.88888889 0.73333333]
+CV-SCORE Mean: 0.89 STD: 0.08
+Targets (expected result):
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0]
+Prediction (actual result):
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0]</code></pre>
+<pre class="python"><code># Gather the importance measures
+ft_imp=[]
+ft_lab=[]
+
+for i,lab in enumerate(np.append(numfts,rf[&#39;preprocessor&#39;].transformers_[1][1][&#39;onehot&#39;].get_feature_names(catfts))):
+    ft_imp.append(rf.steps[-1][1].feature_importances_[i])
+    ft_lab.append(lab)</code></pre>
+<pre class="python"><code>#Make the bar plot
+ft_imps, ft_labs = (list(t) for t in zip(*sorted(zip(ft_imp,ft_lab))))
+datalength=len(ft_imp)
+
+#Create a new figure
+fig,ax = plt.subplots(figsize=(4,10))
+
+#Plot the bar graph
+rects=ax.barh(np.arange(0, datalength, step=1),ft_imps)
+ax.set_yticks(np.arange(0, datalength, step=1))
+ax.set_yticklabels(ft_labs)
+ax.set_xlabel(&#39;Feature Importance&#39;)
+print(&quot;From the Random Forest ML algorithm,&quot;)
+print(&quot;these are the the most significant features for predicting the target bins\n&quot;)
+
+plt.show()</code></pre>
+<pre><code>From the Random Forest ML algorithm,
+these are the the most significant features for predicting the target bins</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_75_1.png" alt="" />
+<p class="caption">png</p>
+</div>
+</div>
+</div>
+<div id="find-where-to-dig" class="section level1">
+<h1>Find where to dig!</h1>
+<p>Now we have a trained model we can pass it NEW data, that is values for all the geopysical parameters, and it will give us a prediction for whether there is a deposit there or not. Simple.</p>
+<pre class="python"><code>res1= [2.2,2.2]
+faults1 = [0.01,2.2]
+dem1 = [187,2.2]
+mag1= [-118,2.2]
+grav = [1.8,2.2]
+geol = [&#39;Crustal element Muloorina&#39;,&#39;Crustal element Muloorina&#39;]
+
+targets = pd.DataFrame({&#39;res&#39;:res1,&#39;faults&#39;:faults1,&#39;dem&#39;:dem1,&#39;mag&#39;:mag1,&#39;grav&#39;:grav,&#39;geol&#39;:geol})
+print(targets)
+#print(targets.reshape(1, -11))
+rf.predict_proba(targets)</code></pre>
+<pre><code>   res  faults    dem    mag  grav                       geol
+0  2.2    0.01  187.0 -118.0   1.8  Crustal element Muloorina
+1  2.2    2.20    2.2    2.2   2.2  Crustal element Muloorina
+
+
+
+
+
+array([[0.13, 0.87],
+       [0.79, 0.21]])</code></pre>
+<pre class="python"><code>#100x100 takes about 1 hour! 10x10 takes about 1 minute
+# Make a grid of target locations
+grid_x, grid_y = np.mgrid[130:140:100j,-36:-26:100j]</code></pre>
+<pre class="python"><code>%%time
+
+tdf = pd.DataFrame({&#39;LONGITUDE&#39;: grid_x.reshape(grid_x.size), &#39;LATITUDE&#39;: grid_y.reshape(grid_y.size)})
+                   
+# Res
+indexes = tdf.apply(
+    lambda x: coregPoint(treeres,np.array([x.LONGITUDE, x.LATITUDE]),10,retval=&#39;index&#39;), axis=1)
+
+tdf[&#39;res&#39;] = data_res.loc[indexes].resistivity.values
+print(&quot;Done res&quot;)
+
+# Faults
+tdf[&#39;faults&#39;] = tdf.apply(
+    lambda x: coregPoint(treefaults,np.array([x.LONGITUDE, x.LATITUDE]),100,retval=&#39;dists&#39;), axis=1)
+print(&quot;Done faults&quot;)
+
+# Geophys
+tdf[&#39;dem&#39;] = rastersearch(tdf,z1,originx1,originy1,pixelx1,pixely1)
+tdf[&#39;mag&#39;] = rastersearch(tdf,z2,originx2,originy2,pixelx2,pixely2)
+tdf[&#39;grav&#39;] = rastersearch(tdf,z3,originx3,originy3,pixelx3,pixely3)
+print(&quot;Done rasters&quot;)
+
+# Geology
+tdf[&#39;geol&#39;]=tdf.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)
+print(&quot;Done!&quot;)</code></pre>
+<pre><code>Done res
+Done faults
+Done rasters
+Done!
+CPU times: user 24min 55s, sys: 1.32 s, total: 24min 56s
+Wall time: 24min 57s</code></pre>
+<pre class="python"><code># Save all our hard work to a csv file for more hacking to come!
+tdf.to_csv(&#39;data/tdf_100.csv&#39;,index=False)</code></pre>
+<pre class="python"><code>#Apply the trained ML to our gridded data to determine the probabilities at each of the points
+print(&#39;RF...&#39;)
+pRF_map=np.array(rf.predict_proba(tdf.iloc[:,2:]))
+print(&quot;Done RF&quot;)</code></pre>
+<pre><code>RF...
+Done RF</code></pre>
+<pre class="python"><code>#X, Y = np.meshgrid(xi, yi)
+gridZ = scipy.interpolate.griddata((tdf.LONGITUDE, tdf.LATITUDE), pRF_map[:,1], (grid_x, grid_y),method=&#39;linear&#39;)</code></pre>
+<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+ax = plt.axes()
+im=plt.pcolormesh(grid_x,grid_y,gridZ,cmap=&#39;bwr&#39;,shading=&#39;auto&#39;)
+ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
+ax.plot(fv[fv.deposit==1].LONGITUDE, fv[fv.deposit==1].LATITUDE, 
+        marker=&#39;x&#39;, linestyle=&#39;&#39;,markersize=5, color=&#39;y&#39;,label=commname+&quot; Deposits&quot;)
+ax.plot(fv[fv.deposit==0].LONGITUDE, fv[fv.deposit==0].LATITUDE, 
+        marker=&#39;.&#39;, linestyle=&#39;&#39;,markersize=1, color=&#39;b&#39;,label=&quot;Random Samples&quot;)
+
+plt.xlim(128.5,141.5)
+plt.ylim(-38.5,-25.5)
+plt.legend(loc=3)
+
+cbaxes = fig.add_axes([0.40, 0.18, 0.2, 0.015])
+cbar = plt.colorbar(im, cax = cbaxes,orientation=&quot;horizontal&quot;)
+cbar.set_label(&#39;Probability of Mineral Depost&#39;, labelpad=10)
+cbar.ax.xaxis.set_label_position(&#39;top&#39;)
+
+plt.show()</code></pre>
+<div class="figure">
+<img src="03-ML_workflow_files/03-ML_workflow_83_0.png" alt="" />
+<p class="caption">png</p>
+</div>
+<pre class="python"><code></code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

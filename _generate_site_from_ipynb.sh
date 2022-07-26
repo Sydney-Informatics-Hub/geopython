@@ -8,5 +8,5 @@ Rscript --vanilla siterender.R
 # run the below to copy the files to root so they are appropriately rendered in the final 
 # GitHub website
 cp -r docs/*files .
-cp -r figs docs/
+#cp -r figs docs/
 tar -czf docs/data.tar.gz _ipynb/data
