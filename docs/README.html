@@ -485,7 +485,12 @@ div.tocify {
 <p>Rendered at: <a href="https://sydney-informatics-hub.github.io/geopython/" class="uri">https://sydney-informatics-hub.github.io/geopython/</a></p>
 <ul>
 <li>All notebooks go into <code>_ipynb</code> folder</li>
-<li>Run the below command to render them into markdown files in the right place</li>
+<li>Edit <code>index.Rmd</code> to change the main landing page.</li>
+<li>Edit <code>setup.Rmd</code> to change the Setup instruction pages.</li>
+<li>Edit <code>_site.yml</code> to change the dropdown menu options.</li>
+<li>Add additional <code>*.md</code> files to the root dir to have them converted to html files (and add them to <code>_site.yml</code> to make them navigable).</li>
+<li>Run the below commands to render the notebooks into markdown files and copy everything to the <code>/docs</code> folder, which will be what is hosted on the github pages.</li>
+<li>You will need to have jupyter and Rscript installed to convert the notebooks and render them in “Rmarkdown” format.</li>
 </ul>
 <pre><code>bash _generate_site_from_ipynb.sh
 #Generally add whatever files you have created

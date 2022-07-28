@@ -508,7 +508,7 @@ import shapefile
 <pre class="python"><code>#help(shapefile)
 #Or check out the help pages https://github.com/GeospatialPython/pyshp</code></pre>
 <pre class="python"><code>#Set the filename
-boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
+boreshape=&#39;data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(boreshape)
@@ -593,7 +593,7 @@ recs[299][4]</code></pre>
 <h1>Dataframes and table manipulation</h1>
 <p>Pandas is one of the most useful packages (along with probably numpy and matplotlib). We will use it several times throughout the course for data handling and manipulation.</p>
 <pre class="python"><code>#As before, read in the shapefile
-boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
+boreshape=&#39;data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
 #Read the shapefile attributes to variables
 shapeRead = shapefile.Reader(boreshape)
@@ -1464,7 +1464,7 @@ coords
 </div>
 <p>Pandas more frequently is used to directly read in tables. So let’s read in the csv data that came with shapefile (as this gives us some additional fields not stored in the shapefile that we can explore.</p>
 <pre class="python"><code>#read in the data
-log_data=pandas.read_csv(&quot;../data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,usecols=list(range(0,13))) 
+log_data=pandas.read_csv(&quot;data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,usecols=list(range(0,13))) 
 
 #What is the &quot;usecols&quot; variable equal to?
 #Try reading the data without using the usecols option, can you solve the error?</code></pre>
@@ -2892,11 +2892,11 @@ SLAT     4071
 FILL     4020
 SDST     3209
         ...  
-REGO        1
+DIOR        1
 SANN        1
+HFLS        1
 CALU        1
-DUST        1
-ALDG        1
+REGO        1
 Name: MajorLithCode, Length: 81, dtype: int64</code></pre>
 <pre class="python"><code>#plot a bar chart of the lith codes
 lithCounts.plot.bar(figsize=(15,5))</code></pre>
@@ -3022,16 +3022,16 @@ import glob
 #For &quot;regular expression manipulation&quot;
 import re</code></pre>
 <pre class="python"><code>#Build a list of filenames to read
-read_files = glob.glob(&quot;../data/WELL/*.las&quot;)
+read_files = glob.glob(&quot;data/WELL/*.las&quot;)
 read_files</code></pre>
-<pre><code>[&#39;../data/WELL\\Balnaves.las&#39;,
- &#39;../data/WELL\\Banyula.las&#39;,
- &#39;../data/WELL\\Beachport1.las&#39;,
- &#39;../data/WELL\\BeachportEast1.las&#39;,
- &#39;../data/WELL\\BiscuitFlat1.las&#39;,
- &#39;../data/WELL\\BoolLagoon1.las&#39;,
- &#39;../data/WELL\\Bungaloo1.las&#39;,
- &#39;../data/WELL\\Burrungule1.las&#39;]</code></pre>
+<pre><code>[&#39;data/WELL/Burrungule1.las&#39;,
+ &#39;data/WELL/BoolLagoon1.las&#39;,
+ &#39;data/WELL/BeachportEast1.las&#39;,
+ &#39;data/WELL/Balnaves.las&#39;,
+ &#39;data/WELL/BiscuitFlat1.las&#39;,
+ &#39;data/WELL/Bungaloo1.las&#39;,
+ &#39;data/WELL/Beachport1.las&#39;,
+ &#39;data/WELL/Banyula.las&#39;]</code></pre>
 <p><strong>Note:</strong> the possibility of Windows VS Unix character interpretations.</p>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
@@ -3044,32 +3044,32 @@ for file in read_files:
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
-<pre><code>FILE: ../data/WELL\Balnaves.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
+<pre><code>FILE: data/WELL/Burrungule1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Banyula.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
+FILE: data/WELL/BoolLagoon1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Beachport1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
+FILE: data/WELL/BeachportEast1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\BeachportEast1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
+FILE: data/WELL/Balnaves.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\BiscuitFlat1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
+FILE: data/WELL/BiscuitFlat1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\BoolLagoon1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
+FILE: data/WELL/Bungaloo1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Bungaloo1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
+FILE: data/WELL/Beachport1.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
 
-FILE: ../data/WELL\Burrungule1.las
-SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
+FILE: data/WELL/Banyula.las
+SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
 
 There are  8 wells.
-[&#39;Balnaves&#39;, &#39;Banyula&#39;, &#39;Beachport1&#39;, &#39;BeachportEast1&#39;, &#39;BiscuitFlat1&#39;, &#39;BoolLagoon1&#39;, &#39;Bungaloo1&#39;, &#39;Burrungule1&#39;]</code></pre>
+[&#39;Burrungule1&#39;, &#39;BoolLagoon1&#39;, &#39;BeachportEast1&#39;, &#39;Balnaves&#39;, &#39;BiscuitFlat1&#39;, &#39;Bungaloo1&#39;, &#39;Beachport1&#39;, &#39;Banyula&#39;]</code></pre>
 <pre class="python"><code>#Now actually read in the log files to lasio
 #The last cell was just to automatically make a nicely formatted list of well names!
 lases = []
@@ -3089,27 +3089,27 @@ for well in lases:
     print(&quot;Wellid:&quot;, j, well_names[j])
     j+=1
     print(well.keys())</code></pre>
-<pre><code>Wellid: 0 Balnaves
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 1 Banyula
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 2 Beachport1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 3 BeachportEast1
+<pre><code>Wellid: 0 Burrungule1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 1 BoolLagoon1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 2 BeachportEast1
 [&#39;DEPTH&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 3 Balnaves
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
 Wellid: 4 BiscuitFlat1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 5 BoolLagoon1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]
-Wellid: 6 Bungaloo1
+Wellid: 5 Bungaloo1
 [&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;DTS&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;PEF&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;RMIC&#39;, &#39;SP&#39;]
-Wellid: 7 Burrungule1
-[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
+Wellid: 6 Beachport1
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;MINV&#39;, &#39;MNOR&#39;, &#39;RDEP&#39;, &#39;RMED&#39;, &#39;SP&#39;]
+Wellid: 7 Banyula
+[&#39;DEPTH&#39;, &#39;CALI&#39;, &#39;DRHO&#39;, &#39;DT&#39;, &#39;GR&#39;, &#39;NPHI&#39;, &#39;RDEP&#39;, &#39;RHOB&#39;, &#39;RMED&#39;, &#39;SP&#39;]</code></pre>
 <pre class="python"><code>#Set a wellid you want to explore more
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x232520c7908&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f915a5e5640&gt;]</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_54_1.png" alt="" />
 <p class="caption">png</p>
@@ -3120,15 +3120,16 @@ print(lases[wellid].curves)</code></pre>
 <pre><code>Mnemonic  Unit   Value  Description                                         
 --------  ----   -----  -----------                                         
 DEPTH     M             Depth                                               
-CALI      in            Caliper     CALI Edited, Spliced, BANYU001.G01.lis  
-DRHO      g/cm3         DenCorr     DRHO Edited, BANYU001.G01.lis           
-DT        us/ft         Sonic       DT Edited, Spliced, BANYU001.G01.lis    
-GR        gAPI          GammaRay    GR Spliced, BANYU001.G01.lis            
-NPHI      dec           Neutron     NPHI Edited, BANYU001.G01.lis           
-RDEP      ohmm          DeepRes     ILD Spliced, BANYU001.G01.lis           
-RHOB      g/cm3         Density     RHOB Edited, BANYU001.G01.lis           
-RMED      ohmm          MedRes      ILM Spliced, BANYU001.G01.lis           
-SP        mV            SponPot     SP Spliced, BANYU001.G01.lis            </code></pre>
+CALI      in            Caliper     CALI Edited, bool_lagoon_1.lis          
+DRHO      g/cm3         DenCorr     DRHO Edited, bool_lagoon_1.lis          
+DT        us/ft         Sonic       DT Edited, bool_lagoon_1.lis            
+GR        gAPI          GammaRay    GR , bool_lagoon_1.lis                  
+NPHI      dec           Neutron     NPHI Edited, bool_lagoon_1.lis          
+PEF       b/e           PEFactor    PEF Edited, bool_lagoon_1.lis           
+RDEP      ohmm          DeepRes     LLD Edited, Shifted, bool_lagoon_1.lis  
+RHOB      g/cm3         Density     RHOB Edited, bool_lagoon_1.lis          
+RMED      ohmm          MedRes      LLS Edited, Shifted, bool_lagoon_1.lis  
+SP        MV            SP          SP Edited, Shifted, bool_lagoon_1.lis   </code></pre>
 <div class="challenge">
 
 <div id="challenge-1" class="section level3">
@@ -3258,7 +3259,7 @@ import numpy as np
 #https://github.com/agile-geoscience/xlines</code></pre>
 <pre class="python"><code>#Set the filename of the segy data
 
-filename=&quot;../data/james/james_1959_pstm_tvfk_gain.sgy&quot;
+filename=&quot;data/james/james_1959_pstm_tvfk_gain.sgy&quot;
 
 #Data randomly chosen from here:
 #Title: 2006 James 3D Seismic Survey.
@@ -3301,7 +3302,7 @@ data.shape</code></pre>
 <pre><code>(500, 1001)</code></pre>
 <pre class="python"><code>#Have a look at the data
 plt.imshow(data.T, cmap=&quot;Greys&quot;, aspect=&#39;auto&#39;)</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7f865805d460&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7f91a349bd60&gt;</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
 <p class="caption">png</p>
@@ -3471,7 +3472,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import pandas as pd</code></pre>
 <pre class="python"><code>#Open the file for reading
-f = open(&quot;../data/S3D_Vrms_StkVels_VELF.txt&quot;,&#39;r&#39;)
+f = open(&quot;data/S3D_Vrms_StkVels_VELF.txt&quot;,&#39;r&#39;)
 
 #Read in all the lines in the file and save them to a variable
 mylist = f.readlines()
@@ -3999,89 +4000,41 @@ import ast
 xy=ast.literal_eval(mysplit)[0]</code></pre>
 <pre class="python"><code>#Now you have the data you need in a useful format you can do whatever you like!
 xy</code></pre>
-<pre><code>[[140.217847053169, -20.0651426032713],
- [140.217846866281, -20.0818094534046],
- [140.217846679393, -20.098476305538],
- [140.217846494505, -20.1151431576712],
- [140.217846308617, -20.1318100088045],
- [140.20117986795, -20.1318102200127],
- [140.201179682062, -20.1484770721459],
- [140.184513241396, -20.1484772833552],
- [140.18451305651, -20.1651441374885],
- [140.184512871624, -20.1818109906216],
- [140.184512686738, -20.1984778437548],
- [140.184512502851, -20.2151446978879],
- [140.184512318964, -20.2318115510211],
- [140.201178757624, -20.2318113368118],
- [140.201178572735, -20.2484781899449],
- [140.201178390847, -20.265145043078],
- [140.201178208958, -20.2818118962111],
- [140.201178028069, -20.2984787493441],
- [140.184511590415, -20.2984789665533],
- [140.184511408527, -20.3151458196863],
- [140.184511227638, -20.3318126738193],
- [140.18451104575, -20.3484795289523],
- [140.184510864861, -20.3651463820852],
- [140.184510683973, -20.3818132362181],
- [140.184510502084, -20.398480089351],
- [140.184510219194, -20.4151469904839],
- [140.184509936305, -20.4318138906168],
- [140.201176401949, -20.4318136554078],
- [140.217842867592, -20.4318134202],
- [140.234509334236, -20.4318131849934],
- [140.25117579888, -20.4318129497879],
- [140.267842265524, -20.4318127145836],
- [140.284508731169, -20.4318124793805],
- [140.301175196813, -20.4318122431786],
- [140.317841659457, -20.4318120809779],
- [140.317841839357, -20.4151452358448],
- [140.317842020257, -20.3984783917118],
- [140.317842205157, -20.3818115465788],
- [140.317842390056, -20.3651447014456],
- [140.317842576955, -20.3484778563125],
- [140.317842761854, -20.3318110101794],
- [140.317842946753, -20.3151441640463],
- [140.317843132652, -20.2984773189131],
- [140.31784331755, -20.2818104737799],
- [140.317843502448, -20.2651436286467],
- [140.30117702579, -20.2651437498476],
- [140.284510586133, -20.2651439660497],
- [140.284510403237, -20.2818108161829],
- [140.284510219342, -20.2984776663161],
- [140.284510036446, -20.3151445164492],
- [140.28450985255, -20.3318113665823],
- [140.267843414897, -20.3318115837855],
- [140.267843232003, -20.3484784349186],
- [140.251176794352, -20.348478653123],
- [140.251176612458, -20.365145505256],
- [140.251176429564, -20.381812356389],
- [140.234509992916, -20.3818125765945],
- [140.234509810023, -20.3984794277275],
- [140.217843374376, -20.3984796479342],
- [140.217843556268, -20.3818127958012],
- [140.21784373916, -20.3651459436682],
- [140.217843920051, -20.3484790915352],
- [140.217844101942, -20.3318122384023],
- [140.217844284833, -20.3151453852692],
- [140.234510722486, -20.3151451680625],
- [140.234510904378, -20.2984783169294],
- [140.234511087269, -20.2818114637963],
- [140.234511270161, -20.2651446126632],
- [140.234511451052, -20.24847776053],
- [140.234511637943, -20.2318109083969],
- [140.234511822834, -20.2151440572637],
- [140.234512008724, -20.1984772051305],
- [140.234512194615, -20.1818103539973],
- [140.234512379505, -20.1651435028641],
- [140.25117882117, -20.1651432906583],
- [140.251179007062, -20.148476440525],
- [140.251179192953, -20.1318095883917],
- [140.251179378844, -20.1151427382584],
- [140.251179564734, -20.098475887125],
- [140.251179752625, -20.0818090379917],
- [140.251179940515, -20.0651421878583],
- [140.234513496842, -20.0651423950642],
- [140.217847053169, -20.0651426032713]]</code></pre>
+<pre><code>[[[139.901170853999, -20.4651656329993],
+  [139.884504220999, -20.4651658769991],
+  [139.867837588999, -20.4651661309991],
+  [139.851170957999, -20.4651663759992],
+  [139.834504324999, -20.4651666519991],
+  [139.834504414999, -20.4484997749993],
+  [139.834504493999, -20.4318328969991],
+  [139.834504583999, -20.4151660189993],
+  [139.834504673999, -20.3984991289993],
+  [139.834504817999, -20.3818322399992],
+  [139.834504974999, -20.3651653509993],
+  [139.834505130999, -20.3484984619992],
+  [139.834505276999, -20.3318315619991],
+  [139.817838621999, -20.3318318499993],
+  [139.801171968999, -20.3318321489993],
+  [139.784505313999, -20.3318324379992],
+  [139.784505458999, -20.3151655479993],
+  [139.784505604999, -20.2984986709991],
+  [139.801172269999, -20.2984983719992],
+  [139.817838923999, -20.2984980729993],
+  [139.834505589999, -20.2984977849992],
+  [139.851172242999, -20.2984974849992],
+  [139.867838875999, -20.2984972409993],
+  [139.884505496999, -20.2984970089993],
+  [139.901172127999, -20.2984967649993],
+  [139.901171993999, -20.3151636539992],
+  [139.901171860999, -20.3318305429993],
+  [139.901171725999, -20.3484974319992],
+  [139.901171591999, -20.3651643209993],
+  [139.901171445999, -20.3818312099993],
+  [139.901171311999, -20.3984980879992],
+  [139.901171199999, -20.4151649779992],
+  [139.901171087999, -20.4318318659992],
+  [139.901170965999, -20.4484987439991],
+  [139.901170853999, -20.4651656329993]]]</code></pre>
 <div id="key-points" class="section level3 keypoints">
 <h3>Key points</h3>
 <ul>
@@ -4094,7 +4047,6 @@ xy</code></pre>
 <li>API calls can be made to build your own workflows and applications with Python</li>
 </ul>
 </div>
-<pre class="python"><code></code></pre>
 </div>
 
 

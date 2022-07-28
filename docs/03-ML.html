@@ -520,7 +520,7 @@ sns.set(font_scale = 1.5)</code></pre>
 #Read in the data
 #Set a value for NaNs
 #Drop many of the columns (so it is easier to work with)
-df = pd.read_csv(&#39;../data/training_data-Cu.txt&#39;,na_values=&#39;-9999.0&#39;)
+df = pd.read_csv(&#39;data/training_data-Cu.csv&#39;,na_values=&#39;-9999.0&#39;)
 cols = list(range(5,65))
 cols.insert(0,0)
 df.drop(df.columns[cols],axis=1,inplace=True)
@@ -683,10 +683,10 @@ NaN
 27.176790
 </td>
 <td>
-14552
+14552.0
 </td>
 <td>
-17296
+17296.0
 </td>
 <td>
 999
@@ -751,10 +751,10 @@ NaN
 -83.541550
 </td>
 <td>
-14552
+14552.0
 </td>
 <td>
-17068
+17068.0
 </td>
 <td>
 -999
@@ -819,10 +819,10 @@ NaN
 -81.498817
 </td>
 <td>
-14552
+14552.0
 </td>
 <td>
-17296
+17296.0
 </td>
 <td>
 -999
@@ -955,10 +955,10 @@ NaN
 -90.970375
 </td>
 <td>
-14552
+14552.0
 </td>
 <td>
-17296
+17296.0
 </td>
 <td>
 -999
@@ -1110,9 +1110,9 @@ missingNo</code></pre>
 dtb18                   1648
 aster5-Ferrous-cont     1494
 aster7-MgOH-comp        1494
-aster10-kaolin          1327
 aster3-FeOH-cont        1327
 aster8-MgOH-cont        1327
+aster10-kaolin          1327
 aster2-AlOH             1128
 aster1-AlOH-cont         327
 aster4-Ferric-cont       327
@@ -1124,16 +1124,16 @@ rad22-dose               229
 aster14-regolith-b4       65
 aster13-regolith-b3       11
 aster9-green               9
-aster12-quartz             8
 aster15-silica             8
+aster12-quartz             8
 grav26                     7
 mag19-2vd                  6
 mag20-rtp                  6
 mag21-tmi                  6
 dem17                      5
-base16                     3
 archean27                  3
 geol28                     3
+base16                     3
 dtype: int64</code></pre>
 <pre class="python"><code>#Plot the missingness with Seaborn
 f, ax = plt.subplots(figsize = (10, 10))
@@ -1183,8 +1183,8 @@ catVars = df.select_dtypes(include = [&#39;object&#39;]).columns</code></pre>
 <pre class="python"><code>#Select which columns to plot (all of them are too many), and be sure to include the &quot;deposit&quot; variable
 cols = [np.append(np.arange(0, 11), 37)]
 #Make a pairwise plot to find all the relationships in the data
-sns.pairplot(df[df.columns[cols]],hue =&quot;deposit&quot;,palette=&quot;Set1&quot;,diag_kind=&quot;kde&quot;,diag_kws={&#39;bw&#39;: 0.1})</code></pre>
-<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x2620ef80dc8&gt;</code></pre>
+sns.pairplot(df[df.columns[cols].tolist()[0]],hue =&quot;deposit&quot;,palette=&quot;Set1&quot;,diag_kind=&quot;kde&quot;,diag_kws={&#39;bw&#39;: 0.1})</code></pre>
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7fcf70312d30&gt;</code></pre>
 <div class="figure">
 <img src="03-ML_files/03-ML_21_1.png" alt="" />
 <p class="caption">png</p>
@@ -1242,7 +1242,6 @@ sns.lmplot(
 </ul>
 </div>
 </div>
-<pre class="python"><code></code></pre>
 </div>
 </div>
 

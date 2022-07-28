@@ -497,7 +497,7 @@ div.tocify {
 <p>We have a dataset (from Butterworth et al. 2016) with a collection of tectonomagmatic parameters associated with the time and location of porphyry copper deposits. We want to determine which of these (if any) parameters are geologically important (or at least statistically significant) in relation to the formation of porphyry coppers.</p>
 <p>Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.</p>
 <div class="figure">
-<img src="fig/MullerConvergenceSmall.gif" title="segment" alt="" />
+<img src="./data/figs/MullerConvergenceSmall.gif" title="segment" alt="" />
 <p class="caption">SegmentLocal</p>
 </div>
 <div id="import-most-of-the-modules-we-need" class="section level2">
@@ -530,7 +530,7 @@ import shapefile
 <div id="load-in-the-data" class="section level2">
 <h2>Load in the data</h2>
 <pre class="python"><code>#Use pandas to load in the machine learning dataset
-ml_data=pandas.read_csv(&quot;../data/ml_data_points.csv&quot;,index_col=0)</code></pre>
+ml_data=pandas.read_csv(&quot;data/ml_data_points.csv&quot;,index_col=0)</code></pre>
 <pre class="python"><code>#Print out the dataset so we can see what it looks like
 ml_data</code></pre>
 <div>
@@ -1425,9 +1425,9 @@ print(rf.predict(features))</code></pre>
 <pre><code>Make the classifiers
 Random Forest...
 Done RF
-RF Scores:  [0.70967742 0.8        0.66666667 0.7        0.73333333 0.63333333
- 0.4        0.66666667 0.63333333 0.7       ]
-SCORE Mean: 0.66 STD: 0.10 
+RF Scores:  [0.64516129 0.8        0.63333333 0.7        0.8        0.6
+ 0.4        0.63333333 0.73333333 0.66666667]
+SCORE Mean: 0.66 STD: 0.11 
 
 Targets (expected result):
 [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
@@ -1446,15 +1446,15 @@ Targets (expected result):
 Prediction (actual result):
 [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
  1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
- 1. 1. 1. 0. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
  1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 0. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1. 0. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
  1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
- 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
- 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
  0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
  0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
  0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
- 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
  0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
  0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]</code></pre>
 <pre class="python"><code>#Make a list of labels for our chosen features
@@ -1481,10 +1481,10 @@ for i,label in enumerate(paramLabels):
 plt.show()
 </code></pre>
 <pre><code>Importance   Feature
-0.288        16 Subduction polarity (degrees)
-0.275        17 Subduction obliquity (degrees)
-0.162        18 Distance along margin (km)
-0.274        19 Subduction obliquity signed (radians)</code></pre>
+0.280        16 Subduction polarity (degrees)
+0.293        17 Subduction obliquity (degrees)
+0.160        18 Distance along margin (km)
+0.267        19 Subduction obliquity signed (radians)</code></pre>
 <div class="figure">
 <img src="03a-MachineLearning_files/03a-MachineLearning_11_1.png" alt="" />
 <p class="caption">png</p>
@@ -1500,17 +1500,24 @@ Done RF</code></pre>
 #to make predictions
 newdata = np.array([[0.5, -0.6, -0.7,  0.2]])
 rf.predict_proba(newdata)</code></pre>
-<pre><code>array([[0.82, 0.18]])</code></pre>
+<pre><code>array([[0.695, 0.305]])</code></pre>
 </div>
 <div id="mapping-the-ml-result" class="section level2">
 <h2>Mapping the ML result</h2>
-<pre class="python"><code>filename=&quot;../data/topodata.nc&quot;
+<pre class="python"><code>filename=&quot;data/topodata.nc&quot;
 data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 data.variables</code></pre>
-<pre><code>OrderedDict([(&#39;X&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x20385a13988&gt;),
-             (&#39;Y&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x20385a13948&gt;),
-             (&#39;elev&#39;, &lt;scipy.io.netcdf.netcdf_variable at 0x20385a13748&gt;)])</code></pre>
+<pre><code>/tmp/ipykernel_2554792/1418601044.py:2: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
+  data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
+
+
+
+
+
+{&#39;X&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7f9fde4ed040&gt;,
+ &#39;Y&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7f9fde4edc70&gt;,
+ &#39;elev&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7f9fde4eddc0&gt;}</code></pre>
 <pre class="python"><code>topoX=data.variables[&#39;X&#39;][:]
 topoY=data.variables[&#39;Y&#39;][:]
 topoZ=np.array(data.variables[&#39;elev&#39;][:])
@@ -1518,8 +1525,8 @@ topoZ=np.array(data.variables[&#39;elev&#39;][:])
 #Some file types and readers (like netcdf) can actually change the data directly on disk
 #Good practice, is to close the file when done (for safety and memory saving)
 data.close()</code></pre>
-<pre><code>c:\users\nbutter\miniconda3\envs\geopy\lib\site-packages\scipy\io\netcdf.py:317: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
-  ), category=RuntimeWarning)</code></pre>
+<pre><code>/home/nbutter/miniconda3/envs/PESA/lib/python3.9/site-packages/scipy/io/_netcdf.py:304: RuntimeWarning: Cannot close a netcdf_file opened with mmap=True, when netcdf_variables or arrays referring to its data still exist. All data arrays obtained from such files refer directly to data on disk, and must be copied before the file can be cleanly closed. (See netcdf_file docstring for more information on mmap.)
+  warnings.warn((</code></pre>
 <pre class="python"><code>#Make a figure object
 plt.figure()
 
@@ -1553,7 +1560,7 @@ plt.show()</code></pre>
 <div id="plotting-shapefiles-with-for-loops" class="section level2">
 <h2>Plotting shapefiles with for loops</h2>
 <pre class="python"><code>#Load in plate polygons for plotting
-topologyFile=&#39;../data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
+topologyFile=&#39;data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -1613,14 +1620,14 @@ print(&quot;Made base map&quot;)
 #Make a lat lon grid to fit the topo grid
 lons, lats = np.meshgrid(topoX,topoY)
 im1=ax.pcolormesh(lons,lats,topoZ, shading=&quot;auto&quot;,cmap=plt.cm.gist_earth,transform=ccrs.PlateCarree())              
-cbar=plt.colorbar(im1, ax=ax, orientation=&quot;horizontal&quot;, pad=0.02, fraction=0.05, shrink=0.2,extend=&#39;both&#39;)
+cbar=plt.colorbar(im1, ax=ax, orientation=&quot;horizontal&quot;, pad=0.01, fraction=0.05, shrink=0.2,extend=&#39;both&#39;)
 cbar.set_label(&#39;Topography (m)&#39;)
 
 print(&quot;Added topo&quot;)
 
 ###Plot shapefile polygon outlines
 #Load in plate polygons for plotting
-topologyFile=&#39;../data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
+topologyFile=&#39;data/platepolygons/topology_platepolygons_0.00Ma.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
@@ -1697,7 +1704,6 @@ Added deposit probability</code></pre>
 <li>Wrangling data.</li>
 </ul>
 </div>
-<pre class="python"><code></code></pre>
 </div>
 </div>
 

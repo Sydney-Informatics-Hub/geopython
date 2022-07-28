@@ -1294,7 +1294,7 @@ x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc(&quot;data/sa-grav.nc&quot;)
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
 Loaded data/sa-mag-tmi.nc in 0.00s
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
-Loaded data/sa-grav.nc in 0.01s
+Loaded data/sa-grav.nc in 0.00s
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99</code></pre>
 <pre class="python"><code>fig = plt.figure(figsize=(8,8))
 ax = plt.axes()
@@ -2294,8 +2294,8 @@ def shapeExplore(lon,lat,shapes,recs,record):
 <pre class="python"><code>%%time
 geoindex = 4
 td1[&#39;geol&#39;]=td1.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
-<pre><code>CPU times: user 9.63 s, sys: 11.8 ms, total: 9.64 s
-Wall time: 9.65 s</code></pre>
+<pre><code>CPU times: user 6.65 s, sys: 0 ns, total: 6.65 s
+Wall time: 6.65 s</code></pre>
 <pre class="python"><code>td1</code></pre>
 <div>
 <style scoped>
@@ -2725,8 +2725,8 @@ td2[&#39;grav&#39;] = rastersearch(td2,z3,originx3,originy3,pixelx3,pixely3)
 
 #Geology
 td2[&#39;geol&#39;]=td2.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
-<pre><code>CPU times: user 22.7 s, sys: 23.8 ms, total: 22.8 s
-Wall time: 22.8 s</code></pre>
+<pre><code>CPU times: user 14.9 s, sys: 18.1 ms, total: 14.9 s
+Wall time: 14.9 s</code></pre>
 <pre class="python"><code>#Add flag indicating classification label
 td1[&#39;deposit&#39;]=1
 td2[&#39;deposit&#39;]=0</code></pre>
@@ -2978,28 +2978,28 @@ Crustal element Adelaide
 225
 </th>
 <td>
-141.316422
+138.794774
 </td>
 <td>
--28.535431
+-29.691649
 </td>
 <td>
-1.9873
+2.0031
 </td>
 <td>
-0.318785
+0.424774
 </td>
 <td>
 …
 </td>
 <td>
-NaN
+21.032959
 </td>
 <td>
-NaN
+-4.841107
 </td>
 <td>
--9999
+Crustal element Muloorina
 </td>
 <td>
 0
@@ -3010,16 +3010,16 @@ NaN
 226
 </th>
 <td>
-135.352957
+140.267747
 </td>
 <td>
--37.255236
+-38.008458
 </td>
 <td>
--0.5148
+1.9598
 </td>
 <td>
-1.402739
+1.023122
 </td>
 <td>
 …
@@ -3031,7 +3031,7 @@ NaN
 0.000000
 </td>
 <td>
--9999
+Crustal element Kanmantoo Main
 </td>
 <td>
 0
@@ -3042,28 +3042,27 @@ NaN
 227
 </th>
 <td>
-140.865975
+129.038536
 </td>
 <td>
--34.989399
+-31.538249
 </td>
 <td>
-2.0438
+2.2199
 </td>
 <td>
-0.945575
+0.094928
 </td>
 <td>
 …
 </td>
 <td>
--63.256947
+125.275963
 </td>
 <td>
--20.687813
+-32.817963
 </td>
 <td>
-Crustal element Glenelg
 </td>
 <td>
 0
@@ -3074,28 +3073,28 @@ Crustal element Glenelg
 228
 </th>
 <td>
-130.191418
+140.756481
 </td>
 <td>
--32.579327
+-37.106672
 </td>
 <td>
--0.7268
+2.0076
 </td>
 <td>
-0.992523
+0.049691
 </td>
 <td>
 …
 </td>
 <td>
-0.000000
+-337.100220
 </td>
 <td>
-0.000000
+0.925697
 </td>
 <td>
-?Fowler Domain
+Crustal element Kanmantoo Main
 </td>
 <td>
 0
@@ -3106,28 +3105,28 @@ Crustal element Glenelg
 229
 </th>
 <td>
-137.454301
+137.484771
 </td>
 <td>
--31.160760
+-29.303033
 </td>
 <td>
-1.9846
+1.7740
 </td>
 <td>
-0.585865
+0.229885
 </td>
 <td>
 …
 </td>
 <td>
-21.408169
+-279.871063
 </td>
 <td>
--20.863804
+-19.597466
 </td>
 <td>
-Cleve, Spencer, Olympic Domains
+Crustal element Adelaide
 </td>
 <td>
 0
@@ -3158,9 +3157,9 @@ Data columns (total 9 columns):
  1   LATITUDE   230 non-null    float64
  2   res        230 non-null    float64
  3   faults     230 non-null    float64
- 4   dem        225 non-null    float64
- 5   mag        225 non-null    float64
- 6   grav       225 non-null    float64
+ 4   dem        227 non-null    float64
+ 5   mag        227 non-null    float64
+ 6   grav       227 non-null    float64
  7   geol       230 non-null    object 
  8   deposit    230 non-null    int64  
 dtypes: float64(7), int64(1), object(1)
@@ -3171,11 +3170,9 @@ import seaborn as sns</code></pre>
 missingNo = missingNo[missingNo.values  &gt; 0]
 missingNo
 
-sns.barplot(missingNo.values, missingNo.index);</code></pre>
-<pre><code>/home/ubuntu/miniconda3/lib/python3.9/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
-  warnings.warn(</code></pre>
+sns.barplot(x=missingNo.values, y=missingNo.index);</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_59_1.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_59_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>import upsetplot</code></pre>
@@ -3192,7 +3189,7 @@ upsetplot.plot(missing_counts);</code></pre>
 </div>
 <pre class="python"><code># Plot historgrams and scatter plots for each combination of features.
 sns.pairplot(fv,hue=&#39;deposit&#39;,palette=&quot;Set1&quot;,diag_kind=&quot;auto&quot;)</code></pre>
-<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7f325381e190&gt;</code></pre>
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7fc3ec701ee0&gt;</code></pre>
 <div class="figure">
 <img src="03-ML_workflow_files/03-ML_workflow_62_1.png" alt="" />
 <p class="caption">png</p>
@@ -3298,15 +3295,15 @@ plt.ylabel(&quot;Target/Prediction&quot;)
 plt.legend(loc=7)</code></pre>
 <pre><code>Tranining the Clasifier...
 Done RF. Now scoring...
-RF 5-fold cross validation Scores: [0.93333333 0.97777778 0.91111111 0.88888889 0.73333333]
-SCORE Mean: 0.89 STD: 0.08 
+RF 5-fold cross validation Scores: [0.93478261 0.97826087 0.95555556 0.95555556 0.75555556]
+SCORE Mean: 0.92 STD: 0.08 
 
 
 
 
 
 
-&lt;matplotlib.legend.Legend at 0x7f3251577a60&gt;</code></pre>
+&lt;matplotlib.legend.Legend at 0x7fc3e8952af0&gt;</code></pre>
 <div class="figure">
 <img src="03-ML_workflow_files/03-ML_workflow_72_2.png" alt="" />
 <p class="caption">png</p>
@@ -3322,9 +3319,9 @@ print(&quot;Targets (expected result):&quot;)
 print(targets.values)
 print(&quot;Prediction (actual result):&quot;)
 print(rf.predict(features))</code></pre>
-<pre><code>Features: (225, 6) Targets: (225,)
-RF CV-Scores:  [0.93333333 0.97777778 0.91111111 0.88888889 0.73333333]
-CV-SCORE Mean: 0.89 STD: 0.08
+<pre><code>Features: (227, 6) Targets: (227,)
+RF CV-Scores:  [0.93478261 0.97826087 0.95555556 0.95555556 0.75555556]
+CV-SCORE Mean: 0.92 STD: 0.08
 Targets (expected result):
 [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -3332,7 +3329,7 @@ Targets (expected result):
  1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0]
+ 0 0 0 0 0]
 Prediction (actual result):
 [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -3340,12 +3337,12 @@ Prediction (actual result):
  1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0]</code></pre>
+ 0 0 0 0 0]</code></pre>
 <pre class="python"><code># Gather the importance measures
 ft_imp=[]
 ft_lab=[]
 
-for i,lab in enumerate(np.append(numfts,rf[&#39;preprocessor&#39;].transformers_[1][1][&#39;onehot&#39;].get_feature_names(catfts))):
+for i,lab in enumerate(np.append(numfts,rf[&#39;preprocessor&#39;].transformers_[1][1][&#39;onehot&#39;].get_feature_names_out(catfts))):
     ft_imp.append(rf.steps[-1][1].feature_importances_[i])
     ft_lab.append(lab)</code></pre>
 <pre class="python"><code>#Make the bar plot
@@ -3360,12 +3357,11 @@ rects=ax.barh(np.arange(0, datalength, step=1),ft_imps)
 ax.set_yticks(np.arange(0, datalength, step=1))
 ax.set_yticklabels(ft_labs)
 ax.set_xlabel(&#39;Feature Importance&#39;)
-print(&quot;From the Random Forest ML algorithm,&quot;)
-print(&quot;these are the the most significant features for predicting the target bins\n&quot;)
+print(&quot;From the Random Forest ML algorithm\nthese are the the most significant features for predicting the target bins.\n&quot;)
 
 plt.show()</code></pre>
-<pre><code>From the Random Forest ML algorithm,
-these are the the most significant features for predicting the target bins</code></pre>
+<pre><code>From the Random Forest ML algorithm
+these are the the most significant features for predicting the target bins.</code></pre>
 <div class="figure">
 <img src="03-ML_workflow_files/03-ML_workflow_75_1.png" alt="" />
 <p class="caption">png</p>
@@ -3394,11 +3390,11 @@ rf.predict_proba(targets)</code></pre>
 
 
 
-array([[0.13, 0.87],
+array([[0.2 , 0.8 ],
        [0.79, 0.21]])</code></pre>
 <pre class="python"><code>#100x100 takes about 1 hour! 10x10 takes about 1 minute
 # Make a grid of target locations
-grid_x, grid_y = np.mgrid[130:140:100j,-36:-26:100j]</code></pre>
+grid_x, grid_y = np.mgrid[130:140:10j,-36:-26:10j]</code></pre>
 <pre class="python"><code>%%time
 
 tdf = pd.DataFrame({&#39;LONGITUDE&#39;: grid_x.reshape(grid_x.size), &#39;LATITUDE&#39;: grid_y.reshape(grid_y.size)})
@@ -3428,10 +3424,11 @@ print(&quot;Done!&quot;)</code></pre>
 Done faults
 Done rasters
 Done!
-CPU times: user 24min 55s, sys: 1.32 s, total: 24min 56s
-Wall time: 24min 57s</code></pre>
+CPU times: user 16min 22s, sys: 166 ms, total: 16min 22s
+Wall time: 16min 22s</code></pre>
 <pre class="python"><code># Save all our hard work to a csv file for more hacking to come!
-tdf.to_csv(&#39;data/tdf_100.csv&#39;,index=False)</code></pre>
+tdf.to_csv(&#39;data/tdf_10.csv&#39;,index=False)
+#tdf.read_csv(&#39;data/tdf_100.csv&#39;) #Read the file in if you need</code></pre>
 <pre class="python"><code>#Apply the trained ML to our gridded data to determine the probabilities at each of the points
 print(&#39;RF...&#39;)
 pRF_map=np.array(rf.predict_proba(tdf.iloc[:,2:]))
@@ -3440,7 +3437,7 @@ print(&quot;Done RF&quot;)</code></pre>
 Done RF</code></pre>
 <pre class="python"><code>#X, Y = np.meshgrid(xi, yi)
 gridZ = scipy.interpolate.griddata((tdf.LONGITUDE, tdf.LATITUDE), pRF_map[:,1], (grid_x, grid_y),method=&#39;linear&#39;)</code></pre>
-<pre class="python"><code>fig = plt.figure(figsize=(8,8))
+<pre class="python"><code>fig = plt.figure(figsize=(10,10))
 ax = plt.axes()
 im=plt.pcolormesh(grid_x,grid_y,gridZ,cmap=&#39;bwr&#39;,shading=&#39;auto&#39;)
 ax.plot(xval,yval,&#39;grey&#39;,linestyle=&#39;--&#39;,linewidth=1,label=&#39;SA&#39;)
@@ -3463,7 +3460,6 @@ plt.show()</code></pre>
 <img src="03-ML_workflow_files/03-ML_workflow_83_0.png" alt="" />
 <p class="caption">png</p>
 </div>
-<pre class="python"><code></code></pre>
 </div>
 
 

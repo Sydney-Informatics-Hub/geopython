@@ -508,7 +508,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MaxAbsScaler </code></pre>
 <pre class="python"><code>#Load in the dataset
-filename=&#39;../data/sydney_temperature.csv&#39;
+filename=&#39;data/sydney_temperature.csv&#39;
 dataframe = pd.read_csv(filename, usecols=[5], engine=&#39;python&#39;)
 dataset = dataframe.dropna()
 dataset = dataset.values
@@ -592,7 +592,11 @@ model.compile(loss=&#39;mean_squared_error&#39;, optimizer=&#39;adam&#39;)</code
 <pre><code>Running model...
 Adding LSTM.
 Adding dense.
-Compiling.</code></pre>
+Compiling.
+
+
+2022-07-28 13:03:55.260254: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.</code></pre>
 <pre class="python"><code>#Fit the model, this takes the longest time
 print(&quot;fitting...&quot;)
 startT=time.time()
@@ -602,14 +606,14 @@ endT=time.time()
 print(&quot;Time taken: &quot;, endT-startT)</code></pre>
 <pre><code>fitting...
 Epoch 1/4
-1933/1933 [==============================] - 37s 19ms/step - loss: 0.0086
+1933/1933 [==============================] - 11s 5ms/step - loss: 0.0065
 Epoch 2/4
-1933/1933 [==============================] - 36s 19ms/step - loss: 0.0064
+1933/1933 [==============================] - 10s 5ms/step - loss: 0.0059
 Epoch 3/4
-1933/1933 [==============================] - 36s 19ms/step - loss: 0.0062
+1933/1933 [==============================] - 10s 5ms/step - loss: 0.0059
 Epoch 4/4
-1933/1933 [==============================] - 37s 19ms/step - loss: 0.0060
-Time taken:  148.00688791275024</code></pre>
+1933/1933 [==============================] - 10s 5ms/step - loss: 0.0058
+Time taken:  40.31758904457092</code></pre>
 <pre class="python"><code>#Save or load the model
 #model.save(&#39;kerasmodel.hdf5&#39;)
 #model = tf.keras.models.load_model(&#39;kerasmodel.hdf5&#39;)</code></pre>
@@ -629,8 +633,10 @@ print(&#39;Train Score: %.4f RMSE&#39; % (trainScore))
 testScore = math.sqrt(mean_squared_error(testYi[0], testPredicti[:,0]))
 print(&#39;Test Score: %.4f RMSE&#39; % (testScore))
 </code></pre>
-<pre><code>Train Score: 2.9821 RMSE
-Test Score: 3.0455 RMSE</code></pre>
+<pre><code>1812/1812 [==============================] - 3s 2ms/step
+103/103 [==============================] - 0s 1ms/step
+Train Score: 2.8994 RMSE
+Test Score: 2.9587 RMSE</code></pre>
 <pre class="python"><code>#PLOT the result
 
 #Create a dataset that is the same size as the testing/training set 
@@ -670,7 +676,6 @@ plt.show()</code></pre>
 <div id="exercise" class="section level2">
 <h2>Exercise</h2>
 <p>Pick another site at <a href="http://www.bom.gov.au/climate/data/">http://www.bom.gov.au/climate/data/</a> and re-run the analysis.</p>
-<pre class="python"><code></code></pre>
 </div>
 </div>
 

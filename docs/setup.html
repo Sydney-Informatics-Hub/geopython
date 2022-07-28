@@ -381,12 +381,12 @@ $(document).ready(function () {
 
 <div id="get-a-python-client" class="section level1">
 <h1>1. Get a Python client</h1>
-<p>We generally use and recommend Miniconda Python distribution: <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a>. But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py37_4.8.3.</p>
+<p>We generally use and recommend Miniconda Python distribution: <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a>. But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py39_4.11.0.</p>
 <p>You can get this specific version here for:</p>
 <ul>
-<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Windows-x86_64.exe">Windows 64 bit Download</a></p></li>
-<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-MacOSX-x86_64.pkg">Mac OSX Download</a></p></li>
-<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh">Linux Download</a></p></li>
+<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.11.0-Windows-x86_64.exe">Windows 64 bit Download</a></p></li>
+<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.11.0-MacOSX-x86_64.pkg">Mac OSX Download</a></p></li>
+<li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.11.0-Linux-x86_64.sh">Linux Download</a></p></li>
 </ul>
 <p>Follow the prompts (the default recommendations in the installer are generally fine.) Once installed, launch an “Anaconda Prompt” from the Start Menu / Applications Folder to begin your Python adventure.</p>
 <p><img src="fig/setup00.png" /></p>
@@ -403,7 +403,7 @@ $(document).ready(function () {
 <ul>
 <li>Assuming you have downloaded the <em>environment.yml</em> file to your Downloads folder. Type in the below command on a Windows machine at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:</li>
 </ul>
-<pre class="sh"><code>conda env create --name geopy --file=C:\Users\nbutter\Downloads\environment.yml</code></pre>
+<pre class="sh"><code>conda env create -n PESA -f C:\Users\nbutter\Downloads\environment.yml</code></pre>
 <p><img src="fig/setup02.png" /></p>
 <p>If you are working on a Mac or Linux machine, the following will work:</p>
 <pre class="sh"><code>conda env create -f ~/Downloads/environment.yml</code></pre>
@@ -441,8 +441,8 @@ jupyter notebook</code></pre>
 </div>
 <div id="download-the-data" class="section level1">
 <h1>3. Download the data</h1>
-<p>Download the data (280 MB inflated to 500 MB) for all the exercises from here:</p>
-<p><a href="https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0">https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0</a></p>
+<p>Download the data (280 MB inflated to 600 MB) for all the exercises from here:</p>
+<p><a href="https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download">https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download</a></p>
 <p>Extract this to a directory you can work in. Your file tree should look like something like this</p>
 <p><img src="fig/setup-folder.png" /></p>
 <pre><code>.
@@ -457,9 +457,7 @@ jupyter notebook</code></pre>
 <h1>Other Options</h1>
 <div id="google-colab" class="section level2">
 <h2>Google Colab</h2>
-<p>If the above options do not work for you, <a href="https://colab.research.google.com/">Google Colab</a> can be used for an on-demand Python notebook. You will require a Google Account for this.</p>
-<p>The data is also available on Google Drive here: <a href="https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing" class="uri">https://drive.google.com/drive/folders/1b5TuOIZDhwf1UEMNQ0Jl5zDyn9dRwaRo?usp=sharing</a></p>
-<p>And an example Colab notebook (linking to that data) is here: <a href="https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing" class="uri">https://colab.research.google.com/drive/1Uw78l8SDyRjdeanSvnsGayFWf_AJbZL1?usp=sharing</a></p>
+<p>If the above options do not work for you, you can use an on-demand cloud instance. You will be given a weblink. Done.</p>
 <p><br> ## Docker</p>
 <p>If you are familiar with Docker you may use our Docker image with something like:</p>
 <pre><code>sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c &quot;jupyter notebook --allow-root --ip=0.0.0.0 --no-browser&quot;</code></pre>

@@ -9,7 +9,7 @@ _site
 .Rhistory
 .RData
 data/*
-
+_ipynb/data/*
 # Code editors
 *.sublime-*
 *.pdf

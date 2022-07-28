@@ -511,7 +511,7 @@ div.tocify {
 <li>Responsive: Designed with interactive computing in mind, it provides rapid feedback and diagnostics to aid humans</li>
 </ul>
 <figure>
-<img src="fig/dask_pic1.png" style="margin:10px;width:600px"/>
+<img src="./data/figs/dask_pic1.png" style="margin:10px;width:600px"/>
 <figcaption>
 Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.dask.org/en/latest/</a>
 </figcaption>
@@ -520,7 +520,7 @@ Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.d
 <p>Dask provides high level collections - these are <strong><em>Dask Dataframes, bags, and arrays</em></strong>. On a low level, dask dynamic task schedulers to scale up or down processes, and presents parallel computations by implementing task graphs. It provides an alternative to scaling out tasks instead of threading (IO Bound) and multiprocessing (cpu bound).</p>
 <p>A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.</p>
 <figure>
-<img src="fig/dask_pic2.png" style="margin:6px;width:400px"/>
+<img src="./data/figs/dask_pic2.png" style="margin:6px;width:400px"/>
 <figcaption>
 Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/">https://docs.dask.org/en/latest/dataframe.html/</a>
 </figcaption>
@@ -535,52 +535,316 @@ Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/"
 <pre class="python"><code>#Import dask dataframe modules
 import dask.dataframe as dd
 
+#import dask
+#dask.config.set({&quot;visualization.engine&quot;: &quot;cytoscape&quot;})
 #NOTE: to run this example (with diagrams) you will need to &quot;pip install graphviz&quot; and donwload graphviz
 #https://graphviz.org/download/
 import os
-os.environ[&quot;PATH&quot;] += os.pathsep + &#39;C:/APPS/Graphviz/bin&#39;</code></pre>
+#os.environ[&quot;PATH&quot;] += os.pathsep + &#39;C:/APPS/Graphviz/bin&#39;</code></pre>
 <pre class="python"><code># Setup a parlalle LocalCluster that makes use of all the cores and RAM we have on a single machine
 from dask.distributed import Client, LocalCluster
 cluster = LocalCluster()
 # explicitly connect to the cluster we just created
 client = Client(cluster)
 client</code></pre>
-<table style="border: 2px solid white;">
-<tr>
-<td style="vertical-align: top; border: 0px solid white">
-<h3 style="text-align: left;">
-Client
-</h3>
-<ul style="text-align: left; list-style: none; margin: 0; padding: 0;">
-<li>
-<b>Scheduler: </b>tcp://127.0.0.1:54234
-</li>
-<li>
-<b>Dashboard: </b><a href='http://127.0.0.1:8787/status' target='_blank'>http://127.0.0.1:8787/status</a>
-</li>
-</ul>
-</td>
-<td style="vertical-align: top; border: 0px solid white">
-<h3 style="text-align: left;">
-Cluster
-</h3>
-<ul style="text-align: left; list-style:none; margin: 0; padding: 0;">
-<li>
-<b>Workers: </b>4
-</li>
-<li>
-<b>Cores: </b>8
-</li>
-<li>
-<b>Memory: </b>34.21 GB
-</li>
-</ul>
-</td>
+<div>
+<pre><code>&lt;div style=&quot;width: 24px; height: 24px; background-color: #e1e1e1; border: 3px solid #9D9D9D; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+&lt;div style=&quot;margin-left: 48px;&quot;&gt;
+    &lt;h3 style=&quot;margin-bottom: 0px;&quot;&gt;Client&lt;/h3&gt;
+    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Client-f345cbf0-0e25-11ed-9593-4865ee14dcd0&lt;/p&gt;
+    &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Connection method:&lt;/strong&gt; Cluster object&lt;/td&gt;
+        &lt;td style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Cluster type:&lt;/strong&gt; distributed.LocalCluster&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+
+        &lt;tr&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;
+                &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:8787/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:8787/status&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+
+
+    &lt;/table&gt;
+
+
+        &lt;details&gt;
+        &lt;summary style=&quot;margin-bottom: 20px;&quot;&gt;&lt;h3 style=&quot;display: inline;&quot;&gt;Cluster Info&lt;/h3&gt;&lt;/summary&gt;
+        &lt;div class=&quot;jp-RenderedHTMLCommon jp-RenderedHTML jp-mod-trusted jp-OutputArea-output&quot;&gt;
+&lt;div style=&quot;width: 24px; height: 24px; background-color: #e1e1e1; border: 3px solid #9D9D9D; border-radius: 5px; position: absolute;&quot;&gt;
+&lt;/div&gt;
+&lt;div style=&quot;margin-left: 48px;&quot;&gt;
+    &lt;h3 style=&quot;margin-bottom: 0px; margin-top: 0px;&quot;&gt;LocalCluster&lt;/h3&gt;
+    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;0d3d104c&lt;/p&gt;
+    &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+        &lt;tr&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;
+                &lt;strong&gt;Dashboard:&lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:8787/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:8787/status&lt;/a&gt;
+            &lt;/td&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;
+                &lt;strong&gt;Workers:&lt;/strong&gt; 4
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;
+                &lt;strong&gt;Total threads:&lt;/strong&gt; 12
+            &lt;/td&gt;
+            &lt;td style=&quot;text-align: left;&quot;&gt;
+                &lt;strong&gt;Total memory:&lt;/strong&gt; 31.11 GiB
+            &lt;/td&gt;
+        &lt;/tr&gt;
+
+        &lt;tr&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Status:&lt;/strong&gt; running&lt;/td&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;&lt;strong&gt;Using processes:&lt;/strong&gt; True&lt;/td&gt;</code></pre>
 </tr>
-</table>
+<pre><code>    &lt;/table&gt;
+
+    &lt;details&gt;
+        &lt;summary style=&quot;margin-bottom: 20px;&quot;&gt;
+            &lt;h3 style=&quot;display: inline;&quot;&gt;Scheduler Info&lt;/h3&gt;
+        &lt;/summary&gt;
+
+        &lt;div style=&quot;&quot;&gt;
+&lt;div&gt;
+    &lt;div style=&quot;width: 24px; height: 24px; background-color: #FFF7E5; border: 3px solid #FF6132; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+    &lt;div style=&quot;margin-left: 48px;&quot;&gt;
+        &lt;h3 style=&quot;margin-bottom: 0px;&quot;&gt;Scheduler&lt;/h3&gt;
+        &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Scheduler-7046b19d-5b8d-4330-860c-f9c33f7266f2&lt;/p&gt;
+        &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+            &lt;tr&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Comm:&lt;/strong&gt; tcp://127.0.0.1:36743
+                &lt;/td&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Workers:&lt;/strong&gt; 4
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Dashboard:&lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:8787/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:8787/status&lt;/a&gt;
+                &lt;/td&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Total threads:&lt;/strong&gt; 12
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Started:&lt;/strong&gt; Just now
+                &lt;/td&gt;
+                &lt;td style=&quot;text-align: left;&quot;&gt;
+                    &lt;strong&gt;Total memory:&lt;/strong&gt; 31.11 GiB
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;details style=&quot;margin-left: 48px;&quot;&gt;
+    &lt;summary style=&quot;margin-bottom: 20px;&quot;&gt;
+        &lt;h3 style=&quot;display: inline;&quot;&gt;Workers&lt;/h3&gt;
+    &lt;/summary&gt;
+
+
+    &lt;div style=&quot;margin-bottom: 20px;&quot;&gt;
+        &lt;div style=&quot;width: 24px; height: 24px; background-color: #DBF5FF; border: 3px solid #4CC9FF; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+        &lt;div style=&quot;margin-left: 48px;&quot;&gt;
+        &lt;details&gt;
+            &lt;summary&gt;
+                &lt;h4 style=&quot;margin-bottom: 0px; display: inline;&quot;&gt;Worker: 0&lt;/h4&gt;
+            &lt;/summary&gt;
+            &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:33607
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Total threads: &lt;/strong&gt; 3
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:36243/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:36243/status&lt;/a&gt;
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:45619
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-8y8difk0
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+
+
+
+
+
+            &lt;/table&gt;
+        &lt;/details&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-bottom: 20px;&quot;&gt;
+        &lt;div style=&quot;width: 24px; height: 24px; background-color: #DBF5FF; border: 3px solid #4CC9FF; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+        &lt;div style=&quot;margin-left: 48px;&quot;&gt;
+        &lt;details&gt;
+            &lt;summary&gt;
+                &lt;h4 style=&quot;margin-bottom: 0px; display: inline;&quot;&gt;Worker: 1&lt;/h4&gt;
+            &lt;/summary&gt;
+            &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:38753
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Total threads: &lt;/strong&gt; 3
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:37565/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:37565/status&lt;/a&gt;
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:42159
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-qvp_l7ja
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+
+
+
+
+
+            &lt;/table&gt;
+        &lt;/details&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-bottom: 20px;&quot;&gt;
+        &lt;div style=&quot;width: 24px; height: 24px; background-color: #DBF5FF; border: 3px solid #4CC9FF; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+        &lt;div style=&quot;margin-left: 48px;&quot;&gt;
+        &lt;details&gt;
+            &lt;summary&gt;
+                &lt;h4 style=&quot;margin-bottom: 0px; display: inline;&quot;&gt;Worker: 2&lt;/h4&gt;
+            &lt;/summary&gt;
+            &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:37445
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Total threads: &lt;/strong&gt; 3
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:44247/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:44247/status&lt;/a&gt;
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:34691
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-v3gapqyt
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+
+
+
+
+
+            &lt;/table&gt;
+        &lt;/details&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;margin-bottom: 20px;&quot;&gt;
+        &lt;div style=&quot;width: 24px; height: 24px; background-color: #DBF5FF; border: 3px solid #4CC9FF; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
+        &lt;div style=&quot;margin-left: 48px;&quot;&gt;
+        &lt;details&gt;
+            &lt;summary&gt;
+                &lt;h4 style=&quot;margin-bottom: 0px; display: inline;&quot;&gt;Worker: 3&lt;/h4&gt;
+            &lt;/summary&gt;
+            &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:32947
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Total threads: &lt;/strong&gt; 3
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:36217/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:36217/status&lt;/a&gt;
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:34899
+                    &lt;/td&gt;
+                    &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-4kt9skq6
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+
+
+
+
+
+            &lt;/table&gt;
+        &lt;/details&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/details&gt;</code></pre>
+</div>
+<pre><code>    &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<pre><code>        &lt;/details&gt;
+
+
+&lt;/div&gt;</code></pre>
+</div>
 <pre class="python"><code># Although this is small csv file, we&#39;ll reuse our same example from before!
 # Load csv results from server into a Pandas DataFrame
-df = dd.read_csv(&quot;../data/ml_data_points.csv&quot;)</code></pre>
+df = dd.read_csv(&quot;data/ml_data_points.csv&quot;)</code></pre>
 <pre class="python"><code># We only see the metadata, the actual data are only computed when requested.
 df</code></pre>
 <div>
@@ -1341,16 +1605,511 @@ df.groupby(&#39;4 Age (Ma)&#39;)[&#39;14 Convergence normal rate (km/Myr)&#39;].
 178.0    58.860860
 179.0    65.671240
 Name: 14 Convergence normal rate (km/Myr), Length: 126, dtype: float64</code></pre>
+<pre class="python"><code># We can break up the table into 4 partions to map out to each core:
+df = df.repartition(npartitions=4)
+df</code></pre>
+<div>
+<strong>Dask DataFrame Structure:</strong>
 </div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+Unnamed: 0
+</th>
+<th>
+0 Present day longitude (degrees)
+</th>
+<th>
+1 Present day latitude (degrees)
+</th>
+<th>
+2 Reconstructed longitude (degrees)
+</th>
+<th>
+3 Reconstructed latitude (degrees)
+</th>
+<th>
+4 Age (Ma)
+</th>
+<th>
+5 Time before mineralisation (Myr)
+</th>
+<th>
+6 Seafloor age (Myr)
+</th>
+<th>
+7 Segment length (km)
+</th>
+<th>
+8 Slab length (km)
+</th>
+<th>
+9 Distance to trench edge (km)
+</th>
+<th>
+10 Subducting plate normal velocity (km/Myr)
+</th>
+<th>
+11 Subducting plate parallel velocity (km/Myr)
+</th>
+<th>
+12 Overriding plate normal velocity (km/Myr)
+</th>
+<th>
+13 Overriding plate parallel velocity (km/Myr)
+</th>
+<th>
+14 Convergence normal rate (km/Myr)
+</th>
+<th>
+15 Convergence parallel rate (km/Myr)
+</th>
+<th>
+16 Subduction polarity (degrees)
+</th>
+<th>
+17 Subduction obliquity (degrees)
+</th>
+<th>
+18 Distance along margin (km)
+</th>
+<th>
+19 Subduction obliquity signed (radians)
+</th>
+<th>
+20 Ore Deposits Binary Flag (1 or 0)
+</th>
+</tr>
+<tr>
+<th>
+npartitions=4
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+</th>
+<td>
+int64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+<td>
+float64
+</td>
+</tr>
+<tr>
+<th>
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="we-can-break-up-the-table-into-4-partions-to-map-out-to-each-core" class="section level1">
-<h1>We can break up the table into 4 partions to map out to each core:</h1>
-<p>df = df.repartition(npartitions=4) df</p>
+<div>
+Dask Name: repartition, 6 tasks
+</div>
 <pre class="python"><code># Let&#39;s say we want to know the minimum last eruption year for all volcanoes
 last_eruption_year_min = df[&#39;4 Age (Ma)&#39;].mean()
 last_eruption_year_min</code></pre>
 <pre><code>dd.Scalar&lt;series-..., dtype=float64&gt;</code></pre>
 <pre class="python"><code># Instead of getting the actual value we see dd.Scalar, which represents a recipe for actually calculating this value
+
 last_eruption_year_min.visualize(format=&#39;svg&#39;)</code></pre>
 <div class="figure">
 <img src="04b-DaskDataframes_files/04b-DaskDataframes_13_0.svg" alt="" />
@@ -1393,62 +2152,38 @@ Chunk
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Bytes
-</th>
-<td>
-32.00 MB
-</td>
-<td>
-32.00 MB
-</td>
-</tr>
-<tr>
-<th>
-Shape
-</th>
-<td>
-(1000, 4000)
-</td>
-<td>
-(1000, 4000)
-</td>
-</tr>
-<tr>
-<th>
-Count
-</th>
-<td>
-1 Tasks
-</td>
-<td>
-1 Chunks
-</td>
-</tr>
-<tr>
-<th>
-Type
-</th>
-<td>
-float64
-</td>
-<td>
-numpy.ndarray
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="92" style="stroke:rgb(0,0,0);stroke-width:1">
+<pre><code>                &lt;tr&gt;
+                    &lt;th&gt; Bytes &lt;/th&gt;
+                    &lt;td&gt; 30.52 MiB &lt;/td&gt;
+                    &lt;td&gt; 30.52 MiB &lt;/td&gt;
+                &lt;/tr&gt;
+
+                &lt;tr&gt;
+                    &lt;th&gt; Shape &lt;/th&gt;
+                    &lt;td&gt; (1000, 4000) &lt;/td&gt;
+                    &lt;td&gt; (1000, 4000) &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;th&gt; Count &lt;/th&gt;
+                    &lt;td&gt; 1 Tasks &lt;/td&gt;
+                    &lt;td&gt; 1 Chunks &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;th&gt; Type &lt;/th&gt;
+                &lt;td&gt; float64 &lt;/td&gt;
+                &lt;td&gt; numpy.ndarray &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+    &lt;svg width=&quot;170&quot; height=&quot;92&quot; style=&quot;stroke:rgb(0,0,0);stroke-width:1&quot; &gt;</code></pre>
 <p><!-- Horizontal lines --> <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" /> <line x1="0" y1="42" x2="120" y2="42" style="stroke-width:2" /></p>
 <p><!-- Vertical lines --> <line x1="0" y1="0" x2="0" y2="42" style="stroke-width:2" /> <line x1="120" y1="0" x2="120" y2="42" style="stroke-width:2" /></p>
 <p><!-- Colored Rectangle --> <polygon points="0.0,0.0 120.0,0.0 120.0,42.89879552186203 0.0,42.89879552186203" style="fill:#ECB172A0;stroke-width:0"/></p>
-<!-- Text --> <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text>
-</svg>
+<!-- Text --> <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text> </svg>
 </td>
-</tr>
+<pre><code>&lt;/tr&gt;</code></pre>
 </table>
 <pre class="python"><code>chunk_shape = (1000, 1000)
 ones = da.ones(shape, chunks=chunk_shape)
@@ -1470,62 +2205,38 @@ Chunk
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Bytes
-</th>
-<td>
-32.00 MB
-</td>
-<td>
-8.00 MB
-</td>
-</tr>
-<tr>
-<th>
-Shape
-</th>
-<td>
-(1000, 4000)
-</td>
-<td>
-(1000, 1000)
-</td>
-</tr>
-<tr>
-<th>
-Count
-</th>
-<td>
-4 Tasks
-</td>
-<td>
-4 Chunks
-</td>
-</tr>
-<tr>
-<th>
-Type
-</th>
-<td>
-float64
-</td>
-<td>
-numpy.ndarray
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-<svg width="170" height="92" style="stroke:rgb(0,0,0);stroke-width:1">
+<pre><code>                &lt;tr&gt;
+                    &lt;th&gt; Bytes &lt;/th&gt;
+                    &lt;td&gt; 30.52 MiB &lt;/td&gt;
+                    &lt;td&gt; 7.63 MiB &lt;/td&gt;
+                &lt;/tr&gt;
+
+                &lt;tr&gt;
+                    &lt;th&gt; Shape &lt;/th&gt;
+                    &lt;td&gt; (1000, 4000) &lt;/td&gt;
+                    &lt;td&gt; (1000, 1000) &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;th&gt; Count &lt;/th&gt;
+                    &lt;td&gt; 4 Tasks &lt;/td&gt;
+                    &lt;td&gt; 4 Chunks &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;th&gt; Type &lt;/th&gt;
+                &lt;td&gt; float64 &lt;/td&gt;
+                &lt;td&gt; numpy.ndarray &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+    &lt;svg width=&quot;170&quot; height=&quot;92&quot; style=&quot;stroke:rgb(0,0,0);stroke-width:1&quot; &gt;</code></pre>
 <p><!-- Horizontal lines --> <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" /> <line x1="0" y1="42" x2="120" y2="42" style="stroke-width:2" /></p>
 <p><!-- Vertical lines --> <line x1="0" y1="0" x2="0" y2="42" style="stroke-width:2" /> <line x1="30" y1="0" x2="30" y2="42" /> <line x1="60" y1="0" x2="60" y2="42" /> <line x1="90" y1="0" x2="90" y2="42" /> <line x1="120" y1="0" x2="120" y2="42" style="stroke-width:2" /></p>
 <p><!-- Colored Rectangle --> <polygon points="0.0,0.0 120.0,0.0 120.0,42.89879552186203 0.0,42.89879552186203" style="fill:#ECB172A0;stroke-width:0"/></p>
-<!-- Text --> <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text>
-</svg>
+<!-- Text --> <text x="60.000000" y="62.898796" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="140.000000" y="21.449398" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,21.449398)">1000</text> </svg>
 </td>
-</tr>
+<pre><code>&lt;/tr&gt;</code></pre>
 </table>
 <pre class="python"><code>ones.compute()</code></pre>
 <pre><code>array([[1., 1., 1., ..., 1., 1., 1.],
@@ -1572,62 +2283,38 @@ Chunk
 </tr>
 </thead>
 <tbody>
-<tr>
-<th>
-Bytes
-</th>
-<td>
-6.40 GB
-</td>
-<td>
-8.00 MB
-</td>
-</tr>
-<tr>
-<th>
-Shape
-</th>
-<td>
-(200000, 4000)
-</td>
-<td>
-(1000, 1000)
-</td>
-</tr>
-<tr>
-<th>
-Count
-</th>
-<td>
-800 Tasks
-</td>
-<td>
-800 Chunks
-</td>
-</tr>
-<tr>
-<th>
-Type
-</th>
-<td>
-float64
-</td>
-<td>
-numpy.ndarray
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-<td>
-<svg width="79" height="170" style="stroke:rgb(0,0,0);stroke-width:1">
+<pre><code>                &lt;tr&gt;
+                    &lt;th&gt; Bytes &lt;/th&gt;
+                    &lt;td&gt; 5.96 GiB &lt;/td&gt;
+                    &lt;td&gt; 7.63 MiB &lt;/td&gt;
+                &lt;/tr&gt;
+
+                &lt;tr&gt;
+                    &lt;th&gt; Shape &lt;/th&gt;
+                    &lt;td&gt; (200000, 4000) &lt;/td&gt;
+                    &lt;td&gt; (1000, 1000) &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;th&gt; Count &lt;/th&gt;
+                    &lt;td&gt; 800 Tasks &lt;/td&gt;
+                    &lt;td&gt; 800 Chunks &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;th&gt; Type &lt;/th&gt;
+                &lt;td&gt; float64 &lt;/td&gt;
+                &lt;td&gt; numpy.ndarray &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+    &lt;svg width=&quot;79&quot; height=&quot;170&quot; style=&quot;stroke:rgb(0,0,0);stroke-width:1&quot; &gt;</code></pre>
 <p><!-- Horizontal lines --> <line x1="0" y1="0" x2="29" y2="0" style="stroke-width:2" /> <line x1="0" y1="6" x2="29" y2="6" /> <line x1="0" y1="12" x2="29" y2="12" /> <line x1="0" y1="18" x2="29" y2="18" /> <line x1="0" y1="25" x2="29" y2="25" /> <line x1="0" y1="31" x2="29" y2="31" /> <line x1="0" y1="37" x2="29" y2="37" /> <line x1="0" y1="43" x2="29" y2="43" /> <line x1="0" y1="50" x2="29" y2="50" /> <line x1="0" y1="56" x2="29" y2="56" /> <line x1="0" y1="63" x2="29" y2="63" /> <line x1="0" y1="69" x2="29" y2="69" /> <line x1="0" y1="75" x2="29" y2="75" /> <line x1="0" y1="81" x2="29" y2="81" /> <line x1="0" y1="88" x2="29" y2="88" /> <line x1="0" y1="94" x2="29" y2="94" /> <line x1="0" y1="100" x2="29" y2="100" /> <line x1="0" y1="106" x2="29" y2="106" /> <line x1="0" y1="113" x2="29" y2="113" /> <line x1="0" y1="120" x2="29" y2="120" style="stroke-width:2" /></p>
 <p><!-- Vertical lines --> <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" /> <line x1="7" y1="0" x2="7" y2="120" /> <line x1="14" y1="0" x2="14" y2="120" /> <line x1="21" y1="0" x2="21" y2="120" /> <line x1="29" y1="0" x2="29" y2="120" style="stroke-width:2" /></p>
 <p><!-- Colored Rectangle --> <polygon points="0.0,0.0 29.030629010473877,0.0 29.030629010473877,120.0 0.0,120.0" style="fill:#8B4903A0;stroke-width:0"/></p>
-<!-- Text --> <text x="14.515315" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="49.030629" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,49.030629,60.000000)">200000</text>
-</svg>
+<!-- Text --> <text x="14.515315" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >4000</text> <text x="49.030629" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,49.030629,60.000000)">200000</text> </svg>
 </td>
-</tr>
+<pre><code>&lt;/tr&gt;</code></pre>
 </table>
 <pre class="python"><code>print(&#39;%.1f MB&#39; % (big_ones.nbytes / 1e6))</code></pre>
 <pre><code>6400.0 MB</code></pre>
@@ -1654,7 +2341,8 @@ x = inc(1)
 y = dec(2)
 z = add(x, y)
 z</code></pre>
-<pre><code>Wall time: 431 ms
+<pre><code>CPU times: user 47.3 ms, sys: 9.36 ms, total: 56.6 ms
+Wall time: 401 ms
 
 
 
@@ -1670,13 +2358,14 @@ x = inc(1)
 y = dec(2)
 z = add(x, y)
 z</code></pre>
-<pre><code>Wall time: 1.03 ms
+<pre><code>CPU times: user 6.45 ms, sys: 0 ns, total: 6.45 ms
+Wall time: 4.28 ms
 
 
 
 
 
-Delayed(&#39;add-4336c3e8-9b9a-47b3-8c33-5da47dd0128c&#39;)</code></pre>
+Delayed(&#39;add-2f529910-99a0-4f94-afc1-a4c6a53325bb&#39;)</code></pre>
 <pre class="python"><code>z.visualize(format=&#39;svg&#39;, rankdir=&#39;LR&#39;)</code></pre>
 <div class="figure">
 <img src="04b-DaskDataframes_files/04b-DaskDataframes_30_0.svg" alt="" />
@@ -1684,13 +2373,15 @@ Delayed(&#39;add-4336c3e8-9b9a-47b3-8c33-5da47dd0128c&#39;)</code></pre>
 </div>
 <pre class="python"><code>%%time
 z.compute()</code></pre>
-<pre><code>Wall time: 363 ms
+<pre><code>CPU times: user 60.4 ms, sys: 4.88 ms, total: 65.2 ms
+Wall time: 334 ms
 
 
 
 
 
 3</code></pre>
+</div>
 <div id="helpful-links" class="section level2">
 <h2>Helpful Links:</h2>
 <p>Dask bag fundamentals <a href="https://docs.dask.org/en/latest/bag.html">https://docs.dask.org/en/latest/bag.html</a></p>

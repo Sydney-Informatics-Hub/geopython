@@ -542,7 +542,8 @@ div.tocify {
 <pre class="python"><code>%%time
 import time
 time.sleep(1)</code></pre>
-<pre><code>Wall time: 1.01 s</code></pre>
+<pre><code>CPU times: user 385 µs, sys: 29 µs, total: 414 µs
+Wall time: 1 s</code></pre>
 <p>A neat little feature to check how fast some of your cells are running. Now let’s profile a simple Python script and then think about how we could make it faster. Put this code in a script (save it as <code>faster.py</code>):</p>
 <pre class="python"><code>#A test function to see how you can profile code for speedups
 
@@ -622,13 +623,13 @@ tic=time.time()
 for index,samp in Samples.iterrows():
     for index2,well in Wells.iterrows():
         if well[&#39;Alpha&#39;]==samp[&#39;Alpha&#39;]:
-            totalSlow=totalSlow.append(samp,ignore_index=True)
+            totalSlow=pd.concat([totalSlow, samp])
             
 totalSlow=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Nested-loop Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Nested-loop Runtime: 4.68686056137085 seconds</code></pre>
+<pre><code>Nested-loop Runtime: 1.867074966430664 seconds</code></pre>
 <pre class="python"><code>#Or the vectorised method:
 
 tic=time.time()
@@ -637,7 +638,7 @@ totalFast=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Vectorized Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Vectorized Runtime: 0.00400090217590332 seconds</code></pre>
+<pre><code>Vectorized Runtime: 0.0026428699493408203 seconds</code></pre>
 <p>Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.</p>
 </div>
 <div id="python-multiprocessing" class="section level2">
@@ -676,7 +677,7 @@ import time
 multiprocessing.cpu_count()
 
 #Read in the shapefile that we will use
-sf = shapefile.Reader(&quot;../data/platepolygons/topology_platepolygons_0.00Ma.shp&quot;)
+sf = shapefile.Reader(&quot;data/platepolygons/topology_platepolygons_0.00Ma.shp&quot;)
 recs    = sf.records()
 shapes  = sf.shapes()
 fields  = sf.fields
@@ -696,7 +697,7 @@ plt.plot(poly[:,0],poly[:,1])</code></pre>
 
 
 
-[&lt;matplotlib.lines.Line2D at 0x2b29bc7ed08&gt;]</code></pre>
+[&lt;matplotlib.lines.Line2D at 0x7f30e59dfa60&gt;]</code></pre>
 <div class="figure">
 <img src="04a-SimpleSpeedUps_files/04a-SimpleSpeedUps_13_2.png" alt="" />
 <p class="caption">png</p>
@@ -729,53 +730,53 @@ for i in polygons:
     Areas1.append(PolygonArea(i))
 
 print(&quot;Final Runtime&quot;, time.time() - start_time)</code></pre>
-<pre><code>Process 0 Finished in 0.2019s.
-Process 1 Finished in 0.2133s.
-Process 2 Finished in 0.2097s.
-Process 3 Finished in 0.2137s.
-Process 4 Finished in 0.2162s.
-Process 5 Finished in 0.2106s.
-Process 6 Finished in 0.2134s.
-Process 7 Finished in 0.2145s.
-Process 8 Finished in 0.2117s.
-Process 9 Finished in 0.2123s.
-Process 10 Finished in 0.2124s.
-Process 11 Finished in 0.2139s.
-Process 12 Finished in 0.2111s.
-Process 13 Finished in 0.2107s.
-Process 14 Finished in 0.2138s.
-Process 15 Finished in 0.2114s.
-Process 16 Finished in 0.2107s.
-Process 17 Finished in 0.2134s.
-Process 18 Finished in 0.2119s.
-Process 19 Finished in 0.2114s.
-Process 20 Finished in 0.2129s.
-Process 21 Finished in 0.2143s.
-Process 22 Finished in 0.2148s.
-Process 23 Finished in 0.2125s.
-Process 24 Finished in 0.2122s.
-Process 25 Finished in 0.2105s.
-Process 26 Finished in 0.2138s.
-Process 27 Finished in 0.2164s.
-Process 28 Finished in 0.2122s.
-Process 29 Finished in 0.2112s.
-Process 30 Finished in 0.2109s.
-Process 31 Finished in 0.2132s.
-Process 32 Finished in 0.2136s.
-Process 33 Finished in 0.2133s.
-Process 34 Finished in 0.2112s.
-Process 35 Finished in 0.2135s.
-Process 36 Finished in 0.2132s.
-Process 37 Finished in 0.2141s.
-Process 38 Finished in 0.2104s.
-Process 39 Finished in 0.2117s.
-Process 40 Finished in 0.2124s.
-Process 41 Finished in 0.2125s.
-Process 42 Finished in 0.2128s.
-Process 43 Finished in 0.2100s.
-Process 44 Finished in 0.2148s.
-Process 45 Finished in 0.2138s.
-Final Runtime 9.796719074249268</code></pre>
+<pre><code>Process 0 Finished in 0.2009s.
+Process 1 Finished in 0.2023s.
+Process 2 Finished in 0.2005s.
+Process 3 Finished in 0.2008s.
+Process 4 Finished in 0.2007s.
+Process 5 Finished in 0.2011s.
+Process 6 Finished in 0.2022s.
+Process 7 Finished in 0.2009s.
+Process 8 Finished in 0.2004s.
+Process 9 Finished in 0.2005s.
+Process 10 Finished in 0.2020s.
+Process 11 Finished in 0.2005s.
+Process 12 Finished in 0.2004s.
+Process 13 Finished in 0.2024s.
+Process 14 Finished in 0.2010s.
+Process 15 Finished in 0.2009s.
+Process 16 Finished in 0.2005s.
+Process 17 Finished in 0.2007s.
+Process 18 Finished in 0.2004s.
+Process 19 Finished in 0.2004s.
+Process 20 Finished in 0.2004s.
+Process 21 Finished in 0.2006s.
+Process 22 Finished in 0.2006s.
+Process 23 Finished in 0.2021s.
+Process 24 Finished in 0.2004s.
+Process 25 Finished in 0.2004s.
+Process 26 Finished in 0.2004s.
+Process 27 Finished in 0.2004s.
+Process 28 Finished in 0.2004s.
+Process 29 Finished in 0.2006s.
+Process 30 Finished in 0.2004s.
+Process 31 Finished in 0.2006s.
+Process 32 Finished in 0.2006s.
+Process 33 Finished in 0.2005s.
+Process 34 Finished in 0.2005s.
+Process 35 Finished in 0.2041s.
+Process 36 Finished in 0.2021s.
+Process 37 Finished in 0.2004s.
+Process 38 Finished in 0.2006s.
+Process 39 Finished in 0.2009s.
+Process 40 Finished in 0.2006s.
+Process 41 Finished in 0.2008s.
+Process 42 Finished in 0.2004s.
+Process 43 Finished in 0.2005s.
+Process 44 Finished in 0.2008s.
+Process 45 Finished in 0.2006s.
+Final Runtime 9.249871015548706</code></pre>
 <p>Now we will have to run the multiprocessing version <strong>outside of our jupyter environment</strong>. Put the following into a script or download the <a href="https://cloudstor.aarnet.edu.au/plus/s/Q7DpigC2bibIgHT/download">full version here</a>.</p>
 <pre class="python"><code>#Put this snippet in a code block outside of Jupyter, but this time, use the multiprocessing capabilities
 #Because of how the multiprocessing works, it does not behave nicely in Jupyter all the time
@@ -901,719 +902,7 @@ print(&quot;I am rank %d in group of %d processes.&quot; % (rank, size))</code><
 <pre><code>I am rank 0 in group of 1 processes.</code></pre>
 <pre class="python"><code>#Want more help on the MPI.COMM_WORLD class object?
 #See the methods, functions, and variables associated with it.
-help(comm)</code></pre>
-<pre><code>Help on Intracomm object:
-
-class Intracomm(Comm)
- |  Intracommunicator
- |  
- |  Method resolution order:
- |      Intracomm
- |      Comm
- |      builtins.object
- |  
- |  Methods defined here:
- |  
- |  Accept(...)
- |      Intracomm.Accept(self, port_name, Info info=INFO_NULL, int root=0)
- |      
- |      Accept a request to form a new intercommunicator
- |  
- |  Cart_map(...)
- |      Intracomm.Cart_map(self, dims, periods=None)
- |      
- |      Return an optimal placement for the
- |      calling process on the physical machine
- |  
- |  Connect(...)
- |      Intracomm.Connect(self, port_name, Info info=INFO_NULL, int root=0)
- |      
- |      Make a request to form a new intercommunicator
- |  
- |  Create_cart(...)
- |      Intracomm.Create_cart(self, dims, periods=None, bool reorder=False)
- |      
- |      Create cartesian communicator
- |  
- |  Create_dist_graph(...)
- |      Intracomm.Create_dist_graph(self, sources, degrees, destinations, weights=None, Info info=INFO_NULL, bool reorder=False)
- |      
- |      Create distributed graph communicator
- |  
- |  Create_dist_graph_adjacent(...)
- |      Intracomm.Create_dist_graph_adjacent(self, sources, destinations, sourceweights=None, destweights=None, Info info=INFO_NULL, bool reorder=False)
- |      
- |      Create distributed graph communicator
- |  
- |  Create_graph(...)
- |      Intracomm.Create_graph(self, index, edges, bool reorder=False)
- |      
- |      Create graph communicator
- |  
- |  Create_intercomm(...)
- |      Intracomm.Create_intercomm(self, int local_leader, Intracomm peer_comm, int remote_leader, int tag=0)
- |      
- |      Create intercommunicator
- |  
- |  Exscan(...)
- |      Intracomm.Exscan(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Exclusive Scan
- |  
- |  Graph_map(...)
- |      Intracomm.Graph_map(self, index, edges)
- |      
- |      Return an optimal placement for the
- |      calling process on the physical machine
- |  
- |  Iexscan(...)
- |      Intracomm.Iexscan(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Inclusive Scan
- |  
- |  Iscan(...)
- |      Intracomm.Iscan(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Inclusive Scan
- |  
- |  Scan(...)
- |      Intracomm.Scan(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Inclusive Scan
- |  
- |  Spawn(...)
- |      Intracomm.Spawn(self, command, args=None, int maxprocs=1, Info info=INFO_NULL, int root=0, errcodes=None)
- |      
- |      Spawn instances of a single MPI application
- |  
- |  Spawn_multiple(...)
- |      Intracomm.Spawn_multiple(self, command, args=None, maxprocs=None, info=INFO_NULL, int root=0, errcodes=None)
- |      
- |      Spawn instances of multiple MPI applications
- |  
- |  exscan(...)
- |      Intracomm.exscan(self, sendobj, op=SUM)
- |      Exclusive Scan
- |  
- |  scan(...)
- |      Intracomm.scan(self, sendobj, op=SUM)
- |      Inclusive Scan
- |  
- |  ----------------------------------------------------------------------
- |  Static methods defined here:
- |  
- |  __new__(*args, **kwargs) from builtins.type
- |      Create and return a new object.  See help(type) for accurate signature.
- |  
- |  ----------------------------------------------------------------------
- |  Methods inherited from Comm:
- |  
- |  Abort(...)
- |      Comm.Abort(self, int errorcode=0)
- |      
- |      Terminate MPI execution environment
- |      
- |      .. warning:: This is a direct call, use it with care!!!.
- |  
- |  Allgather(...)
- |      Comm.Allgather(self, sendbuf, recvbuf)
- |      
- |      Gather to All, gather data from all processes and
- |      distribute it to all other processes in a group
- |  
- |  Allgatherv(...)
- |      Comm.Allgatherv(self, sendbuf, recvbuf)
- |      
- |      Gather to All Vector, gather data from all processes and
- |      distribute it to all other processes in a group providing
- |      different amount of data and displacements
- |  
- |  Allreduce(...)
- |      Comm.Allreduce(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      All Reduce
- |  
- |  Alltoall(...)
- |      Comm.Alltoall(self, sendbuf, recvbuf)
- |      
- |      All to All Scatter/Gather, send data from all to all
- |      processes in a group
- |  
- |  Alltoallv(...)
- |      Comm.Alltoallv(self, sendbuf, recvbuf)
- |      
- |      All to All Scatter/Gather Vector, send data from all to all
- |      processes in a group providing different amount of data and
- |      displacements
- |  
- |  Alltoallw(...)
- |      Comm.Alltoallw(self, sendbuf, recvbuf)
- |      
- |      Generalized All-to-All communication allowing different
- |      counts, displacements and datatypes for each partner
- |  
- |  Barrier(...)
- |      Comm.Barrier(self)
- |      
- |      Barrier synchronization
- |  
- |  Bcast(...)
- |      Comm.Bcast(self, buf, int root=0)
- |      
- |      Broadcast a message from one process
- |      to all other processes in a group
- |  
- |  Bsend(...)
- |      Comm.Bsend(self, buf, int dest, int tag=0)
- |      
- |      Blocking send in buffered mode
- |  
- |  Bsend_init(...)
- |      Comm.Bsend_init(self, buf, int dest, int tag=0)
- |      
- |      Persistent request for a send in buffered mode
- |  
- |  Call_errhandler(...)
- |      Comm.Call_errhandler(self, int errorcode)
- |      
- |      Call the error handler installed on a communicator
- |  
- |  Clone(...)
- |      Comm.Clone(self)
- |      
- |      Clone an existing communicator
- |  
- |  Create(...)
- |      Comm.Create(self, Group group)
- |      
- |      Create communicator from group
- |  
- |  Create_group(...)
- |      Comm.Create_group(self, Group group, int tag=0)
- |      
- |      Create communicator from group
- |  
- |  Delete_attr(...)
- |      Comm.Delete_attr(self, int keyval)
- |      
- |      Delete attribute value associated with a key
- |  
- |  Disconnect(...)
- |      Comm.Disconnect(self)
- |      
- |      Disconnect from a communicator
- |  
- |  Dup(...)
- |      Comm.Dup(self, Info info=None)
- |      
- |      Duplicate an existing communicator
- |  
- |  Dup_with_info(...)
- |      Comm.Dup_with_info(self, Info info)
- |      
- |      Duplicate an existing communicator
- |  
- |  Free(...)
- |      Comm.Free(self)
- |      
- |      Free a communicator
- |  
- |  Gather(...)
- |      Comm.Gather(self, sendbuf, recvbuf, int root=0)
- |      
- |      Gather together values from a group of processes
- |  
- |  Gatherv(...)
- |      Comm.Gatherv(self, sendbuf, recvbuf, int root=0)
- |      
- |      Gather Vector, gather data to one process from all other
- |      processes in a group providing different amount of data and
- |      displacements at the receiving sides
- |  
- |  Get_attr(...)
- |      Comm.Get_attr(self, int keyval)
- |      
- |      Retrieve attribute value by key
- |  
- |  Get_errhandler(...)
- |      Comm.Get_errhandler(self)
- |      
- |      Get the error handler for a communicator
- |  
- |  Get_group(...)
- |      Comm.Get_group(self)
- |      
- |      Access the group associated with a communicator
- |  
- |  Get_info(...)
- |      Comm.Get_info(self)
- |      
- |      Return the hints for a communicator
- |      that are currently in use
- |  
- |  Get_name(...)
- |      Comm.Get_name(self)
- |      
- |      Get the print name for this communicator
- |  
- |  Get_rank(...)
- |      Comm.Get_rank(self)
- |      
- |      Return the rank of this process in a communicator
- |  
- |  Get_size(...)
- |      Comm.Get_size(self)
- |      
- |      Return the number of processes in a communicator
- |  
- |  Get_topology(...)
- |      Comm.Get_topology(self)
- |      
- |      Determine the type of topology (if any)
- |      associated with a communicator
- |  
- |  Iallgather(...)
- |      Comm.Iallgather(self, sendbuf, recvbuf)
- |      
- |      Nonblocking Gather to All
- |  
- |  Iallgatherv(...)
- |      Comm.Iallgatherv(self, sendbuf, recvbuf)
- |      
- |      Nonblocking Gather to All Vector
- |  
- |  Iallreduce(...)
- |      Comm.Iallreduce(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Nonblocking All Reduce
- |  
- |  Ialltoall(...)
- |      Comm.Ialltoall(self, sendbuf, recvbuf)
- |      
- |      Nonblocking All to All Scatter/Gather
- |  
- |  Ialltoallv(...)
- |      Comm.Ialltoallv(self, sendbuf, recvbuf)
- |      
- |      Nonblocking All to All Scatter/Gather Vector
- |  
- |  Ialltoallw(...)
- |      Comm.Ialltoallw(self, sendbuf, recvbuf)
- |      
- |      Nonblocking Generalized All-to-All
- |  
- |  Ibarrier(...)
- |      Comm.Ibarrier(self)
- |      
- |      Nonblocking Barrier
- |  
- |  Ibcast(...)
- |      Comm.Ibcast(self, buf, int root=0)
- |      
- |      Nonblocking Broadcast
- |  
- |  Ibsend(...)
- |      Comm.Ibsend(self, buf, int dest, int tag=0)
- |      
- |      Nonblocking send in buffered mode
- |  
- |  Idup(...)
- |      Comm.Idup(self)
- |      
- |      Nonblocking duplicate an existing communicator
- |  
- |  Igather(...)
- |      Comm.Igather(self, sendbuf, recvbuf, int root=0)
- |      
- |      Nonblocking Gather
- |  
- |  Igatherv(...)
- |      Comm.Igatherv(self, sendbuf, recvbuf, int root=0)
- |      
- |      Nonblocking Gather Vector
- |  
- |  Improbe(...)
- |      Comm.Improbe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      
- |      Nonblocking test for a matched message
- |  
- |  Iprobe(...)
- |      Comm.Iprobe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      
- |      Nonblocking test for a message
- |  
- |  Irecv(...)
- |      Comm.Irecv(self, buf, int source=ANY_SOURCE, int tag=ANY_TAG)
- |      
- |      Nonblocking receive
- |  
- |  Ireduce(...)
- |      Comm.Ireduce(self, sendbuf, recvbuf, Op op=SUM, int root=0)
- |      
- |      Nonblocking Reduce
- |  
- |  Ireduce_scatter(...)
- |      Comm.Ireduce_scatter(self, sendbuf, recvbuf, recvcounts=None, Op op=SUM)
- |      
- |      Nonblocking Reduce-Scatter (vector version)
- |  
- |  Ireduce_scatter_block(...)
- |      Comm.Ireduce_scatter_block(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Nonblocking Reduce-Scatter Block (regular, non-vector version)
- |  
- |  Irsend(...)
- |      Comm.Irsend(self, buf, int dest, int tag=0)
- |      
- |      Nonblocking send in ready mode
- |  
- |  Is_inter(...)
- |      Comm.Is_inter(self)
- |      
- |      Test to see if a comm is an intercommunicator
- |  
- |  Is_intra(...)
- |      Comm.Is_intra(self)
- |      
- |      Test to see if a comm is an intracommunicator
- |  
- |  Iscatter(...)
- |      Comm.Iscatter(self, sendbuf, recvbuf, int root=0)
- |      
- |      Nonblocking Scatter
- |  
- |  Iscatterv(...)
- |      Comm.Iscatterv(self, sendbuf, recvbuf, int root=0)
- |      
- |      Nonblocking Scatter Vector
- |  
- |  Isend(...)
- |      Comm.Isend(self, buf, int dest, int tag=0)
- |      
- |      Nonblocking send
- |  
- |  Issend(...)
- |      Comm.Issend(self, buf, int dest, int tag=0)
- |      
- |      Nonblocking send in synchronous mode
- |  
- |  Mprobe(...)
- |      Comm.Mprobe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      
- |      Blocking test for a matched message
- |  
- |  Probe(...)
- |      Comm.Probe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      
- |      Blocking test for a message
- |      
- |      .. note:: This function blocks until the message arrives.
- |  
- |  Recv(...)
- |      Comm.Recv(self, buf, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      
- |      Blocking receive
- |      
- |      .. note:: This function blocks until the message is received
- |  
- |  Recv_init(...)
- |      Comm.Recv_init(self, buf, int source=ANY_SOURCE, int tag=ANY_TAG)
- |      
- |      Create a persistent request for a receive
- |  
- |  Reduce(...)
- |      Comm.Reduce(self, sendbuf, recvbuf, Op op=SUM, int root=0)
- |      
- |      Reduce
- |  
- |  Reduce_scatter(...)
- |      Comm.Reduce_scatter(self, sendbuf, recvbuf, recvcounts=None, Op op=SUM)
- |      
- |      Reduce-Scatter (vector version)
- |  
- |  Reduce_scatter_block(...)
- |      Comm.Reduce_scatter_block(self, sendbuf, recvbuf, Op op=SUM)
- |      
- |      Reduce-Scatter Block (regular, non-vector version)
- |  
- |  Rsend(...)
- |      Comm.Rsend(self, buf, int dest, int tag=0)
- |      
- |      Blocking send in ready mode
- |  
- |  Rsend_init(...)
- |      Comm.Rsend_init(self, buf, int dest, int tag=0)
- |      
- |      Persistent request for a send in ready mode
- |  
- |  Scatter(...)
- |      Comm.Scatter(self, sendbuf, recvbuf, int root=0)
- |      
- |      Scatter data from one process
- |      to all other processes in a group
- |  
- |  Scatterv(...)
- |      Comm.Scatterv(self, sendbuf, recvbuf, int root=0)
- |      
- |      Scatter Vector, scatter data from one process to all other
- |      processes in a group providing different amount of data and
- |      displacements at the sending side
- |  
- |  Send(...)
- |      Comm.Send(self, buf, int dest, int tag=0)
- |      
- |      Blocking send
- |      
- |      .. note:: This function may block until the message is
- |         received. Whether or not `Send` blocks depends on
- |         several factors and is implementation dependent
- |  
- |  Send_init(...)
- |      Comm.Send_init(self, buf, int dest, int tag=0)
- |      
- |      Create a persistent request for a standard send
- |  
- |  Sendrecv(...)
- |      Comm.Sendrecv(self, sendbuf, int dest, int sendtag=0, recvbuf=None, int source=ANY_SOURCE, int recvtag=ANY_TAG, Status status=None)
- |      
- |      Send and receive a message
- |      
- |      .. note:: This function is guaranteed not to deadlock in
- |         situations where pairs of blocking sends and receives may
- |         deadlock.
- |      
- |      .. caution:: A common mistake when using this function is to
- |         mismatch the tags with the source and destination ranks,
- |         which can result in deadlock.
- |  
- |  Sendrecv_replace(...)
- |      Comm.Sendrecv_replace(self, buf, int dest, int sendtag=0, int source=ANY_SOURCE, int recvtag=ANY_TAG, Status status=None)
- |      
- |      Send and receive a message
- |      
- |      .. note:: This function is guaranteed not to deadlock in
- |         situations where pairs of blocking sends and receives may
- |         deadlock.
- |      
- |      .. caution:: A common mistake when using this function is to
- |         mismatch the tags with the source and destination ranks,
- |         which can result in deadlock.
- |  
- |  Set_attr(...)
- |      Comm.Set_attr(self, int keyval, attrval)
- |      
- |      Store attribute value associated with a key
- |  
- |  Set_errhandler(...)
- |      Comm.Set_errhandler(self, Errhandler errhandler)
- |      
- |      Set the error handler for a communicator
- |  
- |  Set_info(...)
- |      Comm.Set_info(self, Info info)
- |      
- |      Set new values for the hints
- |      associated with a communicator
- |  
- |  Set_name(...)
- |      Comm.Set_name(self, name)
- |      
- |      Set the print name for this communicator
- |  
- |  Split(...)
- |      Comm.Split(self, int color=0, int key=0)
- |      
- |      Split communicator by color and key
- |  
- |  Split_type(...)
- |      Comm.Split_type(self, int split_type, int key=0, Info info=INFO_NULL)
- |      
- |      Split communicator by color and key
- |  
- |  Ssend(...)
- |      Comm.Ssend(self, buf, int dest, int tag=0)
- |      
- |      Blocking send in synchronous mode
- |  
- |  Ssend_init(...)
- |      Comm.Ssend_init(self, buf, int dest, int tag=0)
- |      
- |      Persistent request for a send in synchronous mode
- |  
- |  __bool__(self, /)
- |      self != 0
- |  
- |  __eq__(self, value, /)
- |      Return self==value.
- |  
- |  __ge__(self, value, /)
- |      Return self&gt;=value.
- |  
- |  __gt__(self, value, /)
- |      Return self&gt;value.
- |  
- |  __le__(self, value, /)
- |      Return self&lt;=value.
- |  
- |  __lt__(self, value, /)
- |      Return self&lt;value.
- |  
- |  __ne__(self, value, /)
- |      Return self!=value.
- |  
- |  allgather(...)
- |      Comm.allgather(self, sendobj)
- |      Gather to All
- |  
- |  allreduce(...)
- |      Comm.allreduce(self, sendobj, op=SUM)
- |      Reduce to All
- |  
- |  alltoall(...)
- |      Comm.alltoall(self, sendobj)
- |      All to All Scatter/Gather
- |  
- |  barrier(...)
- |      Comm.barrier(self)
- |      Barrier
- |  
- |  bcast(...)
- |      Comm.bcast(self, obj, int root=0)
- |      Broadcast
- |  
- |  bsend(...)
- |      Comm.bsend(self, obj, int dest, int tag=0)
- |      Send in buffered mode
- |  
- |  gather(...)
- |      Comm.gather(self, sendobj, int root=0)
- |      Gather
- |  
- |  ibsend(...)
- |      Comm.ibsend(self, obj, int dest, int tag=0)
- |      Nonblocking send in buffered mode
- |  
- |  improbe(...)
- |      Comm.improbe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      Nonblocking test for a matched message
- |  
- |  iprobe(...)
- |      Comm.iprobe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      Nonblocking test for a message
- |  
- |  irecv(...)
- |      Comm.irecv(self, buf=None, int source=ANY_SOURCE, int tag=ANY_TAG)
- |      Nonblocking receive
- |  
- |  isend(...)
- |      Comm.isend(self, obj, int dest, int tag=0)
- |      Nonblocking send
- |  
- |  issend(...)
- |      Comm.issend(self, obj, int dest, int tag=0)
- |      Nonblocking send in synchronous mode
- |  
- |  mprobe(...)
- |      Comm.mprobe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      Blocking test for a matched message
- |  
- |  probe(...)
- |      Comm.probe(self, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      Blocking test for a message
- |  
- |  py2f(...)
- |      Comm.py2f(self)
- |  
- |  recv(...)
- |      Comm.recv(self, buf=None, int source=ANY_SOURCE, int tag=ANY_TAG, Status status=None)
- |      Receive
- |  
- |  reduce(...)
- |      Comm.reduce(self, sendobj, op=SUM, int root=0)
- |      Reduce
- |  
- |  scatter(...)
- |      Comm.scatter(self, sendobj, int root=0)
- |      Scatter
- |  
- |  send(...)
- |      Comm.send(self, obj, int dest, int tag=0)
- |      Send
- |  
- |  sendrecv(...)
- |      Comm.sendrecv(self, sendobj, int dest, int sendtag=0, recvbuf=None, int source=ANY_SOURCE, int recvtag=ANY_TAG, Status status=None)
- |      Send and Receive
- |  
- |  ssend(...)
- |      Comm.ssend(self, obj, int dest, int tag=0)
- |      Send in synchronous mode
- |  
- |  ----------------------------------------------------------------------
- |  Class methods inherited from Comm:
- |  
- |  Compare(...) from builtins.type
- |      Comm.Compare(type cls, Comm comm1, Comm comm2)
- |      
- |      Compare two communicators
- |  
- |  Create_keyval(...) from builtins.type
- |      Comm.Create_keyval(type cls, copy_fn=None, delete_fn=None, nopython=False)
- |      
- |      Create a new attribute key for communicators
- |  
- |  Free_keyval(...) from builtins.type
- |      Comm.Free_keyval(type cls, int keyval)
- |      
- |      Free and attribute key for communicators
- |  
- |  Get_parent(...) from builtins.type
- |      Comm.Get_parent(type cls)
- |      
- |      Return the parent intercommunicator for this process
- |  
- |  Join(...) from builtins.type
- |      Comm.Join(type cls, int fd)
- |      
- |      Create a intercommunicator by joining
- |      two processes connected by a socket
- |  
- |  f2py(...) from builtins.type
- |      Comm.f2py(type cls, arg)
- |  
- |  ----------------------------------------------------------------------
- |  Data descriptors inherited from Comm:
- |  
- |  group
- |      communicator group
- |  
- |  info
- |      communicator info
- |  
- |  is_inter
- |      is intercommunicator
- |  
- |  is_intra
- |      is intracommunicator
- |  
- |  is_topo
- |      is a topology communicator
- |  
- |  name
- |      communicator name
- |  
- |  rank
- |      rank of this process in communicator
- |  
- |  size
- |      number of processes in communicator
- |  
- |  topology
- |      communicator topology type
- |  
- |  ----------------------------------------------------------------------
- |  Data and other attributes inherited from Comm:
- |  
- |  __hash__ = None</code></pre>
+#help(comm)</code></pre>
 <div id="keypoints" class="section level3 keypoints">
 <h3>keypoints</h3>
 <ul>
