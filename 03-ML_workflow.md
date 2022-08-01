@@ -1,23 +1,23 @@
-# Building Machine Learning Datasets From Scratch
+# Machine Learning From Scratch
 
-All machine learning problems begin with a dataset, and before we can perform any kind of inference on that dataset we must create/wrangle/build it. This is often the most time-consuming and hard part of a successful machine learning workflow. There is no set procedure here, as all data is different, although there are a few simple methods we can take to make a useful dataset.
+Most machine learning problems begin with a dataset, but before we can perform any kind of inference on that dataset we must create/wrangle/build it. This is often the most time-consuming and hard part of a successful machine learning workflow. There is no set procedure here, as all data is different, although there are a few simple methods we can take to make a useful dataset.
 
 We will be using data from a submitted Manuscript (Butterworth and Barnett-Moore 2020) which was a finalist in the [Unearthed, ExploreSA: Gawler Challenge](https://unearthed.solutions/u/competitions/exploresa). You can visit the [original repo here](https://github.com/natbutter/gawler-exploration).
 
 <br>
 
-# Goal: Create a table of data containing "targets" and "predictor variables"
+# Building a dataset of "targets" and "predictor variables"
 
 The targets in an ML context can be a simple binary 1 or 0, or could be some category (classification), or the value of a particular parameter (regression problems). It is the "feature" of a dataset that we want to learn something about!
 
-The "predictor/feature variables" are the qualities/parameters that may have some causal relationship with the the target.
+The "predictor/feature variables" are the qualities/parameters that may have some causal relationship with the "target".
 
 
-## Step 1 - What is our target variable?
-Are we classifying something? 
+## Step 1 - Determine our target variable
+Let's explore our our main dataset.
 
-### Deposit locations - mine and mineral occurances
-The most important dataset for this workflow is the currently known locations of mineral occurences. Using the data we already know about these known-deposits we will build a model to predict where future occurences will be.
+### Deposit locations - mine and mineral occurrences
+The most important dataset for this workflow is the currently known locations of mineral occurrences. Using the data we already know about these mineral deposits we will build a model to predict where future occurrences will be.
 
 
 ```python
@@ -301,9 +301,10 @@ plt.show()
     
 
 
-## Step 2 - Wrangle the geophysical and geological datasets (variable features)
-Each geophysical dataset could offer instight into various commodities. Here we load in the pre-processed datasets and prepare them for further manipulations, data-mining, and machine learning.
-All of the full datasets are availble from https://map.sarig.sa.gov.au/. For this exercise we have simplified the datasets (reduced complexity and resolution). Grab full datasets from [https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA](https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA)
+## Step 2 - Wrangle the geophysical and geological datasets (predictor variables)
+Many geophysical data are available for South Australia overlapping our target mineral locations. We may presume that certain mineral occurrences express a combination of geology and geophysics. We can train an algorithm to learn these associations and then use the same algorithm to make predictions for where unknown occurrences may be found. 
+
+Here we load in the (slightly) pre-processed geophysical datasets and prepare them for further manipulations, data-mining, and machine learning. All of the full/raw datasets are available from https://map.sarig.sa.gov.au/. For this exercise we have simplified the datasets by reducing complexity and resolution. Grab additional processed datasets from [https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA](https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA)
 
 ### Resistivity xyz data
 
@@ -427,7 +428,7 @@ data_res
 
 
 
-This data is Lat-Lon spatial location and the value of the feature at that location.
+This data is the Lat-Lon spatial location and the value of the feature at that location.
 
 
 ```python
@@ -451,7 +452,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_13_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_12_0.png)
     
 
 
@@ -511,7 +512,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_18_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_17_0.png)
     
 
 
@@ -560,7 +561,7 @@ x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc("../data/sa-grav.nc")
 
     Loaded ../data/sa-dem.nc in 0.01s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
-    Loaded ../data/sa-mag-tmi.nc in 0.01s
+    Loaded ../data/sa-mag-tmi.nc in 0.00s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
     Loaded ../data/sa-grav.nc in 0.00s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
@@ -588,7 +589,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_23_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_22_0.png)
     
 
 
@@ -692,7 +693,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_28_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_27_0.png)
     
 
 
@@ -702,9 +703,9 @@ Now we need to think about what we actually want to achieve? What is our goal he
 
 ## Step 3 - Assign geophys values to target locations
 
-We need to assign the values of each of these geophyiscal datasets (predictor variables) to the target class (i.e. mineral deposit locations). 
-The assumption being that the occurnece of some mineral deposit (e.g. Cu) is a function of x1, x2, x3, x4, x5, x6. 
-Where the Resitivity is x1, the distance to a Neoprotezoic fault is x2, the value of DEM, magnetic TMI, and Gravity is x3, x4, and x5, and the geologica basement unit is x6.
+We need to assign the values of each of these geophysical datasets (predictor variables) to the target class (i.e. mineral deposit locations). 
+The assumption being that the occurrence of some mineral deposit (e.g. Cu) is a function of x1, x2, x3, x4, x5, x6. 
+Where the Resistivity is x1, the distance to a Neoprotezoic fault is x2, the value of DEM, magnetic TMI, and Gravity is x3, x4, and x5, and the geological basement unit is x6.
 
 
 ```python
@@ -1217,7 +1218,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_43_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_42_0.png)
     
 
 
@@ -1247,8 +1248,8 @@ geoindex = 4
 td1['geol']=td1.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)
 ```
 
-    CPU times: user 6.51 s, sys: 4.67 ms, total: 6.51 s
-    Wall time: 6.51 s
+    CPU times: user 6.23 s, sys: 0 ns, total: 6.23 s
+    Wall time: 6.22 s
 
 
 
@@ -1460,7 +1461,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_50_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_49_0.png)
     
 
 
@@ -1491,8 +1492,8 @@ td2['grav'] = rastersearch(td2,z3,originx3,originy3,pixelx3,pixely3)
 td2['geol']=td2.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)
 ```
 
-    CPU times: user 14.8 s, sys: 10 ms, total: 14.8 s
-    Wall time: 14.8 s
+    CPU times: user 15.3 s, sys: 0 ns, total: 15.3 s
+    Wall time: 15.3 s
 
 
 
@@ -1615,62 +1616,62 @@ fv
     </tr>
     <tr>
       <th>225</th>
-      <td>137.445474</td>
-      <td>-33.652830</td>
-      <td>-0.3611</td>
-      <td>0.470525</td>
+      <td>137.379563</td>
+      <td>-27.239945</td>
+      <td>1.9918</td>
+      <td>1.585305</td>
       <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>Nawa, Mount Woods, Fowler, Wilgena, Harris Gr</td>
+      <td>-49.557037</td>
+      <td>-14.879361</td>
+      <td>Noolyeana Domain</td>
       <td>0</td>
     </tr>
     <tr>
       <th>226</th>
-      <td>131.475045</td>
-      <td>-29.542970</td>
-      <td>1.9398</td>
-      <td>0.003774</td>
+      <td>132.160057</td>
+      <td>-33.464682</td>
+      <td>-0.8385</td>
+      <td>0.717271</td>
       <td>...</td>
-      <td>-194.693344</td>
-      <td>-11.794041</td>
-      <td>Nawa Domain</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>Nuyts, Cleve, Spencer, Gawler Range Volcanics</td>
       <td>0</td>
     </tr>
     <tr>
       <th>227</th>
-      <td>132.345170</td>
-      <td>-30.403433</td>
-      <td>2.5240</td>
-      <td>0.174649</td>
+      <td>136.717075</td>
+      <td>-33.605361</td>
+      <td>2.6090</td>
+      <td>0.443433</td>
       <td>...</td>
-      <td>-420.737854</td>
-      <td>-13.037086</td>
-      <td>Chrisite, Wilgena, Harris Greenstone, Olympic</td>
+      <td>-228.808777</td>
+      <td>7.512496</td>
+      <td>Cleve Domain</td>
       <td>0</td>
     </tr>
     <tr>
       <th>228</th>
-      <td>133.561520</td>
-      <td>-34.495421</td>
-      <td>-0.6886</td>
-      <td>0.891632</td>
+      <td>136.970578</td>
+      <td>-30.732843</td>
+      <td>1.9818</td>
+      <td>0.656012</td>
       <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>Nuyts Domain</td>
+      <td>466.422302</td>
+      <td>-20.277115</td>
+      <td>Cleve, Spencer, Olympic Domains</td>
       <td>0</td>
     </tr>
     <tr>
       <th>229</th>
-      <td>133.398693</td>
-      <td>-37.706946</td>
-      <td>-0.5407</td>
-      <td>2.870313</td>
+      <td>138.328646</td>
+      <td>-35.060603</td>
+      <td>0.5226</td>
+      <td>0.088926</td>
       <td>...</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>-9999</td>
+      <td></td>
       <td>0</td>
     </tr>
   </tbody>
@@ -1688,9 +1689,11 @@ fv.to_csv('../data/fv.csv',index=False)
 
 # Exploratory Data Analysis
 
-This is often the point you recieve the data in (if you are using any well-formed datasets). But in reality 90% of the time is doing weird data wrangling steps like what we have done. Then 9% is spent exploring your dataset and understanding it more, dealing with missing data, observing correlations. This is often an iterative process. Let's do some simple visualisations.
+This is often the point you receive the data in (if you are using any well-formed datasets). But in reality 90% of the time is doing weird data wrangling steps like what we have done. Then 9% is spent exploring your dataset and understanding it more, dealing with missing data, observing correlations. This is often an iterative process. Let's do some simple visualisations.
 
-Note: the last 1% of time is actually applying the ML algorithms!
+Note: the last 1% of time is actually applying the ML algorithm! 
+
+Note2: These percentages are totally made up, but feeeel about right.
 
 
 ```python
@@ -1707,9 +1710,9 @@ fv.info()
      1   LATITUDE   230 non-null    float64
      2   res        230 non-null    float64
      3   faults     230 non-null    float64
-     4   dem        224 non-null    float64
-     5   mag        224 non-null    float64
-     6   grav       224 non-null    float64
+     4   dem        227 non-null    float64
+     5   mag        227 non-null    float64
+     6   grav       227 non-null    float64
      7   geol       230 non-null    object 
      8   deposit    230 non-null    int64  
     dtypes: float64(7), int64(1), object(1)
@@ -1733,7 +1736,7 @@ sns.barplot(x=missingNo.values, y=missingNo.index);
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_59_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_58_0.png)
     
 
 
@@ -1755,7 +1758,7 @@ upsetplot.plot(missing_counts);
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_61_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_60_0.png)
     
 
 
@@ -1768,13 +1771,13 @@ sns.pairplot(fv,hue='deposit',palette="Set1",diag_kind="auto")
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x7f8735d06550>
+    <seaborn.axisgrid.PairGrid at 0x7f5676a4d880>
 
 
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_62_1.png)
+![png](03-ML_workflow_files/03-ML_workflow_61_1.png)
     
 
 
@@ -1793,7 +1796,7 @@ sns.heatmap(corr,
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_63_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_62_0.png)
     
 
 
@@ -1806,31 +1809,31 @@ for i in ['res', 'faults', 'dem', 'mag', 'grav']:
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_64_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_63_0.png)
     
 
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_64_1.png)
+![png](03-ML_workflow_files/03-ML_workflow_63_1.png)
     
 
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_64_2.png)
+![png](03-ML_workflow_files/03-ML_workflow_63_2.png)
     
 
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_64_3.png)
+![png](03-ML_workflow_files/03-ML_workflow_63_3.png)
     
 
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_64_4.png)
+![png](03-ML_workflow_files/03-ML_workflow_63_4.png)
     
 
 
@@ -1943,7 +1946,7 @@ plt.legend(loc=7)
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_72_2.png)
+![png](03-ML_workflow_files/03-ML_workflow_71_2.png)
     
 
 
@@ -2020,7 +2023,7 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_75_1.png)
+![png](03-ML_workflow_files/03-ML_workflow_74_1.png)
     
 
 
@@ -2058,9 +2061,12 @@ rf.predict_proba(targets)
 
 
 ```python
+# Better - Make a grid of target locations over an entire area
 #100x100 takes about 1 hour! 10x10 takes about 1 minute
-# Make a grid of target locations
 grid_x, grid_y = np.mgrid[130:140:10j,-36:-26:10j]
+
+# Now we want to get the geophys values for every single point on this grid
+# Which we will then apply our model to!
 ```
 
 
@@ -2150,6 +2156,6 @@ plt.show()
 
 
     
-![png](03-ML_workflow_files/03-ML_workflow_83_0.png)
+![png](03-ML_workflow_files/03-ML_workflow_82_0.png)
     
 

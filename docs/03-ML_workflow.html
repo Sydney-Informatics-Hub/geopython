@@ -474,22 +474,22 @@ div.tocify {
 </div>
 
 
-<div id="building-machine-learning-datasets-from-scratch" class="section level1">
-<h1>Building Machine Learning Datasets From Scratch</h1>
-<p>All machine learning problems begin with a dataset, and before we can perform any kind of inference on that dataset we must create/wrangle/build it. This is often the most time-consuming and hard part of a successful machine learning workflow. There is no set procedure here, as all data is different, although there are a few simple methods we can take to make a useful dataset.</p>
+<div id="machine-learning-from-scratch" class="section level1">
+<h1>Machine Learning From Scratch</h1>
+<p>Most machine learning problems begin with a dataset, but before we can perform any kind of inference on that dataset we must create/wrangle/build it. This is often the most time-consuming and hard part of a successful machine learning workflow. There is no set procedure here, as all data is different, although there are a few simple methods we can take to make a useful dataset.</p>
 <p>We will be using data from a submitted Manuscript (Butterworth and Barnett-Moore 2020) which was a finalist in the <a href="https://unearthed.solutions/u/competitions/exploresa">Unearthed, ExploreSA: Gawler Challenge</a>. You can visit the <a href="https://github.com/natbutter/gawler-exploration">original repo here</a>.</p>
 <p><br></p>
 </div>
-<div id="goal-create-a-table-of-data-containing-targets-and-predictor-variables" class="section level1">
-<h1>Goal: Create a table of data containing “targets” and “predictor variables”</h1>
+<div id="building-a-dataset-of-targets-and-predictor-variables" class="section level1">
+<h1>Building a dataset of “targets” and “predictor variables”</h1>
 <p>The targets in an ML context can be a simple binary 1 or 0, or could be some category (classification), or the value of a particular parameter (regression problems). It is the “feature” of a dataset that we want to learn something about!</p>
-<p>The “predictor/feature variables” are the qualities/parameters that may have some causal relationship with the the target.</p>
-<div id="step-1---what-is-our-target-variable" class="section level2">
-<h2>Step 1 - What is our target variable?</h2>
-<p>Are we classifying something?</p>
-<div id="deposit-locations---mine-and-mineral-occurances" class="section level3">
-<h3>Deposit locations - mine and mineral occurances</h3>
-<p>The most important dataset for this workflow is the currently known locations of mineral occurences. Using the data we already know about these known-deposits we will build a model to predict where future occurences will be.</p>
+<p>The “predictor/feature variables” are the qualities/parameters that may have some causal relationship with the “target”.</p>
+<div id="step-1---determine-our-target-variable" class="section level2">
+<h2>Step 1 - Determine our target variable</h2>
+<p>Let’s explore our our main dataset.</p>
+<div id="deposit-locations---mine-and-mineral-occurrences" class="section level3">
+<h3>Deposit locations - mine and mineral occurrences</h3>
+<p>The most important dataset for this workflow is the currently known locations of mineral occurrences. Using the data we already know about these mineral deposits we will build a model to predict where future occurrences will be.</p>
 <pre class="python"><code># For working with shapefiles (packaged is called pyshp)
 import shapefile
 # For working with dataframes
@@ -958,9 +958,10 @@ plt.show()</code></pre>
 </div>
 </div>
 </div>
-<div id="step-2---wrangle-the-geophysical-and-geological-datasets-variable-features" class="section level2">
-<h2>Step 2 - Wrangle the geophysical and geological datasets (variable features)</h2>
-<p>Each geophysical dataset could offer instight into various commodities. Here we load in the pre-processed datasets and prepare them for further manipulations, data-mining, and machine learning. All of the full datasets are availble from <a href="https://map.sarig.sa.gov.au/" class="uri">https://map.sarig.sa.gov.au/</a>. For this exercise we have simplified the datasets (reduced complexity and resolution). Grab full datasets from <a href="https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA">https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA</a></p>
+<div id="step-2---wrangle-the-geophysical-and-geological-datasets-predictor-variables" class="section level2">
+<h2>Step 2 - Wrangle the geophysical and geological datasets (predictor variables)</h2>
+<p>Many geophysical data are available for South Australia overlapping our target mineral locations. We may presume that certain mineral occurrences express a combination of geology and geophysics. We can train an algorithm to learn these associations and then use the same algorithm to make predictions for where unknown occurrences may be found.</p>
+<p>Here we load in the (slightly) pre-processed geophysical datasets and prepare them for further manipulations, data-mining, and machine learning. All of the full/raw datasets are available from <a href="https://map.sarig.sa.gov.au/" class="uri">https://map.sarig.sa.gov.au/</a>. For this exercise we have simplified the datasets by reducing complexity and resolution. Grab additional processed datasets from <a href="https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA">https://github.com/natbutter/gawler-exploration/tree/master/ML-DATA</a></p>
 <div id="resistivity-xyz-data" class="section level3">
 <h3>Resistivity xyz data</h3>
 <pre class="python"><code>#Read in the data
@@ -1194,7 +1195,7 @@ resistivity
 11008 rows × 4 columns
 </p>
 </div>
-<p>This data is Lat-Lon spatial location and the value of the feature at that location.</p>
+<p>This data is the Lat-Lon spatial location and the value of the feature at that location.</p>
 <pre class="python"><code>fig = plt.figure(figsize=(8,8))
 ax = plt.axes()
 im=ax.scatter(data_res.lon,data_res.lat,s=4,c=data_res.resistivity,cmap=&quot;jet&quot;)
@@ -1212,7 +1213,7 @@ cbar.ax.xaxis.set_label_position(&#39;top&#39;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_13_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_12_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -1252,7 +1253,7 @@ plt.legend(loc=3)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_18_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_17_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -1289,7 +1290,7 @@ x2,y2,z2,originx2,originy2,pixelx2,pixely2 = readnc(&quot;../data/sa-mag-tmi.nc&
 x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc(&quot;../data/sa-grav.nc&quot;)</code></pre>
 <pre><code>Loaded ../data/sa-dem.nc in 0.01s
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
-Loaded ../data/sa-mag-tmi.nc in 0.01s
+Loaded ../data/sa-mag-tmi.nc in 0.00s
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
 Loaded ../data/sa-grav.nc in 0.00s
 Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99</code></pre>
@@ -1310,7 +1311,7 @@ cbar.ax.xaxis.set_label_position(&#39;top&#39;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_23_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_22_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>These data are raster grids. Essentially Lat-Lon-Value like the XYZ data, but represented in a different format.</p>
@@ -1398,7 +1399,7 @@ plt.ylim(-38.5,-25.5)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_28_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_27_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p><strong>Take a moment to appreciate the various methods you have used just to load the data!</strong></p>
@@ -1407,7 +1408,7 @@ plt.show()</code></pre>
 </div>
 <div id="step-3---assign-geophys-values-to-target-locations" class="section level2">
 <h2>Step 3 - Assign geophys values to target locations</h2>
-<p>We need to assign the values of each of these geophyiscal datasets (predictor variables) to the target class (i.e. mineral deposit locations). The assumption being that the occurnece of some mineral deposit (e.g. Cu) is a function of x1, x2, x3, x4, x5, x6. Where the Resitivity is x1, the distance to a Neoprotezoic fault is x2, the value of DEM, magnetic TMI, and Gravity is x3, x4, and x5, and the geologica basement unit is x6.</p>
+<p>We need to assign the values of each of these geophysical datasets (predictor variables) to the target class (i.e. mineral deposit locations). The assumption being that the occurrence of some mineral deposit (e.g. Cu) is a function of x1, x2, x3, x4, x5, x6. Where the Resistivity is x1, the distance to a Neoprotezoic fault is x2, the value of DEM, magnetic TMI, and Gravity is x3, x4, and x5, and the geological basement unit is x6.</p>
 <pre class="python"><code># Make a Target DataFrame of the points we want to interrogate the features for
 td1 = comm[[&#39;LONGITUDE&#39;, &#39;LATITUDE&#39;]].copy()</code></pre>
 <div id="resistivity" class="section level3">
@@ -2269,7 +2270,7 @@ cbar.ax.xaxis.set_label_position(&#39;top&#39;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_43_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_42_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -2291,8 +2292,8 @@ def shapeExplore(lon,lat,shapes,recs,record):
 <pre class="python"><code>%%time
 geoindex = 4
 td1[&#39;geol&#39;]=td1.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
-<pre><code>CPU times: user 6.51 s, sys: 4.67 ms, total: 6.51 s
-Wall time: 6.51 s</code></pre>
+<pre><code>CPU times: user 6.23 s, sys: 0 ns, total: 6.23 s
+Wall time: 6.22 s</code></pre>
 <pre class="python"><code>td1</code></pre>
 <div>
 <style scoped>
@@ -2697,7 +2698,7 @@ plt.legend(loc=3)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_50_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_49_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>We must do the same coregistration/interrogation of the different data layers for our randomised “non-deposit” data.</p>
@@ -2722,8 +2723,8 @@ td2[&#39;grav&#39;] = rastersearch(td2,z3,originx3,originy3,pixelx3,pixely3)
 
 #Geology
 td2[&#39;geol&#39;]=td2.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)</code></pre>
-<pre><code>CPU times: user 14.8 s, sys: 10 ms, total: 14.8 s
-Wall time: 14.8 s</code></pre>
+<pre><code>CPU times: user 15.3 s, sys: 0 ns, total: 15.3 s
+Wall time: 15.3 s</code></pre>
 <pre class="python"><code>#Add flag indicating classification label
 td1[&#39;deposit&#39;]=1
 td2[&#39;deposit&#39;]=0</code></pre>
@@ -2975,28 +2976,28 @@ Crustal element Adelaide
 225
 </th>
 <td>
-137.445474
+137.379563
 </td>
 <td>
--33.652830
+-27.239945
 </td>
 <td>
--0.3611
+1.9918
 </td>
 <td>
-0.470525
+1.585305
 </td>
 <td>
 …
 </td>
 <td>
-0.000000
+-49.557037
 </td>
 <td>
-0.000000
+-14.879361
 </td>
 <td>
-Nawa, Mount Woods, Fowler, Wilgena, Harris Gr
+Noolyeana Domain
 </td>
 <td>
 0
@@ -3007,28 +3008,28 @@ Nawa, Mount Woods, Fowler, Wilgena, Harris Gr
 226
 </th>
 <td>
-131.475045
+132.160057
 </td>
 <td>
--29.542970
+-33.464682
 </td>
 <td>
-1.9398
+-0.8385
 </td>
 <td>
-0.003774
+0.717271
 </td>
 <td>
 …
 </td>
 <td>
--194.693344
+0.000000
 </td>
 <td>
--11.794041
+0.000000
 </td>
 <td>
-Nawa Domain
+Nuyts, Cleve, Spencer, Gawler Range Volcanics
 </td>
 <td>
 0
@@ -3039,28 +3040,28 @@ Nawa Domain
 227
 </th>
 <td>
-132.345170
+136.717075
 </td>
 <td>
--30.403433
+-33.605361
 </td>
 <td>
-2.5240
+2.6090
 </td>
 <td>
-0.174649
+0.443433
 </td>
 <td>
 …
 </td>
 <td>
--420.737854
+-228.808777
 </td>
 <td>
--13.037086
+7.512496
 </td>
 <td>
-Chrisite, Wilgena, Harris Greenstone, Olympic
+Cleve Domain
 </td>
 <td>
 0
@@ -3071,28 +3072,28 @@ Chrisite, Wilgena, Harris Greenstone, Olympic
 228
 </th>
 <td>
-133.561520
+136.970578
 </td>
 <td>
--34.495421
+-30.732843
 </td>
 <td>
--0.6886
+1.9818
 </td>
 <td>
-0.891632
+0.656012
 </td>
 <td>
 …
 </td>
 <td>
-0.000000
+466.422302
 </td>
 <td>
-0.000000
+-20.277115
 </td>
 <td>
-Nuyts Domain
+Cleve, Spencer, Olympic Domains
 </td>
 <td>
 0
@@ -3103,16 +3104,16 @@ Nuyts Domain
 229
 </th>
 <td>
-133.398693
+138.328646
 </td>
 <td>
--37.706946
+-35.060603
 </td>
 <td>
--0.5407
+0.5226
 </td>
 <td>
-2.870313
+0.088926
 </td>
 <td>
 …
@@ -3124,7 +3125,6 @@ Nuyts Domain
 0.000000
 </td>
 <td>
--9999
 </td>
 <td>
 0
@@ -3142,8 +3142,9 @@ fv.to_csv(&#39;../data/fv.csv&#39;,index=False)</code></pre>
 </div>
 <div id="exploratory-data-analysis" class="section level1">
 <h1>Exploratory Data Analysis</h1>
-<p>This is often the point you recieve the data in (if you are using any well-formed datasets). But in reality 90% of the time is doing weird data wrangling steps like what we have done. Then 9% is spent exploring your dataset and understanding it more, dealing with missing data, observing correlations. This is often an iterative process. Let’s do some simple visualisations.</p>
-<p>Note: the last 1% of time is actually applying the ML algorithms!</p>
+<p>This is often the point you receive the data in (if you are using any well-formed datasets). But in reality 90% of the time is doing weird data wrangling steps like what we have done. Then 9% is spent exploring your dataset and understanding it more, dealing with missing data, observing correlations. This is often an iterative process. Let’s do some simple visualisations.</p>
+<p>Note: the last 1% of time is actually applying the ML algorithm!</p>
+<p>Note2: These percentages are totally made up, but feeeel about right.</p>
 <pre class="python"><code>#Get information about index type and column types, non-null values and memory usage.
 fv.info()</code></pre>
 <pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
@@ -3155,9 +3156,9 @@ Data columns (total 9 columns):
  1   LATITUDE   230 non-null    float64
  2   res        230 non-null    float64
  3   faults     230 non-null    float64
- 4   dem        224 non-null    float64
- 5   mag        224 non-null    float64
- 6   grav       224 non-null    float64
+ 4   dem        227 non-null    float64
+ 5   mag        227 non-null    float64
+ 6   grav       227 non-null    float64
  7   geol       230 non-null    object 
  8   deposit    230 non-null    int64  
 dtypes: float64(7), int64(1), object(1)
@@ -3170,7 +3171,7 @@ missingNo
 
 sns.barplot(x=missingNo.values, y=missingNo.index);</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_59_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_58_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>import upsetplot</code></pre>
@@ -3182,14 +3183,14 @@ missing_counts = (fv.loc[:, missing_cols]
 
 upsetplot.plot(missing_counts);</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_61_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_60_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code># Plot historgrams and scatter plots for each combination of features.
 sns.pairplot(fv,hue=&#39;deposit&#39;,palette=&quot;Set1&quot;,diag_kind=&quot;auto&quot;)</code></pre>
-<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7f8735d06550&gt;</code></pre>
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7f5676a4d880&gt;</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_62_1.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_61_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>#Plot a heatmap for how correlated each of the features are
@@ -3202,30 +3203,30 @@ sns.heatmap(corr,
             xticklabels=True, yticklabels=True,
             );</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_63_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_62_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>for i in [&#39;res&#39;, &#39;faults&#39;, &#39;dem&#39;, &#39;mag&#39;, &#39;grav&#39;]:
     ax = sns.boxplot(x=&#39;deposit&#39;,y=i, data=fv)
     plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_64_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_63_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_64_1.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_63_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_64_2.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_63_2.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_64_3.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_63_3.png" alt="" />
 <p class="caption">png</p>
 </div>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_64_4.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_63_4.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -3303,7 +3304,7 @@ SCORE Mean: 0.92 STD: 0.07
 
 &lt;matplotlib.legend.Legend at 0x7f8733744f10&gt;</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_72_2.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_71_2.png" alt="" />
 <p class="caption">png</p>
 </div>
 <pre class="python"><code>print(&quot;Features:&quot;,np.shape(features),&quot;Targets:&quot;,np.shape(targets))
@@ -3361,7 +3362,7 @@ plt.show()</code></pre>
 <pre><code>From the Random Forest ML algorithm
 these are the the most significant features for predicting the target bins.</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_75_1.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_74_1.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>
@@ -3390,9 +3391,12 @@ rf.predict_proba(targets)</code></pre>
 
 array([[0.18, 0.82],
        [0.81, 0.19]])</code></pre>
-<pre class="python"><code>#100x100 takes about 1 hour! 10x10 takes about 1 minute
-# Make a grid of target locations
-grid_x, grid_y = np.mgrid[130:140:10j,-36:-26:10j]</code></pre>
+<pre class="python"><code># Better - Make a grid of target locations over an entire area
+#100x100 takes about 1 hour! 10x10 takes about 1 minute
+grid_x, grid_y = np.mgrid[130:140:10j,-36:-26:10j]
+
+# Now we want to get the geophys values for every single point on this grid
+# Which we will then apply our model to!</code></pre>
 <pre class="python"><code>%%time
 
 tdf = pd.DataFrame({&#39;LONGITUDE&#39;: grid_x.reshape(grid_x.size), &#39;LATITUDE&#39;: grid_y.reshape(grid_y.size)})
@@ -3455,7 +3459,7 @@ cbar.ax.xaxis.set_label_position(&#39;top&#39;)
 
 plt.show()</code></pre>
 <div class="figure">
-<img src="03-ML_workflow_files/03-ML_workflow_83_0.png" alt="" />
+<img src="03-ML_workflow_files/03-ML_workflow_82_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 </div>

@@ -18,4 +18,4 @@ rm -rf docs/data
 
 # Update the zip files and then go upload these to cloudstor.
 # zip -r _additional/data.zip data
-# zip -r _additional/notebooks.zip _ipynb/*
+# cd _ipynb; zip -r ../_additional/notebooks.zip *; cd -

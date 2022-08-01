@@ -394,7 +394,7 @@ $(document).ready(function () {
 <h1>2. Setup your Python environment (install required packages and libraries)</h1>
 <p>Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.</p>
 <ul>
-<li><a href="requirements/environment.yml">Download the python environment file from here</a> (this is a small text file). You may have to “Right Click &gt; Save link as…” to download it.</li>
+<li>Download the python environment file for your system: <a href="requirements/environment_win.yml">Windows</a>, <a href="requirements/environment.yml">MacOSX</a>, <a href="requirements/environment_linux.yml">Linux</a>. This is a small text file, you may have to “Right Click &gt; Save link as…” to download it.</li>
 <li>Launch an Anaconda Prompt (miniconda3).</li>
 </ul>
 <p><br> <img src="fig/setup01.png" /></p>
@@ -403,7 +403,7 @@ $(document).ready(function () {
 </ul>
 <pre class="sh"><code>conda env create -n geopy -f C:\Users\nbutter\Downloads\environment.yml</code></pre>
 <p><img src="fig/setup02.png" /></p>
-<p>If you are working on a Mac or Linux machine, the following will work:</p>
+<p>If you are working on a Mac or Linux machine, the following is equivalent:</p>
 <pre class="sh"><code>conda env create -n geopy -f ~/Downloads/environment.yml</code></pre>
 <p><br></p>
 <p>Upon successful completion the command prompt should look like this:</p>

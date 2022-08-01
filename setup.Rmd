@@ -30,7 +30,7 @@ Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications F
 
 Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.
 
-* [Download the python environment file from here](requirements/environment.yml) (this is a small text file). You may have to "Right Click > Save link as..." to download it.
+* Download the python environment file for your system: [Windows](requirements/environment_win.yml), [MacOSX](requirements/environment.yml), [Linux](requirements/environment_linux.yml). This is a small text file, you may have to "Right Click > Save link as..." to download it.
 * Launch an Anaconda Prompt (miniconda3).
 
 <br>
@@ -44,7 +44,7 @@ conda env create -n geopy -f C:\Users\nbutter\Downloads\environment.yml
 
 ![](fig/setup02.png)
 
-If you are working on a Mac or Linux machine, the following will work:
+If you are working on a Mac or Linux machine, the following is equivalent:
 ```sh
 conda env create -n geopy -f ~/Downloads/environment.yml
 ```
