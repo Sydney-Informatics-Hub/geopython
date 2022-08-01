@@ -32,7 +32,7 @@ RUN cd /data && \
 
 RUN cd /notebooks && \
 	curl -O https://cloudstor.aarnet.edu.au/plus/s/BkeCEYooVLyuLvm/download && \
-	unzip download -d / && rm -rf download
+	unzip download -d /notebooks && rm -rf download
 
 WORKDIR /notebooks
 
