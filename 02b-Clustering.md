@@ -156,7 +156,7 @@ plt.plot(time_values, exact_theta_values, 'b-')
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f9d917bf2e0>]
+    [<matplotlib.lines.Line2D at 0x7f21d5ef44c0>]
 
 
 
@@ -546,7 +546,7 @@ Load in the tomography data set. Assign the column vectors to unique variables (
 
 
 ```python
-tomo=np.loadtxt('data/ggge1202-sup-0002-ds01.txt', skiprows=1)
+tomo=np.loadtxt('../data/ggge1202-sup-0002-ds01.txt', skiprows=1)
 
 lat=tomo[:,0]
 lon=tomo[:,1]
@@ -611,7 +611,7 @@ ax.scatter(lonClust, latClust, -depthClust, c=dvpClust)
 
 
 
-    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x7f9d86f84370>
+    <mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x7f2248d1ebe0>
 
 
 

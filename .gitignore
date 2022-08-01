@@ -9,6 +9,10 @@ _site
 .Rhistory
 .RData
 data/*
+_ipynb/.ipynb_checkpoints
+_ipynb/dask-worker-space
+_additional/*
+
 _ipynb/data/*
 # Code editors
 *.sublime-*

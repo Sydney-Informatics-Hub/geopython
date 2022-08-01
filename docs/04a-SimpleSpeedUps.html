@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -542,7 +539,7 @@ div.tocify {
 <pre class="python"><code>%%time
 import time
 time.sleep(1)</code></pre>
-<pre><code>CPU times: user 385 µs, sys: 29 µs, total: 414 µs
+<pre><code>CPU times: user 0 ns, sys: 617 µs, total: 617 µs
 Wall time: 1 s</code></pre>
 <p>A neat little feature to check how fast some of your cells are running. Now let’s profile a simple Python script and then think about how we could make it faster. Put this code in a script (save it as <code>faster.py</code>):</p>
 <pre class="python"><code>#A test function to see how you can profile code for speedups
@@ -629,7 +626,7 @@ totalSlow=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Nested-loop Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Nested-loop Runtime: 1.867074966430664 seconds</code></pre>
+<pre><code>Nested-loop Runtime: 3.345609664916992 seconds</code></pre>
 <pre class="python"><code>#Or the vectorised method:
 
 tic=time.time()
@@ -638,7 +635,7 @@ totalFast=totalSlow.drop_duplicates()
 toc=time.time()
 print(&quot;Vectorized Runtime:&quot;,toc-tic, &quot;seconds&quot;)
 </code></pre>
-<pre><code>Vectorized Runtime: 0.0026428699493408203 seconds</code></pre>
+<pre><code>Vectorized Runtime: 0.0022592544555664062 seconds</code></pre>
 <p>Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.</p>
 </div>
 <div id="python-multiprocessing" class="section level2">
@@ -677,7 +674,7 @@ import time
 multiprocessing.cpu_count()
 
 #Read in the shapefile that we will use
-sf = shapefile.Reader(&quot;data/platepolygons/topology_platepolygons_0.00Ma.shp&quot;)
+sf = shapefile.Reader(&quot;../data/platepolygons/topology_platepolygons_0.00Ma.shp&quot;)
 recs    = sf.records()
 shapes  = sf.shapes()
 fields  = sf.fields
@@ -697,7 +694,7 @@ plt.plot(poly[:,0],poly[:,1])</code></pre>
 
 
 
-[&lt;matplotlib.lines.Line2D at 0x7f30e59dfa60&gt;]</code></pre>
+[&lt;matplotlib.lines.Line2D at 0x7f233de2acd0&gt;]</code></pre>
 <div class="figure">
 <img src="04a-SimpleSpeedUps_files/04a-SimpleSpeedUps_13_2.png" alt="" />
 <p class="caption">png</p>
@@ -730,53 +727,53 @@ for i in polygons:
     Areas1.append(PolygonArea(i))
 
 print(&quot;Final Runtime&quot;, time.time() - start_time)</code></pre>
-<pre><code>Process 0 Finished in 0.2009s.
-Process 1 Finished in 0.2023s.
-Process 2 Finished in 0.2005s.
-Process 3 Finished in 0.2008s.
-Process 4 Finished in 0.2007s.
-Process 5 Finished in 0.2011s.
-Process 6 Finished in 0.2022s.
-Process 7 Finished in 0.2009s.
-Process 8 Finished in 0.2004s.
-Process 9 Finished in 0.2005s.
-Process 10 Finished in 0.2020s.
-Process 11 Finished in 0.2005s.
-Process 12 Finished in 0.2004s.
-Process 13 Finished in 0.2024s.
-Process 14 Finished in 0.2010s.
-Process 15 Finished in 0.2009s.
-Process 16 Finished in 0.2005s.
-Process 17 Finished in 0.2007s.
-Process 18 Finished in 0.2004s.
-Process 19 Finished in 0.2004s.
-Process 20 Finished in 0.2004s.
-Process 21 Finished in 0.2006s.
-Process 22 Finished in 0.2006s.
-Process 23 Finished in 0.2021s.
-Process 24 Finished in 0.2004s.
-Process 25 Finished in 0.2004s.
-Process 26 Finished in 0.2004s.
-Process 27 Finished in 0.2004s.
-Process 28 Finished in 0.2004s.
-Process 29 Finished in 0.2006s.
-Process 30 Finished in 0.2004s.
-Process 31 Finished in 0.2006s.
-Process 32 Finished in 0.2006s.
-Process 33 Finished in 0.2005s.
-Process 34 Finished in 0.2005s.
-Process 35 Finished in 0.2041s.
-Process 36 Finished in 0.2021s.
-Process 37 Finished in 0.2004s.
-Process 38 Finished in 0.2006s.
-Process 39 Finished in 0.2009s.
-Process 40 Finished in 0.2006s.
-Process 41 Finished in 0.2008s.
-Process 42 Finished in 0.2004s.
-Process 43 Finished in 0.2005s.
-Process 44 Finished in 0.2008s.
-Process 45 Finished in 0.2006s.
-Final Runtime 9.249871015548706</code></pre>
+<pre><code>Process 0 Finished in 0.2005s.
+Process 1 Finished in 0.2007s.
+Process 2 Finished in 0.2004s.
+Process 3 Finished in 0.2004s.
+Process 4 Finished in 0.2003s.
+Process 5 Finished in 0.2004s.
+Process 6 Finished in 0.2007s.
+Process 7 Finished in 0.2004s.
+Process 8 Finished in 0.2003s.
+Process 9 Finished in 0.2003s.
+Process 10 Finished in 0.2006s.
+Process 11 Finished in 0.2003s.
+Process 12 Finished in 0.2003s.
+Process 13 Finished in 0.2006s.
+Process 14 Finished in 0.2004s.
+Process 15 Finished in 0.2003s.
+Process 16 Finished in 0.2003s.
+Process 17 Finished in 0.2003s.
+Process 18 Finished in 0.2003s.
+Process 19 Finished in 0.2003s.
+Process 20 Finished in 0.2003s.
+Process 21 Finished in 0.2003s.
+Process 22 Finished in 0.2002s.
+Process 23 Finished in 0.2006s.
+Process 24 Finished in 0.2003s.
+Process 25 Finished in 0.2008s.
+Process 26 Finished in 0.2003s.
+Process 27 Finished in 0.2003s.
+Process 28 Finished in 0.2001s.
+Process 29 Finished in 0.2003s.
+Process 30 Finished in 0.2003s.
+Process 31 Finished in 0.2003s.
+Process 32 Finished in 0.2003s.
+Process 33 Finished in 0.2003s.
+Process 34 Finished in 0.2003s.
+Process 35 Finished in 0.2011s.
+Process 36 Finished in 0.2009s.
+Process 37 Finished in 0.2003s.
+Process 38 Finished in 0.2003s.
+Process 39 Finished in 0.2004s.
+Process 40 Finished in 0.2003s.
+Process 41 Finished in 0.2004s.
+Process 42 Finished in 0.2008s.
+Process 43 Finished in 0.2003s.
+Process 44 Finished in 0.2003s.
+Process 45 Finished in 0.2003s.
+Final Runtime 9.221593379974365</code></pre>
 <p>Now we will have to run the multiprocessing version <strong>outside of our jupyter environment</strong>. Put the following into a script or download the <a href="https://cloudstor.aarnet.edu.au/plus/s/Q7DpigC2bibIgHT/download">full version here</a>.</p>
 <pre class="python"><code>#Put this snippet in a code block outside of Jupyter, but this time, use the multiprocessing capabilities
 #Because of how the multiprocessing works, it does not behave nicely in Jupyter all the time

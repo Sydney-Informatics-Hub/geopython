@@ -1,5 +1,11 @@
+#To build this docker file
+#docker build -t nbutter/geopy:pesa2022 .
+#To push to dockerhub
+#docker push nbutter/geopy:pesa2022
+#To run this with an interactive notebook:
+#docker run -p 8888:8888 -it --rm nbutter/geopy:pesa2022 /bin/bash  -c "jupyter notebook --allow-root --ip=0.0.0.0 --no-browser"
 
-FROM ubuntu:bionic
+FROM ubuntu:focal
 MAINTAINER Nathaniel Butterworth
 
 RUN apt-get update -y && \
@@ -11,29 +17,23 @@ ARG PATH="/build/miniconda3/bin:${PATH}"
 
 WORKDIR /build
 
-RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh &&\
+RUN curl -O https://repo.anaconda.com/miniconda/Miniconda3-py39_4.11.0-Linux-x86_64.sh &&\
 	mkdir /build/.conda && \
-	bash Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p /build/miniconda3 &&\
-	rm -rf /Miniconda3-py37_4.8.3-Linux-x86_64.sh
+	bash Miniconda3-py39_4.11.0-Linux-x86_64.sh -b -p /build/miniconda3 &&\
+	rm -rf /Miniconda3-py39_4.11.0-Linux-x86_64.sh
 
-WORKDIR /build
+RUN conda install -c conda-forge python=3.9 pip=22.2 matplotlib=3.5 numpy=1.23 pygmt=0.7 seaborn=0.11 obspy=1.3 tensorflow=2.6 pyshp=2.3 mpi4py=3.1 scikit-learn=1.1 scipy=1.8 dask=2022.7 cartopy=0.20 upsetplot=0.6 pandas=1.4  jupyter=1.0 python-graphviz=0.20
+RUN pip install lasio==0.30
 
-#conda create -n geopy python=3.7
-#conda activate geopy
-
-RUN conda install pip
-RUN pip install numpy==1.18 pandas==1.0.1 matplotlib==3.3.2 pyshp==2.1.2 lasio==0.28 scipy==1.4.1 scikit-learn==0.23 
-RUN conda install -c conda-forge cartopy=0.18
-RUN conda install -c conda-forge obspy=1.2.2
-RUN pip install tensorflow==2.3 
-RUN python -m pip install dask==2.30
-RUN pip install jupyter==1.0
-
-RUN mkdir /data /notebooks 
+RUN mkdir /data /notebooks
 RUN cd /data && \
-	curl -O https://cloudstor.aarnet.edu.au/plus/s/IfOvRpOXhJyqTT0/download && \
+	curl -O https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download && \
+	unzip download -d / && rm -rf download
+
+RUN cd /notebooks && \
+	curl -O https://cloudstor.aarnet.edu.au/plus/s/BkeCEYooVLyuLvm/download && \
 	unzip download -d / && rm -rf download
 
 WORKDIR /notebooks
 
-CMD /bin/bash 
+CMD /bin/bash

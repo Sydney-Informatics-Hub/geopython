@@ -277,7 +277,7 @@ shade_other_data()
 plt.show()
 ```
 
-    /tmp/ipykernel_2552210/2991489525.py:19: MatplotlibDeprecationWarning: Starting from Matplotlib 3.6, colorbar() will steal space from the mappable's axes, rather than from the current axes, to place the colorbar.  To silence this warning, explicitly pass the 'ax' argument to colorbar().
+    /tmp/ipykernel_2626489/2991489525.py:19: MatplotlibDeprecationWarning: Starting from Matplotlib 3.6, colorbar() will steal space from the mappable's axes, rather than from the current axes, to place the colorbar.  To silence this warning, explicitly pass the 'ax' argument to colorbar().
       fig.colorbar(im)
 
 
@@ -420,13 +420,9 @@ ax.coastlines()
 plt.show()
 ```
 
-    /home/nbutter/miniconda3/envs/PESA/lib/python3.9/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_coastline.zip
-      warnings.warn(f'Downloading: {url}', DownloadWarning)
-
-
 
     
-![png](02a-mapping_files/02a-mapping_14_1.png)
+![png](02a-mapping_files/02a-mapping_14_0.png)
     
 
 
@@ -525,7 +521,7 @@ import scipy.io
 
 ```python
 #Set the file name and read in the data
-filename="data/topodata.nc"
+filename="../data/topodata.nc"
 data = scipy.io.netcdf.netcdf_file(filename,'r')
 
 #Netcdf could be stored with multiple different formats
@@ -533,16 +529,16 @@ data = scipy.io.netcdf.netcdf_file(filename,'r')
 data.variables
 ```
 
-    /tmp/ipykernel_2552210/2810826210.py:3: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
+    /tmp/ipykernel_2626489/1104130496.py:3: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
       data = scipy.io.netcdf.netcdf_file(filename,'r')
 
 
 
 
 
-    {'X': <scipy.io._netcdf.netcdf_variable at 0x7ff066980f40>,
-     'Y': <scipy.io._netcdf.netcdf_variable at 0x7ff0684d1af0>,
-     'elev': <scipy.io._netcdf.netcdf_variable at 0x7ff0684d1ee0>}
+    {'X': <scipy.io._netcdf.netcdf_variable at 0x7fee76dbf730>,
+     'Y': <scipy.io._netcdf.netcdf_variable at 0x7fee76dbf850>,
+     'elev': <scipy.io._netcdf.netcdf_variable at 0x7fee76dbf6a0>}
 
 
 
@@ -655,7 +651,7 @@ cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
 plt.show()
 ```
 
-    /tmp/ipykernel_2552210/346796257.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
+    /tmp/ipykernel_2626489/346796257.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
       cbar.ax.set_xticklabels([-5000,-2500,0,1000],color='white',fontsize=8)
 
 

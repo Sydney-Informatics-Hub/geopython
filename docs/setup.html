@@ -294,9 +294,6 @@ $(document).ready(function () {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -379,9 +376,10 @@ $(document).ready(function () {
 </div>
 
 
+<p><br></p>
 <div id="get-a-python-client" class="section level1">
 <h1>1. Get a Python client</h1>
-<p>We generally use and recommend Miniconda Python distribution: <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a>. But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py39_4.11.0.</p>
+<p>We generally use and recommend the Miniconda Python distribution: <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a>. But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py39_4.11.0.</p>
 <p>You can get this specific version here for:</p>
 <ul>
 <li><p><a href="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.11.0-Windows-x86_64.exe">Windows 64 bit Download</a></p></li>
@@ -403,10 +401,10 @@ $(document).ready(function () {
 <ul>
 <li>Assuming you have downloaded the <em>environment.yml</em> file to your Downloads folder. Type in the below command on a Windows machine at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:</li>
 </ul>
-<pre class="sh"><code>conda env create -n PESA -f C:\Users\nbutter\Downloads\environment.yml</code></pre>
+<pre class="sh"><code>conda env create -n geopy -f C:\Users\nbutter\Downloads\environment.yml</code></pre>
 <p><img src="fig/setup02.png" /></p>
 <p>If you are working on a Mac or Linux machine, the following will work:</p>
-<pre class="sh"><code>conda env create -f ~/Downloads/environment.yml</code></pre>
+<pre class="sh"><code>conda env create -n geopy -f ~/Downloads/environment.yml</code></pre>
 <p><br></p>
 <p>Upon successful completion the command prompt should look like this:</p>
 <p><img src="fig/setup03.png" /></p>
@@ -442,7 +440,7 @@ jupyter notebook</code></pre>
 <div id="download-the-data" class="section level1">
 <h1>3. Download the data</h1>
 <p>Download the data (280 MB inflated to 600 MB) for all the exercises from here:</p>
-<p><a href="https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download">https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download</a></p>
+<p><a href="https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download">https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download</a></p>
 <p>Extract this to a directory you can work in. Your file tree should look like something like this</p>
 <p><img src="fig/setup-folder.png" /></p>
 <pre><code>.
@@ -453,14 +451,18 @@ jupyter notebook</code></pre>
 </code></pre>
 <p><br></p>
 </div>
-<div id="other-options" class="section level1">
-<h1>Other Options</h1>
-<div id="google-colab" class="section level2">
-<h2>Google Colab</h2>
-<p>If the above options do not work for you, you can use an on-demand cloud instance. You will be given a weblink. Done.</p>
-<p><br> ## Docker</p>
+<div id="alternative-python-environment-options" class="section level1">
+<h1>Alternative Python Environment Options</h1>
+<p><br></p>
+<div id="jupyter-hub-in-the-cloud" class="section level2">
+<h2>Jupyter Hub in the Cloud</h2>
+<p>If the above options do not work for you, you can use an on-demand cloud instance. You will be given a web link, login with provided credentials. Done.</p>
+<p><br></p>
+</div>
+<div id="docker" class="section level2">
+<h2>Docker</h2>
 <p>If you are familiar with Docker you may use our Docker image with something like:</p>
-<pre><code>sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c &quot;jupyter notebook --allow-root --ip=0.0.0.0 --no-browser&quot;</code></pre>
+<pre><code>sudo docker run -it -p 8888:8888 nbutter/geopy:pesa2022 /bin/bash -c &quot;jupyter notebook --allow-root --ip=0.0.0.0 --no-browser&quot;</code></pre>
 <p>This will launch the Python notebook server in the <code>/notebooks</code> folder. Access the notebook by entering the generated link in a web-browser, e.g.</p>
 <pre><code>http://127.0.0.1:8888/?token=9b16287ab91dc69d6b265e6c9c31a49586a35291bb20d0ab</code></pre>
 </div>

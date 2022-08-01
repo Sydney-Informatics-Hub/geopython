@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -508,7 +505,7 @@ import shapefile
 <pre class="python"><code>#help(shapefile)
 #Or check out the help pages https://github.com/GeospatialPython/pyshp</code></pre>
 <pre class="python"><code>#Set the filename
-boreshape=&#39;data/shp_torrens_river/NGIS_BoreLine.shp&#39;
+boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
 #read in the file
 shapeRead = shapefile.Reader(boreshape)
@@ -593,7 +590,7 @@ recs[299][4]</code></pre>
 <h1>Dataframes and table manipulation</h1>
 <p>Pandas is one of the most useful packages (along with probably numpy and matplotlib). We will use it several times throughout the course for data handling and manipulation.</p>
 <pre class="python"><code>#As before, read in the shapefile
-boreshape=&#39;data/shp_torrens_river/NGIS_BoreLine.shp&#39;
+boreshape=&#39;../data/shp_torrens_river/NGIS_BoreLine.shp&#39;
 
 #Read the shapefile attributes to variables
 shapeRead = shapefile.Reader(boreshape)
@@ -1464,7 +1461,7 @@ coords
 </div>
 <p>Pandas more frequently is used to directly read in tables. So let’s read in the csv data that came with shapefile (as this gives us some additional fields not stored in the shapefile that we can explore.</p>
 <pre class="python"><code>#read in the data
-log_data=pandas.read_csv(&quot;data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,usecols=list(range(0,13))) 
+log_data=pandas.read_csv(&quot;../data/shp_torrens_river/NGIS_LithologyLog.csv&quot;,usecols=list(range(0,13))) 
 
 #What is the &quot;usecols&quot; variable equal to?
 #Try reading the data without using the usecols option, can you solve the error?</code></pre>
@@ -3022,16 +3019,16 @@ import glob
 #For &quot;regular expression manipulation&quot;
 import re</code></pre>
 <pre class="python"><code>#Build a list of filenames to read
-read_files = glob.glob(&quot;data/WELL/*.las&quot;)
+read_files = glob.glob(&quot;../data/WELL/*.las&quot;)
 read_files</code></pre>
-<pre><code>[&#39;data/WELL/Burrungule1.las&#39;,
- &#39;data/WELL/BoolLagoon1.las&#39;,
- &#39;data/WELL/BeachportEast1.las&#39;,
- &#39;data/WELL/Balnaves.las&#39;,
- &#39;data/WELL/BiscuitFlat1.las&#39;,
- &#39;data/WELL/Bungaloo1.las&#39;,
- &#39;data/WELL/Beachport1.las&#39;,
- &#39;data/WELL/Banyula.las&#39;]</code></pre>
+<pre><code>[&#39;../data/WELL/Burrungule1.las&#39;,
+ &#39;../data/WELL/BoolLagoon1.las&#39;,
+ &#39;../data/WELL/BeachportEast1.las&#39;,
+ &#39;../data/WELL/Balnaves.las&#39;,
+ &#39;../data/WELL/BiscuitFlat1.las&#39;,
+ &#39;../data/WELL/Bungaloo1.las&#39;,
+ &#39;../data/WELL/Beachport1.las&#39;,
+ &#39;../data/WELL/Banyula.las&#39;]</code></pre>
 <p><strong>Note:</strong> the possibility of Windows VS Unix character interpretations.</p>
 <pre class="python"><code>#Cut out just the name of the well from the filenames
 well_names = []
@@ -3044,29 +3041,29 @@ for file in read_files:
 
 print(&quot;There are &quot;, len(well_names), &quot;wells.&quot;)
 print(well_names)</code></pre>
-<pre><code>FILE: data/WELL/Burrungule1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
+<pre><code>FILE: ../data/WELL/Burrungule1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Burrungule1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/BoolLagoon1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
+FILE: ../data/WELL/BoolLagoon1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BoolLagoon1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/BeachportEast1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
+FILE: ../data/WELL/BeachportEast1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BeachportEast1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/Balnaves.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
+FILE: ../data/WELL/Balnaves.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Balnaves&#39;, &#39;&#39;] 
 
-FILE: data/WELL/BiscuitFlat1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
+FILE: ../data/WELL/BiscuitFlat1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;BiscuitFlat1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/Bungaloo1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
+FILE: ../data/WELL/Bungaloo1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Bungaloo1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/Beachport1.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
+FILE: ../data/WELL/Beachport1.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Beachport1&#39;, &#39;&#39;] 
 
-FILE: data/WELL/Banyula.las
-SPLIT: [&#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
+FILE: ../data/WELL/Banyula.las
+SPLIT: [&#39;..&#39;, &#39;data&#39;, &#39;WELL&#39;, &#39;Banyula&#39;, &#39;&#39;] 
 
 There are  8 wells.
 [&#39;Burrungule1&#39;, &#39;BoolLagoon1&#39;, &#39;BeachportEast1&#39;, &#39;Balnaves&#39;, &#39;BiscuitFlat1&#39;, &#39;Bungaloo1&#39;, &#39;Beachport1&#39;, &#39;Banyula&#39;]</code></pre>
@@ -3109,7 +3106,7 @@ Wellid: 7 Banyula
 wellid=1</code></pre>
 <pre class="python"><code>#Make a plot of one of the wells
 plt.plot(lases[wellid][&#39;DRHO&#39;],lases[wellid][&#39;DEPTH&#39;])</code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f915a5e5640&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f3b59bf3910&gt;]</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_54_1.png" alt="" />
 <p class="caption">png</p>
@@ -3259,7 +3256,7 @@ import numpy as np
 #https://github.com/agile-geoscience/xlines</code></pre>
 <pre class="python"><code>#Set the filename of the segy data
 
-filename=&quot;data/james/james_1959_pstm_tvfk_gain.sgy&quot;
+filename=&quot;../data/james/james_1959_pstm_tvfk_gain.sgy&quot;
 
 #Data randomly chosen from here:
 #Title: 2006 James 3D Seismic Survey.
@@ -3302,7 +3299,7 @@ data.shape</code></pre>
 <pre><code>(500, 1001)</code></pre>
 <pre class="python"><code>#Have a look at the data
 plt.imshow(data.T, cmap=&quot;Greys&quot;, aspect=&#39;auto&#39;)</code></pre>
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7f91a349bd60&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7f3bab243dc0&gt;</code></pre>
 <div class="figure">
 <img src="01b-dataframes_files/01b-dataframes_65_1.png" alt="" />
 <p class="caption">png</p>
@@ -3472,7 +3469,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import pandas as pd</code></pre>
 <pre class="python"><code>#Open the file for reading
-f = open(&quot;data/S3D_Vrms_StkVels_VELF.txt&quot;,&#39;r&#39;)
+f = open(&quot;../data/S3D_Vrms_StkVels_VELF.txt&quot;,&#39;r&#39;)
 
 #Read in all the lines in the file and save them to a variable
 mylist = f.readlines()

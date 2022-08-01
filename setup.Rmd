@@ -6,8 +6,10 @@ output:
     toc_float: false
 ---
 
+<br>
+
 # 1. Get a Python client
-We generally use and recommend Miniconda Python distribution: [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html). But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py39_4.11.0.
+We generally use and recommend the Miniconda Python distribution: [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html). But feel free to use whatever one works for you (and the course materials). We will be using Miniconda3-py39_4.11.0.
 
 You can get this specific version here for:
 
@@ -37,14 +39,14 @@ Next we need to set up an environment with all the additional packages and libra
 * Assuming you have downloaded the *environment.yml* file to your Downloads folder. Type in the below command on a Windows machine at the prompt. This should take about 15 minutes to download (~1GB of data) and install the environment packages:
 
 ```sh
-conda env create -n PESA -f C:\Users\nbutter\Downloads\environment.yml
+conda env create -n geopy -f C:\Users\nbutter\Downloads\environment.yml
 ```
 
 ![](fig/setup02.png)
 
 If you are working on a Mac or Linux machine, the following will work:
 ```sh
-conda env create -f ~/Downloads/environment.yml
+conda env create -n geopy -f ~/Downloads/environment.yml
 ```
 
 <br>
@@ -103,7 +105,7 @@ This will launch the Notebook server (and may automatically launch a web-browser
 
 Download the data (280 MB inflated to 600 MB) for all the exercises from here:
 
-[https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download](https://cloudstor.aarnet.edu.au/plus/s/I8e6FctLhDRtBhx/download)
+[https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download](https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download)
 
 Extract this to a directory you can work in.
 Your file tree should look like something like this
@@ -123,18 +125,21 @@ Your file tree should look like something like this
 
 <br>
 
-# Other Options
-
-## Google Colab
-
-If the above options do not work for you, you can use an on-demand cloud instance. You will be given a weblink. Done.
+# Alternative Python Environment Options
 
 <br>
+
+## Jupyter Hub in the Cloud
+
+If the above options do not work for you, you can use an on-demand cloud instance. You will be given a web link, login with provided credentials. Done.
+
+<br>
+
 ## Docker
 
 If you are familiar with Docker you may use our Docker image with something like:
 ```
-sudo docker run -it -p 8888:8888 nbutter/geopy:latest /bin/bash -c "jupyter notebook --allow-root --ip=0.0.0.0 --no-browser"
+sudo docker run -it -p 8888:8888 nbutter/geopy:pesa2022 /bin/bash -c "jupyter notebook --allow-root --ip=0.0.0.0 --no-browser"
 ```
 This will launch the Python notebook server in the ```/notebooks``` folder. Access the notebook by entering the generated link in a web-browser, e.g.
 ```

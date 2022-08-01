@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -671,7 +668,7 @@ import matplotlib.pyplot as plt </code></pre>
 <pre class="python"><code>#Set the variable name for the file we are loading in. 
 #It is in the &#39;data&#39; directory, and the file is called EarthChemCU.txt. 
 #We are currently working in /notebooks.
-filename = &#39;data/EarthChemCU.txt&#39;
+filename = &#39;../data/EarthChemCU.txt&#39;
 
 #Now read in the data
 # loadtxt() is a function that we can now use because we loaded the library called numpy
@@ -907,10 +904,8 @@ cbar.set_label(&#39;Age (Ma)&#39;)
 # Add a map title, and tell the figure to appear on screen
 plt.title(&#39;Age of Copper Deposits in the EarthChem.org database&#39;)
 plt.show()</code></pre>
-<pre><code>/home/nbutter/miniconda3/envs/PESA/lib/python3.9/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_coastline.zip
-  warnings.warn(f&#39;Downloading: {url}&#39;, DownloadWarning)</code></pre>
 <div class="figure">
-<img src="01a-fundamentals_files/01a-fundamentals_62_1.png" alt="" />
+<img src="01a-fundamentals_files/01a-fundamentals_62_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>You can explore the different color maps at <a href="https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html">https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html</a>.</p>

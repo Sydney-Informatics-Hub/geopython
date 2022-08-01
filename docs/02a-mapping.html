@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -710,7 +707,7 @@ display_colorbar()
 avoid_outliers()
 shade_other_data()
 plt.show()</code></pre>
-<pre><code>/tmp/ipykernel_2552210/2991489525.py:19: MatplotlibDeprecationWarning: Starting from Matplotlib 3.6, colorbar() will steal space from the mappable&#39;s axes, rather than from the current axes, to place the colorbar.  To silence this warning, explicitly pass the &#39;ax&#39; argument to colorbar().
+<pre><code>/tmp/ipykernel_2626489/2991489525.py:19: MatplotlibDeprecationWarning: Starting from Matplotlib 3.6, colorbar() will steal space from the mappable&#39;s axes, rather than from the current axes, to place the colorbar.  To silence this warning, explicitly pass the &#39;ax&#39; argument to colorbar().
   fig.colorbar(im)</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_9_1.png" alt="" />
@@ -819,10 +816,8 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
 plt.show()</code></pre>
-<pre><code>/home/nbutter/miniconda3/envs/PESA/lib/python3.9/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_coastline.zip
-  warnings.warn(f&#39;Downloading: {url}&#39;, DownloadWarning)</code></pre>
 <div class="figure">
-<img src="02a-mapping_files/02a-mapping_14_1.png" alt="" />
+<img src="02a-mapping_files/02a-mapping_14_0.png" alt="" />
 <p class="caption">png</p>
 </div>
 <p>The simplest plot: global map using the default image built into the package and adding coastlines</p>
@@ -886,22 +881,22 @@ plt.show()</code></pre>
 <pre class="python"><code>#We use the scipy netcdf reader
 import scipy.io</code></pre>
 <pre class="python"><code>#Set the file name and read in the data
-filename=&quot;data/topodata.nc&quot;
+filename=&quot;../data/topodata.nc&quot;
 data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 #Netcdf could be stored with multiple different formats
 #Print out these data
 data.variables</code></pre>
-<pre><code>/tmp/ipykernel_2552210/2810826210.py:3: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
+<pre><code>/tmp/ipykernel_2626489/1104130496.py:3: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
   data = scipy.io.netcdf.netcdf_file(filename,&#39;r&#39;)
 
 
 
 
 
-{&#39;X&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7ff066980f40&gt;,
- &#39;Y&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7ff0684d1af0&gt;,
- &#39;elev&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7ff0684d1ee0&gt;}</code></pre>
+{&#39;X&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7fee76dbf730&gt;,
+ &#39;Y&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7fee76dbf850&gt;,
+ &#39;elev&#39;: &lt;scipy.io._netcdf.netcdf_variable at 0x7fee76dbf6a0&gt;}</code></pre>
 <pre class="python"><code>#Set each layer as a variable
 worldbath=data.variables[&#39;elev&#39;][:]
 lons=data.variables[&#39;X&#39;][:]
@@ -976,7 +971,7 @@ cbar.ax.set_xticklabels([-5000,-2500,0,1000],color=&#39;white&#39;,fontsize=8)
 
 #Show the plot!
 plt.show()</code></pre>
-<pre><code>/tmp/ipykernel_2552210/346796257.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
+<pre><code>/tmp/ipykernel_2626489/346796257.py:37: UserWarning: FixedFormatter should only be used together with FixedLocator
   cbar.ax.set_xticklabels([-5000,-2500,0,1000],color=&#39;white&#39;,fontsize=8)</code></pre>
 <div class="figure">
 <img src="02a-mapping_files/02a-mapping_31_1.png" alt="" />

@@ -42,7 +42,7 @@ from sklearn.preprocessing import MaxAbsScaler
 
 ```python
 #Load in the dataset
-filename='data/sydney_temperature.csv'
+filename='../data/sydney_temperature.csv'
 dataframe = pd.read_csv(filename, usecols=[5], engine='python')
 dataset = dataframe.dropna()
 dataset = dataset.values
@@ -163,7 +163,7 @@ model.compile(loss='mean_squared_error', optimizer='adam')
     Compiling.
 
 
-    2022-07-28 13:03:55.260254: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+    2022-08-01 09:55:53.292706: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
     To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 
 
@@ -180,14 +180,14 @@ print("Time taken: ", endT-startT)
 
     fitting...
     Epoch 1/4
-    1933/1933 [==============================] - 11s 5ms/step - loss: 0.0065
+    1933/1933 [==============================] - 11s 5ms/step - loss: 0.0101
     Epoch 2/4
-    1933/1933 [==============================] - 10s 5ms/step - loss: 0.0059
+    1933/1933 [==============================] - 10s 5ms/step - loss: 0.0064
     Epoch 3/4
-    1933/1933 [==============================] - 10s 5ms/step - loss: 0.0059
+    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0062
     Epoch 4/4
-    1933/1933 [==============================] - 10s 5ms/step - loss: 0.0058
-    Time taken:  40.31758904457092
+    1933/1933 [==============================] - 11s 6ms/step - loss: 0.0060
+    Time taken:  43.28266000747681
 
 
 
@@ -217,10 +217,10 @@ print('Test Score: %.4f RMSE' % (testScore))
 
 ```
 
-    1812/1812 [==============================] - 3s 2ms/step
+    1812/1812 [==============================] - 3s 1ms/step
     103/103 [==============================] - 0s 1ms/step
-    Train Score: 2.8994 RMSE
-    Test Score: 2.9587 RMSE
+    Train Score: 2.9400 RMSE
+    Test Score: 2.9767 RMSE
 
 
 

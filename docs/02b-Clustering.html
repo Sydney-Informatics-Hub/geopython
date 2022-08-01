@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -590,7 +587,7 @@ exact_theta_values = theta_0 * np.exp(-const_k * time_values)
 plt.plot(time_values, theta_values, linewidth=3.0, color=&quot;red&quot;)
 plt.plot(time_values, exact_theta_values, &#39;b-&#39;)
 </code></pre>
-<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f9d917bf2e0&gt;]</code></pre>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7f21d5ef44c0&gt;]</code></pre>
 <div class="figure">
 <img src="02b-Clustering_files/02b-Clustering_4_1.png" alt="" />
 <p class="caption">png</p>
@@ -863,7 +860,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from mpl_toolkits.mplot3d import Axes3D</code></pre>
 <p>Load in the tomography data set. Assign the column vectors to unique variables (for clarity).</p>
-<pre class="python"><code>tomo=np.loadtxt(&#39;data/ggge1202-sup-0002-ds01.txt&#39;, skiprows=1)
+<pre class="python"><code>tomo=np.loadtxt(&#39;../data/ggge1202-sup-0002-ds01.txt&#39;, skiprows=1)
 
 lat=tomo[:,0]
 lon=tomo[:,1]
@@ -894,7 +891,7 @@ dvpClust=dvp[kmeans.labels_==centre]</code></pre>
 <pre class="python"><code>fig = plt.figure()
 ax = fig.add_subplot(111, projection=&#39;3d&#39;)
 ax.scatter(lonClust, latClust, -depthClust, c=dvpClust)</code></pre>
-<pre><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x7f9d86f84370&gt;</code></pre>
+<pre><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x7f2248d1ebe0&gt;</code></pre>
 <div class="figure">
 <img src="02b-Clustering_files/02b-Clustering_40_1.png" alt="" />
 <p class="caption">png</p>

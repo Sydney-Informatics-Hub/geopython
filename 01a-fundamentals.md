@@ -319,7 +319,7 @@ import matplotlib.pyplot as plt
 #Set the variable name for the file we are loading in. 
 #It is in the 'data' directory, and the file is called EarthChemCU.txt. 
 #We are currently working in /notebooks.
-filename = 'data/EarthChemCU.txt'
+filename = '../data/EarthChemCU.txt'
 
 #Now read in the data
 # loadtxt() is a function that we can now use because we loaded the library called numpy
@@ -700,13 +700,9 @@ plt.title('Age of Copper Deposits in the EarthChem.org database')
 plt.show()
 ```
 
-    /home/nbutter/miniconda3/envs/PESA/lib/python3.9/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/50m_physical/ne_50m_coastline.zip
-      warnings.warn(f'Downloading: {url}', DownloadWarning)
-
-
 
     
-![png](01a-fundamentals_files/01a-fundamentals_62_1.png)
+![png](01a-fundamentals_files/01a-fundamentals_62_0.png)
     
 
 

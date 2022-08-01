@@ -69,7 +69,7 @@ import time
 time.sleep(1)
 ```
 
-    CPU times: user 385 µs, sys: 29 µs, total: 414 µs
+    CPU times: user 0 ns, sys: 617 µs, total: 617 µs
     Wall time: 1 s
 
 
@@ -188,7 +188,7 @@ print("Nested-loop Runtime:",toc-tic, "seconds")
 
 ```
 
-    Nested-loop Runtime: 1.867074966430664 seconds
+    Nested-loop Runtime: 3.345609664916992 seconds
 
 
 
@@ -203,7 +203,7 @@ print("Vectorized Runtime:",toc-tic, "seconds")
 
 ```
 
-    Vectorized Runtime: 0.0026428699493408203 seconds
+    Vectorized Runtime: 0.0022592544555664062 seconds
 
 
 Which one is faster? Note the use of some really basic timing functions, these can help you understand the speed of your code.
@@ -252,7 +252,7 @@ import time
 multiprocessing.cpu_count()
 
 #Read in the shapefile that we will use
-sf = shapefile.Reader("data/platepolygons/topology_platepolygons_0.00Ma.shp")
+sf = shapefile.Reader("../data/platepolygons/topology_platepolygons_0.00Ma.shp")
 recs    = sf.records()
 shapes  = sf.shapes()
 fields  = sf.fields
@@ -278,7 +278,7 @@ plt.plot(poly[:,0],poly[:,1])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f30e59dfa60>]
+    [<matplotlib.lines.Line2D at 0x7f233de2acd0>]
 
 
 
@@ -324,53 +324,53 @@ for i in polygons:
 print("Final Runtime", time.time() - start_time)
 ```
 
-    Process 0 Finished in 0.2009s.
-    Process 1 Finished in 0.2023s.
-    Process 2 Finished in 0.2005s.
-    Process 3 Finished in 0.2008s.
-    Process 4 Finished in 0.2007s.
-    Process 5 Finished in 0.2011s.
-    Process 6 Finished in 0.2022s.
-    Process 7 Finished in 0.2009s.
-    Process 8 Finished in 0.2004s.
-    Process 9 Finished in 0.2005s.
-    Process 10 Finished in 0.2020s.
-    Process 11 Finished in 0.2005s.
-    Process 12 Finished in 0.2004s.
-    Process 13 Finished in 0.2024s.
-    Process 14 Finished in 0.2010s.
-    Process 15 Finished in 0.2009s.
-    Process 16 Finished in 0.2005s.
-    Process 17 Finished in 0.2007s.
-    Process 18 Finished in 0.2004s.
-    Process 19 Finished in 0.2004s.
-    Process 20 Finished in 0.2004s.
-    Process 21 Finished in 0.2006s.
-    Process 22 Finished in 0.2006s.
-    Process 23 Finished in 0.2021s.
-    Process 24 Finished in 0.2004s.
-    Process 25 Finished in 0.2004s.
-    Process 26 Finished in 0.2004s.
-    Process 27 Finished in 0.2004s.
-    Process 28 Finished in 0.2004s.
-    Process 29 Finished in 0.2006s.
-    Process 30 Finished in 0.2004s.
-    Process 31 Finished in 0.2006s.
-    Process 32 Finished in 0.2006s.
-    Process 33 Finished in 0.2005s.
-    Process 34 Finished in 0.2005s.
-    Process 35 Finished in 0.2041s.
-    Process 36 Finished in 0.2021s.
-    Process 37 Finished in 0.2004s.
-    Process 38 Finished in 0.2006s.
-    Process 39 Finished in 0.2009s.
-    Process 40 Finished in 0.2006s.
-    Process 41 Finished in 0.2008s.
-    Process 42 Finished in 0.2004s.
-    Process 43 Finished in 0.2005s.
-    Process 44 Finished in 0.2008s.
-    Process 45 Finished in 0.2006s.
-    Final Runtime 9.249871015548706
+    Process 0 Finished in 0.2005s.
+    Process 1 Finished in 0.2007s.
+    Process 2 Finished in 0.2004s.
+    Process 3 Finished in 0.2004s.
+    Process 4 Finished in 0.2003s.
+    Process 5 Finished in 0.2004s.
+    Process 6 Finished in 0.2007s.
+    Process 7 Finished in 0.2004s.
+    Process 8 Finished in 0.2003s.
+    Process 9 Finished in 0.2003s.
+    Process 10 Finished in 0.2006s.
+    Process 11 Finished in 0.2003s.
+    Process 12 Finished in 0.2003s.
+    Process 13 Finished in 0.2006s.
+    Process 14 Finished in 0.2004s.
+    Process 15 Finished in 0.2003s.
+    Process 16 Finished in 0.2003s.
+    Process 17 Finished in 0.2003s.
+    Process 18 Finished in 0.2003s.
+    Process 19 Finished in 0.2003s.
+    Process 20 Finished in 0.2003s.
+    Process 21 Finished in 0.2003s.
+    Process 22 Finished in 0.2002s.
+    Process 23 Finished in 0.2006s.
+    Process 24 Finished in 0.2003s.
+    Process 25 Finished in 0.2008s.
+    Process 26 Finished in 0.2003s.
+    Process 27 Finished in 0.2003s.
+    Process 28 Finished in 0.2001s.
+    Process 29 Finished in 0.2003s.
+    Process 30 Finished in 0.2003s.
+    Process 31 Finished in 0.2003s.
+    Process 32 Finished in 0.2003s.
+    Process 33 Finished in 0.2003s.
+    Process 34 Finished in 0.2003s.
+    Process 35 Finished in 0.2011s.
+    Process 36 Finished in 0.2009s.
+    Process 37 Finished in 0.2003s.
+    Process 38 Finished in 0.2003s.
+    Process 39 Finished in 0.2004s.
+    Process 40 Finished in 0.2003s.
+    Process 41 Finished in 0.2004s.
+    Process 42 Finished in 0.2008s.
+    Process 43 Finished in 0.2003s.
+    Process 44 Finished in 0.2003s.
+    Process 45 Finished in 0.2003s.
+    Final Runtime 9.221593379974365
 
 
 Now we will have to run the multiprocessing version **outside of our jupyter environment**.

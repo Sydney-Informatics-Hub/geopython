@@ -43,7 +43,7 @@ import shapefile
 
 ```python
 #Set the filename
-boreshape='data/shp_torrens_river/NGIS_BoreLine.shp'
+boreshape='../data/shp_torrens_river/NGIS_BoreLine.shp'
 
 #read in the file
 shapeRead = shapefile.Reader(boreshape)
@@ -197,7 +197,7 @@ Pandas is one of the most useful packages (along with probably numpy and matplot
 
 ```python
 #As before, read in the shapefile
-boreshape='data/shp_torrens_river/NGIS_BoreLine.shp'
+boreshape='../data/shp_torrens_river/NGIS_BoreLine.shp'
 
 #Read the shapefile attributes to variables
 shapeRead = shapefile.Reader(boreshape)
@@ -595,7 +595,7 @@ Pandas more frequently is used to directly read in tables. So let's read in the 
 
 ```python
 #read in the data
-log_data=pandas.read_csv("data/shp_torrens_river/NGIS_LithologyLog.csv",usecols=list(range(0,13))) 
+log_data=pandas.read_csv("../data/shp_torrens_river/NGIS_LithologyLog.csv",usecols=list(range(0,13))) 
 
 #What is the "usecols" variable equal to?
 #Try reading the data without using the usecols option, can you solve the error?
@@ -1554,21 +1554,21 @@ import re
 
 ```python
 #Build a list of filenames to read
-read_files = glob.glob("data/WELL/*.las")
+read_files = glob.glob("../data/WELL/*.las")
 read_files
 ```
 
 
 
 
-    ['data/WELL/Burrungule1.las',
-     'data/WELL/BoolLagoon1.las',
-     'data/WELL/BeachportEast1.las',
-     'data/WELL/Balnaves.las',
-     'data/WELL/BiscuitFlat1.las',
-     'data/WELL/Bungaloo1.las',
-     'data/WELL/Beachport1.las',
-     'data/WELL/Banyula.las']
+    ['../data/WELL/Burrungule1.las',
+     '../data/WELL/BoolLagoon1.las',
+     '../data/WELL/BeachportEast1.las',
+     '../data/WELL/Balnaves.las',
+     '../data/WELL/BiscuitFlat1.las',
+     '../data/WELL/Bungaloo1.las',
+     '../data/WELL/Beachport1.las',
+     '../data/WELL/Banyula.las']
 
 
 
@@ -1589,29 +1589,29 @@ print("There are ", len(well_names), "wells.")
 print(well_names)
 ```
 
-    FILE: data/WELL/Burrungule1.las
-    SPLIT: ['data', 'WELL', 'Burrungule1', ''] 
+    FILE: ../data/WELL/Burrungule1.las
+    SPLIT: ['..', 'data', 'WELL', 'Burrungule1', ''] 
     
-    FILE: data/WELL/BoolLagoon1.las
-    SPLIT: ['data', 'WELL', 'BoolLagoon1', ''] 
+    FILE: ../data/WELL/BoolLagoon1.las
+    SPLIT: ['..', 'data', 'WELL', 'BoolLagoon1', ''] 
     
-    FILE: data/WELL/BeachportEast1.las
-    SPLIT: ['data', 'WELL', 'BeachportEast1', ''] 
+    FILE: ../data/WELL/BeachportEast1.las
+    SPLIT: ['..', 'data', 'WELL', 'BeachportEast1', ''] 
     
-    FILE: data/WELL/Balnaves.las
-    SPLIT: ['data', 'WELL', 'Balnaves', ''] 
+    FILE: ../data/WELL/Balnaves.las
+    SPLIT: ['..', 'data', 'WELL', 'Balnaves', ''] 
     
-    FILE: data/WELL/BiscuitFlat1.las
-    SPLIT: ['data', 'WELL', 'BiscuitFlat1', ''] 
+    FILE: ../data/WELL/BiscuitFlat1.las
+    SPLIT: ['..', 'data', 'WELL', 'BiscuitFlat1', ''] 
     
-    FILE: data/WELL/Bungaloo1.las
-    SPLIT: ['data', 'WELL', 'Bungaloo1', ''] 
+    FILE: ../data/WELL/Bungaloo1.las
+    SPLIT: ['..', 'data', 'WELL', 'Bungaloo1', ''] 
     
-    FILE: data/WELL/Beachport1.las
-    SPLIT: ['data', 'WELL', 'Beachport1', ''] 
+    FILE: ../data/WELL/Beachport1.las
+    SPLIT: ['..', 'data', 'WELL', 'Beachport1', ''] 
     
-    FILE: data/WELL/Banyula.las
-    SPLIT: ['data', 'WELL', 'Banyula', ''] 
+    FILE: ../data/WELL/Banyula.las
+    SPLIT: ['..', 'data', 'WELL', 'Banyula', ''] 
     
     There are  8 wells.
     ['Burrungule1', 'BoolLagoon1', 'BeachportEast1', 'Balnaves', 'BiscuitFlat1', 'Bungaloo1', 'Beachport1', 'Banyula']
@@ -1685,7 +1685,7 @@ plt.plot(lases[wellid]['DRHO'],lases[wellid]['DEPTH'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x7f915a5e5640>]
+    [<matplotlib.lines.Line2D at 0x7f3b59bf3910>]
 
 
 
@@ -1865,7 +1865,7 @@ import numpy as np
 ```python
 #Set the filename of the segy data
 
-filename="data/james/james_1959_pstm_tvfk_gain.sgy"
+filename="../data/james/james_1959_pstm_tvfk_gain.sgy"
 
 #Data randomly chosen from here:
 #Title: 2006 James 3D Seismic Survey.
@@ -1946,7 +1946,7 @@ plt.imshow(data.T, cmap="Greys", aspect='auto')
 
 
 
-    <matplotlib.image.AxesImage at 0x7f91a349bd60>
+    <matplotlib.image.AxesImage at 0x7f3bab243dc0>
 
 
 
@@ -2164,7 +2164,7 @@ import pandas as pd
 
 ```python
 #Open the file for reading
-f = open("data/S3D_Vrms_StkVels_VELF.txt",'r')
+f = open("../data/S3D_Vrms_StkVels_VELF.txt",'r')
 
 #Read in all the lines in the file and save them to a variable
 mylist = f.readlines()

@@ -30,7 +30,7 @@ import pandas as pd
 
 ```python
 # Set the filename
-mineshape="data/MinesMinerals/mines_and_mineral_occurrences_all.shp"
+mineshape="../data/MinesMinerals/mines_and_mineral_occurrences_all.shp"
 
 # Set shapefile attributes and assign
 sf = shapefile.Reader(mineshape)
@@ -242,7 +242,7 @@ df.drop(columns=['REFERENCE','O_MAP_SYMB'])
 
 ```python
 #We are building a model to target South Australia, so load in a map of it.
-gawlshape="data/SA/SA_STATE_POLYGON_shp"
+gawlshape="../data/SA/SA_STATE_POLYGON_shp"
 shapeRead = shapefile.Reader(gawlshape)
 shapes  = shapeRead.shapes()
 
@@ -310,7 +310,7 @@ All of the full datasets are availble from https://map.sarig.sa.gov.au/. For thi
 
 ```python
 #Read in the data
-data_res=pd.read_csv("data/AusLAMP_MT_Gawler_25.xyzr",
+data_res=pd.read_csv("../data/AusLAMP_MT_Gawler_25.xyzr",
                      sep=',',header=0,names=['lat','lon','depth','resistivity'])
 data_res
 ```
@@ -466,7 +466,7 @@ import numpy as np
 
 ```python
 #Get fault data neo
-faultshape="data/Faults/Faults.shp"
+faultshape="../data/Faults/Faults.shp"
 shapeRead = shapefile.Reader(faultshape)
 shapes  = shapeRead.shapes()
 Nshp    = len(shapes)
@@ -551,18 +551,18 @@ def readnc(filename):
 
 ```python
 # Digital Elevation Model
-x1,y1,z1,originx1,originy1,pixelx1,pixely1 = readnc("data/sa-dem.nc")
+x1,y1,z1,originx1,originy1,pixelx1,pixely1 = readnc("../data/sa-dem.nc")
 # Total Magnetic Intensity
-x2,y2,z2,originx2,originy2,pixelx2,pixely2 = readnc("data/sa-mag-tmi.nc")
+x2,y2,z2,originx2,originy2,pixelx2,pixely2 = readnc("../data/sa-mag-tmi.nc")
 # Gravity
-x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc("data/sa-grav.nc")
+x3,y3,z3,originx3,originy3,pixelx3,pixely3 = readnc("../data/sa-grav.nc")
 ```
 
-    Loaded data/sa-dem.nc in 0.01s
+    Loaded ../data/sa-dem.nc in 0.01s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
-    Loaded data/sa-mag-tmi.nc in 0.00s
+    Loaded ../data/sa-mag-tmi.nc in 0.01s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
-    Loaded data/sa-grav.nc in 0.00s
+    Loaded ../data/sa-grav.nc in 0.00s
     Spacing x 0.01 y 0.01 Shape: (1208, 1201) Min x: 129.005 Max x: 141.005 Min y: -38.065 Max y -25.99
 
 
@@ -599,7 +599,7 @@ These data are raster grids. Essentially Lat-Lon-Value like the XYZ data, but re
 
 ```python
 #Archean basement geology
-geolshape=shapefile.Reader("data/Archaean_Early_Mesoprterzoic_polygons_shp/geology_archaean.shp")
+geolshape=shapefile.Reader("../data/Archaean_Early_Mesoprterzoic_polygons_shp/geology_archaean.shp")
 
 recsArch   = geolshape.records()
 shapesArch  = geolshape.shapes()
@@ -1247,8 +1247,8 @@ geoindex = 4
 td1['geol']=td1.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)
 ```
 
-    CPU times: user 6.65 s, sys: 0 ns, total: 6.65 s
-    Wall time: 6.65 s
+    CPU times: user 6.51 s, sys: 4.67 ms, total: 6.51 s
+    Wall time: 6.51 s
 
 
 
@@ -1491,8 +1491,8 @@ td2['grav'] = rastersearch(td2,z3,originx3,originy3,pixelx3,pixely3)
 td2['geol']=td2.apply(lambda x: shapeExplore(x.LONGITUDE, x.LATITUDE, shapesArch,recsArch,geoindex), axis=1)
 ```
 
-    CPU times: user 14.9 s, sys: 18.1 ms, total: 14.9 s
-    Wall time: 14.9 s
+    CPU times: user 14.8 s, sys: 10 ms, total: 14.8 s
+    Wall time: 14.8 s
 
 
 
@@ -1615,62 +1615,62 @@ fv
     </tr>
     <tr>
       <th>225</th>
-      <td>138.794774</td>
-      <td>-29.691649</td>
-      <td>2.0031</td>
-      <td>0.424774</td>
+      <td>137.445474</td>
+      <td>-33.652830</td>
+      <td>-0.3611</td>
+      <td>0.470525</td>
       <td>...</td>
-      <td>21.032959</td>
-      <td>-4.841107</td>
-      <td>Crustal element Muloorina</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>Nawa, Mount Woods, Fowler, Wilgena, Harris Gr</td>
       <td>0</td>
     </tr>
     <tr>
       <th>226</th>
-      <td>140.267747</td>
-      <td>-38.008458</td>
-      <td>1.9598</td>
-      <td>1.023122</td>
+      <td>131.475045</td>
+      <td>-29.542970</td>
+      <td>1.9398</td>
+      <td>0.003774</td>
       <td>...</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>Crustal element Kanmantoo Main</td>
+      <td>-194.693344</td>
+      <td>-11.794041</td>
+      <td>Nawa Domain</td>
       <td>0</td>
     </tr>
     <tr>
       <th>227</th>
-      <td>129.038536</td>
-      <td>-31.538249</td>
-      <td>2.2199</td>
-      <td>0.094928</td>
+      <td>132.345170</td>
+      <td>-30.403433</td>
+      <td>2.5240</td>
+      <td>0.174649</td>
       <td>...</td>
-      <td>125.275963</td>
-      <td>-32.817963</td>
-      <td></td>
+      <td>-420.737854</td>
+      <td>-13.037086</td>
+      <td>Chrisite, Wilgena, Harris Greenstone, Olympic</td>
       <td>0</td>
     </tr>
     <tr>
       <th>228</th>
-      <td>140.756481</td>
-      <td>-37.106672</td>
-      <td>2.0076</td>
-      <td>0.049691</td>
+      <td>133.561520</td>
+      <td>-34.495421</td>
+      <td>-0.6886</td>
+      <td>0.891632</td>
       <td>...</td>
-      <td>-337.100220</td>
-      <td>0.925697</td>
-      <td>Crustal element Kanmantoo Main</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>Nuyts Domain</td>
       <td>0</td>
     </tr>
     <tr>
       <th>229</th>
-      <td>137.484771</td>
-      <td>-29.303033</td>
-      <td>1.7740</td>
-      <td>0.229885</td>
+      <td>133.398693</td>
+      <td>-37.706946</td>
+      <td>-0.5407</td>
+      <td>2.870313</td>
       <td>...</td>
-      <td>-279.871063</td>
-      <td>-19.597466</td>
-      <td>Crustal element Adelaide</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-9999</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -1683,7 +1683,7 @@ fv
 
 ```python
 # Save all our hard work to a csv file for more hacking to come!
-fv.to_csv('data/fv.csv',index=False)
+fv.to_csv('../data/fv.csv',index=False)
 ```
 
 # Exploratory Data Analysis
@@ -1707,9 +1707,9 @@ fv.info()
      1   LATITUDE   230 non-null    float64
      2   res        230 non-null    float64
      3   faults     230 non-null    float64
-     4   dem        227 non-null    float64
-     5   mag        227 non-null    float64
-     6   grav       227 non-null    float64
+     4   dem        224 non-null    float64
+     5   mag        224 non-null    float64
+     6   grav       224 non-null    float64
      7   geol       230 non-null    object 
      8   deposit    230 non-null    int64  
     dtypes: float64(7), int64(1), object(1)
@@ -1768,7 +1768,7 @@ sns.pairplot(fv,hue='deposit',palette="Set1",diag_kind="auto")
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x7fc3ec701ee0>
+    <seaborn.axisgrid.PairGrid at 0x7f8735d06550>
 
 
 
@@ -1929,15 +1929,15 @@ plt.legend(loc=7)
 
     Tranining the Clasifier...
     Done RF. Now scoring...
-    RF 5-fold cross validation Scores: [0.93478261 0.97826087 0.95555556 0.95555556 0.75555556]
-    SCORE Mean: 0.92 STD: 0.08 
+    RF 5-fold cross validation Scores: [0.97777778 0.88888889 0.95555556 1.         0.79545455]
+    SCORE Mean: 0.92 STD: 0.07 
     
 
 
 
 
 
-    <matplotlib.legend.Legend at 0x7fc3e8952af0>
+    <matplotlib.legend.Legend at 0x7f8733744f10>
 
 
 
@@ -1962,9 +1962,9 @@ print("Prediction (actual result):")
 print(rf.predict(features))
 ```
 
-    Features: (227, 6) Targets: (227,)
-    RF CV-Scores:  [0.93478261 0.97826087 0.95555556 0.95555556 0.75555556]
-    CV-SCORE Mean: 0.92 STD: 0.08
+    Features: (224, 6) Targets: (224,)
+    RF CV-Scores:  [0.97777778 0.88888889 0.95555556 1.         0.79545455]
+    CV-SCORE Mean: 0.92 STD: 0.07
     Targets (expected result):
     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
      1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -1972,7 +1972,7 @@ print(rf.predict(features))
      1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0]
+     0 0]
     Prediction (actual result):
     [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
      1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -1980,7 +1980,7 @@ print(rf.predict(features))
      1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0]
+     0 0]
 
 
 
@@ -2051,8 +2051,8 @@ rf.predict_proba(targets)
 
 
 
-    array([[0.2 , 0.8 ],
-           [0.79, 0.21]])
+    array([[0.18, 0.82],
+           [0.81, 0.19]])
 
 
 
@@ -2096,14 +2096,14 @@ print("Done!")
     Done faults
     Done rasters
     Done!
-    CPU times: user 16min 22s, sys: 166 ms, total: 16min 22s
-    Wall time: 16min 22s
+    CPU times: user 17min 19s, sys: 155 ms, total: 17min 19s
+    Wall time: 17min 19s
 
 
 
 ```python
 # Save all our hard work to a csv file for more hacking to come!
-tdf.to_csv('data/tdf_10.csv',index=False)
+tdf.to_csv('../data/tdf_10.csv',index=False)
 #tdf.read_csv('data/tdf_100.csv') #Read the file in if you need
 ```
 

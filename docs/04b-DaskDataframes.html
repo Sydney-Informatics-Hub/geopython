@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -511,7 +508,7 @@ div.tocify {
 <li>Responsive: Designed with interactive computing in mind, it provides rapid feedback and diagnostics to aid humans</li>
 </ul>
 <figure>
-<img src="./data/figs/dask_pic1.png" style="margin:10px;width:600px"/>
+<img src="fig/dask_pic1.png" style="margin:10px;width:600px"/>
 <figcaption>
 Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.dask.org/en/latest/</a>
 </figcaption>
@@ -520,7 +517,7 @@ Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.d
 <p>Dask provides high level collections - these are <strong><em>Dask Dataframes, bags, and arrays</em></strong>. On a low level, dask dynamic task schedulers to scale up or down processes, and presents parallel computations by implementing task graphs. It provides an alternative to scaling out tasks instead of threading (IO Bound) and multiprocessing (cpu bound).</p>
 <p>A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.</p>
 <figure>
-<img src="./data/figs/dask_pic2.png" style="margin:6px;width:400px"/>
+<img src="fig/dask_pic2.png" style="margin:6px;width:400px"/>
 <figcaption>
 Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/">https://docs.dask.org/en/latest/dataframe.html/</a>
 </figcaption>
@@ -551,7 +548,7 @@ client</code></pre>
 <pre><code>&lt;div style=&quot;width: 24px; height: 24px; background-color: #e1e1e1; border: 3px solid #9D9D9D; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
 &lt;div style=&quot;margin-left: 48px;&quot;&gt;
     &lt;h3 style=&quot;margin-bottom: 0px;&quot;&gt;Client&lt;/h3&gt;
-    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Client-f345cbf0-0e25-11ed-9593-4865ee14dcd0&lt;/p&gt;
+    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Client-2e195097-112d-11ed-974e-4865ee14dcd0&lt;/p&gt;
     &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
 
     &lt;tr&gt;
@@ -580,7 +577,7 @@ client</code></pre>
 &lt;/div&gt;
 &lt;div style=&quot;margin-left: 48px;&quot;&gt;
     &lt;h3 style=&quot;margin-bottom: 0px; margin-top: 0px;&quot;&gt;LocalCluster&lt;/h3&gt;
-    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;0d3d104c&lt;/p&gt;
+    &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;95c9a1c8&lt;/p&gt;
     &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
         &lt;tr&gt;
             &lt;td style=&quot;text-align: left;&quot;&gt;
@@ -615,11 +612,11 @@ client</code></pre>
     &lt;div style=&quot;width: 24px; height: 24px; background-color: #FFF7E5; border: 3px solid #FF6132; border-radius: 5px; position: absolute;&quot;&gt; &lt;/div&gt;
     &lt;div style=&quot;margin-left: 48px;&quot;&gt;
         &lt;h3 style=&quot;margin-bottom: 0px;&quot;&gt;Scheduler&lt;/h3&gt;
-        &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Scheduler-7046b19d-5b8d-4330-860c-f9c33f7266f2&lt;/p&gt;
+        &lt;p style=&quot;color: #9D9D9D; margin-bottom: 0px;&quot;&gt;Scheduler-042b7e06-ee22-4d52-9243-890e4a63c08e&lt;/p&gt;
         &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
             &lt;tr&gt;
                 &lt;td style=&quot;text-align: left;&quot;&gt;
-                    &lt;strong&gt;Comm:&lt;/strong&gt; tcp://127.0.0.1:36743
+                    &lt;strong&gt;Comm:&lt;/strong&gt; tcp://127.0.0.1:38649
                 &lt;/td&gt;
                 &lt;td style=&quot;text-align: left;&quot;&gt;
                     &lt;strong&gt;Workers:&lt;/strong&gt; 4
@@ -661,7 +658,7 @@ client</code></pre>
             &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:33607
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:38959
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Total threads: &lt;/strong&gt; 3
@@ -669,7 +666,7 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:36243/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:36243/status&lt;/a&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:37463/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:37463/status&lt;/a&gt;
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
@@ -677,13 +674,13 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:45619
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:43391
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-8y8difk0
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-ud_2801z
                     &lt;/td&gt;
                 &lt;/tr&gt;
 
@@ -706,7 +703,7 @@ client</code></pre>
             &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:38753
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:33595
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Total threads: &lt;/strong&gt; 3
@@ -714,7 +711,7 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:37565/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:37565/status&lt;/a&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:39999/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:39999/status&lt;/a&gt;
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
@@ -722,13 +719,13 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:42159
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:34529
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-qvp_l7ja
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-2grfs2vq
                     &lt;/td&gt;
                 &lt;/tr&gt;
 
@@ -751,7 +748,7 @@ client</code></pre>
             &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:37445
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:39749
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Total threads: &lt;/strong&gt; 3
@@ -759,7 +756,7 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:44247/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:44247/status&lt;/a&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:32823/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:32823/status&lt;/a&gt;
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
@@ -767,13 +764,13 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:34691
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:42563
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-v3gapqyt
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-m7lnih_c
                     &lt;/td&gt;
                 &lt;/tr&gt;
 
@@ -796,7 +793,7 @@ client</code></pre>
             &lt;table style=&quot;width: 100%; text-align: left;&quot;&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:32947
+                        &lt;strong&gt;Comm: &lt;/strong&gt; tcp://127.0.0.1:45453
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Total threads: &lt;/strong&gt; 3
@@ -804,7 +801,7 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:36217/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:36217/status&lt;/a&gt;
+                        &lt;strong&gt;Dashboard: &lt;/strong&gt; &lt;a href=&quot;http://127.0.0.1:35703/status&quot; target=&quot;_blank&quot;&gt;http://127.0.0.1:35703/status&lt;/a&gt;
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
                         &lt;strong&gt;Memory: &lt;/strong&gt; 7.78 GiB
@@ -812,13 +809,13 @@ client</code></pre>
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:34899
+                        &lt;strong&gt;Nanny: &lt;/strong&gt; tcp://127.0.0.1:45341
                     &lt;/td&gt;
                     &lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;
                 &lt;/tr&gt;
                 &lt;tr&gt;
                     &lt;td colspan=&quot;2&quot; style=&quot;text-align: left;&quot;&gt;
-                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-4kt9skq6
+                        &lt;strong&gt;Local directory: &lt;/strong&gt; /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-kawdh4n3
                     &lt;/td&gt;
                 &lt;/tr&gt;
 
@@ -844,7 +841,7 @@ client</code></pre>
 </div>
 <pre class="python"><code># Although this is small csv file, we&#39;ll reuse our same example from before!
 # Load csv results from server into a Pandas DataFrame
-df = dd.read_csv(&quot;data/ml_data_points.csv&quot;)</code></pre>
+df = dd.read_csv(&quot;../data/ml_data_points.csv&quot;)</code></pre>
 <pre class="python"><code># We only see the metadata, the actual data are only computed when requested.
 df</code></pre>
 <div>
@@ -2341,7 +2338,7 @@ x = inc(1)
 y = dec(2)
 z = add(x, y)
 z</code></pre>
-<pre><code>CPU times: user 47.3 ms, sys: 9.36 ms, total: 56.6 ms
+<pre><code>CPU times: user 11.7 ms, sys: 1.94 ms, total: 13.6 ms
 Wall time: 401 ms
 
 
@@ -2358,14 +2355,14 @@ x = inc(1)
 y = dec(2)
 z = add(x, y)
 z</code></pre>
-<pre><code>CPU times: user 6.45 ms, sys: 0 ns, total: 6.45 ms
-Wall time: 4.28 ms
+<pre><code>CPU times: user 912 µs, sys: 64 µs, total: 976 µs
+Wall time: 588 µs
 
 
 
 
 
-Delayed(&#39;add-2f529910-99a0-4f94-afc1-a4c6a53325bb&#39;)</code></pre>
+Delayed(&#39;add-2381f2df-c2c0-41bd-984a-c46c9d6efb88&#39;)</code></pre>
 <pre class="python"><code>z.visualize(format=&#39;svg&#39;, rankdir=&#39;LR&#39;)</code></pre>
 <div class="figure">
 <img src="04b-DaskDataframes_files/04b-DaskDataframes_30_0.svg" alt="" />
@@ -2373,8 +2370,8 @@ Delayed(&#39;add-2f529910-99a0-4f94-afc1-a4c6a53325bb&#39;)</code></pre>
 </div>
 <pre class="python"><code>%%time
 z.compute()</code></pre>
-<pre><code>CPU times: user 60.4 ms, sys: 4.88 ms, total: 65.2 ms
-Wall time: 334 ms
+<pre><code>CPU times: user 21.9 ms, sys: 1.03 ms, total: 23 ms
+Wall time: 317 ms
 
 
 

@@ -393,9 +393,6 @@ div.tocify {
     <li>
       <a href="setup.html">Setup</a>
     </li>
-    <li>
-      <a href="AWSinstuctionsStudents.html">Jupyter Cloud Backup Instructions</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -520,7 +517,7 @@ sns.set(font_scale = 1.5)</code></pre>
 #Read in the data
 #Set a value for NaNs
 #Drop many of the columns (so it is easier to work with)
-df = pd.read_csv(&#39;data/training_data-Cu.csv&#39;,na_values=&#39;-9999.0&#39;)
+df = pd.read_csv(&#39;../data/training_data-Cu.csv&#39;,na_values=&#39;-9999.0&#39;)
 cols = list(range(5,65))
 cols.insert(0,0)
 df.drop(df.columns[cols],axis=1,inplace=True)
@@ -1184,7 +1181,7 @@ catVars = df.select_dtypes(include = [&#39;object&#39;]).columns</code></pre>
 cols = [np.append(np.arange(0, 11), 37)]
 #Make a pairwise plot to find all the relationships in the data
 sns.pairplot(df[df.columns[cols].tolist()[0]],hue =&quot;deposit&quot;,palette=&quot;Set1&quot;,diag_kind=&quot;kde&quot;,diag_kws={&#39;bw&#39;: 0.1})</code></pre>
-<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7fcf70312d30&gt;</code></pre>
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x7f9d87424520&gt;</code></pre>
 <div class="figure">
 <img src="03-ML_files/03-ML_21_1.png" alt="" />
 <p class="caption">png</p>

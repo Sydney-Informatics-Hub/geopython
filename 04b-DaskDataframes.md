@@ -34,7 +34,7 @@ Dask emphasizes the following virtues:
 * Responsive: Designed with interactive computing in mind, it provides rapid feedback and diagnostics to aid humans
 
 <figure>
-  <img src="./data/figs/dask_pic1.png" style="margin:10px;width:600px"/>
+  <img src="./fig/dask_pic1.png" style="margin:10px;width:600px"/>
   <figcaption> Dask High Level Schema <a href="https://docs.dask.org/en/latest/">https://docs.dask.org/en/latest/</a></figcaption>
 </figure><br>
 
@@ -44,7 +44,7 @@ On a low level, dask dynamic task schedulers to scale up or down processes, and 
 A Dask DataFrame is a large parallel DataFrame composed of many smaller Pandas DataFrames, split along the index. These Pandas DataFrames may live on disk for larger-than-memory computing on a single machine, or on many different machines in a cluster. One Dask DataFrame operation triggers many operations on the constituent Pandas DataFrames.
 
 <figure>
-  <img src="./data/figs/dask_pic2.png" style="margin:6px;width:400px"/>
+  <img src="./fig/dask_pic2.png" style="margin:6px;width:400px"/>
   <figcaption> Dask High Level Schema <a href="https://docs.dask.org/en/latest/dataframe.html/">https://docs.dask.org/en/latest/dataframe.html/</a></figcaption>
 </figure><br>
 
@@ -93,7 +93,7 @@ client
     <div style="width: 24px; height: 24px; background-color: #e1e1e1; border: 3px solid #9D9D9D; border-radius: 5px; position: absolute;"> </div>
     <div style="margin-left: 48px;">
         <h3 style="margin-bottom: 0px;">Client</h3>
-        <p style="color: #9D9D9D; margin-bottom: 0px;">Client-f345cbf0-0e25-11ed-9593-4865ee14dcd0</p>
+        <p style="color: #9D9D9D; margin-bottom: 0px;">Client-2e195097-112d-11ed-974e-4865ee14dcd0</p>
         <table style="width: 100%; text-align: left;">
 
         <tr>
@@ -122,7 +122,7 @@ client
     </div>
     <div style="margin-left: 48px;">
         <h3 style="margin-bottom: 0px; margin-top: 0px;">LocalCluster</h3>
-        <p style="color: #9D9D9D; margin-bottom: 0px;">0d3d104c</p>
+        <p style="color: #9D9D9D; margin-bottom: 0px;">95c9a1c8</p>
         <table style="width: 100%; text-align: left;">
             <tr>
                 <td style="text-align: left;">
@@ -159,11 +159,11 @@ client
         <div style="width: 24px; height: 24px; background-color: #FFF7E5; border: 3px solid #FF6132; border-radius: 5px; position: absolute;"> </div>
         <div style="margin-left: 48px;">
             <h3 style="margin-bottom: 0px;">Scheduler</h3>
-            <p style="color: #9D9D9D; margin-bottom: 0px;">Scheduler-7046b19d-5b8d-4330-860c-f9c33f7266f2</p>
+            <p style="color: #9D9D9D; margin-bottom: 0px;">Scheduler-042b7e06-ee22-4d52-9243-890e4a63c08e</p>
             <table style="width: 100%; text-align: left;">
                 <tr>
                     <td style="text-align: left;">
-                        <strong>Comm:</strong> tcp://127.0.0.1:36743
+                        <strong>Comm:</strong> tcp://127.0.0.1:38649
                     </td>
                     <td style="text-align: left;">
                         <strong>Workers:</strong> 4
@@ -205,7 +205,7 @@ client
                 <table style="width: 100%; text-align: left;">
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Comm: </strong> tcp://127.0.0.1:33607
+                            <strong>Comm: </strong> tcp://127.0.0.1:38959
                         </td>
                         <td style="text-align: left;">
                             <strong>Total threads: </strong> 3
@@ -213,7 +213,7 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:36243/status" target="_blank">http://127.0.0.1:36243/status</a>
+                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:37463/status" target="_blank">http://127.0.0.1:37463/status</a>
                         </td>
                         <td style="text-align: left;">
                             <strong>Memory: </strong> 7.78 GiB
@@ -221,13 +221,13 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Nanny: </strong> tcp://127.0.0.1:45619
+                            <strong>Nanny: </strong> tcp://127.0.0.1:43391
                         </td>
                         <td style="text-align: left;"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: left;">
-                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-8y8difk0
+                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-ud_2801z
                         </td>
                     </tr>
 
@@ -250,7 +250,7 @@ client
                 <table style="width: 100%; text-align: left;">
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Comm: </strong> tcp://127.0.0.1:38753
+                            <strong>Comm: </strong> tcp://127.0.0.1:33595
                         </td>
                         <td style="text-align: left;">
                             <strong>Total threads: </strong> 3
@@ -258,7 +258,7 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:37565/status" target="_blank">http://127.0.0.1:37565/status</a>
+                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:39999/status" target="_blank">http://127.0.0.1:39999/status</a>
                         </td>
                         <td style="text-align: left;">
                             <strong>Memory: </strong> 7.78 GiB
@@ -266,13 +266,13 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Nanny: </strong> tcp://127.0.0.1:42159
+                            <strong>Nanny: </strong> tcp://127.0.0.1:34529
                         </td>
                         <td style="text-align: left;"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: left;">
-                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-qvp_l7ja
+                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-2grfs2vq
                         </td>
                     </tr>
 
@@ -295,7 +295,7 @@ client
                 <table style="width: 100%; text-align: left;">
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Comm: </strong> tcp://127.0.0.1:37445
+                            <strong>Comm: </strong> tcp://127.0.0.1:39749
                         </td>
                         <td style="text-align: left;">
                             <strong>Total threads: </strong> 3
@@ -303,7 +303,7 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:44247/status" target="_blank">http://127.0.0.1:44247/status</a>
+                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:32823/status" target="_blank">http://127.0.0.1:32823/status</a>
                         </td>
                         <td style="text-align: left;">
                             <strong>Memory: </strong> 7.78 GiB
@@ -311,13 +311,13 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Nanny: </strong> tcp://127.0.0.1:34691
+                            <strong>Nanny: </strong> tcp://127.0.0.1:42563
                         </td>
                         <td style="text-align: left;"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: left;">
-                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-v3gapqyt
+                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-m7lnih_c
                         </td>
                     </tr>
 
@@ -340,7 +340,7 @@ client
                 <table style="width: 100%; text-align: left;">
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Comm: </strong> tcp://127.0.0.1:32947
+                            <strong>Comm: </strong> tcp://127.0.0.1:45453
                         </td>
                         <td style="text-align: left;">
                             <strong>Total threads: </strong> 3
@@ -348,7 +348,7 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:36217/status" target="_blank">http://127.0.0.1:36217/status</a>
+                            <strong>Dashboard: </strong> <a href="http://127.0.0.1:35703/status" target="_blank">http://127.0.0.1:35703/status</a>
                         </td>
                         <td style="text-align: left;">
                             <strong>Memory: </strong> 7.78 GiB
@@ -356,13 +356,13 @@ client
                     </tr>
                     <tr>
                         <td style="text-align: left;">
-                            <strong>Nanny: </strong> tcp://127.0.0.1:34899
+                            <strong>Nanny: </strong> tcp://127.0.0.1:45341
                         </td>
                         <td style="text-align: left;"></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: left;">
-                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-4kt9skq6
+                            <strong>Local directory: </strong> /home/nbutter/Projects/geopython/_ipynb/dask-worker-space/worker-kawdh4n3
                         </td>
                     </tr>
 
@@ -394,7 +394,7 @@ client
 ```python
 # Although this is small csv file, we'll reuse our same example from before!
 # Load csv results from server into a Pandas DataFrame
-df = dd.read_csv("data/ml_data_points.csv")
+df = dd.read_csv("../data/ml_data_points.csv")
 ```
 
 
@@ -1404,7 +1404,7 @@ z = add(x, y)
 z
 ```
 
-    CPU times: user 47.3 ms, sys: 9.36 ms, total: 56.6 ms
+    CPU times: user 11.7 ms, sys: 1.94 ms, total: 13.6 ms
     Wall time: 401 ms
 
 
@@ -1432,14 +1432,14 @@ z = add(x, y)
 z
 ```
 
-    CPU times: user 6.45 ms, sys: 0 ns, total: 6.45 ms
-    Wall time: 4.28 ms
+    CPU times: user 912 µs, sys: 64 µs, total: 976 µs
+    Wall time: 588 µs
 
 
 
 
 
-    Delayed('add-2f529910-99a0-4f94-afc1-a4c6a53325bb')
+    Delayed('add-2381f2df-c2c0-41bd-984a-c46c9d6efb88')
 
 
 
@@ -1463,8 +1463,8 @@ z.visualize(format='svg', rankdir='LR')
 z.compute()
 ```
 
-    CPU times: user 60.4 ms, sys: 4.88 ms, total: 65.2 ms
-    Wall time: 334 ms
+    CPU times: user 21.9 ms, sys: 1.03 ms, total: 23 ms
+    Wall time: 317 ms
 
 
 

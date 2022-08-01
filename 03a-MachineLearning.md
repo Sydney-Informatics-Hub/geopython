@@ -20,7 +20,7 @@ We have a dataset (from Butterworth et al. 2016) with a collection of tectonomag
 
 Below is an animation of the tectonomagmatic evolution of the South American plate margin since 150Ma, representing many of the parameters in the data.
 
-![SegmentLocal](./data/figs/MullerConvergenceSmall.gif "segment")
+![SegmentLocal](fig/MullerConvergenceSmall.gif "segment")
 
 ## Import most of the modules we need
 By convention module loads go at the top of your workflows.
@@ -58,7 +58,7 @@ import shapefile
 
 ```python
 #Use pandas to load in the machine learning dataset
-ml_data=pandas.read_csv("data/ml_data_points.csv",index_col=0)
+ml_data=pandas.read_csv("../data/ml_data_points.csv",index_col=0)
 ```
 
 
@@ -446,8 +446,8 @@ print(rf.predict(features))
     Make the classifiers
     Random Forest...
     Done RF
-    RF Scores:  [0.64516129 0.8        0.63333333 0.7        0.8        0.6
-     0.4        0.63333333 0.73333333 0.66666667]
+    RF Scores:  [0.74193548 0.8        0.6        0.66666667 0.8        0.63333333
+     0.4        0.63333333 0.66666667 0.7       ]
     SCORE Mean: 0.66 STD: 0.11 
     
     Targets (expected result):
@@ -469,13 +469,13 @@ print(rf.predict(features))
      1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
      1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
      1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 0. 1. 1. 1. 1. 1. 1. 1. 1.
-     1. 1. 1. 1. 1. 1. 0. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+     1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
      1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
      1. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
      0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
      0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
      0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
-     0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+     0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.
      0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
      0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
 
@@ -508,10 +508,10 @@ plt.show()
 ```
 
     Importance 	 Feature
-    0.280 		 16 Subduction polarity (degrees)
-    0.293 		 17 Subduction obliquity (degrees)
-    0.160 		 18 Distance along margin (km)
-    0.267 		 19 Subduction obliquity signed (radians)
+    0.288 		 16 Subduction polarity (degrees)
+    0.285 		 17 Subduction obliquity (degrees)
+    0.157 		 18 Distance along margin (km)
+    0.270 		 19 Subduction obliquity signed (radians)
 
 
 
@@ -546,7 +546,7 @@ rf.predict_proba(newdata)
 
 
 
-    array([[0.695, 0.305]])
+    array([[0.812, 0.188]])
 
 
 
@@ -554,22 +554,22 @@ rf.predict_proba(newdata)
 
 
 ```python
-filename="data/topodata.nc"
+filename="../data/topodata.nc"
 data = scipy.io.netcdf.netcdf_file(filename,'r')
 
 data.variables
 ```
 
-    /tmp/ipykernel_2554792/1418601044.py:2: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
+    /tmp/ipykernel_2626860/2264377247.py:2: DeprecationWarning: Please use `netcdf_file` from the `scipy.io` namespace, the `scipy.io.netcdf` namespace is deprecated.
       data = scipy.io.netcdf.netcdf_file(filename,'r')
 
 
 
 
 
-    {'X': <scipy.io._netcdf.netcdf_variable at 0x7f9fde4ed040>,
-     'Y': <scipy.io._netcdf.netcdf_variable at 0x7f9fde4edc70>,
-     'elev': <scipy.io._netcdf.netcdf_variable at 0x7f9fde4eddc0>}
+    {'X': <scipy.io._netcdf.netcdf_variable at 0x7f9e236a0c10>,
+     'Y': <scipy.io._netcdf.netcdf_variable at 0x7f9e236a0ac0>,
+     'elev': <scipy.io._netcdf.netcdf_variable at 0x7f9e236a0d00>}
 
 
 
@@ -701,7 +701,7 @@ print("Added topo")
 
 ###Plot shapefile polygon outlines
 #Load in plate polygons for plotting
-topologyFile='data/platepolygons/topology_platepolygons_0.00Ma.shp'
+topologyFile='../data/platepolygons/topology_platepolygons_0.00Ma.shp'
 
 #read in the file
 shapeRead = shapefile.Reader(topologyFile)
