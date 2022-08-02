@@ -30,7 +30,7 @@ Once installed, launch an "Anaconda Prompt" from the Start Menu / Applications F
 
 Next we need to set up an environment with all the additional packages and libraries we will be using throughout the course.
 
-* Download the python environment file for your system: [Windows](requirements/environment_win.yml), [MacOSX](requirements/environment.yml), [Linux](requirements/environment_linux.yml). This is a small text file, you may have to "Right Click > Save link as..." to download it.
+* Download the python environment file for your system: [Windows](requirements/environment_win.yml), [MacOSX](requirements/environment_osx.yml), [Linux](requirements/environment_linux.yml), or the [universal version](requirements/environment.yml). This is a small text file, you may have to "Right Click > Save link as..." to download it.
 * Launch an Anaconda Prompt (miniconda3).
 
 <br>

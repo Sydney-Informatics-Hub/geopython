@@ -1,24 +1,25 @@
-name: PESA
+name: geopy
 channels:
   - conda-forge
   - defaults
 dependencies:
   - python=3.9
   - matplotlib
-  - numpy=1.23
-  - pygmt0.7
-  - seaborn=0.11
-  - obspy=1.3
-  - tensorflow=2.9
-  - pyshp=2.3
-  - mpi4py=3.1
-  - scikit-learn=1.1
-  - scipy=1.8
-  - dask=2022.6
-  - cartopy=0.20
-  - upsetplot=0.6
-  - pandas=1.4
-  - jupyter=1.0
-  - python-graphviz=0.2
+  - numpy
+  - pygmt
+  - seaborn
+  - obspy
+  - tensorflow
+  - pyshp
+  - mpi4py
+  - scikit-learn
+  - scipy
+  - dask
+  - cartopy
+  - upsetplot
+  - pandas
+  - jupyter
+  - python-graphviz
+  - pip
   - pip:
-    - lasio==0.30
+    - lasio

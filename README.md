@@ -19,9 +19,8 @@ Rendered at: https://sydney-informatics-hub.github.io/geopython/
 
 ```
 bash _generate_site_from_ipynb.sh
-#Generally add whatever files you have created
-git add docs/*_files/*
-git add *_files/*
+#First time you create the file, add them to be tracked by github, e.g.
+git add docs/*
 git commit -am "your comments"
 git push
 ```

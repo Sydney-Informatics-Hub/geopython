@@ -490,9 +490,8 @@ div.tocify {
 <li>You will need to have jupyter and Rscript installed to convert the notebooks and render them in “Rmarkdown” format.</li>
 </ul>
 <pre><code>bash _generate_site_from_ipynb.sh
-#Generally add whatever files you have created
-git add docs/*_files/*
-git add *_files/*
+#First time you create the file, add them to be tracked by github, e.g.
+git add docs/*
 git commit -am &quot;your comments&quot;
 git push</code></pre>
 <p>You can browse the result locally by exploring the html files created (note: sometimes figures display locally but not on web and the other way around too.)</p>
