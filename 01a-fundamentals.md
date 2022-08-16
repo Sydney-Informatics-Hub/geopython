@@ -716,7 +716,7 @@ You can explore the different color maps at [https://matplotlib.org/3.1.0/tutori
 ### Challenge
 
 - Pick a new element from the EarthChem data and make a similar map. 
-- [Here is a link](https://www.dropbox.com/sh/b1tkoi6k1xmmcka/AADmxEMNwTbv1DZHifMOWzzPa?dl=0) to download the data for indiviual elements
+- [Here is a link](https://cloudstor.aarnet.edu.au/plus/s/xpvPkzornBTzn8T) to download the data for indiviual elements
 - Create a new notebook and display the diagnostic steps leading up to your final map.
 
 <details>
