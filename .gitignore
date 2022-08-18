@@ -2,18 +2,11 @@
 *~
 .DS_Store
 .ipynb_checkpoints
-.sass-cache
 __pycache__
 _site
-.Rproj.user
-.Rhistory
-.RData
 data/*
-_ipynb/.ipynb_checkpoints
-_ipynb/dask-worker-space
 _additional/*
+/.quarto/
 
-_ipynb/data/*
 # Code editors
 *.sublime-*
-*.pdf

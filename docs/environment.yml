@@ -1,0 +1,25 @@
+name: geopy
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - matplotlib
+  - numpy
+  - pygmt
+  - seaborn
+  - obspy
+  - tensorflow
+  - pyshp
+  - mpi4py
+  - scikit-learn
+  - scipy
+  - dask
+  - cartopy
+  - upsetplot
+  - pandas
+  - jupyter
+  - python-graphviz
+  - pip
+  - pip:
+    - lasio
