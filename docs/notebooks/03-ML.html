@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.345">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sydney Informatics Hub Python for Geoscience – ml</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../lesson.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Sydney Informatics Hub Python for Geoscience</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../setup.html">Setup</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 1</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
+        <li>
+    <a class="dropdown-item" href="../00-intro.html">
+ <span class="dropdown-text">Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/01a-fundamentals.html">
+ <span class="dropdown-text">Fundamentals</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 2</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
+        <li>
+    <a class="dropdown-item" href="../notebooks/01b-dataframes.html">
+ <span class="dropdown-text">Useful Python packages for different data types</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 3</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-3">    
+        <li>
+    <a class="dropdown-item" href="../02b-Clustering.html">
+ <span class="dropdown-text">Numerical Approaches</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/03-ML_workflow.html">
+ <span class="dropdown-text">Machine Learning Workflow</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-4" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 4</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-4">    
+        <li>
+    <a class="dropdown-item" href="../notebooks/04a-SimpleSpeedUps.html">
+ <span class="dropdown-text">Efficient Python Methods</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/02a-mapping.html">
+ <span class="dropdown-text">Bonus: Matplotlib and Mapping with Cartopy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/03b-DeepLearningTS.html">
+ <span class="dropdown-text">Bonus: Deep Learning &amp; Time Series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/04b-DaskDataframes.html">
+ <span class="dropdown-text">Bonus: Dask data frames</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exploratory-data-analysis-eda-for-ml" id="toc-exploratory-data-analysis-eda-for-ml" class="nav-link active" data-scroll-target="#exploratory-data-analysis-eda-for-ml">Exploratory Data Analysis (EDA) for ML</a>
+  <ul class="collapse">
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data">Load the data</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory data analysis</a></li>
+  <li><a href="#explore-the-data-to-see-whether-there-are-any-unusual-relationships-between-variables" id="toc-explore-the-data-to-see-whether-there-are-any-unusual-relationships-between-variables" class="nav-link" data-scroll-target="#explore-the-data-to-see-whether-there-are-any-unusual-relationships-between-variables">Explore the data to see whether there are any unusual relationships between variables</a>
+  <ul class="collapse">
+  <li><a href="#challenge" id="toc-challenge" class="nav-link" data-scroll-target="#challenge">Challenge</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points">Key points</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions:</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="exploratory-data-analysis-eda-for-ml" class="level1">
+<h1>Exploratory Data Analysis (EDA) for ML</h1>
+<section id="objectives" class="level3 objectives">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<ul>
+<li>Introduce some of the key packages for EDA and ML.</li>
+<li>Introduce and explore an dataset for ML</li>
+<li>Clean up a dataset</li>
+<li>Install additional Python libraries</li>
+</ul>
+</section>
+<p>First, let’s load the required libraries. We will use the sklearn library for our ML tasks, and the pandas, numpy, matplotlib seaborn and upsetplot libraries for general data processing and visualisation.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable some warnings produced by pandas etc.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't do this in your actual analyses!)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>warnings.simplefilter(<span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">UserWarning</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>warnings.simplefilter(<span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">FutureWarning</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>warnings.simplefilter(<span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">RuntimeWarning</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> model_selection</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#You probably do not have this library! Install it with pip:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#!pip install UpSetPlot</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> upsetplot</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(font_scale <span class="op">=</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="load-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
+<p>Download the data and put it in your “data” folder. You will have to download it from the <a href="https://github.com/natbutter/gawler-exploration/blob/master/ML-DATA/training_data-Cu.csv">GitHub repo</a> (right click on the Download button and select “Save link as..”). Our data is based on a submitted Manuscript (Butterworth and Barnett-Moore 2020) which was a finalist in the <a href="https://unearthed.solutions/u/competitions/exploresa">Unearthed, ExploreSA: Gawler Challenge</a>.</p>
+<p>The dataset contains a mix of categorical and numerical values, representing various geophysical and geological measurements across the Gawler Craton in South Australia.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#training_data-Cu.txt</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in the data</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Set a value for NaNs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Drop many of the columns (so it is easier to work with)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'../data/training_data-Cu.csv'</span>,na_values<span class="op">=</span><span class="st">'-9999.0'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">5</span>,<span class="dv">65</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>cols.insert(<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df.drop(df.columns[cols],axis<span class="op">=</span><span class="dv">1</span>,inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>df.astype({<span class="st">'archean27'</span>:<span class="st">'object'</span>,<span class="st">'geol28'</span>:<span class="st">'object'</span>,<span class="st">'random'</span>:<span class="st">'int64'</span>,<span class="st">'deposit'</span>:<span class="st">'int64'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exploratory-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory data analysis</h2>
+<p>Exploratory data analysis involves looking at:</p>
+<ul>
+<li>the distribution of variables in your dataset</li>
+<li>whether any data is missing</li>
+<li>skewed</li>
+<li>correlated variables</li>
+</ul>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What are the dimensions of the data?</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(3138, 38)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Look at the data:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>lon</th>
+      <th>lat</th>
+      <th>res-25</th>
+      <th>res-77</th>
+      <th>res-309183</th>
+      <th>neoFaults</th>
+      <th>archFaults</th>
+      <th>gairFaults</th>
+      <th>aster1-AlOH-cont</th>
+      <th>aster2-AlOH</th>
+      <th>...</th>
+      <th>mag21-tmi</th>
+      <th>rad22-dose</th>
+      <th>rad23-k</th>
+      <th>rad24-th</th>
+      <th>rad25-u</th>
+      <th>grav26</th>
+      <th>archean27</th>
+      <th>geol28</th>
+      <th>random</th>
+      <th>deposit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>129.106649</td>
+      <td>-26.135900</td>
+      <td>1.9959</td>
+      <td>1.9935</td>
+      <td>2.5780</td>
+      <td>0.858696</td>
+      <td>0.874997</td>
+      <td>2.718781</td>
+      <td>1.907609</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>-88.364891</td>
+      <td>34.762928</td>
+      <td>1.269402</td>
+      <td>6.065621</td>
+      <td>38.492386</td>
+      <td>27.176790</td>
+      <td>14552.0</td>
+      <td>17296.0</td>
+      <td>999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>132.781571</td>
+      <td>-26.151144</td>
+      <td>2.0450</td>
+      <td>2.0651</td>
+      <td>2.3873</td>
+      <td>0.607134</td>
+      <td>0.936479</td>
+      <td>1.468679</td>
+      <td>2.032987</td>
+      <td>1.076198</td>
+      <td>...</td>
+      <td>-190.025864</td>
+      <td>89.423668</td>
+      <td>3.169631</td>
+      <td>15.980172</td>
+      <td>56.650471</td>
+      <td>-83.541550</td>
+      <td>14552.0</td>
+      <td>17068.0</td>
+      <td>-999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>132.816676</td>
+      <td>-26.159202</td>
+      <td>2.0450</td>
+      <td>2.0651</td>
+      <td>2.3873</td>
+      <td>0.577540</td>
+      <td>0.914588</td>
+      <td>1.446256</td>
+      <td>1.982274</td>
+      <td>1.050442</td>
+      <td>...</td>
+      <td>-251.018036</td>
+      <td>75.961006</td>
+      <td>2.525403</td>
+      <td>15.625917</td>
+      <td>58.361298</td>
+      <td>-81.498817</td>
+      <td>14552.0</td>
+      <td>17296.0</td>
+      <td>-999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>128.945869</td>
+      <td>-26.179362</td>
+      <td>1.9978</td>
+      <td>1.9964</td>
+      <td>2.6844</td>
+      <td>0.810394</td>
+      <td>0.826784</td>
+      <td>2.813603</td>
+      <td>1.947705</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>873.983521</td>
+      <td>46.321651</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>50.577263</td>
+      <td>33.863503</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>132.549807</td>
+      <td>-26.185500</td>
+      <td>2.0694</td>
+      <td>2.0999</td>
+      <td>2.3574</td>
+      <td>0.652131</td>
+      <td>1.026991</td>
+      <td>1.499793</td>
+      <td>1.977050</td>
+      <td>1.064977</td>
+      <td>...</td>
+      <td>71.432777</td>
+      <td>47.194534</td>
+      <td>2.367707</td>
+      <td>6.874684</td>
+      <td>29.794928</td>
+      <td>-90.970375</td>
+      <td>14552.0</td>
+      <td>17296.0</td>
+      <td>-999</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 38 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What types are each of the columns?</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>lon                     float64
+lat                     float64
+res-25                  float64
+res-77                  float64
+res-309183              float64
+neoFaults               float64
+archFaults              float64
+gairFaults              float64
+aster1-AlOH-cont        float64
+aster2-AlOH             float64
+aster3-FeOH-cont        float64
+aster4-Ferric-cont      float64
+aster5-Ferrous-cont     float64
+aster6-Ferrous-index    float64
+aster7-MgOH-comp        float64
+aster8-MgOH-cont        float64
+aster9-green            float64
+aster10-kaolin          float64
+aster11-opaque          float64
+aster12-quartz          float64
+aster13-regolith-b3     float64
+aster14-regolith-b4     float64
+aster15-silica          float64
+base16                  float64
+dem17                   float64
+dtb18                   float64
+mag19-2vd               float64
+mag20-rtp               float64
+mag21-tmi               float64
+rad22-dose              float64
+rad23-k                 float64
+rad24-th                float64
+rad25-u                 float64
+grav26                  float64
+archean27                object
+geol28                   object
+random                    int64
+deposit                   int64
+dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Get information about index type and column types, non-null values and memory usage.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 3138 entries, 0 to 3137
+Data columns (total 38 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   lon                   3138 non-null   float64
+ 1   lat                   3138 non-null   float64
+ 2   res-25                3138 non-null   float64
+ 3   res-77                3138 non-null   float64
+ 4   res-309183            3138 non-null   float64
+ 5   neoFaults             3138 non-null   float64
+ 6   archFaults            3138 non-null   float64
+ 7   gairFaults            3138 non-null   float64
+ 8   aster1-AlOH-cont      2811 non-null   float64
+ 9   aster2-AlOH           2010 non-null   float64
+ 10  aster3-FeOH-cont      1811 non-null   float64
+ 11  aster4-Ferric-cont    2811 non-null   float64
+ 12  aster5-Ferrous-cont   1644 non-null   float64
+ 13  aster6-Ferrous-index  2811 non-null   float64
+ 14  aster7-MgOH-comp      1644 non-null   float64
+ 15  aster8-MgOH-cont      1811 non-null   float64
+ 16  aster9-green          3129 non-null   float64
+ 17  aster10-kaolin        1811 non-null   float64
+ 18  aster11-opaque        753 non-null    float64
+ 19  aster12-quartz        3130 non-null   float64
+ 20  aster13-regolith-b3   3127 non-null   float64
+ 21  aster14-regolith-b4   3073 non-null   float64
+ 22  aster15-silica        3130 non-null   float64
+ 23  base16                3135 non-null   float64
+ 24  dem17                 3133 non-null   float64
+ 25  dtb18                 1490 non-null   float64
+ 26  mag19-2vd             3132 non-null   float64
+ 27  mag20-rtp             3132 non-null   float64
+ 28  mag21-tmi             3132 non-null   float64
+ 29  rad22-dose            2909 non-null   float64
+ 30  rad23-k               2900 non-null   float64
+ 31  rad24-th              2904 non-null   float64
+ 32  rad25-u               2909 non-null   float64
+ 33  grav26                3131 non-null   float64
+ 34  archean27             3135 non-null   object 
+ 35  geol28                3135 non-null   object 
+ 36  random                3138 non-null   int64  
+ 37  deposit               3138 non-null   int64  
+dtypes: float64(34), int64(2), object(2)
+memory usage: 931.7+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Explore how many null values are in the dataset</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df.isnull().<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>lon                        0
+lat                        0
+res-25                     0
+res-77                     0
+res-309183                 0
+neoFaults                  0
+archFaults                 0
+gairFaults                 0
+aster1-AlOH-cont         327
+aster2-AlOH             1128
+aster3-FeOH-cont        1327
+aster4-Ferric-cont       327
+aster5-Ferrous-cont     1494
+aster6-Ferrous-index     327
+aster7-MgOH-comp        1494
+aster8-MgOH-cont        1327
+aster9-green               9
+aster10-kaolin          1327
+aster11-opaque          2385
+aster12-quartz             8
+aster13-regolith-b3       11
+aster14-regolith-b4       65
+aster15-silica             8
+base16                     3
+dem17                      5
+dtb18                   1648
+mag19-2vd                  6
+mag20-rtp                  6
+mag21-tmi                  6
+rad22-dose               229
+rad23-k                  238
+rad24-th                 234
+rad25-u                  229
+grav26                     7
+archean27                  3
+geol28                     3
+random                     0
+deposit                    0
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Find out what's the top missing:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>missingNo <span class="op">=</span> df.isnull().<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">0</span>).sort_values(ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>missingNo <span class="op">=</span> missingNo[missingNo.values  <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>missingNo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>aster11-opaque          2385
+dtb18                   1648
+aster5-Ferrous-cont     1494
+aster7-MgOH-comp        1494
+aster3-FeOH-cont        1327
+aster8-MgOH-cont        1327
+aster10-kaolin          1327
+aster2-AlOH             1128
+aster1-AlOH-cont         327
+aster4-Ferric-cont       327
+aster6-Ferrous-index     327
+rad23-k                  238
+rad24-th                 234
+rad25-u                  229
+rad22-dose               229
+aster14-regolith-b4       65
+aster13-regolith-b3       11
+aster9-green               9
+aster15-silica             8
+aster12-quartz             8
+grav26                     7
+mag19-2vd                  6
+mag20-rtp                  6
+mag21-tmi                  6
+dem17                      5
+archean27                  3
+geol28                     3
+base16                     3
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot the missingness with Seaborn</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sns.barplot(missingNo.values, missingNo.index, ax <span class="op">=</span> ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-ML_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use upsetplot to see where missing values occur</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># together</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Only use the top 5 columns</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>missing_cols <span class="op">=</span> missingNo.index[:<span class="dv">5</span>].tolist()</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>missing_counts <span class="op">=</span> (df.loc[:, missing_cols]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                  .isnull()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                  .groupby(missing_cols)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                  .size())</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>upsetplot.plot(missing_counts)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-ML_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Why is this useful to know? Can our future data analysis deal with mising data?</p>
+</section>
+<section id="explore-the-data-to-see-whether-there-are-any-unusual-relationships-between-variables" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-data-to-see-whether-there-are-any-unusual-relationships-between-variables">Explore the data to see whether there are any unusual relationships between variables</h2>
+<section id="pull-out-numeric-and-categoric-variables" class="level4">
+<h4 class="anchored" data-anchor-id="pull-out-numeric-and-categoric-variables">Pull out numeric and categoric variables:</h4>
+<ol type="1">
+<li>What data types do I have in my data? Can I infer that some of them are categorical, and others are not?</li>
+</ol>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.dtypes.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>float64    34
+object      2
+int64       2
+dtype: int64</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Pull out the categorical and numerical variables</li>
+</ol>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>numericVars <span class="op">=</span> df.select_dtypes(exclude <span class="op">=</span> [<span class="st">'int64'</span>,<span class="st">'object'</span>]).columns</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>catVars <span class="op">=</span> df.select_dtypes(include <span class="op">=</span> [<span class="st">'object'</span>]).columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Plot the first 11 numerical variables, and their relationship with whether deposit information.</li>
+</ol>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>(3138, 38)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Select which columns to plot (all of them are too many), and be sure to include the "deposit" variable</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [np.append(np.arange(<span class="dv">0</span>, <span class="dv">11</span>), <span class="dv">37</span>)]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Make a pairwise plot to find all the relationships in the data</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df[df.columns[cols].tolist()[<span class="dv">0</span>]],hue <span class="op">=</span><span class="st">"deposit"</span>,palette<span class="op">=</span><span class="st">"Set1"</span>,diag_kind<span class="op">=</span><span class="st">"kde"</span>,diag_kws<span class="op">=</span>{<span class="st">'bw'</span>: <span class="fl">0.1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>&lt;seaborn.axisgrid.PairGrid at 0x14566cdf0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="03-ML_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="challenge" class="level3 challenge">
+<h3 class="anchored" data-anchor-id="challenge">Challenge</h3>
+<p>What variables are the most correlated? Hint: pandas has a function to find e.g.&nbsp;“pearson” corrrelations.</p>
+<details>
+<summary>
+Solution
+</summary>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df.corr()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Or pick a variable that you want to sort by. And round out the sig figs.</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df.corr().round(2).sort_values('dem17', ascending = False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</section>
+<p>But, no need to dig through a table! We can plot the relationships.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df.corr() </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw the heatmap with the mask and correct aspect ratio</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>            cmap<span class="op">=</span>plt.cm.BrBG, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>            vmin<span class="op">=-</span><span class="fl">0.5</span>, vmax<span class="op">=</span><span class="fl">0.5</span>, </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>            square<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span><span class="va">True</span>, yticklabels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-ML_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot a regression model through the data</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="st">'res-25'</span>, y <span class="op">=</span> <span class="st">'res-77'</span>,hue<span class="op">=</span><span class="st">'deposit'</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="03-ML_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="keypoints">
+
+<section id="key-points" class="level3">
+<h3 class="anchored" data-anchor-id="key-points">Key points</h3>
+<ul>
+<li>EDA is the first step of any analysis, and often very time consuming.</li>
+<li>Skipping EDA can result in substantial issues with subsequent analysis.
+<div>
+</div></li>
+</ul>
+</section>
+<section id="questions" class="level3 questions">
+<h3 class="anchored" data-anchor-id="questions">Questions:</h3>
+<ul>
+<li>What is the first step of any ML project (and often the most time consuming)?</li>
+</ul>
+</section>
+
+
+</div></section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
