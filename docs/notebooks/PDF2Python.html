@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-0.9.345">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -80,23 +80,22 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,7 +124,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 
 <body class="nav-fixed">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -224,7 +222,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pdf-to-python" id="toc-pdf-to-python" class="nav-link active" data-scroll-target="#pdf-to-python">PDF to Python</a></li>
+  <li><a href="#reading-pdf-files-into-python" id="toc-reading-pdf-files-into-python" class="nav-link active" data-scroll-target="#reading-pdf-files-into-python">Reading PDF files into Python</a>
+  <ul class="collapse">
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -233,34 +235,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<section id="reading-pdf-files-into-python" class="level1">
+<h1>Reading PDF files into Python</h1>
+<section id="questions" class="level3 questions">
+<h3 class="anchored" data-anchor-id="questions">Questions</h3>
+<ul>
+<li>How do I read PDF files in Python?</li>
+</ul>
+</section>
+<section id="objectives" class="level3 objectives">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<ul>
+<li>Use tabula-py to work with PDF files in Python</li>
+</ul>
+</section>
+<p><strong><em>Note:</em></strong> in the time it took me to figure out this code, I could have manually transcribed about 50 of these tables I reckon! Just because you <em>can</em> does not mean you <em>should</em>.</p>
+<p>There seem to be a few approaches to reading PDFs with Python. If the PDF is already searchable and you just want to transcribe it, then this notebook using the <code>tabula-py</code> library seems like a good method.</p>
+<p>If your PDF is just a plain image, a more versatile approach is to use an OCR on your document or to convert it to and image. Adjust to your needs, but these workflows and libraries may be helpful: - https://towardsdatascience.com/extracting-text-from-scanned-pdf-using-pytesseract-open-cv-cd670ee38052, or - https://pypi.org/project/ocrmypdf/</p>
+<p>Note that this requres Java! To install on a Mac via Homebrew, follow the instructions <a href="https://stackoverflow.com/questions/65601196/how-to-brew-install-java">here</a>.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tabula<span class="op">-</span>py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Collecting tabula-py
   Downloading tabula_py-2.5.1-py3-none-any.whl (12.0 MB)
-     ---------------------------------------- 12.0/12.0 MB 6.4 MB/s eta 0:00:00
-Requirement already satisfied: numpy in c:\users\nbutter\miniconda3\envs\geopy3\lib\site-packages (from tabula-py) (1.23.1)
-Requirement already satisfied: pandas&gt;=0.25.3 in c:\users\nbutter\miniconda3\envs\geopy3\lib\site-packages (from tabula-py) (1.4.3)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.0/12.0 MB 87.4 MB/s eta 0:00:00a 0:00:01
 Collecting distro
   Downloading distro-1.7.0-py3-none-any.whl (20 kB)
-Requirement already satisfied: pytz&gt;=2020.1 in c:\users\nbutter\miniconda3\envs\geopy3\lib\site-packages (from pandas&gt;=0.25.3-&gt;tabula-py) (2022.1)
-Requirement already satisfied: python-dateutil&gt;=2.8.1 in c:\users\nbutter\miniconda3\envs\geopy3\lib\site-packages (from pandas&gt;=0.25.3-&gt;tabula-py) (2.8.2)
-Requirement already satisfied: six&gt;=1.5 in c:\users\nbutter\miniconda3\envs\geopy3\lib\site-packages (from python-dateutil&gt;=2.8.1-&gt;pandas&gt;=0.25.3-&gt;tabula-py) (1.16.0)
+Requirement already satisfied: pandas&gt;=0.25.3 in /Users/darya/miniconda3/envs/geopy/lib/python3.9/site-packages (from tabula-py) (1.4.3)
+Requirement already satisfied: numpy in /Users/darya/miniconda3/envs/geopy/lib/python3.9/site-packages (from tabula-py) (1.23.1)
+Requirement already satisfied: python-dateutil&gt;=2.8.1 in /Users/darya/miniconda3/envs/geopy/lib/python3.9/site-packages (from pandas&gt;=0.25.3-&gt;tabula-py) (2.8.2)
+Requirement already satisfied: pytz&gt;=2020.1 in /Users/darya/miniconda3/envs/geopy/lib/python3.9/site-packages (from pandas&gt;=0.25.3-&gt;tabula-py) (2022.1)
+Requirement already satisfied: six&gt;=1.5 in /Users/darya/miniconda3/envs/geopy/lib/python3.9/site-packages (from python-dateutil&gt;=2.8.1-&gt;pandas&gt;=0.25.3-&gt;tabula-py) (1.16.0)
 Installing collected packages: distro, tabula-py
 Successfully installed distro-1.7.0 tabula-py-2.5.1</code></pre>
 </div>
 </div>
-<section id="pdf-to-python" class="level1">
-<h1>PDF to Python</h1>
-<p><strong><em>Note:</em></strong> in the time it took me to figure out this code, #I could have manually transcribed about 50 of these tables I reckon! Just because you <em>can</em> does not mean you <em>should</em>.</p>
-<p>There seem to be a few approaches to reading PDFs with Python. If the PDF is already searchable and you just want to transcribe it, then this notebook using the tabula-py library seems like a good method. If your PDF is just a plain image, a more versatile approach is to use an OCR on your document or to convert it to and image. Adjust to your needs, but these workflows and libraries may be helpful: https://towardsdatascience.com/extracting-text-from-scanned-pdf-using-pytesseract-open-cv-cd670ee38052, or https://pypi.org/project/ocrmypdf/</p>
-<div class="cell" data-execution_count="110">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://pypi.org/project/tabula-py/</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tabula</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read pdf into list of DataFrame</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> tabula.read_pdf(<span class="st">"C:/Users/nbutter/Downloads/G32716A3.pdf"</span>, pages<span class="op">=</span><span class="st">'all'</span>, pandas_options<span class="op">=</span>{<span class="st">"header"</span>:<span class="va">None</span>})</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dfs <span class="op">=</span> tabula.read_pdf(<span class="st">"../userdata//G32716A3.pdf"</span>, pages<span class="op">=</span><span class="st">'all'</span>, pandas_options<span class="op">=</span>{<span class="st">"header"</span>:<span class="va">None</span>})</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Read remote pdf into list of DataFrame</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#dfs2 = tabula.read_pdf("https://github.com/tabulapdf/tabula-java/raw/master/src/test/resources/technology/tabula/arabic.pdf")</span></span>
@@ -270,25 +286,33 @@ Successfully installed distro-1.7.0 tabula-py-2.5.1</code></pre>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># convert all PDFs in a directory</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#tabula.convert_into_by_batch("input_directory", output_format='csv', pages='all')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Got stderr: Aug 30, 2022 3:04:07 PM org.apache.pdfbox.pdmodel.font.FileSystemFontProvider loadDiskCache
+WARNING: New fonts found, font cache will be re-built
+Aug 30, 2022 3:04:07 PM org.apache.pdfbox.pdmodel.font.FileSystemFontProvider &lt;init&gt;
+WARNING: Building on-disk font cache, this may take a while
+Aug 30, 2022 3:04:08 PM org.apache.pdfbox.pdmodel.font.FileSystemFontProvider &lt;init&gt;
+WARNING: Finished building on-disk font cache, found 948 fonts
+</code></pre>
 </div>
-<div class="cell" data-execution_count="107">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What format has the load returned?</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(dfs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="107">
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What format has the load returned?</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(dfs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>list</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import pandas to do some table manipulation</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import pandas to do some table manipulation</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="111">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="op">=</span> [<span class="st">"SampleID"</span>, <span class="st">"Project"</span>, <span class="st">"Season"</span>, <span class="st">"OrigGeo"</span>, <span class="st">"Lithology"</span>, <span class="st">"CoreName"</span>, <span class="st">"CoreDepth"</span>, <span class="st">"Geochronology"</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> dfs[<span class="dv">0</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df.columns<span class="op">=</span>colnames</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="111">
-
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>colnames <span class="op">=</span> [<span class="st">"SampleID"</span>, <span class="st">"Project"</span>, <span class="st">"Season"</span>, <span class="st">"OrigGeo"</span>, <span class="st">"Lithology"</span>, <span class="st">"CoreName"</span>, <span class="st">"CoreDepth"</span>, <span class="st">"Geochronology"</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> dfs[<span class="dv">0</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df.columns<span class="op">=</span>colnames</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -795,26 +819,26 @@ Successfully installed distro-1.7.0 tabula-py-2.5.1</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="112">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill "forward" all the approriate groups</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"SampleID"</span>,<span class="st">"Project"</span>,<span class="st">"OrigGeo"</span>]] <span class="op">=</span> df[[<span class="st">"SampleID"</span>,<span class="st">"Project"</span>,<span class="st">"OrigGeo"</span>]].fillna(method<span class="op">=</span><span class="st">"ffill"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Group by the unique sample id...</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#...then fill all the nan values in that group</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Season'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).Season.transform(<span class="st">'first'</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'CoreName'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).CoreName.transform(<span class="st">'first'</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Geochronology'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).Geochronology.transform(<span class="st">'first'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#..then combine strings if the group has multiple lines of text, note what we want to pad each bit of text with</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Lithology'</span>] <span class="op">=</span> df.groupby([<span class="st">'SampleID'</span>])[<span class="st">'Lithology'</span>].transform(<span class="kw">lambda</span> x: <span class="st">' '</span>.join(x.dropna()))</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'CoreDepth'</span>] <span class="op">=</span> df.groupby([<span class="st">'SampleID'</span>])[<span class="st">'CoreDepth'</span>].transform(<span class="kw">lambda</span> x: <span class="st">''</span>.join(x.dropna()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill "forward" all the approriate groups</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"SampleID"</span>,<span class="st">"Project"</span>,<span class="st">"OrigGeo"</span>]] <span class="op">=</span> df[[<span class="st">"SampleID"</span>,<span class="st">"Project"</span>,<span class="st">"OrigGeo"</span>]].fillna(method<span class="op">=</span><span class="st">"ffill"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Group by the unique sample id...</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#...then fill all the nan values in that group</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Season'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).Season.transform(<span class="st">'first'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'CoreName'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).CoreName.transform(<span class="st">'first'</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Geochronology'</span>] <span class="op">=</span> df.groupby(<span class="st">'SampleID'</span>).Geochronology.transform(<span class="st">'first'</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#..then combine strings if the group has multiple lines of text, note what we want to pad each bit of text with</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Lithology'</span>] <span class="op">=</span> df.groupby([<span class="st">'SampleID'</span>])[<span class="st">'Lithology'</span>].transform(<span class="kw">lambda</span> x: <span class="st">' '</span>.join(x.dropna()))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'CoreDepth'</span>] <span class="op">=</span> df.groupby([<span class="st">'SampleID'</span>])[<span class="st">'CoreDepth'</span>].transform(<span class="kw">lambda</span> x: <span class="st">''</span>.join(x.dropna()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="116">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Drop all the repeated lines to get the final table</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(keep<span class="op">=</span><span class="st">'first'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="116">
-
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Drop all the repeated lines to get the final table</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(keep<span class="op">=</span><span class="st">'first'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 <table class="dataframe table table-sm table-striped">
@@ -991,8 +1015,8 @@ Successfully installed distro-1.7.0 tabula-py-2.5.1</code></pre>
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df.to_csv()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df.to_csv()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1001,24 +1025,6 @@ Successfully installed distro-1.7.0 tabula-py-2.5.1</code></pre>
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {

@@ -10,3 +10,7 @@ _additional/*
 
 # Code editors
 *.sublime-*
+
+docs/data/
+
+userdata/
