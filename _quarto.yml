@@ -26,7 +26,7 @@ website:
       - text: "Session 3"
         menu:
         - text: "Numerical Approaches"
-          href: 02b-Clustering.html
+          href: notebooks/02b-Clustering.html
         - text: "Machine Learning Workflow"
           href: notebooks/03-ML_workflow.html
 
@@ -40,7 +40,11 @@ website:
           href: notebooks/03b-DeepLearningTS.html
         - text: "Bonus: Dask data frames"
           href: notebooks/04b-DaskDataframes.html
-
+        - text: "Bonus: Dask data frames"
+          href: notebooks/merge.html
+        - text: "Bonus: Dask data frames"
+          href: notebooks/PDF2Python.html
+          
 format:
   html:
     theme: simplex
