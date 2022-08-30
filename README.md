@@ -9,16 +9,16 @@ Python for Geoscience SIH materials
 
 Rendered at: https://sydney-informatics-hub.github.io/geopython/
 
-- All notebooks go into `_ipynb` folder
-- Edit `index.Rmd` to change the main landing page.
-- Edit `setup.Rmd` to change the Setup instruction pages.
-- Edit `_site.yml` to change the dropdown menu options.
-- Add additional `*.md` files to the root dir to have them converted to html files (and add them to `_site.yml` to make them navigable).
+- All notebooks go into `notebooks` folder
+- Edit `index.qmd` to change the main landing page.
+- Edit `setup.qmd` to change the Setup instruction pages.
+- Edit `_quarto.yml` to change the dropdown menu options.
+- Add additional `*.md` files to the root dir to have them converted to html files (and add them to `_quarto.yml` to make them navigable).
 - Run the below commands to render the notebooks into markdown files and copy everything to the `/docs` folder, which will be what is hosted on the github pages.
-- You will need to have jupyter and Rscript installed to convert the notebooks and render them in "Rmarkdown" format.
+- You will need to have jupyter and quarto installed to convert the notebooks and render them for the web.
 
 ```
-bash _generate_site_from_ipynb.sh
+quarto render
 #First time you create the file, add them to be tracked by github, e.g.
 git add docs/*
 git commit -am "your comments"

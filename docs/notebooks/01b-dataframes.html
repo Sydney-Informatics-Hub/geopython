@@ -249,6 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#roll-your-own-data-reader" id="toc-roll-your-own-data-reader" class="nav-link" data-scroll-target="#roll-your-own-data-reader">Roll-your-own data reader</a>
   <ul class="collapse">
   <li><a href="#western-seismic-velf-format" id="toc-western-seismic-velf-format" class="nav-link" data-scroll-target="#western-seismic-velf-format">Western seismic VELF format</a></li>
+  <li><a href="#bonus-convert-text-to-segy-format" id="toc-bonus-convert-text-to-segy-format" class="nav-link" data-scroll-target="#bonus-convert-text-to-segy-format">Bonus: Convert Text to SegY format</a></li>
   </ul></li>
   <li><a href="#api-application-programming-interface-calls" id="toc-api-application-programming-interface-calls" class="nav-link" data-scroll-target="#api-application-programming-interface-calls">API (application programming interface) calls</a>
   <ul class="collapse">
@@ -2372,51 +2373,122 @@ Solution
 </div>
 </div>
 </section>
+<section id="bonus-convert-text-to-segy-format" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-convert-text-to-segy-format">Bonus: Convert Text to SegY format</h2>
+<p>A work in progress… but the strategy is to simply match up the correct SEGY values with those in the text file. Grouping everything by each x-y (i-j, lat-lon) surface point, and then the z-axis will be the trace (down to a depth or a TWT etc).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group all the text traces by their the i-j coordinates</span></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>groups<span class="op">=</span>df.groupby([<span class="st">'LINE'</span>,<span class="st">'xline3d'</span>])</span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(groups))</span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Make a stream object (flush it out to begin because we have used this variable names for demos)</span></span>
+<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>stream_out <span class="op">=</span> <span class="va">None</span> </span>
+<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>stream_out <span class="op">=</span> Stream()</span>
+<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="co">#not sure how to group the trace ensembles but can use a counter to keep track of them</span></span>
+<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>ensemble_number <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>       </span>
+<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ids,df_trace <span class="kw">in</span> groups:</span>
+<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#ids are the LINE, xline3d coordinate locations</span></span>
+<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#trc is the subset of the full dataframe for just that i-j location</span></span>
+<span id="cb111-15"><a href="#cb111-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-16"><a href="#cb111-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#For each LINE-xline3d location, a trace is impdence at all the depth values, i.e.</span></span>
+<span id="cb111-17"><a href="#cb111-17" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_trace.vt.values</span>
+<span id="cb111-18"><a href="#cb111-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-19"><a href="#cb111-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Enforce correct byte number and set to the Trace object</span></span>
+<span id="cb111-20"><a href="#cb111-20" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.require(data, dtype<span class="op">=</span>np.float32)</span>
+<span id="cb111-21"><a href="#cb111-21" aria-hidden="true" tabindex="-1"></a>    trace <span class="op">=</span> Trace(data<span class="op">=</span>data)</span>
+<span id="cb111-22"><a href="#cb111-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-23"><a href="#cb111-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set all the segy header information</span></span>
+<span id="cb111-24"><a href="#cb111-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Attributes in trace.stats will overwrite everything in trace.stats.segy.trace_header</span></span>
+<span id="cb111-25"><a href="#cb111-25" aria-hidden="true" tabindex="-1"></a>    trace.stats.delta <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb111-26"><a href="#cb111-26" aria-hidden="true" tabindex="-1"></a>    trace.stats.starttime <span class="op">=</span> UTCDateTime(<span class="dv">1970</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb111-27"><a href="#cb111-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-28"><a href="#cb111-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If you want to set some additional attributes in the trace header,</span></span>
+<span id="cb111-29"><a href="#cb111-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add one and only set the attributes you want to be set. Otherwise the</span></span>
+<span id="cb111-30"><a href="#cb111-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># header will be created for you with default values.</span></span>
+<span id="cb111-31"><a href="#cb111-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(trace.stats, <span class="st">'segy.trace_header'</span>):</span>
+<span id="cb111-32"><a href="#cb111-32" aria-hidden="true" tabindex="-1"></a>        trace.stats.segy <span class="op">=</span> {}</span>
+<span id="cb111-33"><a href="#cb111-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-34"><a href="#cb111-34" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header <span class="op">=</span> SEGYTraceHeader()</span>
+<span id="cb111-35"><a href="#cb111-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-36"><a href="#cb111-36" aria-hidden="true" tabindex="-1"></a><span class="co">#         trace.stats.segy.trace_header.trace_sequence_number_within_line = index + 1</span></span>
+<span id="cb111-37"><a href="#cb111-37" aria-hidden="true" tabindex="-1"></a><span class="co">#         trace.stats.segy.trace_header.receiver_group_elevation = 0</span></span>
+<span id="cb111-38"><a href="#cb111-38" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.source_coordinate_x <span class="op">=</span> <span class="bu">int</span>(df_trace.binx.values[<span class="dv">0</span>])</span>
+<span id="cb111-39"><a href="#cb111-39" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.source_coordinate_y <span class="op">=</span> <span class="bu">int</span>(df_trace.biny.values[<span class="dv">0</span>])</span>
+<span id="cb111-40"><a href="#cb111-40" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.ensemble_number <span class="op">=</span> ensemble_number <span class="co">#Not sure how this is actually determined</span></span>
+<span id="cb111-41"><a href="#cb111-41" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.lag_time_A <span class="op">=</span> <span class="dv">2400</span></span>
+<span id="cb111-42"><a href="#cb111-42" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.lag_time_B <span class="op">=</span> <span class="dv">3000</span></span>
+<span id="cb111-43"><a href="#cb111-43" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.number_of_samples_in_this_trace <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb111-44"><a href="#cb111-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-45"><a href="#cb111-45" aria-hidden="true" tabindex="-1"></a>    ensemble_number <span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb111-46"><a href="#cb111-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-47"><a href="#cb111-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add trace to stream</span></span>
+<span id="cb111-48"><a href="#cb111-48" aria-hidden="true" tabindex="-1"></a>    stream_out.append(trace)</span>
+<span id="cb111-49"><a href="#cb111-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-50"><a href="#cb111-50" aria-hidden="true" tabindex="-1"></a><span class="co"># A SEGY file has file wide headers. This can be attached to the stream</span></span>
+<span id="cb111-51"><a href="#cb111-51" aria-hidden="true" tabindex="-1"></a><span class="co"># object.  If these are not set, they will be autocreated with default</span></span>
+<span id="cb111-52"><a href="#cb111-52" aria-hidden="true" tabindex="-1"></a><span class="co"># values.</span></span>
+<span id="cb111-53"><a href="#cb111-53" aria-hidden="true" tabindex="-1"></a>stream_out.stats <span class="op">=</span> AttribDict()</span>
+<span id="cb111-54"><a href="#cb111-54" aria-hidden="true" tabindex="-1"></a>stream_out.stats.textual_file_header <span class="op">=</span> <span class="st">'Textual Header!'</span></span>
+<span id="cb111-55"><a href="#cb111-55" aria-hidden="true" tabindex="-1"></a>stream_out.stats.binary_file_header <span class="op">=</span> SEGYBinaryFileHeader()</span>
+<span id="cb111-56"><a href="#cb111-56" aria-hidden="true" tabindex="-1"></a>stream_out.stats.binary_file_header.trace_sorting_code <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb111-57"><a href="#cb111-57" aria-hidden="true" tabindex="-1"></a><span class="co"># stream.stats.binary_file_header.number_of_data_traces_per_ensemble=1</span></span>
+<span id="cb111-58"><a href="#cb111-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-59"><a href="#cb111-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Stream object before writing..."</span>)</span>
+<span id="cb111-60"><a href="#cb111-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stream_out)</span>
+<span id="cb111-61"><a href="#cb111-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-62"><a href="#cb111-62" aria-hidden="true" tabindex="-1"></a>stream_out.write(<span class="st">"TEST.sgy"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"SEGY"</span>, data_encoding<span class="op">=</span><span class="dv">1</span>, byteorder<span class="op">=</span>sys.byteorder)</span>
+<span id="cb111-63"><a href="#cb111-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-64"><a href="#cb111-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Stream object after writing. Will have some segy attributes..."</span>)</span>
+<span id="cb111-65"><a href="#cb111-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stream_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 </section>
 <section id="api-application-programming-interface-calls" class="level1">
 <h1>API (application programming interface) calls</h1>
 <p>For example: <a href="https://github.com/geological-survey-of-queensland/open-data-api">https://github.com/geological-survey-of-queensland/open-data-api</a></p>
 <p>This is a general API, and can be interfaced with many types of software. Python can do it too! You can write an entire application around APIs provided by developers.</p>
 <div class="cell" data-execution_count="70">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set the API 'endpoint'</span></span>
-<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> <span class="st">'https://geoscience.data.qld.gov.au/api/action/'</span></span>
-<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="co"># construct our query using the rules set out in the documentation</span></span>
-<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> api <span class="op">+</span> <span class="st">'package_search?q=quamby'</span></span>
-<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="co"># make the get request and store it in the response object</span></span>
-<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(query)</span>
-<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="co"># view the payload as JSON</span></span>
-<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>json_response <span class="op">=</span> response.json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set the API 'endpoint'</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> <span class="st">'https://geoscience.data.qld.gov.au/api/action/'</span></span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="co"># construct our query using the rules set out in the documentation</span></span>
+<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> api <span class="op">+</span> <span class="st">'package_search?q=quamby'</span></span>
+<span id="cb112-9"><a href="#cb112-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-10"><a href="#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="co"># make the get request and store it in the response object</span></span>
+<span id="cb112-11"><a href="#cb112-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(query)</span>
+<span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a><span class="co"># view the payload as JSON</span></span>
+<span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a>json_response <span class="op">=</span> response.json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="71">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What kind of data does the server return us?</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(json_response)</span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="co">#json_response</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co">#What kind of data does the server return us?</span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(json_response)</span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="co">#json_response</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="71">
 <pre><code>dict</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="72">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dig into the returned data and just pull out certain items we want</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>jr<span class="op">=</span>json_response[<span class="st">'result'</span>][<span class="st">'results'</span>][<span class="dv">1</span>][<span class="st">'GeoJSONextent'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Dig into the returned data and just pull out certain items we want</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>jr<span class="op">=</span>json_response[<span class="st">'result'</span>][<span class="st">'results'</span>][<span class="dv">1</span>][<span class="st">'GeoJSONextent'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="73">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Clean up the returned values</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>mysplit<span class="op">=</span>jr.split(<span class="st">':'</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">'}'</span>)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Clean up the returned values</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>mysplit<span class="op">=</span>jr.split(<span class="st">':'</span>)[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">'}'</span>)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="74">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co">#And convert them into something more reasonable.</span></span>
-<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
-<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>xy<span class="op">=</span>ast.literal_eval(mysplit)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co">#And convert them into something more reasonable.</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>xy<span class="op">=</span>ast.literal_eval(mysplit)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="75">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Now you have the data you need in a useful format you can do whatever you like!</span></span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Now you have the data you need in a useful format you can do whatever you like!</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>xy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="75">
 <pre><code>[[[139.901170853999, -20.4651656329993],
   [139.884504220999, -20.4651658769991],
