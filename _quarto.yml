@@ -40,9 +40,9 @@ website:
           href: notebooks/03b-DeepLearningTS.html
         - text: "Bonus: Dask data frames"
           href: notebooks/04b-DaskDataframes.html
-        - text: "Bonus: Dask data frames"
+        - text: "Bonus: Merging Text Tables"
           href: notebooks/merge.html
-        - text: "Bonus: Dask data frames"
+        - text: "Bonus: Working with PDF files"
           href: notebooks/PDF2Python.html
           
 format:
