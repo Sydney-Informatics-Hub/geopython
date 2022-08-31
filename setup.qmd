@@ -97,7 +97,7 @@ This will launch the Notebook server (and may automatically launch a web-browser
 
 Download the data (280 MB inflated to 600 MB) for all the exercises from here:
 
-[https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download](https://cloudstor.aarnet.edu.au/plus/s/91HrHFMl4zWANZ6/download)
+[https://cloudstor.aarnet.edu.au/plus/s/xDNNcJ1bM7NJOZT/download](https://cloudstor.aarnet.edu.au/plus/s/xDNNcJ1bM7NJOZT/download)
 
 Extract this to a directory you can work in.
 Your file tree should look like something like this

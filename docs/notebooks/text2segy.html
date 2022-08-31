@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.165">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sydney Informatics Hub Python for Geoscience – text2segy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../lesson.css">
+</head>
+
+<body class="nav-fixed">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Sydney Informatics Hub Python for Geoscience</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../setup.html">Setup</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 1</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-1">    
+        <li>
+    <a class="dropdown-item" href="../00-intro.html">
+ <span class="dropdown-text">Introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/01a-fundamentals.html">
+ <span class="dropdown-text">Fundamentals</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 2</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-2">    
+        <li>
+    <a class="dropdown-item" href="../notebooks/01b-dataframes.html">
+ <span class="dropdown-text">Useful Python packages for different data types</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-3" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 3</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-3">    
+        <li>
+    <a class="dropdown-item" href="../notebooks/02b-Clustering.html">
+ <span class="dropdown-text">Numerical Approaches</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/03-ML_workflow.html">
+ <span class="dropdown-text">Machine Learning Workflow</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-4" role="button" data-bs-toggle="dropdown" aria-expanded="false">Session 4</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-session-4">    
+        <li>
+    <a class="dropdown-item" href="../notebooks/04a-SimpleSpeedUps.html">
+ <span class="dropdown-text">Efficient Python Methods</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/02a-mapping.html">
+ <span class="dropdown-text">Bonus: Matplotlib and Mapping with Cartopy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/03b-DeepLearningTS.html">
+ <span class="dropdown-text">Bonus: Deep Learning &amp; Time Series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/04b-DaskDataframes.html">
+ <span class="dropdown-text">Bonus: Dask data frames</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/merge.html">
+ <span class="dropdown-text">Bonus: Merging Text Tables</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/PDF2Python.html">
+ <span class="dropdown-text">Bonus: Working with PDF files</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../notebooks/text2segy.html">
+ <span class="dropdown-text">Bonus: segy2text2segy</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a.-read-in-text-data" id="toc-a.-read-in-text-data" class="nav-link active" data-scroll-target="#a.-read-in-text-data">A. Read in text data</a></li>
+  <li><a href="#b.-read-in-equivalent-segy-data." id="toc-b.-read-in-equivalent-segy-data." class="nav-link" data-scroll-target="#b.-read-in-equivalent-segy-data.">B. Read in equivalent segy data.</a></li>
+  <li><a href="#c.-write-out-the-text-data-as-segy" id="toc-c.-write-out-the-text-data-as-segy" class="nav-link" data-scroll-target="#c.-write-out-the-text-data-as-segy">C. Write out the text data as segy</a></li>
+  <li><a href="#bonus---why-is-there-a-data-discrepency" id="toc-bonus---why-is-there-a-data-discrepency" class="nav-link" data-scroll-target="#bonus---why-is-there-a-data-discrepency">Bonus - why is there a data discrepency</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard Python libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For reading segy data</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> obspy.io.segy.segy <span class="im">import</span> _read_segy</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#For writing segy data</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> obspy <span class="im">import</span> read, Trace, Stream, UTCDateTime</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> obspy.core <span class="im">import</span> AttribDict</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> obspy.io.segy.segy <span class="im">import</span> SEGYTraceHeader, SEGYBinaryFileHeader</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="a.-read-in-text-data" class="level1">
+<h1>A. Read in text data</h1>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the filename</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">"userdata/P-impedance_2400-3000ms.gslib"</span>,<span class="st">'r'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Read in all the lines in the file and save them to a variable</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> f.readlines()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Close the file</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>f.close()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Done reading file. Number of lines:"</span>, <span class="bu">len</span>(mylist))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done reading file. Number of lines: 3957609</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Have a look at the top of the data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> line <span class="kw">in</span> mylist[<span class="dv">0</span>:<span class="dv">11</span>]:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(line)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PETREL: Properties
+
+7
+
+i_index unit1 scale1
+
+j_index unit1 scale1
+
+k_index unit1 scale1
+
+x_coord unit1 scale1
+
+y_coord unit1 scale1
+
+z_coord unit1 scale1
+
+P-Impedance unit1 scale1
+
+127 1 300 438131.65314303 6475378.74871708 -2999.00000000 9556.294922 
+
+128 1 300 438181.65314303 6475378.74871708 -2999.00000000 9627.205078 
+</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A few ways to map this to a useful python format. But the simplest may be the following</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Skip the header rows</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> line <span class="kw">in</span> mylist[<span class="dv">9</span>:]:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    linesplit <span class="op">=</span> line.split()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">int</span>(linesplit[<span class="dv">0</span>])</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">int</span>(linesplit[<span class="dv">1</span>])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> <span class="bu">int</span>(linesplit[<span class="dv">2</span>])</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">float</span>(linesplit[<span class="dv">3</span>])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="bu">float</span>(linesplit[<span class="dv">4</span>])</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> <span class="bu">float</span>(linesplit[<span class="dv">5</span>])</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="bu">float</span>(linesplit[<span class="dv">6</span>])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    data.append([i,j,k,x,y,z,p])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Put the list in a dataframe</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.DataFrame(data)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Then free up some memory (because this is a fairly big chunk of data)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data<span class="op">=</span><span class="va">None</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the names of the columns of the dataframe</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>df.columns<span class="op">=</span>[<span class="st">'i'</span>,<span class="st">'j'</span>,<span class="st">'k'</span>,<span class="st">'x'</span>,<span class="st">'y'</span>,<span class="st">'z'</span>,<span class="st">'p'</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>i</th>
+      <th>j</th>
+      <th>k</th>
+      <th>x</th>
+      <th>y</th>
+      <th>z</th>
+      <th>p</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>127</td>
+      <td>1</td>
+      <td>300</td>
+      <td>438131.653143</td>
+      <td>6.475379e+06</td>
+      <td>-2999.0</td>
+      <td>9556.294922</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>128</td>
+      <td>1</td>
+      <td>300</td>
+      <td>438181.653143</td>
+      <td>6.475379e+06</td>
+      <td>-2999.0</td>
+      <td>9627.205078</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>129</td>
+      <td>1</td>
+      <td>300</td>
+      <td>438231.653143</td>
+      <td>6.475379e+06</td>
+      <td>-2999.0</td>
+      <td>9555.066406</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>130</td>
+      <td>1</td>
+      <td>300</td>
+      <td>438281.653143</td>
+      <td>6.475379e+06</td>
+      <td>-2999.0</td>
+      <td>9468.100586</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>123</td>
+      <td>2</td>
+      <td>300</td>
+      <td>437931.653143</td>
+      <td>6.475429e+06</td>
+      <td>-2999.0</td>
+      <td>9601.517578</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3957595</th>
+      <td>26</td>
+      <td>127</td>
+      <td>1</td>
+      <td>433081.653143</td>
+      <td>6.481679e+06</td>
+      <td>-2401.0</td>
+      <td>5848.801758</td>
+    </tr>
+    <tr>
+      <th>3957596</th>
+      <td>27</td>
+      <td>127</td>
+      <td>1</td>
+      <td>433131.653143</td>
+      <td>6.481679e+06</td>
+      <td>-2401.0</td>
+      <td>5924.203125</td>
+    </tr>
+    <tr>
+      <th>3957597</th>
+      <td>28</td>
+      <td>127</td>
+      <td>1</td>
+      <td>433181.653143</td>
+      <td>6.481679e+06</td>
+      <td>-2401.0</td>
+      <td>6037.129883</td>
+    </tr>
+    <tr>
+      <th>3957598</th>
+      <td>29</td>
+      <td>127</td>
+      <td>1</td>
+      <td>433231.653143</td>
+      <td>6.481679e+06</td>
+      <td>-2401.0</td>
+      <td>5978.708984</td>
+    </tr>
+    <tr>
+      <th>3957599</th>
+      <td>25</td>
+      <td>128</td>
+      <td>1</td>
+      <td>433031.653143</td>
+      <td>6.481729e+06</td>
+      <td>-2401.0</td>
+      <td>5812.972168</td>
+    </tr>
+  </tbody>
+</table>
+<p>3957600 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot a single trace to see everything looks okay</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>one_trace <span class="op">=</span> df[(df.i<span class="op">==</span><span class="dv">127</span>) <span class="op">&amp;</span> (df.j<span class="op">==</span><span class="dv">1</span>)].p</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">2</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.plot(one_trace)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(df.z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="b.-read-in-equivalent-segy-data." class="level1">
+<h1>B. Read in equivalent segy data.</h1>
+<p>Get the segy header information from here, and just see what the goal is for the conversion.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stream <span class="op">=</span> <span class="va">None</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>stream <span class="op">=</span> _read_segy(<span class="st">"userdata/P-impedance_2400-3000ms.sgy"</span>, headonly<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.shape(stream.traces))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>stream</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(216540,)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>216540 traces in the SEG Y structure.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>arrs<span class="op">=</span>[]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, one_trace <span class="kw">in</span> <span class="bu">enumerate</span>(stream.traces):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> one_trace.data</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    lenp <span class="op">=</span> <span class="bu">len</span>(p)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> np.full((lenp), index,dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> np.full((lenp), one_trace.header.ensemble_number,dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> np.arange(lenp,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>,dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.full((lenp), one_trace.header.source_coordinate_x)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.full((lenp), one_trace.header.source_coordinate_y)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> np.full((lenp), one_trace.header.original_field_record_number)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    temparr <span class="op">=</span> np.c_[i,j,k,x,y,z,p]</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    arrs.append(temparr)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>arrs <span class="op">=</span> np.vstack(arrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>arrs[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<pre><code>array([2.16539000e+05, 2.50000000e+03, 1.00000000e+00, 4.32975000e+05,
+       6.48179200e+06, 1.03610000e+04, 9.38641016e+03])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span><span class="st">"PETREL: Properties</span><span class="ch">\n</span><span class="st">7</span><span class="ch">\n\n</span><span class="st">i_index unit1 scale1</span><span class="ch">\n</span><span class="st">j_index unit1 scale1</span><span class="ch">\n</span><span class="st">k_index unit1 scale1</span><span class="ch">\n</span><span class="st">x_coord unit1 scale1</span><span class="ch">\n</span><span class="st">y_coord unit1 scale1</span><span class="ch">\n</span><span class="st">z_coord unit1 scale1</span><span class="ch">\n</span><span class="st">P-Impedance unit1 scale1</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">"data.txt"</span>, arrs,header<span class="op">=</span>header, comments<span class="op">=</span><span class="st">''</span>, fmt<span class="op">=</span><span class="st">"</span><span class="sc">%i</span><span class="st"> </span><span class="sc">%i</span><span class="st"> </span><span class="sc">%i</span><span class="st"> </span><span class="sc">%i</span><span class="st"> </span><span class="sc">%i</span><span class="st"> </span><span class="sc">%i</span><span class="st"> </span><span class="sc">%f</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>one_trace <span class="op">=</span> stream.traces[<span class="dv">100</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out details single trace</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(one_trace)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot a single trace to see everything looks okay</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">2</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.plot(one_trace.data)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trace sequence number within line: 0
+151 samples, dtype=float32, 250.00 Hz</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here is the header information - for one trace</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>stream.traces[<span class="dv">0</span>].header</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>trace_sequence_number_within_line: 0
+trace_sequence_number_within_segy_file: 0
+original_field_record_number: 9961
+trace_number_within_the_original_field_record: 0
+energy_source_point_number: 0
+ensemble_number: 1961
+trace_number_within_the_ensemble: 0
+trace_identification_code: 0
+number_of_vertically_summed_traces_yielding_this_trace: 0
+number_of_horizontally_stacked_traces_yielding_this_trace: 0
+data_use: 0
+distance_from_center_of_the_source_point_to_the_center_of_the_receiver_group: 0
+receiver_group_elevation: 0
+surface_elevation_at_source: 0
+source_depth_below_surface: 0
+datum_elevation_at_receiver_group: 0
+datum_elevation_at_source: 0
+water_depth_at_source: 0
+water_depth_at_group: 0
+scalar_to_be_applied_to_all_elevations_and_depths: 0
+scalar_to_be_applied_to_all_coordinates: 0
+source_coordinate_x: 438302
+source_coordinate_y: 6475310
+group_coordinate_x: 0
+group_coordinate_y: 0
+coordinate_units: 0
+weathering_velocity: 0
+subweathering_velocity: 0
+uphole_time_at_source_in_ms: 0
+uphole_time_at_group_in_ms: 0
+source_static_correction_in_ms: 0
+group_static_correction_in_ms: 0
+total_static_applied_in_ms: 0
+lag_time_A: 2400
+lag_time_B: 3000
+delay_recording_time: 0
+mute_time_start_time_in_ms: 0
+mute_time_end_time_in_ms: 0
+number_of_samples_in_this_trace: 151
+sample_interval_in_ms_for_this_trace: 4000
+gain_type_of_field_instruments: 0
+instrument_gain_constant: 0
+instrument_early_or_initial_gain: 0
+correlated: 0
+sweep_frequency_at_start: 0
+sweep_frequency_at_end: 0
+sweep_length_in_ms: 0
+sweep_type: 0
+sweep_trace_taper_length_at_start_in_ms: 0
+sweep_trace_taper_length_at_end_in_ms: 0
+taper_type: 0
+alias_filter_frequency: 0
+alias_filter_slope: 0
+notch_filter_frequency: 0
+notch_filter_slope: 0
+low_cut_frequency: 0
+high_cut_frequency: 0
+low_cut_slope: 0
+high_cut_slope: 0
+year_data_recorded: 0
+day_of_year: 0
+hour_of_day: 0
+minute_of_hour: 0
+second_of_minute: 0
+time_basis_code: 0
+trace_weighting_factor: 0
+geophone_group_number_of_roll_switch_position_one: 0
+geophone_group_number_of_trace_number_one: 0
+geophone_group_number_of_last_trace: 0
+gap_size: 0
+over_travel_associated_with_taper: 0
+x_coordinate_of_ensemble_position_of_this_trace: 0
+y_coordinate_of_ensemble_position_of_this_trace: 0
+for_3d_poststack_data_this_field_is_for_in_line_number: 0
+for_3d_poststack_data_this_field_is_for_cross_line_number: 0
+shotpoint_number: 0
+scalar_to_be_applied_to_the_shotpoint_number: 0
+trace_value_measurement_unit: 0
+transduction_constant_mantissa: 0
+transduction_constant_exponent: 0
+transduction_units: 0
+device_trace_identifier: 0
+scalar_to_be_applied_to_times: 0
+source_type_orientation: 0
+source_energy_direction_mantissa: 0
+source_energy_direction_exponent: 0
+source_measurement_mantissa: 0
+source_measurement_exponent: 0
+source_measurement_unit: 0</code></pre>
+</div>
+</div>
+</section>
+<section id="c.-write-out-the-text-data-as-segy" class="level1">
+<h1>C. Write out the text data as segy</h1>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group all the text traces by their the i-j coordinates</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>groups<span class="op">=</span>df.groupby([<span class="st">'i'</span>,<span class="st">'j'</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(groups))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Here I notice there are only 13192 traces in the text data, compared with the 216540 in the segy data...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>13192</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Make a stream object (flush it out to begin because we have used this variable names for demos)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>stream_out <span class="op">=</span> <span class="va">None</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>stream_out <span class="op">=</span> Stream()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#not sure how to group the trace ensembles but can use a counter to keep track of them</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>ensemble_number <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ids,df_trace <span class="kw">in</span> groups:</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#ids are the i, j coordinate locations</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#trc is the subset of the full dataframe for just that i-j location</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#For each i-j location, a trace is impdence at all the depth values, i.e.</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_trace.p.values</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Enforce correct byte number and set to the Trace object</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.require(data, dtype<span class="op">=</span>np.float32)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    trace <span class="op">=</span> Trace(data<span class="op">=</span>data)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set all the segy header information</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Attributes in trace.stats will overwrite everything in trace.stats.segy.trace_header</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    trace.stats.delta <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    trace.stats.starttime <span class="op">=</span> UTCDateTime(<span class="dv">1970</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If you want to set some additional attributes in the trace header,</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add one and only set the attributes you want to be set. Otherwise the</span></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># header will be created for you with default values.</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(trace.stats, <span class="st">'segy.trace_header'</span>):</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        trace.stats.segy <span class="op">=</span> {}</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header <span class="op">=</span> SEGYTraceHeader()</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="co">#         trace.stats.segy.trace_header.trace_sequence_number_within_line = index + 1</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="co">#         trace.stats.segy.trace_header.receiver_group_elevation = 0</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.source_coordinate_x <span class="op">=</span> <span class="bu">int</span>(df_trace.x.values[<span class="dv">0</span>])</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.source_coordinate_y <span class="op">=</span> <span class="bu">int</span>(df_trace.y.values[<span class="dv">0</span>])</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.ensemble_number <span class="op">=</span> ensemble_number <span class="co">#Not sure how this is actually determined</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.lag_time_A <span class="op">=</span> <span class="dv">2400</span></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.lag_time_B <span class="op">=</span> <span class="dv">3000</span></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    trace.stats.segy.trace_header.number_of_samples_in_this_trace <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    ensemble_number <span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add trace to stream</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    stream_out.append(trace)</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="co"># A SEGY file has file wide headers. This can be attached to the stream</span></span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a><span class="co"># object.  If these are not set, they will be autocreated with default</span></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="co"># values.</span></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>stream_out.stats <span class="op">=</span> AttribDict()</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>stream_out.stats.textual_file_header <span class="op">=</span> <span class="st">'Textual Header!'</span></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>stream_out.stats.binary_file_header <span class="op">=</span> SEGYBinaryFileHeader()</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>stream_out.stats.binary_file_header.trace_sorting_code <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="co"># stream.stats.binary_file_header.number_of_data_traces_per_ensemble=1</span></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Stream object before writing..."</span>)</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stream_out)</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>stream_out.write(<span class="st">"TEST.sgy"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"SEGY"</span>, data_encoding<span class="op">=</span><span class="dv">1</span>, byteorder<span class="op">=</span>sys.byteorder)</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Stream object after writing. Will have some segy attributes..."</span>)</span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stream_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stream object before writing...
+13192 Trace(s) in Stream:
+
+... | 1970-01-01T00:00:00.000000Z - 1970-01-01T00:00:02.990000Z | 100.0 Hz, 300 samples
+...
+(13190 other traces)
+...
+... | 1970-01-01T00:00:00.000000Z - 1970-01-01T00:00:02.990000Z | 100.0 Hz, 300 samples
+
+[Use "print(Stream.__str__(extended=True))" to print all Traces]
+Stream object after writing. Will have some segy attributes...
+13192 Trace(s) in Stream:
+
+Seq. No. in line:    0 | 1970-01-01T00:00:00.000000Z - 1970-01-01T00:00:02.990000Z | 100.0 Hz, 300 samples
+...
+(13190 other traces)
+...
+Seq. No. in line:    0 | 1970-01-01T00:00:00.000000Z - 1970-01-01T00:00:02.990000Z | 100.0 Hz, 300 samples
+
+[Use "print(Stream.__str__(extended=True))" to print all Traces]
+CPU times: total: 7.55 s
+Wall time: 7.52 s</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Now check it</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reading using obspy.io.segy..."</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>st1 <span class="op">=</span> _read_segy(<span class="st">"TEST.sgy"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(st1)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.shape(st1.traces))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>st1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading using obspy.io.segy...
+13192 traces in the SEG Y structure.
+(13192,)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>13192 traces in the SEG Y structure.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>one_trace <span class="op">=</span> st1.traces[<span class="dv">0</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out details single trace</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(one_trace)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot a single trace</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>,<span class="dv">2</span>))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.plot(one_trace.data)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trace sequence number within line: 0
+300 samples, dtype=float32, 100.00 Hz</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-18-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="bonus---why-is-there-a-data-discrepency" class="level1">
+<h1>Bonus - why is there a data discrepency</h1>
+<p>I would have expected the traces from the segy data and from the gslib data to match up. But there are only 13192 traces in the text data and 216540 in the segy data. Something weird is going. I can plot these side by side and see if some data are missing.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>xx<span class="op">=</span>[]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>yy<span class="op">=</span>[]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(stream.traces)):</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    xx.append(stream.traces[i].header.source_coordinate_x)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    yy.append(stream.traces[i].header.source_coordinate_y)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(xx,yy)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(df.x,df.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>&lt;matplotlib.collections.PathCollection at 0x2d03be3b550&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>At first glance this seems ok. The data coverage is over the same area, the edges are missing buuuuut zooming in we can see the text data is not as dense as the segy data. Problem solved.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(xx,yy,s<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(df.x,df.y,s<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="dv">433000</span>,<span class="dv">434000</span>])</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.ylim([433000,434000])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>(433000.0, 434000.0)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="text2segy_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

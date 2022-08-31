@@ -44,6 +44,8 @@ website:
           href: notebooks/merge.html
         - text: "Bonus: Working with PDF files"
           href: notebooks/PDF2Python.html
+        - text: "Bonus: segy2text2segy"
+          href: notebooks/text2segy.html
           
 format:
   html:
