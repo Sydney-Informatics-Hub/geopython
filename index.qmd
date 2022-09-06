@@ -32,7 +32,7 @@ We also aim to cultivate a **data community**, organising monthly [Hacky Hours](
 
 ## Trainers
 * Nathaniel (Nate) Butterworth (PhD Computational Geophysics), nathaniel.butterworth@sydney.edu.au
-* Darya Vanichkina (PhD Bioinformatics, FHEA)
+* Darya Vanichkina (PhD Bioinformatics, SFHEA)
 * Kristian Maras (MSc Quant Fin)
 * Tim White (PhD Asteroseismology)
 

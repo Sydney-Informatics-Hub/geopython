@@ -46,6 +46,7 @@ website:
           href: notebooks/PDF2Python.html
         - text: "Bonus: segy2text2segy"
           href: notebooks/text2segy.html
+  body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
           
 format:
   html:
@@ -54,6 +55,7 @@ format:
     toc: true
     code-overflow: wrap
     highlight-style: github
+
 
 
 
