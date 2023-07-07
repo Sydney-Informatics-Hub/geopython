@@ -73,11 +73,11 @@ Our full CoC, with incident reporting guidelines, is available at [https://pages
 
 * Start at 12:00pm promptly.
 * 5 min to discuss feedback and summarise previous week.
-* 1 hour of content.
-* 10 min break.
-* 1 hour content
-* 10 min break
-* 1 hour content
+* 55 min of content.
+* 5 min break.
+* 55 min content
+* 5 min break
+* 55 min content
 
 
 
@@ -87,16 +87,16 @@ Our full CoC, with incident reporting guidelines, is available at [https://pages
 We will be working through the following general content over our 4 sessions together.
 
 **Session 01 Python fundamentals**
-Tues Aug 15, 12:00 pm - 3:30 pm (AEST)
+Tues Aug 15, 12:00 pm - 3:00 pm (AEST)
 
 **Session 02 Specialist Python libraries and data analysis for geoscience**
-Tues Aug 22, 12:00 pm - 3:30 pm (AEST)
+Tues Aug 22, 12:00 pm - 3:00 pm (AEST)
 
 **Session 03 Pattern recognition and prediction in geoscience**
-Tues Aug 29, 12:00 pm - 3:30 pm (AEST)
+Tues Aug 29, 12:00 pm - 3:00 pm (AEST)
 
 **Session 04 Large data and long running workflow strategies**
-Tues Aug 05, 12:00 pm - 3:30 pm (AEST)
+Tues Sep 05, 12:00 pm - 3:00 pm (AEST)
 
 
 
