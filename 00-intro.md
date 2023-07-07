@@ -9,21 +9,21 @@ title: "Python for Geoscience"
 - Why do you want to learn Python?
 </div>
 
-<div class="objectives"> 
+<div class="objectives">
 
 ### Objectives
 - Understand the Python ecosystem and other tools.
 </div>
 
 
-This course we will introduce you to foundations of Python programming. We will utilise common geosicence data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets. 
+This course we will introduce you to foundations of Python programming. We will utilise common geosicence data types (geospatial, temporal, vector, raster, etc) to demonstrate a variety of practical workflows and showcase fundamental capabilities of Python. We will carry out exploratory, analytical, computational and machine learning analyses on these datasets. At the end of the course you will be able to adapt these workflows to your own datasets.
 
 The course is presented by the Sydney Informatics Hub on behalf of the Petroleum Exploration Society of Australia.
 
 
 # What is Python?
 
-The Python programming language was written in the 1980's. It is an interpreted and high-level language, this makes it easy to use for rapid development with lots of flexibility. Version 2.0 was released in 2000. Version 3.0 was released in 2008 (the current version is 3.10.0). 
+The Python programming language was written in the 1980's. It is an interpreted and high-level language, this makes it easy to use for rapid development with lots of flexibility. Version 2.0 was released in 2000. Version 3.0 was released in 2008 (the current version is 3.11).
 
 I use it everyday to:
 
@@ -35,7 +35,7 @@ I use it everyday to:
 There are many comparable languages (e.g. R, Julia, C++, bash, Matlab, Java).
 But there are a few reasons to favour Python:
 
-* Python is free and open-source. 
+* Python is free and open-source.
 * There is a large community of people using it all over the world on different projects, which means there is a lot of help and documentation.
 * There are [millions](https://github.com/search?l=Python&q=python&type=Repositories) of codes, packages, libraries, and extensions. Some that leverage other programming languages to make your Python tasks fast, efficient and capable of doing whatever you need it to.
 
@@ -74,7 +74,7 @@ Once again, you can save this in a text editor as ```hello_advanced.py``` and ex
 
 You can also start a Python IDE session, and execute commands one by one.
 
-A handy tool is the Jupyter Notebook (modelled from Mathematica's Notebooks), that we will predominately be using throughout this course. They are good for the kind of non-development focused Python tasks you may need.
+A handy tool is the Jupyter Notebook (modelled from Mathematica's Notebooks), that we will predominately be using throughout this course. They are good for the kind of development (as opposed to production/deployment) focused Python tasks you may need.
 
 There are also online environments that can host Python code and notebooks for you.
 
