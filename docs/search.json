@@ -193,7 +193,7 @@
     "href": "index.html#date-time-in-aest-brisbane-time",
     "title": "Introduction to Python for Geoscience",
     "section": "Date & Time (in AEST-Brisbane time):",
-    "text": "Date & Time (in AEST-Brisbane time):\nWe will be working through the following general content over our 4 sessions together.\nSession 01 Python fundamentals Wed Aug 15, 12:00 pm - 3:00 pm (AEST)\nSession 02 Specialist Python libraries and data analysis for geoscience Wed Aug 22, 12:00 pm - 3:00 pm (AEST)\nSession 03 Pattern recognition and prediction in geoscience Wed Aug 29, 12:00 pm - 3:00 pm (AEST)\nSession 04 Large data and long running workflow strategies Wed Sep 05, 12:00 pm - 3:00 pm (AEST)"
+    "text": "Date & Time (in AEST-Brisbane time):\nWe will be working through the following general content over our 4 sessions together.\nSession 01 Python fundamentals Tues Aug 15, 12:00 pm - 3:00 pm (AEST)\nSession 02 Specialist Python libraries and data analysis for geoscience Tues Aug 22, 12:00 pm - 3:00 pm (AEST)\nSession 03 Pattern recognition and prediction in geoscience Tues Aug 29, 12:00 pm - 3:00 pm (AEST)\nSession 04 Large data and long running workflow strategies Tues Sep 05, 12:00 pm - 3:00 pm (AEST)"
   },
   {
     "objectID": "index.html#setup-instructions",
