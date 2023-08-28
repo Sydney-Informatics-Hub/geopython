@@ -114,7 +114,6 @@ Your file tree should look something like this
 ```
 
 
-
 # Alternative Python Environment Options
 
 ## Jupyter Hub in the Cloud
