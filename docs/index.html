@@ -86,10 +86,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
  <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./setup.html" rel="" target="">
- <span class="menu-text">Setup</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-setup" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Setup</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-setup">    
+        <li>
+    <a class="dropdown-item" href="./setup.html" rel="" target="">
+ <span class="dropdown-text">Setup Instructions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./notebooks/PathsEnvironments.html" rel="" target="">
+ <span class="dropdown-text">Paths, Environments, and Notebooks</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session-1" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Session 1</span>
@@ -163,6 +174,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="./notebooks/text2segy.html" rel="" target="">
  <span class="dropdown-text">Bonus: segy2text2segy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./notebooks/hdfeos.html" rel="" target="">
+ <span class="dropdown-text">Bonus: HDF-EOS</span></a>
   </li>  
     </ul>
   </li>

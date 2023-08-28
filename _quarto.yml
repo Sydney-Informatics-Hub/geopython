@@ -9,8 +9,14 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: setup.html
-        text: "Setup"
+
+      - text: "Setup"
+        menu:
+        - text: "Setup Instructions"
+          href: setup.html
+        - text: "Paths, Environments, and Notebooks"
+          href: notebooks/PathsEnvironments.html
+
       - text: "Session 1"
         menu:
         - text: "Introduction"
@@ -46,8 +52,11 @@ website:
           href: notebooks/PDF2Python.html
         - text: "Bonus: segy2text2segy"
           href: notebooks/text2segy.html
-  body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
+        - text: "Bonus: HDF-EOS"
+          href: notebooks/hdfeos.html
           
+  body-footer: "All materials copyright Sydney Informatics Hub, University of Sydney"
+
 format:
   html:
     theme: simplex
@@ -55,7 +64,3 @@ format:
     toc: true
     code-overflow: wrap
     highlight-style: github
-
-
-
-
