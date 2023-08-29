@@ -268,8 +268,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows system</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>cd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="to-open-a-data-file-hard-drive-its-essential-to-know-its-exact-path." class="level5">
-<h5 class="anchored" data-anchor-id="to-open-a-data-file-hard-drive-its-essential-to-know-its-exact-path.">To open a data file hard drive it’s ESSENTIAL to know it’s exact path.</h5>
+<section id="to-open-a-data-file-on-the-hard-drive-its-essential-to-know-its-exact-path." class="level5">
+<h5 class="anchored" data-anchor-id="to-open-a-data-file-on-the-hard-drive-its-essential-to-know-its-exact-path.">To open a data file on the hard drive it’s ESSENTIAL to know it’s exact path.</h5>
 <p>Core ideas: 1. Relative paths. 2. Absolute paths. 3. Error Messages.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -277,17 +277,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>abs_path <span class="op">=</span> np.loadtxt(<span class="st">"/home/julian/Desktop/geopy/data/EarthChemCU.txt"</span>, delimiter<span class="op">=</span><span class="st">','</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ERROR, read error message</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ERROR, read the error message</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bad_path <span class="op">=</span> np.loadtxt(<span class="st">"../data/EarthChemCU.txt"</span>, delimiter<span class="op">=</span><span class="st">','</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## For windows: FICTIONAL paths to illustrate my point</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## For windows: FICTIONAL paths to illustrate a point</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rel_path <span class="op">=</span> <span class="st">'./Download/geo course/data/EarthChemCU.txt'</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>abs_path <span class="op">=</span> <span class="st">'C:/Users/jgio5642/Downloads/geo course/data/EarthChemCU.txt'</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>win_path <span class="op">=</span> <span class="vs">r'C:\Users\jgio5642\Download\geo course\data\EarthChemCU.txt'</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'r' make a raw string - important because '\U' is a special python reserved character.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The 'r' makes a raw string - important because '\U' is a special python reserved character.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># programming method: to make paths useable</span></span>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A full proof way of find files is to use "tab completion"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'./data/EarthChemCU.txt'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'./</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 </section>
@@ -310,14 +310,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="conda-environments" class="level4">
 <h4 class="anchored" data-anchor-id="conda-environments">Conda environments</h4>
 <ul>
-<li><p>Conda is a “python” environment manager. Managing packages (python / R / C / Fortran, etc.) and dependencies.</p></li>
-<li><p>Different styles of conda exist: anaconda, miniconda, mamba, etc, but interface is the same. (Difference is default packages and internal dependency calculations).</p></li>
+<li><p>Conda is a “python” environment manager. Managing “complex” packages (python / R / C / Fortran, etc.) and dependencies.</p></li>
+<li><p>Different styles of conda exist: anaconda, miniconda, mamba, etc, but the interface is the same. ( Difference is the default packages and internal dependency implementation ).</p></li>
 <li><p>Conda can be available system-wide, or just per user.</p>
 <ul>
-<li>In session 1 we downloaded our own i.e.&nbsp;per user)</li>
-<li>I suspect some are using older or system installs from debugging. <br> <br></li>
+<li>In session 1 we downloaded our own i.e.&nbsp;per user.</li>
+<li>I suspect some are using older or system installs. <br> <br></li>
 </ul></li>
-<li><p>Conda is designed to have many envrionments that can be switch in and out.</p></li>
+<li><p>Conda is designed to have many envrionments that can be switched in and out.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find what conda environments you have available</span></span>
@@ -328,17 +328,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>conda info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find what python packages are `import'-able</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find what conda packages you have</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>conda <span class="bu">list</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Very similar to the pip list. The underlying python package manager</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#!pip list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Very similar to the pip list if you're familiar with pip</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python packages are `import'-ableVery similar to the pip list if you're familiar with pip</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>conda env export <span class="op">--</span><span class="im">from</span><span class="op">-</span>history</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This information could be copied into a file and used to download the same packages - this is how we created the initial environment in session 1.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This information could be copied into a file and used to download the same packages - this is how we created the initial environment in session 1.</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We use python "package" / "module" / "library" interchangably as users, when developing packages it's imporant to understand the difference but not for regular users.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To download other packages</span></span>
